@@ -28,12 +28,14 @@
   "contributes": {
     "commands": [
       {
-        "command": "windmix-vscode.helloWorld",
-        "title": "Hello World"
+        "command": "windmix-vscode.openEditor",
+        "title": "Open Windmix"
       }
     ]
   },
-  "activationEvents": [],
+  "activationEvents": [
+    "onWebviewPanel:windmixEditor"
+  ],
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
