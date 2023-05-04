@@ -29,7 +29,11 @@
     "commands": [
       {
         "command": "windmix-vscode.openEditor",
-        "title": "Open Windmix"
+        "title": "Windmix: Open Editor"
+      },
+      {
+        "command": "windmix-vscode.openEditorExternal",
+        "title": "Windmix: Open Editor in External Browser"
       }
     ]
   },

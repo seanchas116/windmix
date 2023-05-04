@@ -21,15 +21,16 @@ export async function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand(
-    "windmix-vscode.openEditor",
-    () => {
+  context.subscriptions.push(
+    vscode.commands.registerCommand("windmix-vscode.openEditor", () => {
       new EditorSession({
         textEditor: vscode.window.activeTextEditor,
       });
-    }
+    }),
+    vscode.commands.registerCommand("windmix-vscode.openEditorExternal", () => {
+      vscode.env.openExternal(vscode.Uri.parse("http://localhost:5173"));
+    })
   );
-  context.subscriptions.push(disposable);
 
   vscode.window.registerWebviewPanelSerializer(
     "windmixEditor",
