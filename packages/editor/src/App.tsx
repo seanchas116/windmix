@@ -17,7 +17,6 @@ const App: React.FC = observer(() => {
     "
     >
       <div className="flex-1">
-        <div>{editorState.tabPath}</div>
         <div className="m-4">
           <h2 className="font-semibold mb-1">
             {editorState.tabPath &&
