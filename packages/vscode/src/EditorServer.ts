@@ -41,13 +41,7 @@ export class EditorServer {
     const wss = new ws.Server({ server });
 
     wss.on("connection", (ws) => {
-      ws.on("error", console.error);
-
-      ws.on("message", function message(data) {
-        console.log("received: %s", data);
-      });
-
-      ws.send("something");
+      new WebsocketSession(ws);
     });
 
     server.listen(1338);
@@ -66,4 +60,26 @@ export class EditorServer {
       });
     });
   }
+}
+
+class WebsocketSession {
+  constructor(ws: ws.WebSocket) {
+    this.ws = ws;
+
+    ws.on("error", (e) => console.error(e));
+
+    ws.on("close", () => {
+      this.dispose();
+    });
+
+    ws.on("message", (data) => {
+      console.log("received: %s", data);
+    });
+
+    ws.send("something");
+  }
+
+  ws: ws.WebSocket;
+
+  dispose() {}
 }
