@@ -9,12 +9,44 @@ export class DevServer {
       throw new Error("No workspace found");
     }
 
+    const virtualModulePrefix = "/virtual:windmix/";
+    const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
+
     const server = await createServer({
       configFile: false,
       plugins: [
         react({
           exclude: "**",
         }),
+        {
+          name: "windmix-renderer", // required, will show up in warnings and errors
+          resolveId(id) {
+            console.log(id);
+            if (id.startsWith(virtualModulePrefix)) {
+              return "\0" + id;
+            }
+          },
+          load(id) {
+            console.log("load", id);
+            if (id.startsWith(resolvedVirtualModulePrefix)) {
+              const targetPath = id.slice(resolvedVirtualModulePrefix.length);
+              console.log("targetPath", targetPath);
+
+              return `
+                import Component from "/${targetPath}";
+                import React from 'react';
+                import { createRoot } from 'react-dom/client';
+
+                export function render() {
+                  const root = document.getElementById('root');
+                  createRoot(root).render(
+                    React.createElement(Component)
+                  );
+                }
+              `;
+            }
+          },
+        },
       ],
       root: workspace.uri.fsPath,
       server: {

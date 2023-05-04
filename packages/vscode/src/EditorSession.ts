@@ -42,7 +42,8 @@ export class EditorSession {
           case "ready":
             panel.webview.postMessage({
               command: "tabSelected",
-              path: this._textEditor?.document.uri.path,
+              path:
+                this._textEditor && this.projectPathForEditor(this._textEditor),
             });
             break;
         }
@@ -77,7 +78,7 @@ export class EditorSession {
     this._panel.title = this.titleForEditor(textEditor);
     this._panel.webview.postMessage({
       command: "tabSelected",
-      path: textEditor?.document.uri.path,
+      path: textEditor && this.projectPathForEditor(textEditor),
     });
   }
 
@@ -89,6 +90,15 @@ export class EditorSession {
     return "Windmix " + path.basename(editor.document.uri.path);
   }
 
+  projectPathForEditor(editor: vscode.TextEditor) {
+    const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.path;
+    if (!workspacePath) {
+      throw new Error("No workspace path");
+    }
+
+    return "/" + path.relative(workspacePath, editor.document.uri.path);
+  }
+
   private getWebviewContent() {
     return `<!DOCTYPE html>
   <html lang="en">
@@ -96,6 +106,7 @@ export class EditorSession {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cat Coding</title>
+      <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
       <div id="path">No editor selected</div>
@@ -106,6 +117,16 @@ export class EditorSession {
               switch (message.command) {
                   case 'tabSelected':
                       document.getElementById('path').innerText = message.path;
+
+                      const root = document.getElementById('root');
+                      root?.remove()
+                      const newRoot = document.createElement('div');
+                      newRoot.id = 'root';
+                      document.body.appendChild(newRoot);
+
+                      import("http://localhost:1337/virtual:windmix" + message.path).then(
+                        mod => mod.render()
+                      );
                       break;
               }
           });
