@@ -125,7 +125,14 @@ export class EditorSession {
                       document.body.appendChild(newRoot);
 
                       import("http://localhost:1337/virtual:windmix" + message.path).then(
-                        mod => mod.render()
+                        mod => {
+                          const root = document.getElementById('root');
+                          root?.remove()
+                          const newRoot = document.createElement('div');
+                          newRoot.id = 'root';
+                          document.body.appendChild(newRoot);
+                          mod.render(newRoot)
+                        }
                       );
                       break;
               }

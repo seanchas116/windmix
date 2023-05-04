@@ -37,8 +37,7 @@ export class DevServer {
                 import React from 'react';
                 import { createRoot } from 'react-dom/client';
 
-                export function render() {
-                  const root = document.getElementById('root');
+                export function render(root) {
                   createRoot(root).render(
                     React.createElement(Component)
                   );
