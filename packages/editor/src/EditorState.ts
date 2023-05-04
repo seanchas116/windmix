@@ -25,10 +25,14 @@ class WebSocketConnection {
 
 class VSCodeConnection {
   constructor(onMessage: (message: Message) => void) {
-    //const vscode = acquireVsCodeApi();
+    const vscode = acquireVsCodeApi();
 
     window.addEventListener("message", (event) => {
       onMessage(event.data);
+    });
+
+    vscode.postMessage({
+      command: "ready",
     });
   }
 }
