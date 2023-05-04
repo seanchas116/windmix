@@ -44,6 +44,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.11
         version: 18.0.11
+      '@types/vscode-webview':
+        specifier: ^1.57.1
+        version: 1.57.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.59.1(@typescript-eslint/parser@5.59.1)(eslint@8.39.0)(typescript@5.0.2)
@@ -845,6 +848,10 @@ packages:
 
   /@types/semver@7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
+    dev: true
+
+  /@types/vscode-webview@1.57.1:
+    resolution: {integrity: sha512-ghW5SfuDmsGDS2A4xkvGsLwDRNc3Vj5rS6rPOyPm/IryZuf3wceZKxgYaUoW+k9f0f/CB7y2c1rRsdOWZWn0PQ==}
     dev: true
 
   /@types/vscode@1.77.0:

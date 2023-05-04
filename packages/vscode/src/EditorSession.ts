@@ -100,6 +100,33 @@ export class EditorSession {
   }
 
   private getWebviewContent() {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <script type="module">
+    import RefreshRuntime from "http://localhost:5173/@react-refresh"
+    RefreshRuntime.injectIntoGlobalHook(window)
+    window.$RefreshReg$ = () => {}
+    window.$RefreshSig$ = () => (type) => type
+    window.__vite_plugin_react_preamble_installed__ = true
+    </script>
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Windmix Editor</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body>
+        <div id="root"></div>
+        <script type="module" src="http://localhost:5173/src/main.tsx"></script>
+      </body>
+    </html>
+    `;
+  }
+
+  /*
+  private getWebviewContent() {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -143,5 +170,5 @@ export class EditorSession {
       </script>
   </body>
   </html>`;
-  }
+  }*/
 }
