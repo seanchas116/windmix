@@ -3,6 +3,9 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
 import { EditorPanelSerializer, EditorSession } from "./EditorSession";
+import { DevServer } from "./DevServer";
+
+let devServer: DevServer | undefined;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -30,7 +33,11 @@ export async function activate(context: vscode.ExtensionContext) {
     "windmixEditor",
     new EditorPanelSerializer()
   );
+
+  devServer = await DevServer.start();
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export async function deactivate() {
+  await devServer?.dispose();
+}
