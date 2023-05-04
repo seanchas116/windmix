@@ -1,5 +1,7 @@
 import { Server, createServer } from "http";
 import ws from "ws";
+import * as vscode from "vscode";
+import * as path from "path";
 
 export class EditorServer {
   constructor() {
@@ -65,6 +67,7 @@ export class EditorServer {
 class WebsocketSession {
   constructor(ws: ws.WebSocket) {
     this.ws = ws;
+    this.textDocument = vscode.window.activeTextEditor?.document;
 
     ws.on("error", (e) => console.error(e));
 
@@ -76,10 +79,45 @@ class WebsocketSession {
       console.log("received: %s", data);
     });
 
-    ws.send("something");
+    ws.send(
+      JSON.stringify({
+        command: "tabSelected",
+        path:
+          this.textDocument && this.projectPathForDocument(this.textDocument),
+      })
+    );
+
+    this.disposables.push(
+      vscode.window.onDidChangeActiveTextEditor((editor) => {
+        console.log("onDidChangeActiveTextEditor", editor);
+
+        if (editor) {
+          this.textDocument = editor.document;
+          ws.send(
+            JSON.stringify({
+              command: "tabSelected",
+              path:
+                this.textDocument &&
+                this.projectPathForDocument(this.textDocument),
+            })
+          );
+        }
+      })
+    );
   }
 
   ws: ws.WebSocket;
+  disposables: vscode.Disposable[] = [];
+  textDocument: vscode.TextDocument | undefined;
 
   dispose() {}
+
+  projectPathForDocument(document: vscode.TextDocument) {
+    const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.path;
+    if (!workspacePath) {
+      throw new Error("No workspace path");
+    }
+
+    return "/" + path.relative(workspacePath, document.uri.path);
+  }
 }
