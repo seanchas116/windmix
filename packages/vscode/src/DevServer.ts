@@ -1,5 +1,6 @@
 import { createServer, ViteDevServer } from "vite";
 import * as vscode from "vscode";
+import react from "@vitejs/plugin-react";
 
 export class DevServer {
   static async start() {
@@ -9,9 +10,15 @@ export class DevServer {
     }
 
     const server = await createServer({
+      configFile: false,
+      plugins: [
+        react({
+          exclude: "**",
+        }),
+      ],
       root: workspace.uri.fsPath,
       server: {
-        port: 1337,
+        port: 1337, // TODO: use ephemeral port
       },
     });
     await server.listen();
