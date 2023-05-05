@@ -4,6 +4,7 @@ import { Renderer } from "./Renderer";
 import * as path from "path-browserify";
 import { StyleInspector } from "./inspector/StyleInspector";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
+import { ScrollArea } from "../components/ScrollArea";
 
 const App: React.FC = observer(() => {
   return (
@@ -23,10 +24,12 @@ const App: React.FC = observer(() => {
           </div>
         </div>
       </div>
-      <aside className="w-[224px] bg-white/5 border-l border-white/5">
-        <PaintkitRoot colorScheme="dark">
-          <StyleInspector state={appState.styleInspectorState} />
-        </PaintkitRoot>
+      <aside className="w-[224px] h-full bg-white/5 border-l border-white/5 relative">
+        <ScrollArea className="absolute inset-0 w-full h-full">
+          <PaintkitRoot colorScheme="dark">
+            <StyleInspector state={appState.styleInspectorState} />
+          </PaintkitRoot>
+        </ScrollArea>
       </aside>
     </main>
   );

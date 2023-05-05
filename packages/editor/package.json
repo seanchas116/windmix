@@ -13,6 +13,7 @@
     "@iconify-icons/ic": "^1.2.13",
     "@iconify-icons/mdi": "^1.2.44",
     "@iconify/react": "^4.1.0",
+    "@radix-ui/react-scroll-area": "^1.0.3",
     "@seanchas116/paintkit": "workspace:*",
     "@tippyjs/react": "^4.2.6",
     "lodash-es": "^4.17.21",
