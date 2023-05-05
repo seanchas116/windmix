@@ -25,6 +25,24 @@ importers:
 
   packages/editor:
     dependencies:
+      '@iconify-icons/ic':
+        specifier: ^1.2.13
+        version: 1.2.13
+      '@iconify-icons/mdi':
+        specifier: ^1.2.44
+        version: 1.2.44
+      '@iconify/react':
+        specifier: ^4.1.0
+        version: 4.1.0(react@18.2.0)
+      '@seanchas116/paintkit':
+        specifier: workspace:*
+        version: link:../paintkit
+      '@tippyjs/react':
+        specifier: ^4.2.6
+        version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       mobx:
         specifier: ^6.9.0
         version: 6.9.0
@@ -40,7 +58,13 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      styled-components:
+        specifier: ^5.3.10
+        version: 5.3.10(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.7
+        version: 4.17.7
       '@types/path-browserify':
         specifier: ^1.0.0
         version: 1.0.0
@@ -50,9 +74,15 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.11
         version: 18.2.3
+      '@types/styled-components':
+        specifier: ^5.1.26
+        version: 5.1.26
       '@types/vscode-webview':
         specifier: ^1.57.1
         version: 1.57.1
+      '@types/wicg-file-system-access':
+        specifier: ^2020.9.6
+        version: 2020.9.6
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.57.1
         version: 5.59.2(@typescript-eslint/parser@5.59.2)(eslint@8.39.0)(typescript@5.0.4)
@@ -86,6 +116,9 @@ importers:
       vite:
         specifier: ^4.3.2
         version: 4.3.4(@types/node@16.0.0)
+      vitest:
+        specifier: ^0.31.0
+        version: 0.31.0
 
   packages/paintkit:
     dependencies:
@@ -1969,6 +2002,12 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-icons/mdi@1.2.44:
+    resolution: {integrity: sha512-pV3TEkOEm295p09CftJQYSS86CucVBupkcA7KgLK5BIbHeqLAvqhVRZ6CC81lY94l7ZxnI88x72jzJ1iEAx0QQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
+
   /@iconify/react@4.1.0(react@18.2.0):
     resolution: {integrity: sha512-Mf72i3TNNKpKCKxmo7kzqyrUdCgaoljpqtWmtqpqwyxoV4ukhnDsSRNLhf2yBnqGr3cVZsdj/i0FMpXIY0Qk0g==}
     peerDependencies:
@@ -3614,7 +3653,6 @@ packages:
 
   /@types/wicg-file-system-access@2020.9.6:
     resolution: {integrity: sha512-6hogE75Hl2Ov/jgp8ZhDaGmIF/q3J07GtXf8nCJCwKTHq7971po5+DId7grft09zG7plBwpF6ZU0yx9Du4/e1A==}
-    dev: false
 
   /@types/ws@8.5.4:
     resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
@@ -7707,6 +7745,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
