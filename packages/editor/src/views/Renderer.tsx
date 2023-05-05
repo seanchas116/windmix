@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { reaction } from "mobx";
-import { editorState } from "../state/AppState";
+import { appState } from "../state/AppState";
 
 export const Renderer: React.FC = () => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -12,7 +12,7 @@ export const Renderer: React.FC = () => {
     }
 
     return reaction(
-      () => editorState.tabPath,
+      () => appState.tabPath,
       async (tabPath) => {
         container.innerHTML = "";
 

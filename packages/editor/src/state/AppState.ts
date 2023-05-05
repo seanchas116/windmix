@@ -1,4 +1,6 @@
 import { observable, makeObservable } from "mobx";
+import { StyleInspectorState } from "./StyleInspectorState";
+import { Style } from "../models/style/Style";
 
 type Message = {
   command: "tabSelected";
@@ -58,6 +60,20 @@ export class AppState {
   }
 
   @observable tabPath: string | undefined = undefined;
+
+  readonly styleInspectorState = new StyleInspectorState({
+    getTargets: () => {
+      return [
+        {
+          tagName: "div",
+          style: new Style(),
+          computedStyle: new Style(),
+        },
+      ];
+    },
+    notifyChange: () => {},
+    notifyChangeEnd: () => {},
+  });
 }
 
-export const editorState = new AppState();
+export const appState = new AppState();
