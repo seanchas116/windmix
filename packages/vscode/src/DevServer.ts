@@ -15,9 +15,7 @@ export class DevServer {
     const server = await createServer({
       configFile: false,
       plugins: [
-        react({
-          exclude: "**",
-        }),
+        react(),
         {
           name: "windmix-renderer", // required, will show up in warnings and errors
           resolveId(id) {
@@ -37,11 +35,10 @@ export class DevServer {
                 import React from 'react';
                 import { createRoot } from 'react-dom/client';
 
-                export function render(root) {
-                  createRoot(root).render(
-                    React.createElement(Component)
-                  );
-                }
+                const root = document.getElementById('root');
+                createRoot(root).render(
+                  React.createElement(Component)
+                );
               `;
             }
           },
