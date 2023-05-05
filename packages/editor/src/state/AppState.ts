@@ -37,7 +37,7 @@ class VSCodeConnection {
   }
 }
 
-export class EditorState {
+export class AppState {
   constructor() {
     const onMessage = (message: Message) => {
       switch (message.command) {
@@ -60,4 +60,4 @@ export class EditorState {
   @observable tabPath: string | undefined = undefined;
 }
 
-export const editorState = new EditorState();
+export const editorState = new AppState();

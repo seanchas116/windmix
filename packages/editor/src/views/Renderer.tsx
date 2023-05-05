@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { reaction } from "mobx";
-import { editorState } from "./EditorState";
+import { editorState } from "../state/AppState";
 
 export const Renderer: React.FC = () => {
   const ref = React.useRef<HTMLDivElement>(null);

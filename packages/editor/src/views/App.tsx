@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { editorState } from "./EditorState";
+import { editorState } from "../state/AppState";
 import { Renderer } from "./Renderer";
 import * as path from "path-browserify";
 
