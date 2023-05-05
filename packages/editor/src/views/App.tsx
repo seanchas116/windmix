@@ -23,7 +23,7 @@ const App: React.FC = observer(() => {
           </div>
         </div>
       </div>
-      <aside className="w-[256px] bg-white/5 border-l border-white/5">
+      <aside className="w-[224px] bg-white/5 border-l border-white/5">
         <PaintkitRoot colorScheme="dark">
           <StyleInspector state={appState.styleInspectorState} />
         </PaintkitRoot>
