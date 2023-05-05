@@ -11,7 +11,7 @@ class WebSocketConnection {
     const socket = new WebSocket("ws://localhost:1338");
 
     // Connection opened
-    socket.addEventListener("open", (event) => {
+    socket.addEventListener("open", () => {
       socket.send("Hello Server!");
     });
 
