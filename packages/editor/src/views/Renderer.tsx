@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { appState } from "../state/AppState";
 import { observer } from "mobx-react-lite";
 
 export const Renderer: React.FC = observer(() => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const srcdoc = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,5 +26,46 @@ export const Renderer: React.FC = observer(() => {
 </html>
 `;
 
-  return <iframe srcDoc={srcdoc} className="w-[1024px] h-[768px]" />;
+  return (
+    <div className="w-[1024px] h-[768px] relative">
+      <iframe
+        srcDoc={srcdoc}
+        className="w-[1024px] h-[768px]"
+        ref={iframeRef}
+      />
+      <div
+        className="absolute inset-0 w-full h-full"
+        onClick={(event) => {
+          console.log(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+
+          const iframe = iframeRef.current;
+          if (!iframe) {
+            return;
+          }
+
+          const window = iframe.contentWindow;
+          if (!window) {
+            return;
+          }
+
+          const elem = window.document.elementFromPoint(
+            event.nativeEvent.offsetX,
+            event.nativeEvent.offsetY
+          );
+          console.log(elem);
+
+          const id = elem?.getAttribute("data-windmixid");
+          if (id) {
+            console.log("clicked", id);
+
+            const node = appState.nodeMap.get(id);
+
+            if (node) {
+              appState.reveal(node.location);
+            }
+          }
+        }}
+      />
+    </div>
+  );
 });
