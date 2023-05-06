@@ -1,12 +1,27 @@
 import { observer } from "mobx-react-lite";
 import { NodeRendererProps, Tree } from "react-arborist";
 import { FillFlexParent } from "../../components/FillFlexParent";
+import { Icon } from "@iconify/react";
 
 function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
   /* This node instance can do many things. See the API reference. */
   return (
-    <div style={style} ref={dragHandle} onClick={() => node.toggle()}>
-      {node.isLeaf ? " " : node.isOpen ? "-" : "+"} {node.data.name}
+    <div
+      style={style}
+      ref={dragHandle}
+      onClick={() => node.toggle()}
+      className="h-full"
+    >
+      <div className="flex items-center h-full pl-1 gap-1">
+        {node.isLeaf ? (
+          <div className="w-[1em] h-[1em]" />
+        ) : node.isOpen ? (
+          <Icon icon="material-symbols:chevron-right" rotate={1} />
+        ) : (
+          <Icon icon="material-symbols:chevron-right" />
+        )}
+        {node.data.name}
+      </div>
     </div>
   );
 }
@@ -43,7 +58,7 @@ export const Outline: React.FC = observer(() => {
           openByDefault={false}
           width={width}
           height={height}
-          indent={16}
+          indent={12}
           rowHeight={24}
           paddingTop={12}
           paddingBottom={12}
