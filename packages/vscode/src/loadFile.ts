@@ -120,7 +120,7 @@ function loadNode(
   }
 }
 
-export function buildDoc(ydoc: Y.Doc, filePath: string, code: string) {
+export function loadFile(ydoc: Y.Doc, filePath: string, code: string) {
   const ast = parse(code, {
     sourceType: "module",
     plugins: ["jsx", "typescript"],

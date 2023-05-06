@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { buildDoc } from "./buildDoc";
+import { loadFile } from "./loadFile";
 import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,
@@ -108,7 +108,7 @@ export class EditorSession {
     if (textEditor) {
       const filePath = this.projectPathForEditor(textEditor);
       const code = textEditor.document.getText();
-      buildDoc(this._doc, filePath, code);
+      loadFile(this._doc, filePath, code);
     }
 
     this._textEditor = textEditor;
