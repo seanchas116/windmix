@@ -4,7 +4,7 @@ import { appState } from "../state/AppState";
 export class DOMLocator {
   window: Window | undefined;
 
-  findNode(offsetX: number, offsetY: number): Node | undefined {
+  findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
     const elem = this.window?.document.elementFromPoint(offsetX, offsetY);
     console.log(elem);
 
@@ -12,8 +12,18 @@ export class DOMLocator {
     if (id) {
       console.log("clicked", id);
 
-      return appState.nodeMap.get(id);
+      const node = appState.nodeMap.get(id);
+      if (node) {
+        return [node, elem];
+      }
     }
+  }
+
+  findDOM(node: Node): Element | undefined {
+    const elem = this.window?.document.querySelector(
+      `[data-windmixid="${node.id}"]`
+    );
+    return elem ?? undefined;
   }
 }
 

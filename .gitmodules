@@ -4,3 +4,6 @@
 [submodule "paintkit"]
 	path = paintkit
 	url = git@github.com:seanchas116/paintkit.git
+[submodule "packages/paintvec"]
+	path = packages/paintvec
+	url = git@github.com:seanchas116/paintvec.git

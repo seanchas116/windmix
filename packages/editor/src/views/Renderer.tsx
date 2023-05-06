@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import { appState } from "../state/AppState";
 import { observer } from "mobx-react-lite";
 import { domLocator } from "./DOMLocator";
+import { Rect } from "paintvec";
+import { action } from "mobx";
 
 export const Renderer: React.FC = observer(() => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -38,6 +40,7 @@ export const Renderer: React.FC = observer(() => {
         }}
       />
       <MouseOverlay iframeRef={iframeRef} />
+      <HUD />
     </div>
   );
 });
@@ -50,16 +53,50 @@ const MouseOverlay = ({
   return (
     <div
       className="absolute inset-0 w-full h-full"
-      onClick={(event) => {
-        const node = domLocator.findNode(
+      onClick={action((event) => {
+        const nodeElem = domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
 
-        if (node) {
+        if (nodeElem) {
+          const [node, elem] = nodeElem;
           appState.reveal(node.location);
         }
-      }}
+      })}
+      onMouseMove={action((event) => {
+        const nodeElem = domLocator.findNode(
+          event.nativeEvent.offsetX,
+          event.nativeEvent.offsetY
+        );
+        if (nodeElem) {
+          const [node, elem] = nodeElem;
+          appState.hover = {
+            node,
+            rect: Rect.from(elem.getBoundingClientRect()),
+          };
+        }
+      })}
     />
   );
 };
+
+const HUD = observer(() => {
+  const hoveredRect = appState.hover?.rect;
+
+  return (
+    <svg className="absolute inset-0 w-full h-full pointer-events-none">
+      {hoveredRect && (
+        <rect
+          x={hoveredRect.left}
+          y={hoveredRect.top}
+          width={hoveredRect.width}
+          height={hoveredRect.height}
+          fill="none"
+          stroke="red"
+          strokeWidth={1}
+        />
+      )}
+    </svg>
+  );
+});

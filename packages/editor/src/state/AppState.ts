@@ -5,6 +5,7 @@ import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
 import { Node, NodeMap } from "@windmix/model";
+import { Rect } from "paintvec";
 
 function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -53,7 +54,9 @@ export class AppState {
   readonly nodeMap = new NodeMap(this.doc.getMap("nodes"));
   readonly fileNode = this.nodeMap.getOrCreate("file", "file");
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
-  @observable hoveredNode: Node | undefined = undefined;
+
+  // TODO: cache rect for node
+  @observable hover: { node: Node; rect: Rect } | undefined = undefined;
 
   @computed get tabPath(): string | undefined {
     return this.fileNode.data.get("filePath");
