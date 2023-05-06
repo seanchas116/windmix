@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
+import { parse } from "@babel/parser";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -74,6 +75,19 @@ export class EditorSession {
   }
 
   set textEditor(textEditor: vscode.TextEditor | undefined) {
+    if (this._textEditor === textEditor) {
+      return;
+    }
+
+    if (textEditor) {
+      const code = textEditor.document.getText();
+      const ast = parse(code, {
+        sourceType: "module",
+        plugins: ["jsx", "typescript"],
+      });
+      console.log(ast);
+    }
+
     this._textEditor = textEditor;
     this._panel.title = this.titleForEditor(textEditor);
     this._panel.webview.postMessage({
