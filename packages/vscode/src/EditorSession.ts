@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { loadFile } from "./loadFile";
+import { loadFile } from "@windmix/model";
 import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,

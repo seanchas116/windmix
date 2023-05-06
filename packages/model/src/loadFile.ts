@@ -11,7 +11,7 @@ import {
   ComponentNode,
   Attribute,
   SpreadAttribute,
-} from "@windmix/model";
+} from "./index";
 import * as Y from "yjs";
 
 function codeForNode(code: string, node: babel.Node): string {

@@ -140,6 +140,9 @@ importers:
 
   packages/model:
     dependencies:
+      '@babel/parser':
+        specifier: ^7.21.8
+        version: 7.21.8
       '@seanchas116/paintkit':
         specifier: workspace:*
         version: link:../../paintkit/packages/paintkit
@@ -147,6 +150,9 @@ importers:
         specifier: ^13.6.1
         version: 13.6.1
     devDependencies:
+      '@babel/types':
+        specifier: ^7.21.5
+        version: 7.21.5
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
