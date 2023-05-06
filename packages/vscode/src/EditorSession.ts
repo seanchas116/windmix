@@ -111,7 +111,7 @@ export class EditorSession {
       const code = textEditor.document.getText();
       const file = loadFile(this._doc, filePath, code);
 
-      DevServer.currentContent = {
+      DevServer.fileContentWithID = {
         filePath,
         content: file.stringify({ id: true }),
       };

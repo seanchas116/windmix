@@ -26,16 +26,16 @@ export class DevServer {
             }
           },
           load(id) {
-            console.log("load", id, DevServer.currentContent);
+            console.log("load", id, DevServer.fileContentWithID);
 
             if (
-              DevServer.currentContent &&
+              DevServer.fileContentWithID &&
               path.resolve(
                 workspace.uri.fsPath,
-                DevServer.currentContent.filePath.slice(1)
+                DevServer.fileContentWithID.filePath.slice(1)
               ) === id
             ) {
-              return DevServer.currentContent.content;
+              return DevServer.fileContentWithID.content;
             }
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
@@ -78,7 +78,7 @@ export class DevServer {
     this._server.close();
   }
 
-  static currentContent:
+  static fileContentWithID:
     | {
         filePath: string;
         content: string;
