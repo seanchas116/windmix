@@ -45,6 +45,17 @@ function NodeRow({
     }
   };
 
+  const mayHaveChildren = () => {
+    switch (node.type) {
+      case "component":
+      case "element":
+      case "wrappingExpression":
+        return true;
+      default:
+        return false;
+    }
+  };
+
   return (
     <div
       style={style}
@@ -53,7 +64,7 @@ function NodeRow({
       className="h-full hover:ring-1 hover:ring-inset hover:ring-blue-500"
     >
       <div className="flex items-center h-full pl-1 gap-2">
-        {node.type === "text" ? (
+        {!mayHaveChildren() ? (
           <div className="w-[1em] h-[1em]" />
         ) : treeNode.isOpen ? (
           <Icon icon="material-symbols:chevron-right" rotate={1} />
