@@ -20,6 +20,9 @@ export class FileNode extends CollaborativeNode<
   get filePath(): string {
     return this.data.get("filePath") ?? "";
   }
+  get header(): string {
+    return this.data.get("header") ?? "";
+  }
 }
 
 export class ComponentNode extends CollaborativeNode<
@@ -31,6 +34,13 @@ export class ComponentNode extends CollaborativeNode<
 > {
   get type(): "component" {
     return "component";
+  }
+
+  get header(): string {
+    return this.data.get("header") ?? "";
+  }
+  get footer(): string {
+    return this.data.get("footer") ?? "";
   }
 }
 
@@ -94,6 +104,13 @@ export class WrappingExpressionNode extends CollaborativeNode<
   get type(): "wrappingExpression" {
     return "wrappingExpression";
   }
+
+  get header(): string {
+    return this.data.get("header") ?? "";
+  }
+  get footer(): string {
+    return this.data.get("footer") ?? "";
+  }
 }
 
 // JSXExpressionContainer without an element (e.g. `{users.map(user => user.name)}`)
@@ -103,6 +120,10 @@ export class ExpressionNode extends CollaborativeNode<
 > {
   get type(): "expression" {
     return "expression";
+  }
+
+  get code(): string {
+    return this.data.get("code") ?? "";
   }
 }
 
