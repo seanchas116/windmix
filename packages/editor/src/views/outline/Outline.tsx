@@ -9,9 +9,9 @@ function NodeRow({
   node: treeNode,
   style,
   dragHandle,
-}: NodeRendererProps<Node>) {
+}: NodeRendererProps<TreeData>) {
   /* This node instance can do many things. See the API reference. */
-  const node = treeNode.data;
+  const node = treeNode.data.node;
 
   const getName = () => {
     switch (node.type) {
@@ -67,13 +67,34 @@ function NodeRow({
   );
 }
 
+interface TreeData {
+  id: string;
+  children: TreeData[];
+  node: Node;
+}
+
+function buildTreeData(node: Node): TreeData {
+  return {
+    id: node.id,
+    node,
+    children: node.children
+      .filter((child) => {
+        if (child.type === "text" && /^\s*$/.test(child.text)) {
+          return false;
+        }
+        return true;
+      })
+      .map(buildTreeData),
+  };
+}
+
 export const Outline: React.FC = observer(() => {
   return (
     <FillFlexParent>
       {({ width, height }) => (
         <Tree
-          data={appState.fileNode.children}
-          openByDefault={false}
+          data={buildTreeData(appState.fileNode).children}
+          openByDefault={true}
           width={width}
           height={height}
           indent={8}
