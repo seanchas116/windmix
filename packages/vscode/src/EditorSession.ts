@@ -8,6 +8,7 @@ import {
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
+import { DevServer } from "./DevServer";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -108,7 +109,12 @@ export class EditorSession {
     if (textEditor) {
       const filePath = this.projectPathForEditor(textEditor);
       const code = textEditor.document.getText();
-      loadFile(this._doc, filePath, code);
+      const file = loadFile(this._doc, filePath, code);
+
+      DevServer.currentContent = {
+        filePath,
+        content: file.stringify({ id: true }),
+      };
     }
 
     this._textEditor = textEditor;

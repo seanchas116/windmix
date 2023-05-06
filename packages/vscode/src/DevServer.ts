@@ -1,3 +1,4 @@
+import * as path from "node:path";
 import { createServer, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
@@ -25,7 +26,18 @@ export class DevServer {
             }
           },
           load(id) {
-            console.log("load", id);
+            console.log("load", id, DevServer.currentContent);
+
+            if (
+              DevServer.currentContent &&
+              path.resolve(
+                workspace.uri.fsPath,
+                DevServer.currentContent.filePath.slice(1)
+              ) === id
+            ) {
+              return DevServer.currentContent.content;
+            }
+
             if (id.startsWith(resolvedVirtualModulePrefix)) {
               const targetPath = id.slice(resolvedVirtualModulePrefix.length);
               console.log("targetPath", targetPath);
@@ -65,4 +77,11 @@ export class DevServer {
   async dispose() {
     this._server.close();
   }
+
+  static currentContent:
+    | {
+        filePath: string;
+        content: string;
+      }
+    | undefined = undefined;
 }
