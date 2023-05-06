@@ -71,7 +71,7 @@ function loadNode(
 ): TextNode | ElementNode | ExpressionNode | WrappingExpressionNode {
   if (node.type === "JSXText") {
     const textNode = nodeMap.create("text", ["text", ...indexPath].join(":"));
-    textNode.data.set({ text: node.value });
+    textNode.data.set({ text: codeForNode(code, node) });
     return textNode;
   }
   if (node.type === "JSXElement" || node.type === "JSXFragment") {
@@ -90,7 +90,7 @@ function loadNode(
 
   if (childElement) {
     const headerStart = node.start ?? 0;
-    const headerEnd = childElement.end ?? 0;
+    const headerEnd = childElement.start ?? 0;
     const header = code.slice(headerStart, headerEnd);
     const footerStart = childElement.end ?? 0;
     const footerEnd = node.end ?? 0;

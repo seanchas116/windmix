@@ -23,6 +23,12 @@ export class FileNode extends CollaborativeNode<
   get header(): string {
     return this.data.get("header") ?? "";
   }
+
+  stringify(): string {
+    return (
+      this.header + this.children.map((child) => child.stringify()).join("")
+    );
+  }
 }
 
 export class ComponentNode extends CollaborativeNode<
@@ -41,6 +47,14 @@ export class ComponentNode extends CollaborativeNode<
   }
   get footer(): string {
     return this.data.get("footer") ?? "";
+  }
+
+  stringify(): string {
+    return (
+      this.header +
+      this.children.map((child) => child.stringify()).join("") +
+      this.footer
+    );
   }
 }
 
@@ -74,6 +88,27 @@ export class ElementNode extends CollaborativeNode<
   set attributes(attributes: (Attribute | SpreadAttribute)[]) {
     this.data.set({ attributes });
   }
+
+  stringify(): string {
+    const attributes = this.attributes.map((attr) => {
+      if ("spread" in attr) {
+        return attr.spread;
+      } else if (attr.value) {
+        return `${attr.name}=${attr.value}`;
+      } else {
+        return attr.name;
+      }
+    });
+
+    const children = this.children;
+    if (children.length === 0) {
+      return `<${this.tagName} ${attributes.join(" ")} />`;
+    }
+
+    return `<${this.tagName} ${attributes.join(" ")}>${children
+      .map((child) => child.stringify())
+      .join("")}</${this.tagName}>`;
+  }
 }
 
 // JSXText
@@ -90,6 +125,11 @@ export class TextNode extends CollaborativeNode<
   }
   set text(text: string) {
     this.data.set({ text });
+  }
+
+  stringify(): string {
+    // TODO: escape?
+    return this.text;
   }
 }
 
@@ -111,6 +151,14 @@ export class WrappingExpressionNode extends CollaborativeNode<
   get footer(): string {
     return this.data.get("footer") ?? "";
   }
+
+  stringify(): string {
+    return (
+      this.header +
+      this.children.map((child) => child.stringify()).join("") +
+      this.footer
+    );
+  }
 }
 
 // JSXExpressionContainer without an element (e.g. `{users.map(user => user.name)}`)
@@ -124,6 +172,10 @@ export class ExpressionNode extends CollaborativeNode<
 
   get code(): string {
     return this.data.get("code") ?? "";
+  }
+
+  stringify(): string {
+    return this.code;
   }
 }
 

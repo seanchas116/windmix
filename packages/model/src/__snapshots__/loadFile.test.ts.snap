@@ -947,7 +947,7 @@ const navigation = [
   "text:Example:1:1:7:1:1:0": {
     "index": 0,
     "parent": "element:Example:1:1:7:1:1",
-    "text": "→",
+    "text": "&rarr;",
     "type": "text",
   },
   "text:Example:1:1:7:1:2": {
@@ -1268,7 +1268,7 @@ const navigation = [
   "text:Example:3:3:1:1:3:3:0": {
     "index": 0,
     "parent": "element:Example:3:3:1:1:3:3",
-    "text": "→",
+    "text": "&rarr;",
     "type": "text",
   },
   "text:Example:3:3:1:1:3:4": {
@@ -1440,13 +1440,7 @@ const navigation = [
     "footer": "
             ))}",
     "header": "{navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className=\\"text-sm font-semibold leading-6 text-gray-900\\"
-              >
-                {item.name}
-              </a>",
+              ",
     "index": 1,
     "parent": "element:Example:1:1:5",
     "type": "wrappingExpression",
@@ -1455,13 +1449,7 @@ const navigation = [
     "footer": "
                   ))}",
     "header": "{navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className=\\"-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"
-                    >
-                      {item.name}
-                    </a>",
+                    ",
     "index": 1,
     "parent": "element:Example:1:3:3:3:1:1",
     "type": "wrappingExpression",
