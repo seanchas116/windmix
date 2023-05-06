@@ -1,65 +1,63 @@
-import { observable, makeObservable } from "mobx";
+import { observable, makeObservable, action, computed } from "mobx";
 import { StyleInspectorState } from "./StyleInspectorState";
 import { Style } from "../models/style/Style";
+import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
+import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
+import * as Y from "yjs";
+import { NodeMap } from "@windmix/model";
+import { compact } from "lodash-es";
 
-type Message = {
-  command: "tabSelected";
-  path?: string;
-};
+function vscodeParentTarget(): Target {
+  const vscode = acquireVsCodeApi();
 
-class WebSocketConnection {
-  constructor(onMessage: (message: Message) => void) {
-    // Create WebSocket connection.
-    const socket = new WebSocket("ws://localhost:1338");
-
-    // Connection opened
-    socket.addEventListener("open", () => {
-      socket.send("Hello Server!");
-    });
-
-    // Listen for messages
-    socket.addEventListener("message", (event) => {
-      const message = JSON.parse(event.data);
-      onMessage(message);
-    });
-  }
+  return {
+    post: (message) => vscode.postMessage(message),
+    subscribe: (handler) => {
+      const onMessage = (event: MessageEvent) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        handler(event.data);
+      };
+      window.addEventListener("message", onMessage);
+      return () => {
+        window.removeEventListener("message", onMessage);
+      };
+    },
+  };
 }
 
 class VSCodeConnection {
-  constructor(onMessage: (message: Message) => void) {
-    const vscode = acquireVsCodeApi();
+  constructor() {
+    this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
+      vscodeParentTarget(),
+      {
+        update: action(async (data: Uint8Array) => {
+          Y.applyUpdate(appState.doc, data);
+        }),
+        init: action(async (data: Uint8Array) => {
+          Y.applyUpdate(appState.doc, data);
+        }),
+      }
+    );
 
-    window.addEventListener("message", (event) => {
-      onMessage(event.data);
-    });
-
-    vscode.postMessage({
-      command: "ready",
-    });
+    this.rpc.remote.ready();
   }
+
+  private rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
 }
 
 export class AppState {
   constructor() {
-    const onMessage = (message: Message) => {
-      switch (message.command) {
-        case "tabSelected":
-          this.tabPath = message.path;
-          console.log("tabSelected", message.path);
-          break;
-      }
-    };
-
-    if (location.protocol === "vscode-webview:") {
-      new VSCodeConnection(onMessage);
-    } else {
-      new WebSocketConnection(onMessage);
-    }
-
+    new VSCodeConnection();
     makeObservable(this);
   }
 
-  @observable tabPath: string | undefined = undefined;
+  readonly doc = new Y.Doc();
+  readonly nodeMap = new NodeMap(this.doc.getMap("nodes"));
+  readonly fileNode = this.nodeMap.getOrCreate("file", "file");
+
+  @computed get tabPath(): string | undefined {
+    return this.fileNode.data.get("filePath");
+  }
 
   readonly styleInspectorState = new StyleInspectorState({
     getTargets: () => {
@@ -71,8 +69,12 @@ export class AppState {
         },
       ];
     },
-    notifyChange: () => {},
-    notifyChangeEnd: () => {},
+    notifyChange: () => {
+      // TODO
+    },
+    notifyChangeEnd: () => {
+      // TODO
+    },
   });
 }
 

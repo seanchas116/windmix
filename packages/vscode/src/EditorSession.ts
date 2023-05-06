@@ -1,6 +1,34 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
+import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
+import * as Y from "yjs";
 import { buildDoc } from "./buildDoc";
+import {
+  IEditorToRootRPCHandler,
+  IRootToEditorRPCHandler,
+} from "../../editor/src/types/RPC";
+
+const debouncedUpdate = (
+  onUpdate: (update: Uint8Array) => void
+): ((update: Uint8Array) => void) => {
+  const updates: Uint8Array[] = [];
+  let queued = false;
+  const debounced = (update: Uint8Array) => {
+    updates.push(update);
+    if (queued) {
+      return;
+    }
+    queued = true;
+    queueMicrotask(() => {
+      queued = false;
+      if (updates.length) {
+        onUpdate(Y.mergeUpdates(updates));
+        updates.length = 0;
+      }
+    });
+  };
+  return debounced;
+};
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -38,19 +66,6 @@ export class EditorSession {
     const disposables: vscode.Disposable[] = [];
 
     disposables.push(
-      panel.webview.onDidReceiveMessage((message) => {
-        switch (message.command) {
-          case "ready":
-            panel.webview.postMessage({
-              command: "tabSelected",
-              path:
-                this._textEditor && this.projectPathForEditor(this._textEditor),
-            });
-            break;
-        }
-      })
-    );
-    disposables.push(
       vscode.window.onDidChangeActiveTextEditor((editor) => {
         console.log("onDidChangeActiveTextEditor", editor);
 
@@ -59,6 +74,35 @@ export class EditorSession {
         }
       })
     );
+
+    let unsubscribeDoc: (() => void) | undefined;
+
+    const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
+      {
+        post: (message) => {
+          panel.webview.postMessage(message);
+        },
+        subscribe: (handler) => {
+          const disposable = panel.webview.onDidReceiveMessage(handler);
+          return () => disposable.dispose();
+        },
+      },
+      {
+        ready: async () => {
+          unsubscribeDoc?.();
+
+          const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
+            rpc.remote.update(update);
+          });
+          this._doc.on("update", onDocUpdate);
+          unsubscribeDoc = () => this._doc.off("update", onDocUpdate);
+        },
+        update: async (data) => {
+          Y.applyUpdate(this._doc, data);
+        },
+      }
+    );
+    disposables.push({ dispose: () => rpc.dispose() });
 
     panel.onDidDispose(() => {
       for (const disposable of disposables) {
@@ -69,6 +113,7 @@ export class EditorSession {
 
   private _panel: vscode.WebviewPanel;
   private _textEditor: vscode.TextEditor | undefined;
+  private _doc = new Y.Doc();
 
   get textEditor(): vscode.TextEditor | undefined {
     return this._textEditor;
@@ -80,16 +125,13 @@ export class EditorSession {
     }
 
     if (textEditor) {
+      const filePath = this.projectPathForEditor(textEditor);
       const code = textEditor.document.getText();
-      buildDoc(code);
+      buildDoc(this._doc, filePath, code);
     }
 
     this._textEditor = textEditor;
     this._panel.title = this.titleForEditor(textEditor);
-    this._panel.webview.postMessage({
-      command: "tabSelected",
-      path: textEditor && this.projectPathForEditor(textEditor),
-    });
   }
 
   titleForEditor(editor: vscode.TextEditor | undefined) {

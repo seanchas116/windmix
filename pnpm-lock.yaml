@@ -43,6 +43,9 @@ importers:
       '@tippyjs/react':
         specifier: ^4.2.6
         version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
+      '@windmix/model':
+        specifier: workspace:*
+        version: link:../model
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -73,6 +76,9 @@ importers:
       use-resize-observer:
         specifier: ^9.1.0
         version: 9.1.0(react-dom@18.2.0)(react@18.2.0)
+      yjs:
+        specifier: ^13.6.1
+        version: 13.6.1
     devDependencies:
       '@types/lodash-es':
         specifier: ^4.17.7
@@ -137,6 +143,9 @@ importers:
       '@seanchas116/paintkit':
         specifier: workspace:*
         version: link:../../paintkit/packages/paintkit
+      yjs:
+        specifier: ^13.6.1
+        version: 13.6.1
     devDependencies:
       typescript:
         specifier: ^5.0.4
@@ -163,6 +172,9 @@ importers:
       '@babel/types':
         specifier: ^7.21.5
         version: 7.21.5
+      '@seanchas116/paintkit':
+        specifier: workspace:*
+        version: link:../../paintkit/packages/paintkit
       '@types/glob':
         specifier: ^8.1.0
         version: 8.1.0
@@ -7721,7 +7733,6 @@ packages:
 
   /isomorphic.js@0.2.5:
     resolution: {integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==}
-    dev: true
 
   /istanbul-lib-coverage@3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
@@ -7975,6 +7986,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -8079,7 +8091,6 @@ packages:
     hasBin: true
     dependencies:
       isomorphic.js: 0.2.5
-    dev: true
 
   /lie@3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
@@ -12293,7 +12304,6 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     dependencies:
       lib0: 0.2.74
-    dev: true
 
   /yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}

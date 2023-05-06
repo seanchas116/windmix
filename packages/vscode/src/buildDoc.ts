@@ -120,14 +120,15 @@ function loadNode(
   }
 }
 
-export function buildDoc(code: string) {
+export function buildDoc(ydoc: Y.Doc, filePath: string, code: string) {
   const ast = parse(code, {
     sourceType: "module",
     plugins: ["jsx", "typescript"],
   });
   console.log(ast.program);
 
-  const ydoc = new Y.Doc();
+  ydoc.getMap("nodes").clear();
+
   const nodeMap = new CollaborativeNodeMap(ydoc.getMap("nodes"), nodeTypes);
 
   const foundComponents = ast.program.body.flatMap((expr) => {
@@ -142,6 +143,7 @@ export function buildDoc(code: string) {
   const fileHeader = code.slice(fileHeaderStart, fileHeaderEnd);
   file.data.set({
     header: fileHeader,
+    filePath,
   });
 
   const componentNodes: ComponentNode[] = [];

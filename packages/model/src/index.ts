@@ -2,12 +2,14 @@ import {
   CollaborativeNode,
   CollaborativeNodeMap,
 } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
+import * as Y from "yjs";
 
 export { CollaborativeNode, CollaborativeNodeMap };
 
 export class FileNode extends CollaborativeNode<
   typeof nodeTypes,
   {
+    filePath: string; // path in project (e.g. `/src/components/MyComponent.tsx`)
     header: string; // header code (e.g. `import React from "react";`)
   }
 > {
@@ -110,3 +112,9 @@ export const nodeTypes = {
 };
 
 export type Node = InstanceType<(typeof nodeTypes)[keyof typeof nodeTypes]>;
+
+export class NodeMap extends CollaborativeNodeMap<typeof nodeTypes> {
+  constructor(nodes: Y.Map<any>) {
+    super(nodes, nodeTypes);
+  }
+}
