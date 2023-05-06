@@ -10,6 +10,11 @@ interface StringifyOptions {
   id?: boolean;
 }
 
+interface Location {
+  line: number;
+  column: number;
+}
+
 export class FileNode extends CollaborativeNode<
   typeof nodeTypes,
   {
@@ -41,6 +46,7 @@ export class ComponentNode extends CollaborativeNode<
   {
     header: string; // header code of component (e.g. `function MyComponent() { return `)
     footer: string; // footer code of component (e.g. `; }`)
+    location: Location;
   }
 > {
   get type(): "component" {
@@ -74,7 +80,11 @@ export interface SpreadAttribute {
 // JSXElement
 export class ElementNode extends CollaborativeNode<
   typeof nodeTypes,
-  { tagName: string; attributes: (Attribute | SpreadAttribute)[] }
+  {
+    tagName: string;
+    attributes: (Attribute | SpreadAttribute)[];
+    location: Location;
+  }
 > {
   get type(): "element" {
     return "element";
@@ -122,7 +132,7 @@ export class ElementNode extends CollaborativeNode<
 // JSXText
 export class TextNode extends CollaborativeNode<
   typeof nodeTypes,
-  { text: string }
+  { text: string; location: Location }
 > {
   get type(): "text" {
     return "text";
@@ -147,6 +157,7 @@ export class WrappingExpressionNode extends CollaborativeNode<
   {
     header: string; // header code of expression (e.g. `{users.map(user => (`)
     footer: string; // footer code of expression (e.g. `)}`)
+    location: Location;
   }
 > {
   get type(): "wrappingExpression" {
@@ -172,7 +183,7 @@ export class WrappingExpressionNode extends CollaborativeNode<
 // JSXExpressionContainer without an element (e.g. `{users.map(user => user.name)}`)
 export class ExpressionNode extends CollaborativeNode<
   typeof nodeTypes,
-  { code: string }
+  { code: string; location: Location }
 > {
   get type(): "expression" {
     return "expression";

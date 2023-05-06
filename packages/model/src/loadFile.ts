@@ -19,6 +19,22 @@ function codeForNode(code: string, node: babel.Node): string {
   return code.slice(node.start ?? 0, node.end ?? 0);
 }
 
+function locationForNode(node: babel.Node):
+  | {
+      line: number;
+      column: number;
+    }
+  | undefined {
+  if (!node.loc) {
+    return;
+  }
+
+  return {
+    line: node.loc.start.line,
+    column: node.loc.start.column,
+  };
+}
+
 function loadElement(
   nodeMap: CollaborativeNodeMap<typeof nodeTypes>,
   code: string,
@@ -49,6 +65,7 @@ function loadElement(
     elementNode.data.set({
       tagName,
       attributes,
+      location: locationForNode(element),
     });
   }
 
@@ -71,7 +88,10 @@ function loadNode(
 ): TextNode | ElementNode | ExpressionNode | WrappingExpressionNode {
   if (node.type === "JSXText") {
     const textNode = nodeMap.create("text", ["text", ...indexPath].join(":"));
-    textNode.data.set({ text: codeForNode(code, node) });
+    textNode.data.set({
+      text: codeForNode(code, node),
+      location: locationForNode(node),
+    });
     return textNode;
   }
   if (node.type === "JSXElement" || node.type === "JSXFragment") {
@@ -101,6 +121,7 @@ function loadNode(
     wrapperNode.data.set({
       header,
       footer,
+      location: locationForNode(node),
     });
 
     const childNode = loadElement(nodeMap, code, childElement, [
@@ -116,6 +137,7 @@ function loadNode(
     const expressionNode = nodeMap.create("expression", id);
     expressionNode.data.set({
       code: code.slice(node.start ?? 0, node.end ?? 0),
+      location: locationForNode(node),
     });
     return expressionNode;
   }
@@ -172,6 +194,7 @@ export function loadFile(
       name,
       header: code.slice(headerStart, headerEnd),
       footer: code.slice(footerStart, footerEnd),
+      location: locationForNode(foundComponent.statement),
     });
 
     componentNodes.push(componentNode);
