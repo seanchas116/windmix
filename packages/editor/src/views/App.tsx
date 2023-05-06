@@ -9,7 +9,7 @@ import { Outline } from "./outline/Outline";
 
 const App: React.FC = observer(() => {
   return (
-    <main
+    <div
       className="
     fixed inset-0 flex text-xs
     "
@@ -17,7 +17,7 @@ const App: React.FC = observer(() => {
       <aside className="w-[224px] h-full bg-white/5 border-r border-white/5 relative">
         <Outline />
       </aside>
-      <div className="flex-1">
+      <main className="flex-1 min-w-0">
         <div className="m-4">
           <h2 className="font-semibold mb-1">
             {appState.tabPath &&
@@ -27,7 +27,7 @@ const App: React.FC = observer(() => {
             <Renderer />
           </div>
         </div>
-      </div>
+      </main>
       <aside className="w-[224px] h-full bg-white/5 border-l border-white/5 relative">
         <ScrollArea>
           <PaintkitRoot colorScheme="dark">
@@ -35,7 +35,7 @@ const App: React.FC = observer(() => {
           </PaintkitRoot>
         </ScrollArea>
       </aside>
-    </main>
+    </div>
   );
 });
 
