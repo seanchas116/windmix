@@ -53,17 +53,16 @@ const MouseOverlay = ({
   return (
     <div
       className="absolute inset-0 w-full h-full"
-      onClick={action((event) => {
-        const nodeElem = domLocator.findNode(
-          event.nativeEvent.offsetX,
-          event.nativeEvent.offsetY
-        );
+      // onClick={action((event) => {
+      //   const nodeElem = domLocator.findNode(
+      //     event.nativeEvent.offsetX,
+      //     event.nativeEvent.offsetY
+      //   );
 
-        if (nodeElem) {
-          const [node, elem] = nodeElem;
-          appState.reveal(node.location);
-        }
-      })}
+      //   if (nodeElem) {
+      //     const [node, elem] = nodeElem;
+      //   }
+      // })}
       onMouseMove={action((event) => {
         const nodeElem = domLocator.findNode(
           event.nativeEvent.offsetX,
