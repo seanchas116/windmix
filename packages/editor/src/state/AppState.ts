@@ -1,10 +1,10 @@
-import { makeObservable, action, computed } from "mobx";
+import { makeObservable, action, computed, observable } from "mobx";
 import { StyleInspectorState } from "./StyleInspectorState";
 import { Style } from "../models/style/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { NodeMap } from "@windmix/model";
+import { Node, NodeMap } from "@windmix/model";
 
 function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -53,6 +53,7 @@ export class AppState {
   readonly nodeMap = new NodeMap(this.doc.getMap("nodes"));
   readonly fileNode = this.nodeMap.getOrCreate("file", "file");
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
+  @observable hoveredNode: Node | undefined = undefined;
 
   @computed get tabPath(): string | undefined {
     return this.fileNode.data.get("filePath");
