@@ -1,4 +1,5 @@
 import * as RadixScrollArea from "@radix-ui/react-scroll-area";
+import { twMerge } from "tailwind-merge";
 
 export function ScrollArea({
   className,
@@ -8,7 +9,9 @@ export function ScrollArea({
   children: React.ReactNode;
 }) {
   return (
-    <RadixScrollArea.Root className={className}>
+    <RadixScrollArea.Root
+      className={twMerge("flex-1 w-full h-full min-w-0 min-h-0", className)}
+    >
       <RadixScrollArea.Viewport
         asChild
         className="absolute top-0 left-0 w-full h-full !block"

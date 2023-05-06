@@ -29,7 +29,7 @@ const App: React.FC = observer(() => {
         </div>
       </div>
       <aside className="w-[224px] h-full bg-white/5 border-l border-white/5 relative">
-        <ScrollArea className="absolute inset-0 w-full h-full">
+        <ScrollArea>
           <PaintkitRoot colorScheme="dark">
             <StyleInspector state={appState.styleInspectorState} />
           </PaintkitRoot>
