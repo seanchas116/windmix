@@ -88,6 +88,7 @@ export class EditorSession {
             const pos = new vscode.Position(location.line, location.column);
             textEditor.selection = new vscode.Selection(pos, pos);
             textEditor.revealRange(new vscode.Range(pos, pos));
+            // TODO: activate text editor without opening new tab (vscode API seems to be missing this)
           }
         },
       }
