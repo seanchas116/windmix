@@ -29,6 +29,8 @@ describe("File load/stringify", () => {
     expect(ydoc.getMap("nodes").toJSON()).toMatchSnapshot("nodes");
 
     expect(formatJS(file.stringify())).toEqual(formatJS(demoFile));
-    //expect(file.stringify()).toMatchSnapshot("stringify");
+    expect(formatJS(file.stringify({ id: true }))).toMatchSnapshot(
+      "stringifyWithID"
+    );
   });
 });

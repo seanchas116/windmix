@@ -6,6 +6,10 @@ import * as Y from "yjs";
 
 export { CollaborativeNode, CollaborativeNodeMap };
 
+interface StringifyOptions {
+  id?: boolean;
+}
+
 export class FileNode extends CollaborativeNode<
   typeof nodeTypes,
   {
@@ -24,9 +28,10 @@ export class FileNode extends CollaborativeNode<
     return this.data.get("header") ?? "";
   }
 
-  stringify(): string {
+  stringify(options: StringifyOptions = {}): string {
     return (
-      this.header + this.children.map((child) => child.stringify()).join("")
+      this.header +
+      this.children.map((child) => child.stringify(options)).join("")
     );
   }
 }
@@ -49,10 +54,10 @@ export class ComponentNode extends CollaborativeNode<
     return this.data.get("footer") ?? "";
   }
 
-  stringify(): string {
+  stringify(options: StringifyOptions = {}): string {
     return (
       this.header +
-      this.children.map((child) => child.stringify()).join("") +
+      this.children.map((child) => child.stringify(options)).join("") +
       this.footer
     );
   }
@@ -89,7 +94,7 @@ export class ElementNode extends CollaborativeNode<
     this.data.set({ attributes });
   }
 
-  stringify(): string {
+  stringify(options: StringifyOptions = {}): string {
     const attributes = this.attributes.map((attr) => {
       if ("spread" in attr) {
         return attr.spread;
@@ -99,6 +104,9 @@ export class ElementNode extends CollaborativeNode<
         return attr.name;
       }
     });
+    if (options.id) {
+      attributes.push(`data-windmixid="${this.id}"`);
+    }
 
     const children = this.children;
     if (children.length === 0) {
@@ -106,7 +114,7 @@ export class ElementNode extends CollaborativeNode<
     }
 
     return `<${this.tagName} ${attributes.join(" ")}>${children
-      .map((child) => child.stringify())
+      .map((child) => child.stringify(options))
       .join("")}</${this.tagName}>`;
   }
 }
@@ -152,10 +160,10 @@ export class WrappingExpressionNode extends CollaborativeNode<
     return this.data.get("footer") ?? "";
   }
 
-  stringify(): string {
+  stringify(options: StringifyOptions = {}): string {
     return (
       this.header +
-      this.children.map((child) => child.stringify()).join("") +
+      this.children.map((child) => child.stringify(options)).join("") +
       this.footer
     );
   }
