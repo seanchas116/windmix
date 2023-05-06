@@ -4,14 +4,20 @@ import { FillFlexParent } from "../../components/FillFlexParent";
 import { Icon } from "@iconify/react";
 import { Node } from "@windmix/model";
 import { appState } from "../../state/AppState";
+import { action } from "mobx";
+import { domLocator } from "../DOMLocator";
+import { Rect } from "paintvec";
+import { twMerge } from "tailwind-merge";
 
-function NodeRow({
+const NodeRow = observer(function NodeRow({
   node: treeNode,
   style,
   dragHandle,
 }: NodeRendererProps<TreeData>) {
   /* This node instance can do many things. See the API reference. */
   const node = treeNode.data.node;
+
+  const hover = appState.hover?.node === node;
 
   const getName = () => {
     switch (node.type) {
@@ -56,14 +62,29 @@ function NodeRow({
     }
   };
 
+  const onMouseEnter = action(() => {
+    const elem = domLocator.findDOM(node);
+
+    appState.hover = {
+      node,
+      rect: elem && Rect.from(elem.getBoundingClientRect()),
+    };
+  });
+
+  const onMouseLeave = action(() => {
+    appState.hover = undefined;
+  });
+
   return (
     <div
       style={style}
       ref={dragHandle}
-      className="h-full hover:ring-1 hover:ring-inset hover:ring-blue-500"
+      className={twMerge("h-full", hover && "ring-1 ring-inset ring-blue-500")}
       onClick={() => {
         appState.reveal(node.location);
       }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div className="flex items-center h-full pl-1">
         <span className="w-5 h-hull opacity-50 flex items-center justify-center">
@@ -82,7 +103,7 @@ function NodeRow({
       </div>
     </div>
   );
-}
+});
 
 interface TreeData {
   id: string;

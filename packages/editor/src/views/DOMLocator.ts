@@ -7,16 +7,23 @@ export class DOMLocator {
   findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
     const elem = this.window?.document.elementFromPoint(offsetX, offsetY);
     console.log(elem);
+    if (!elem) {
+      return;
+    }
 
     const id = elem?.getAttribute("data-windmixid");
-    if (id) {
-      console.log("clicked", id);
-
-      const node = appState.nodeMap.get(id);
-      if (node) {
-        return [node, elem];
-      }
+    if (!id) {
+      return;
     }
+
+    console.log("clicked", id);
+
+    const node = appState.nodeMap.get(id);
+    if (!node) {
+      return;
+    }
+
+    return [node, elem];
   }
 
   findDOM(node: Node): Element | undefined {
