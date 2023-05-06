@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { appState } from "../state/AppState";
 import { observer } from "mobx-react-lite";
-import { Node } from "@windmix/model";
+import { domLocator } from "./DOMLocator";
 
 export const Renderer: React.FC = observer(() => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -33,6 +33,9 @@ export const Renderer: React.FC = observer(() => {
         srcDoc={srcdoc}
         className="w-[1024px] h-[768px]"
         ref={iframeRef}
+        onLoad={(e) => {
+          domLocator.window = e.currentTarget.contentWindow ?? undefined;
+        }}
       />
       <MouseOverlay iframeRef={iframeRef} />
     </div>
@@ -48,19 +51,7 @@ const MouseOverlay = ({
     <div
       className="absolute inset-0 w-full h-full"
       onClick={(event) => {
-        console.log(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
-
-        const iframe = iframeRef.current;
-        if (!iframe) {
-          return;
-        }
-        const window = iframe.contentWindow;
-        if (!window) {
-          return;
-        }
-
-        const node = findNode(
-          window,
+        const node = domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
@@ -72,19 +63,3 @@ const MouseOverlay = ({
     />
   );
 };
-
-function findNode(
-  window: Window,
-  offsetX: number,
-  offsetY: number
-): Node | undefined {
-  const elem = window.document.elementFromPoint(offsetX, offsetY);
-  console.log(elem);
-
-  const id = elem?.getAttribute("data-windmixid");
-  if (id) {
-    console.log("clicked", id);
-
-    return appState.nodeMap.get(id);
-  }
-}
