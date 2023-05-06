@@ -35,14 +35,12 @@ function loadElement(
       element.openingElement.attributes.map((attr) => {
         if (attr.type === "JSXAttribute") {
           return {
-            type: "attribute",
             name: codeForNode(code, attr.name),
             value: attr.value ? codeForNode(code, attr.value) : undefined,
           };
         } else {
           return {
-            type: "spreadAttribute",
-            value: codeForNode(code, attr),
+            spread: codeForNode(code, attr),
           };
         }
       });

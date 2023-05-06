@@ -29,13 +29,11 @@ export class ComponentNode extends CollaborativeNode<
 }
 
 export interface Attribute {
-  type: "attribute";
   name: string;
   value?: string; // stringified value of StringLiteral or JSXExpressionContainer (`"foo"` or `{foo}`)
 }
 export interface SpreadAttribute {
-  type: "spreadAttribute";
-  value: string; // stringified value of JSXSpreadAttribute (`{...foo}`)
+  spread: string; // stringified value of JSXSpreadAttribute (`{...foo}`)
 }
 
 // JSXElement
