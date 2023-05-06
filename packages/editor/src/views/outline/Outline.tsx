@@ -44,7 +44,7 @@ export const Outline: React.FC = observer(() => {
           width={width}
           height={height}
           indent={16}
-          rowHeight={32}
+          rowHeight={24}
           paddingTop={12}
           paddingBottom={12}
           padding={12}

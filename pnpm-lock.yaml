@@ -159,6 +159,9 @@ importers:
       '@iconify/utils':
         specifier: ^2.1.5
         version: 2.1.5
+      '@radix-ui/react-scroll-area':
+        specifier: ^1.0.3
+        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
       '@seanchas116/cssvalue':
         specifier: ^0.0.1
         version: 0.0.1

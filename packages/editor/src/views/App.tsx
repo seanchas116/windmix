@@ -4,7 +4,7 @@ import { Renderer } from "./Renderer";
 import * as path from "path-browserify";
 import { StyleInspector } from "./inspector/StyleInspector";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
-import { ScrollArea } from "../components/ScrollArea";
+import { ScrollArea } from "@seanchas116/paintkit/src/components/ScrollArea";
 import { Outline } from "./outline/Outline";
 
 const App: React.FC = observer(() => {
