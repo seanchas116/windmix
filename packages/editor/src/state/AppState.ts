@@ -41,18 +41,18 @@ class VSCodeConnection {
     this.rpc.remote.ready(Y.encodeStateAsUpdate(appState.doc));
   }
 
-  private rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
+  rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
 }
 
 export class AppState {
   constructor() {
-    new VSCodeConnection(this);
     makeObservable(this);
   }
 
   readonly doc = new Y.Doc();
   readonly nodeMap = new NodeMap(this.doc.getMap("nodes"));
   readonly fileNode = this.nodeMap.getOrCreate("file", "file");
+  readonly connection: VSCodeConnection = new VSCodeConnection(this);
 
   @computed get tabPath(): string | undefined {
     return this.fileNode.data.get("filePath");
@@ -75,6 +75,10 @@ export class AppState {
       // TODO
     },
   });
+
+  reveal(location: { line: number; column: number }): void {
+    this.connection.rpc.remote.reveal(location);
+  }
 }
 
 export const appState = new AppState();

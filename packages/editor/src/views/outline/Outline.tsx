@@ -61,6 +61,9 @@ function NodeRow({
       style={style}
       ref={dragHandle}
       className="h-full hover:ring-1 hover:ring-inset hover:ring-blue-500"
+      onClick={() => {
+        appState.reveal(node.location);
+      }}
     >
       <div className="flex items-center h-full pl-1">
         <span className="w-5 h-hull opacity-50 flex items-center justify-center">

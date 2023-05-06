@@ -82,6 +82,14 @@ export class EditorSession {
         update: async (data) => {
           Y.applyUpdate(this._doc, data);
         },
+        reveal: async (location: { line: number; column: number }) => {
+          const textEditor = this._textEditor;
+          if (textEditor) {
+            const pos = new vscode.Position(location.line, location.column);
+            textEditor.selection = new vscode.Selection(pos, pos);
+            textEditor.revealRange(new vscode.Range(pos, pos));
+          }
+        },
       }
     );
     disposables.push({ dispose: () => rpc.dispose() });

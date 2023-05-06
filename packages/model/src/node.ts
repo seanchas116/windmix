@@ -39,6 +39,10 @@ export class FileNode extends CollaborativeNode<
       this.children.map((child) => child.stringify(options)).join("")
     );
   }
+
+  get location(): Location {
+    return { line: 1, column: 0 };
+  }
 }
 
 export class ComponentNode extends CollaborativeNode<
@@ -66,6 +70,10 @@ export class ComponentNode extends CollaborativeNode<
       this.children.map((child) => child.stringify(options)).join("") +
       this.footer
     );
+  }
+
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
   }
 }
 
@@ -102,6 +110,10 @@ export class ElementNode extends CollaborativeNode<
   }
   set attributes(attributes: (Attribute | SpreadAttribute)[]) {
     this.data.set({ attributes });
+  }
+
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
   }
 
   stringify(options: StringifyOptions = {}): string {
@@ -145,6 +157,10 @@ export class TextNode extends CollaborativeNode<
     this.data.set({ text });
   }
 
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
+  }
+
   stringify(): string {
     // TODO: escape?
     return this.text;
@@ -171,6 +187,10 @@ export class WrappingExpressionNode extends CollaborativeNode<
     return this.data.get("footer") ?? "";
   }
 
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
+  }
+
   stringify(options: StringifyOptions = {}): string {
     return (
       this.header +
@@ -191,6 +211,10 @@ export class ExpressionNode extends CollaborativeNode<
 
   get code(): string {
     return this.data.get("code") ?? "";
+  }
+
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
   }
 
   stringify(): string {
