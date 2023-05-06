@@ -1,4 +1,9 @@
-import { CollaborativeNode } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
+import {
+  CollaborativeNode,
+  CollaborativeNodeMap,
+} from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
+
+export { CollaborativeNode, CollaborativeNodeMap };
 
 export class FileNode extends CollaborativeNode<
   typeof nodeTypes,
@@ -16,7 +21,6 @@ export class ComponentNode extends CollaborativeNode<
   {
     header: string; // header code of component (e.g. `function MyComponent() { return `)
     footer: string; // footer code of component (e.g. `; }`)
-    trailing: string; // code after component and before next component (e.g. `;`)
   }
 > {
   get type(): "component" {
@@ -27,7 +31,7 @@ export class ComponentNode extends CollaborativeNode<
 export interface Attribute {
   type: "attribute";
   name: string;
-  value: string; // stringified value of StringLiteral or JSXExpressionContainer (`"foo"` or `{foo}`)
+  value?: string; // stringified value of StringLiteral or JSXExpressionContainer (`"foo"` or `{foo}`)
 }
 export interface SpreadAttribute {
   type: "spreadAttribute";
@@ -106,3 +110,5 @@ export const nodeTypes = {
   wrappingExpression: WrappingExpressionNode,
   expression: ExpressionNode,
 };
+
+export type Node = InstanceType<(typeof nodeTypes)[keyof typeof nodeTypes]>;

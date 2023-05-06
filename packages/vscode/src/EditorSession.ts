@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
-import { parse } from "@babel/parser";
+import { buildDoc } from "./buildDoc";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -81,11 +81,7 @@ export class EditorSession {
 
     if (textEditor) {
       const code = textEditor.document.getText();
-      const ast = parse(code, {
-        sourceType: "module",
-        plugins: ["jsx", "typescript"],
-      });
-      console.log(ast);
+      buildDoc(code);
     }
 
     this._textEditor = textEditor;

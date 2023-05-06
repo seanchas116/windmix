@@ -15,6 +15,7 @@ const options = {
     "./src/test/suite/index.ts",
   ],
   bundle: true,
+  sourcemap: true,
   format: "cjs",
   platform: "node",
   outdir: "out",
