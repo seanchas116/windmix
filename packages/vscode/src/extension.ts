@@ -1,13 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import * as path from "node:path";
 import { EditorPanelSerializer, EditorSession } from "./EditorSession";
 import { DevServer } from "./DevServer";
-import { EditorServer } from "./EditorServer";
 
 let devServer: DevServer | undefined;
-let editorServer: EditorServer | undefined;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -38,11 +35,9 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   devServer = await DevServer.start();
-  editorServer = new EditorServer();
 }
 
 // This method is called when your extension is deactivated
 export async function deactivate() {
   await devServer?.dispose();
-  await editorServer?.dispose();
 }
