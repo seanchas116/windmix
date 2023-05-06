@@ -1,4 +1,4 @@
-import { makeObservable, action, computed, observable, reaction } from "mobx";
+import { makeObservable, action, computed, observable } from "mobx";
 import { StyleInspectorState } from "./StyleInspectorState";
 import { Style } from "../models/style/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
@@ -48,15 +48,6 @@ class VSCodeConnection {
 export class AppState {
   constructor() {
     makeObservable(this);
-
-    reaction(
-      () => this.hover,
-      (hover) => {
-        if (hover?.node) {
-          this.reveal(hover.node.location);
-        }
-      }
-    );
   }
 
   readonly doc = new Y.Doc();
