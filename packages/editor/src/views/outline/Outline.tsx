@@ -64,13 +64,14 @@ function NodeRow({
       className="h-full hover:ring-1 hover:ring-inset hover:ring-blue-500"
     >
       <div className="flex items-center h-full pl-1 gap-2">
-        {!mayHaveChildren() ? (
-          <div className="w-[1em] h-[1em]" />
-        ) : treeNode.isOpen ? (
-          <Icon icon="material-symbols:chevron-right" rotate={1} />
-        ) : (
-          <Icon icon="material-symbols:chevron-right" />
-        )}
+        <span className="w-[1em] h-[1em] opacity-50">
+          {mayHaveChildren() &&
+            (treeNode.isOpen ? (
+              <Icon icon="material-symbols:chevron-right" rotate={1} />
+            ) : (
+              <Icon icon="material-symbols:chevron-right" />
+            ))}
+        </span>
         <span className="opacity-50">{getIcon()}</span>
         <span className="flex-1 min-w-0 truncate">{getName()}</span>
       </div>
