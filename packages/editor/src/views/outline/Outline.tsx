@@ -100,11 +100,12 @@ function buildTreeData(node: Node): TreeData {
 }
 
 export const Outline: React.FC = observer(() => {
+  const data = buildTreeData(appState.fileNode).children;
   return (
     <FillFlexParent>
       {({ width, height }) => (
         <Tree
-          data={buildTreeData(appState.fileNode).children}
+          data={data}
           openByDefault={true}
           width={width}
           height={height}
