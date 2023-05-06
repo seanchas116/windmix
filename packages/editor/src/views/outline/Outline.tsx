@@ -60,19 +60,21 @@ function NodeRow({
     <div
       style={style}
       ref={dragHandle}
-      onClick={() => treeNode.toggle()}
       className="h-full hover:ring-1 hover:ring-inset hover:ring-blue-500"
     >
-      <div className="flex items-center h-full pl-1 gap-2">
-        <span className="w-[1em] h-[1em] opacity-50">
-          {mayHaveChildren() &&
-            (treeNode.isOpen ? (
-              <Icon icon="material-symbols:chevron-right" rotate={1} />
-            ) : (
-              <Icon icon="material-symbols:chevron-right" />
-            ))}
+      <div className="flex items-center h-full pl-1">
+        <span className="w-5 h-hull opacity-50 flex items-center justify-center">
+          {mayHaveChildren() && (
+            <button onClick={() => treeNode.toggle()}>
+              {treeNode.isOpen ? (
+                <Icon icon="material-symbols:chevron-right" rotate={1} />
+              ) : (
+                <Icon icon="material-symbols:chevron-right" />
+              )}
+            </button>
+          )}
         </span>
-        <span className="opacity-50">{getIcon()}</span>
+        <span className="opacity-50 mr-2">{getIcon()}</span>
         <span className="flex-1 min-w-0 truncate">{getName()}</span>
       </div>
     </div>
