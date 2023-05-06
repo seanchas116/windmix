@@ -1,11 +1,10 @@
-import { observable, makeObservable, action, computed } from "mobx";
+import { makeObservable, action, computed } from "mobx";
 import { StyleInspectorState } from "./StyleInspectorState";
 import { Style } from "../models/style/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
 import { NodeMap } from "@windmix/model";
-import { compact } from "lodash-es";
 
 function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -26,7 +25,7 @@ function vscodeParentTarget(): Target {
 }
 
 class VSCodeConnection {
-  constructor() {
+  constructor(appState: AppState) {
     this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
       vscodeParentTarget(),
       {
@@ -39,7 +38,7 @@ class VSCodeConnection {
       }
     );
 
-    this.rpc.remote.ready();
+    this.rpc.remote.ready(Y.encodeStateAsUpdate(appState.doc));
   }
 
   private rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
@@ -47,7 +46,7 @@ class VSCodeConnection {
 
 export class AppState {
   constructor() {
-    new VSCodeConnection();
+    new VSCodeConnection(this);
     makeObservable(this);
   }
 

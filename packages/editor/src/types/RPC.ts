@@ -4,6 +4,6 @@ export interface IRootToEditorRPCHandler {
 }
 
 export interface IEditorToRootRPCHandler {
-  ready(): Promise<void>;
+  ready(data: Uint8Array): Promise<void>;
   update(data: Uint8Array): Promise<void>;
 }

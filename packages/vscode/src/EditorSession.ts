@@ -7,28 +7,7 @@ import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
-
-const debouncedUpdate = (
-  onUpdate: (update: Uint8Array) => void
-): ((update: Uint8Array) => void) => {
-  const updates: Uint8Array[] = [];
-  let queued = false;
-  const debounced = (update: Uint8Array) => {
-    updates.push(update);
-    if (queued) {
-      return;
-    }
-    queued = true;
-    queueMicrotask(() => {
-      queued = false;
-      if (updates.length) {
-        onUpdate(Y.mergeUpdates(updates));
-        updates.length = 0;
-      }
-    });
-  };
-  return debounced;
-};
+import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -88,8 +67,9 @@ export class EditorSession {
         },
       },
       {
-        ready: async () => {
+        ready: async (data) => {
           unsubscribeDoc?.();
+          Y.applyUpdate(this._doc, data);
 
           const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
             rpc.remote.update(update);
