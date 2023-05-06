@@ -61,7 +61,7 @@ function NodeRow({
           <Icon icon="material-symbols:chevron-right" />
         )}
         <span className="opacity-50">{getIcon()}</span>
-        <span className="min-w-0 truncate">{getName()}</span>
+        <span className="flex-1 min-w-0 truncate">{getName()}</span>
       </div>
     </div>
   );
@@ -77,7 +77,7 @@ export const Outline: React.FC = observer(() => {
           width={width}
           height={height}
           indent={8}
-          rowHeight={24}
+          rowHeight={22}
           paddingTop={12}
           paddingBottom={12}
         >
