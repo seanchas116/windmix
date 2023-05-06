@@ -16,6 +16,10 @@ export class FileNode extends CollaborativeNode<
   get type(): "file" {
     return "file";
   }
+
+  get filePath(): string {
+    return this.data.get("filePath") ?? "";
+  }
 }
 
 export class ComponentNode extends CollaborativeNode<

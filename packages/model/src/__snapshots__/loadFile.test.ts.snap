@@ -1,0 +1,1470 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`File load/stringify > should load a file > nodes 1`] = `
+{
+  "component:Example": {
+    "footer": "
+  );
+}
+",
+    "header": "export function Example() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    ",
+    "index": 0,
+    "name": "Example",
+    "parent": "file",
+    "type": "component",
+  },
+  "element:Example": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"bg-white\\"",
+      },
+    ],
+    "index": 0,
+    "parent": "component:Example",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"absolute inset-x-0 top-0 z-50\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example",
+    "tagName": "header",
+    "type": "element",
+  },
+  "element:Example:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"flex items-center justify-between p-6 lg:px-8\\"",
+      },
+      {
+        "name": "aria-label",
+        "value": "\\"Global\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1",
+    "tagName": "nav",
+    "type": "element",
+  },
+  "element:Example:1:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"flex lg:flex-1\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:1:1:1": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"-m-1.5 p-1.5\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:1",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:1:1:1:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"sr-only\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:1:1",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:1:1:1:1:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"h-8 w-auto\\"",
+      },
+      {
+        "name": "src",
+        "value": "\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"",
+      },
+      {
+        "name": "alt",
+        "value": "\\"\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:1:1:1",
+    "tagName": "img",
+    "type": "element",
+  },
+  "element:Example:1:1:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"flex lg:hidden\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:1:3:1": {
+    "attributes": [
+      {
+        "name": "type",
+        "value": "\\"button\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700\\"",
+      },
+      {
+        "name": "onClick",
+        "value": "{() => setMobileMenuOpen(true)}",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:3",
+    "tagName": "button",
+    "type": "element",
+  },
+  "element:Example:1:1:3:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"sr-only\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:3:1",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:1:1:3:1:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"h-6 w-6\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:1:3:1",
+    "tagName": "Bars3Icon",
+    "type": "element",
+  },
+  "element:Example:1:1:5": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"hidden lg:flex lg:gap-x-12\\"",
+      },
+    ],
+    "index": 5,
+    "parent": "element:Example:1:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:1:5:1:1": {
+    "attributes": [
+      {
+        "name": "key",
+        "value": "{item.name}",
+      },
+      {
+        "name": "href",
+        "value": "{item.href}",
+      },
+      {
+        "name": "className",
+        "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
+      },
+    ],
+    "index": 0,
+    "parent": "wrapper:Example:1:1:5:1",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:1:1:7": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"hidden lg:flex lg:flex-1 lg:justify-end\\"",
+      },
+    ],
+    "index": 7,
+    "parent": "element:Example:1:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:1:7:1": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:7",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:1:1:7:1:1": {
+    "attributes": [
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:1:7:1",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:1:3": {
+    "attributes": [
+      {
+        "name": "as",
+        "value": "\\"div\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"lg:hidden\\"",
+      },
+      {
+        "name": "open",
+        "value": "{mobileMenuOpen}",
+      },
+      {
+        "name": "onClose",
+        "value": "{setMobileMenuOpen}",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1",
+    "tagName": "Dialog",
+    "type": "element",
+  },
+  "element:Example:1:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"fixed inset-0 z-50\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3",
+    "tagName": "Dialog.Panel",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"flex items-center justify-between\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:1": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"-m-1.5 p-1.5\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:1",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"sr-only\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:1:1",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:1:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"h-8 w-auto\\"",
+      },
+      {
+        "name": "src",
+        "value": "\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"",
+      },
+      {
+        "name": "alt",
+        "value": "\\"\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3:3:1:1",
+    "tagName": "img",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:3": {
+    "attributes": [
+      {
+        "name": "type",
+        "value": "\\"button\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"-m-2.5 rounded-md p-2.5 text-gray-700\\"",
+      },
+      {
+        "name": "onClick",
+        "value": "{() => setMobileMenuOpen(false)}",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3:3:1",
+    "tagName": "button",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"sr-only\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:1:3",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:1:3:3:1:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"h-6 w-6\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3:3:1:3",
+    "tagName": "XMarkIcon",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"mt-6 flow-root\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"-my-6 divide-y divide-gray-500/10\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"space-y-2 py-6\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:3:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3:1:1:1:1": {
+    "attributes": [
+      {
+        "name": "key",
+        "value": "{item.name}",
+      },
+      {
+        "name": "href",
+        "value": "{item.href}",
+      },
+      {
+        "name": "className",
+        "value": "\\"-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"",
+      },
+    ],
+    "index": 0,
+    "parent": "wrapper:Example:1:3:3:3:1:1:1",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3:1:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"py-6\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:1:3:3:3:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:1:3:3:3:1:3:1": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:1:3:3:3:1:3",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"relative isolate px-6 pt-14 lg:px-8\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\\"",
+      },
+      {
+        "name": "style",
+        "value": "{{
+              clipPath:
+                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
+            }}",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"mx-auto max-w-2xl py-32 sm:py-48 lg:py-56\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"hidden sm:mb-8 sm:flex sm:justify-center\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3:1:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3:1",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3:1:1:3": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"font-semibold text-indigo-600\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3:3:1:1",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:3:3:1:1:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"absolute inset-0\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3:1:1:3",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:3:3:1:1:3:3": {
+    "attributes": [
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3:3:1:1:3",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:3:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"text-center\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3:3:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3:3",
+    "tagName": "h1",
+    "type": "element",
+  },
+  "element:Example:3:3:3:3": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"mt-6 text-lg leading-8 text-gray-600\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3:3:3",
+    "tagName": "p",
+    "type": "element",
+  },
+  "element:Example:3:3:3:5": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"mt-10 flex items-center justify-center gap-x-6\\"",
+      },
+    ],
+    "index": 5,
+    "parent": "element:Example:3:3:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:3:3:5:1": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3:3:5",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:3:3:3:5:3": {
+    "attributes": [
+      {
+        "name": "href",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
+      },
+    ],
+    "index": 3,
+    "parent": "element:Example:3:3:3:5",
+    "tagName": "a",
+    "type": "element",
+  },
+  "element:Example:3:3:3:5:3:1": {
+    "attributes": [
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:3:3:5:3",
+    "tagName": "span",
+    "type": "element",
+  },
+  "element:Example:3:5": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 5,
+    "parent": "element:Example:3",
+    "tagName": "div",
+    "type": "element",
+  },
+  "element:Example:3:5:1": {
+    "attributes": [
+      {
+        "name": "className",
+        "value": "\\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\\"",
+      },
+      {
+        "name": "style",
+        "value": "{{
+              clipPath:
+                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
+            }}",
+      },
+    ],
+    "index": 1,
+    "parent": "element:Example:3:5",
+    "tagName": "div",
+    "type": "element",
+  },
+  "expression:Example:1:1:5:1:1:1": {
+    "code": "{item.name}",
+    "index": 1,
+    "parent": "element:Example:1:1:5:1:1",
+    "type": "expression",
+  },
+  "expression:Example:1:3:3:3:1:1:1:1:1": {
+    "code": "{item.name}",
+    "index": 1,
+    "parent": "element:Example:1:3:3:3:1:1:1:1",
+    "type": "expression",
+  },
+  "expression:Example:3:3:1:1:1": {
+    "code": "{\\" \\"}",
+    "index": 1,
+    "parent": "element:Example:3:3:1:1",
+    "type": "expression",
+  },
+  "file": {
+    "filePath": "/demo.js",
+    "header": "import { useState } from \\"react\\";
+import { Dialog } from \\"@headlessui/react\\";
+import { Bars3Icon, XMarkIcon } from \\"@heroicons/react/24/outline\\";
+
+const navigation = [
+  { name: \\"Product\\", href: \\"#\\" },
+  { name: \\"Features\\", href: \\"#\\" },
+  { name: \\"Marketplace\\", href: \\"#\\" },
+  { name: \\"Company\\", href: \\"#\\" },
+];
+
+",
+    "index": 0,
+    "type": "file",
+  },
+  "text:Example:0": {
+    "index": 0,
+    "parent": "element:Example",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "text:Example:1:0": {
+    "index": 0,
+    "parent": "element:Example:1",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:1:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:1:1:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:1:1:1",
+    "text": "Your Company",
+    "type": "text",
+  },
+  "text:Example:1:1:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:1:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:1:1:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:1:1:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:3:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:1:3:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:3:1:1",
+    "text": "Open main menu",
+    "type": "text",
+  },
+  "text:Example:1:1:3:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:3:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:1:3:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:1:3:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:5:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:5",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:5:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:5:1:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:1:5:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:5:1:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:1:5:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:6": {
+    "index": 6,
+    "parent": "element:Example:1:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:7:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:7",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:7:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:7:1",
+    "text": "
+              Log in ",
+    "type": "text",
+  },
+  "text:Example:1:1:7:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:1:7:1:1",
+    "text": "→",
+    "type": "text",
+  },
+  "text:Example:1:1:7:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:7:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:1:7:2": {
+    "index": 2,
+    "parent": "element:Example:1:1:7",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:1:8": {
+    "index": 8,
+    "parent": "element:Example:1:1",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:1:2": {
+    "index": 2,
+    "parent": "element:Example:1",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:1:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:1:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:1:1:1",
+    "text": "Your Company",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:1:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:3:3:1:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:1:3",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:1:3:1",
+    "text": "Close menu",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:1:3",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:3:4": {
+    "index": 4,
+    "parent": "element:Example:1:3:3:1:3",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:3:3:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3:1:1",
+    "text": "
+                  ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:1:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3:1:1:1:1",
+    "text": "
+                      ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:1:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:3:1:1:1:1",
+    "text": "
+                    ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:3:1:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:3:1",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:3:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3:1:3",
+    "text": "
+                  ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:1:3:3:3:1:3:1",
+    "text": "
+                    Log in
+                  ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:3:1:3",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:1:4": {
+    "index": 4,
+    "parent": "element:Example:1:3:3:3:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:3:2": {
+    "index": 2,
+    "parent": "element:Example:1:3:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:1:3:3:4": {
+    "index": 4,
+    "parent": "element:Example:1:3:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:1:3:4": {
+    "index": 4,
+    "parent": "element:Example:1:3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:1:4": {
+    "index": 4,
+    "parent": "element:Example:1",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "text:Example:2": {
+    "index": 2,
+    "parent": "element:Example",
+    "text": "
+
+      ",
+    "type": "text",
+  },
+  "text:Example:3:0": {
+    "index": 0,
+    "parent": "element:Example:3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:1:2": {
+    "index": 2,
+    "parent": "element:Example:3:1",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:2": {
+    "index": 2,
+    "parent": "element:Example:3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:1:1",
+    "text": "
+              Announcing our next round of funding.",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:1:1",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:1:1:3",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:3:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:1:1:3",
+    "text": "
+                Read more ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:1:1:3:3",
+    "text": "→",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:3:4": {
+    "index": 4,
+    "parent": "element:Example:3:3:1:1:3",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:1:4": {
+    "index": 4,
+    "parent": "element:Example:3:3:1:1",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:1:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:1",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:3:2": {
+    "index": 2,
+    "parent": "element:Example:3:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:1",
+    "text": "
+              Data to enrich your online business
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:3",
+    "text": "
+              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
+              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
+              fugiat aliqua.
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:4": {
+    "index": 4,
+    "parent": "element:Example:3:3:3",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:5",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:5:1",
+    "text": "
+                Get started
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:3:5",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:3:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:5:3",
+    "text": "
+                Learn more ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:3:1:0": {
+    "index": 0,
+    "parent": "element:Example:3:3:3:5:3:1",
+    "text": "→",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:3:2": {
+    "index": 2,
+    "parent": "element:Example:3:3:3:5:3",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:5:4": {
+    "index": 4,
+    "parent": "element:Example:3:3:3:5",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "text:Example:3:3:3:6": {
+    "index": 6,
+    "parent": "element:Example:3:3:3",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:3:4": {
+    "index": 4,
+    "parent": "element:Example:3:3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:4": {
+    "index": 4,
+    "parent": "element:Example:3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:5:0": {
+    "index": 0,
+    "parent": "element:Example:3:5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "text:Example:3:5:2": {
+    "index": 2,
+    "parent": "element:Example:3:5",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "text:Example:3:6": {
+    "index": 6,
+    "parent": "element:Example:3",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "text:Example:4": {
+    "index": 4,
+    "parent": "element:Example",
+    "text": "
+    ",
+    "type": "text",
+  },
+  "wrapper:Example:1:1:5:1": {
+    "footer": "
+            ))}",
+    "header": "{navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className=\\"text-sm font-semibold leading-6 text-gray-900\\"
+              >
+                {item.name}
+              </a>",
+    "index": 1,
+    "parent": "element:Example:1:1:5",
+    "type": "wrappingExpression",
+  },
+  "wrapper:Example:1:3:3:3:1:1:1": {
+    "footer": "
+                  ))}",
+    "header": "{navigation.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className=\\"-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"
+                    >
+                      {item.name}
+                    </a>",
+    "index": 1,
+    "parent": "element:Example:1:3:3:3:1:1",
+    "type": "wrappingExpression",
+  },
+}
+`;

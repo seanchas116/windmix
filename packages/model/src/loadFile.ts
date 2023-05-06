@@ -11,6 +11,7 @@ import {
   ComponentNode,
   Attribute,
   SpreadAttribute,
+  FileNode,
 } from "./index";
 import * as Y from "yjs";
 
@@ -120,12 +121,15 @@ function loadNode(
   }
 }
 
-export function loadFile(ydoc: Y.Doc, filePath: string, code: string) {
+export function loadFile(
+  ydoc: Y.Doc,
+  filePath: string,
+  code: string
+): FileNode {
   const ast = parse(code, {
     sourceType: "module",
     plugins: ["jsx", "typescript"],
   });
-  console.log(ast.program);
 
   ydoc.getMap("nodes").clear();
 
@@ -174,8 +178,6 @@ export function loadFile(ydoc: Y.Doc, filePath: string, code: string) {
   }
 
   file.append(componentNodes);
-
-  console.log(ydoc.getMap("nodes").toJSON());
 
   return file;
 }
