@@ -76,6 +76,7 @@ export class EditorSession {
           });
           this._doc.on("update", onDocUpdate);
           unsubscribeDoc = () => this._doc.off("update", onDocUpdate);
+          rpc.remote.init(Y.encodeStateAsUpdate(this._doc));
         },
         update: async (data) => {
           Y.applyUpdate(this._doc, data);
