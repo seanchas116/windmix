@@ -2,7 +2,7 @@ import {
   CollaborativeNode,
   CollaborativeNodeMap,
 } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
-import * as Y from "yjs";
+import { computed, makeObservable } from "mobx";
 import { Document } from "./document";
 
 export { CollaborativeNode, CollaborativeNodeMap };
@@ -33,8 +33,50 @@ export abstract class BaseNode<
     location: Location;
   }
 > {
+  constructor(nodes: CollaborativeNodeMap<NodeTypes>, id: string) {
+    super(nodes, id);
+    makeObservable(this);
+  }
+
+  get document() {
+    return (this.nodeMap as CollaborativeNodeMap<any> as NodeMap).document;
+  }
+
   get location(): Location {
     return this.data.get("location") ?? { line: 1, column: 0 };
+  }
+
+  @computed private get _selected(): boolean {
+    return this.document.selectionData.has(this.id);
+  }
+
+  private set _selected(value: boolean) {
+    if (this._selected === value) {
+      return;
+    }
+    if (value) {
+      this.document.selectionData.set(this.id, true);
+    } else {
+      this.document.selectionData.delete(this.id);
+    }
+  }
+
+  @computed get selected(): boolean {
+    return this._selected;
+  }
+
+  select(): void {
+    this._selected = true;
+    for (const child of this.children as this[]) {
+      child.deselect();
+    }
+  }
+
+  deselect(): void {
+    this._selected = false;
+    for (const child of this.children as this[]) {
+      child.deselect();
+    }
   }
 }
 

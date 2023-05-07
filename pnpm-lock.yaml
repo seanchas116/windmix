@@ -149,6 +149,9 @@ importers:
       '@seanchas116/paintkit':
         specifier: workspace:*
         version: link:../../paintkit/packages/paintkit
+      mobx:
+        specifier: ^6.9.0
+        version: 6.9.0
       yjs:
         specifier: ^13.6.1
         version: 13.6.1
