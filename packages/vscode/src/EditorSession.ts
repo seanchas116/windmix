@@ -130,16 +130,17 @@ export class EditorSession {
   }
 
   reloadTextDocument() {
-    if (this._textEditor) {
-      const filePath = this.projectPathForEditor(this._textEditor);
-      const code = this._textEditor.document.getText();
-      const file = loadFile(this._doc, filePath, code);
-
-      DevServer.fileContentWithID = {
-        filePath,
-        content: file.stringify({ id: true }),
-      };
+    if (!this._textEditor) {
+      return;
     }
+    const filePath = this.projectPathForEditor(this._textEditor);
+    const code = this._textEditor.document.getText();
+    const file = loadFile(this._doc, filePath, code);
+
+    DevServer.fileContentWithID = {
+      filePath,
+      content: file.stringify({ id: true }),
+    };
   }
 
   titleForEditor(editor: vscode.TextEditor | undefined) {
