@@ -60,6 +60,7 @@ export class EditorSession {
         }
       })
     );
+    this.reloadTextDocument();
 
     let unsubscribeDoc: (() => void) | undefined;
 
