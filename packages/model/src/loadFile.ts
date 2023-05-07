@@ -14,6 +14,7 @@ import {
   FileNode,
 } from "./index";
 import * as Y from "yjs";
+import { Document } from "./document";
 
 function codeForNode(code: string, node: babel.Node): string {
   return code.slice(node.start ?? 0, node.end ?? 0);
@@ -36,12 +37,12 @@ function locationForNode(node: babel.Node):
 }
 
 function loadElement(
-  nodeMap: CollaborativeNodeMap<typeof nodeTypes>,
+  doc: Document,
   code: string,
   element: babel.JSXElement | babel.JSXFragment,
   indexPath: string[]
 ): ElementNode {
-  const elementNode = nodeMap.create(
+  const elementNode = doc.nodes.create(
     "element",
     "element:" + indexPath.join(":")
   );
@@ -73,7 +74,7 @@ function loadElement(
 
   const childNodes: Node[] = [];
   for (const [i, child] of element.children.entries()) {
-    childNodes.push(loadNode(nodeMap, code, child, [...indexPath, String(i)]));
+    childNodes.push(loadNode(doc, code, child, [...indexPath, String(i)]));
   }
   elementNode.append(childNodes);
 
@@ -81,13 +82,13 @@ function loadElement(
 }
 
 function loadNode(
-  nodeMap: CollaborativeNodeMap<typeof nodeTypes>,
+  doc: Document,
   code: string,
   node: babel.JSXElement["children"][number],
   indexPath: string[]
 ): TextNode | ElementNode | ExpressionNode | WrappingExpressionNode {
   if (node.type === "JSXText") {
-    const textNode = nodeMap.create("text", ["text", ...indexPath].join(":"));
+    const textNode = doc.nodes.create("text", ["text", ...indexPath].join(":"));
     textNode.data.set({
       text: codeForNode(code, node),
       location: locationForNode(node),
@@ -95,7 +96,7 @@ function loadNode(
     return textNode;
   }
   if (node.type === "JSXElement" || node.type === "JSXFragment") {
-    return loadElement(nodeMap, code, node, indexPath);
+    return loadElement(doc, code, node, indexPath);
   }
 
   let childElement: babel.JSXElement | babel.JSXFragment | undefined;
@@ -117,14 +118,14 @@ function loadNode(
     const footer = code.slice(footerStart, footerEnd);
 
     const id = ["wrapper", ...indexPath].join(":");
-    const wrapperNode = nodeMap.create("wrappingExpression", id);
+    const wrapperNode = doc.nodes.create("wrappingExpression", id);
     wrapperNode.data.set({
       header,
       footer,
       location: locationForNode(node),
     });
 
-    const childNode = loadElement(nodeMap, code, childElement, [
+    const childNode = loadElement(doc, code, childElement, [
       ...indexPath,
       String(1),
     ]);
@@ -134,7 +135,7 @@ function loadNode(
   } else {
     const id = ["expression", ...indexPath].join(":");
 
-    const expressionNode = nodeMap.create("expression", id);
+    const expressionNode = doc.nodes.create("expression", id);
     expressionNode.data.set({
       code: code.slice(node.start ?? 0, node.end ?? 0),
       location: locationForNode(node),
@@ -144,7 +145,7 @@ function loadNode(
 }
 
 export function loadFile(
-  ydoc: Y.Doc,
+  doc: Document,
   filePath: string,
   code: string
 ): FileNode {
@@ -153,16 +154,14 @@ export function loadFile(
     plugins: ["jsx", "typescript"],
   });
 
-  ydoc.getMap("nodes").clear();
-
-  const nodeMap = new CollaborativeNodeMap(ydoc.getMap("nodes"), nodeTypes);
+  doc.clear();
 
   const foundComponents = ast.program.body.flatMap((expr) => {
     const found = findComponentFromStatement(expr);
     return found ? [found] : [];
   });
 
-  const file = nodeMap.create("file", "file");
+  const file = doc.nodes.create("file", "file");
 
   const fileHeaderStart = 0;
   const fileHeaderEnd = foundComponents[0]?.statement.start ?? code.length;
@@ -184,10 +183,8 @@ export function loadFile(
     const footerEnd = nextComponent?.statement.start ?? code.length;
 
     const name = foundComponent.name ?? "default";
-    const componentNode = nodeMap.create("component", "component:" + name);
-    const elementNode = loadElement(nodeMap, code, foundComponent.element, [
-      name,
-    ]);
+    const componentNode = doc.nodes.create("component", "component:" + name);
+    const elementNode = loadElement(doc, code, foundComponent.element, [name]);
     componentNode.append([elementNode]);
 
     componentNode.data.set({
