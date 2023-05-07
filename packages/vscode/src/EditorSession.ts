@@ -64,6 +64,25 @@ export class EditorSession {
 
     const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
       rpc.remote.update(update);
+
+      const textEditor = this._textEditor;
+      if (textEditor) {
+        textEditor.edit((editBuilder) => {
+          const newText = this._document.nodes.get("file")?.stringify() ?? "";
+          const oldText = textEditor.document.getText();
+          if (newText === oldText) {
+            return;
+          }
+
+          editBuilder.replace(
+            new vscode.Range(
+              textEditor.document.positionAt(0),
+              textEditor.document.positionAt(oldText.length)
+            ),
+            newText
+          );
+        });
+      }
     });
     this._document.ydoc.on("update", onDocUpdate);
     disposables.push({
