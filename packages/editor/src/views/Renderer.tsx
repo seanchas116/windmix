@@ -53,7 +53,7 @@ const MouseOverlay = ({
   return (
     <div
       className="absolute inset-0 w-full h-full"
-      onClick={action((event) => {
+      onDoubleClick={action((event) => {
         const nodeElem = domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY

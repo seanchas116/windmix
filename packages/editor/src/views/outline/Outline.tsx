@@ -80,7 +80,7 @@ const NodeRow = observer(function NodeRow({
       style={style}
       ref={dragHandle}
       className={twMerge("h-full", hover && "ring-1 ring-inset ring-blue-500")}
-      onClick={() => {
+      onDoubleClick={() => {
         appState.reveal(node.location);
       }}
       onMouseEnter={onMouseEnter}
