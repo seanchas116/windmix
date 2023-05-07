@@ -139,7 +139,7 @@ export class EditorSession {
     const file = loadFile(this._doc, filePath, code);
 
     if (devServer) {
-      devServer.setCurrentFileContent(filePath, file.stringify({ id: true }));
+      devServer.setPreview(filePath, file.stringify({ id: true }));
     }
   }
 

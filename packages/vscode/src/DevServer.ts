@@ -26,16 +26,16 @@ export class DevServer {
             }
           },
           load: (id) => {
-            console.log("load", id, this.fileContentWithID);
+            console.log("load", id, this.preview);
 
             if (
-              this.fileContentWithID &&
+              this.preview &&
               path.resolve(
                 workspace.uri.fsPath,
-                this.fileContentWithID.filePath.slice(1)
+                this.preview.filePath.slice(1)
               ) === id
             ) {
-              return this.fileContentWithID.content;
+              return this.preview.content;
             }
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
@@ -73,8 +73,8 @@ export class DevServer {
     this.server?.close();
   }
 
-  setCurrentFileContent(filePath: string, content: string) {
-    this.fileContentWithID = {
+  setPreview(filePath: string, content: string) {
+    this.preview = {
       filePath,
       content,
     };
@@ -99,7 +99,7 @@ export class DevServer {
     }
   }
 
-  private fileContentWithID:
+  private preview:
     | {
         filePath: string;
         content: string;
