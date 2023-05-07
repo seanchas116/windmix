@@ -11,4 +11,4 @@ pnpm install
 code .
 ```
 
-Then press F5 to run the extension in a new VS Code instance.
+Then press <kbd>F5</kbd> to run the extension in a new VS Code window.
