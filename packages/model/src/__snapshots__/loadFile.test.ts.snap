@@ -25,11 +25,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"bg-white\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 0,
     "location": {
       "column": 4,
@@ -37,6 +36,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "component:Example",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -44,11 +44,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"absolute inset-x-0 top-0 z-50\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 6,
@@ -56,6 +55,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "header",
     "type": "element",
   },
@@ -63,19 +63,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "\\"flex items-center justify-between p-6 lg:px-8\\"",
       },
       {
         "name": "aria-label",
-        "trailingCode": "
+        "trailingSpace": "
         ",
         "value": "\\"Global\\"",
       },
     ],
-    "codeAfterTagName": "
-          ",
     "index": 1,
     "location": {
       "column": 8,
@@ -83,6 +81,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1",
     "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
     "tagName": "nav",
     "type": "element",
   },
@@ -90,11 +90,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"flex lg:flex-1\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 10,
@@ -102,6 +101,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -109,16 +109,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"-m-1.5 p-1.5\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 12,
@@ -126,6 +125,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "a",
     "type": "element",
   },
@@ -133,11 +133,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"sr-only\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 14,
@@ -145,12 +144,12 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
   "element:Example:1:1:1:1:1:1": {
     "attributes": [],
-    "codeAfterTagName": "",
     "index": 1,
     "location": {
       "column": 16,
@@ -158,6 +157,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:1:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": "",
     "tagName": "b",
     "type": "element",
   },
@@ -165,25 +165,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"h-8 w-auto\\"",
       },
       {
         "name": "src",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"",
       },
       {
         "name": "alt",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"\\"",
       },
     ],
-    "codeAfterTagName": "
-                ",
     "index": 3,
     "location": {
       "column": 14,
@@ -191,6 +189,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:1:1",
     "selfClosing": true,
+    "spaceAfterTagName": "
+                ",
     "tagName": "img",
     "type": "element",
   },
@@ -198,11 +198,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"flex lg:hidden\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 10,
@@ -210,6 +209,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -217,25 +217,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "type",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"button\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700\\"",
       },
       {
         "name": "onClick",
-        "trailingCode": "
+        "trailingSpace": "
             ",
         "value": "{() => setMobileMenuOpen(true)}",
       },
     ],
-    "codeAfterTagName": "
-              ",
     "index": 1,
     "location": {
       "column": 12,
@@ -243,6 +241,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:3",
     "selfClosing": false,
+    "spaceAfterTagName": "
+              ",
     "tagName": "button",
     "type": "element",
   },
@@ -250,11 +250,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"sr-only\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 14,
@@ -262,6 +261,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -269,16 +269,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"h-6 w-6\\"",
       },
       {
         "name": "aria-hidden",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 14,
@@ -286,6 +285,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:3:1",
     "selfClosing": true,
+    "spaceAfterTagName": " ",
     "tagName": "Bars3Icon",
     "type": "element",
   },
@@ -293,11 +293,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"hidden lg:flex lg:gap-x-12\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 5,
     "location": {
       "column": 10,
@@ -305,6 +304,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -312,25 +312,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "key",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "{item.name}",
       },
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "{item.href}",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
       },
     ],
-    "codeAfterTagName": "
-                ",
     "index": 0,
     "location": {
       "column": 14,
@@ -338,6 +336,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "wrapper:Example:1:1:5:1",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
     "tagName": "a",
     "type": "element",
   },
@@ -345,11 +345,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"hidden lg:flex lg:flex-1 lg:justify-end\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 7,
     "location": {
       "column": 10,
@@ -357,6 +356,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -364,19 +364,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
             ",
         "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
       },
     ],
-    "codeAfterTagName": "
-              ",
     "index": 1,
     "location": {
       "column": 12,
@@ -384,6 +382,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:7",
     "selfClosing": false,
+    "spaceAfterTagName": "
+              ",
     "tagName": "a",
     "type": "element",
   },
@@ -391,11 +391,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "aria-hidden",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 21,
@@ -403,6 +402,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:1:7:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -410,31 +410,29 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "as",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "\\"div\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "\\"lg:hidden\\"",
       },
       {
         "name": "open",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "{mobileMenuOpen}",
       },
       {
         "name": "onClose",
-        "trailingCode": "
+        "trailingSpace": "
         ",
         "value": "{setMobileMenuOpen}",
       },
     ],
-    "codeAfterTagName": "
-          ",
     "index": 3,
     "location": {
       "column": 8,
@@ -442,6 +440,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1",
     "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
     "tagName": "Dialog",
     "type": "element",
   },
@@ -449,11 +449,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"fixed inset-0 z-50\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 10,
@@ -461,6 +460,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3",
     "selfClosing": true,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -468,11 +468,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 10,
@@ -480,6 +479,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "Dialog.Panel",
     "type": "element",
   },
@@ -487,11 +487,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"flex items-center justify-between\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 12,
@@ -499,6 +498,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -506,16 +506,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"-m-1.5 p-1.5\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 14,
@@ -523,6 +522,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "a",
     "type": "element",
   },
@@ -530,11 +530,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"sr-only\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 16,
@@ -542,6 +541,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -549,25 +549,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
                   ",
         "value": "\\"h-8 w-auto\\"",
       },
       {
         "name": "src",
-        "trailingCode": "
+        "trailingSpace": "
                   ",
         "value": "\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"",
       },
       {
         "name": "alt",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"\\"",
       },
     ],
-    "codeAfterTagName": "
-                  ",
     "index": 3,
     "location": {
       "column": 16,
@@ -575,6 +573,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1:1",
     "selfClosing": true,
+    "spaceAfterTagName": "
+                  ",
     "tagName": "img",
     "type": "element",
   },
@@ -582,25 +582,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "type",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"button\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"-m-2.5 rounded-md p-2.5 text-gray-700\\"",
       },
       {
         "name": "onClick",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "{() => setMobileMenuOpen(false)}",
       },
     ],
-    "codeAfterTagName": "
-                ",
     "index": 3,
     "location": {
       "column": 14,
@@ -608,6 +606,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
     "tagName": "button",
     "type": "element",
   },
@@ -615,11 +615,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"sr-only\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 16,
@@ -627,6 +626,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -634,16 +634,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"h-6 w-6\\"",
       },
       {
         "name": "aria-hidden",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 16,
@@ -651,6 +650,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:1:3",
     "selfClosing": true,
+    "spaceAfterTagName": " ",
     "tagName": "XMarkIcon",
     "type": "element",
   },
@@ -658,11 +658,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"mt-6 flow-root\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 12,
@@ -670,6 +669,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -677,11 +677,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"-my-6 divide-y divide-gray-500/10\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 14,
@@ -689,6 +688,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -696,11 +696,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"space-y-2 py-6\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 16,
@@ -708,6 +707,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -715,25 +715,23 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "key",
-        "trailingCode": "
+        "trailingSpace": "
                       ",
         "value": "{item.name}",
       },
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
                       ",
         "value": "{item.href}",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
                     ",
         "value": "\\"-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"",
       },
     ],
-    "codeAfterTagName": "
-                      ",
     "index": 0,
     "location": {
       "column": 20,
@@ -741,6 +739,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "wrapper:Example:1:3:3:3:1:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                      ",
     "tagName": "a",
     "type": "element",
   },
@@ -748,11 +748,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"py-6\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 16,
@@ -760,6 +759,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -767,19 +767,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
                     ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
                   ",
         "value": "\\"-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"",
       },
     ],
-    "codeAfterTagName": "
-                    ",
     "index": 1,
     "location": {
       "column": 18,
@@ -787,6 +785,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:1:3:3:3:1:3",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                    ",
     "tagName": "a",
     "type": "element",
   },
@@ -794,11 +794,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"relative isolate px-6 pt-14 lg:px-8\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 6,
@@ -806,6 +805,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -813,19 +813,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "\\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\\"",
       },
       {
         "name": "aria-hidden",
-        "trailingCode": "
+        "trailingSpace": "
         ",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": "
-          ",
     "index": 1,
     "location": {
       "column": 8,
@@ -833,6 +831,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3",
     "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
     "tagName": "div",
     "type": "element",
   },
@@ -840,13 +840,13 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
             ",
         "value": "\\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\\"",
       },
       {
         "name": "style",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "{{
               clipPath:
@@ -854,8 +854,6 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
             }}",
       },
     ],
-    "codeAfterTagName": "
-            ",
     "index": 1,
     "location": {
       "column": 10,
@@ -863,6 +861,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:1",
     "selfClosing": true,
+    "spaceAfterTagName": "
+            ",
     "tagName": "div",
     "type": "element",
   },
@@ -870,11 +870,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"mx-auto max-w-2xl py-32 sm:py-48 lg:py-56\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 8,
@@ -882,6 +881,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -889,11 +889,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"hidden sm:mb-8 sm:flex sm:justify-center\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 10,
@@ -901,6 +900,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -908,11 +908,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 12,
@@ -920,6 +919,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -927,16 +927,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"font-semibold text-indigo-600\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 14,
@@ -944,6 +943,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:1:1",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "a",
     "type": "element",
   },
@@ -951,16 +951,15 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"absolute inset-0\\"",
       },
       {
         "name": "aria-hidden",
-        "trailingCode": " ",
+        "trailingSpace": " ",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 16,
@@ -968,6 +967,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:1:1:3",
     "selfClosing": true,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -975,11 +975,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "aria-hidden",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 26,
@@ -987,6 +986,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:1:1:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -994,11 +994,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"text-center\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 10,
@@ -1006,6 +1005,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -1013,11 +1013,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 12,
@@ -1025,6 +1024,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "h1",
     "type": "element",
   },
@@ -1032,11 +1032,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"mt-6 text-lg leading-8 text-gray-600\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 3,
     "location": {
       "column": 12,
@@ -1044,6 +1043,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "p",
     "type": "element",
   },
@@ -1051,11 +1051,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"mt-10 flex items-center justify-center gap-x-6\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 5,
     "location": {
       "column": 12,
@@ -1063,6 +1062,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
@@ -1070,19 +1070,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600\\"",
       },
     ],
-    "codeAfterTagName": "
-                ",
     "index": 1,
     "location": {
       "column": 14,
@@ -1090,6 +1088,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3:5",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
     "tagName": "a",
     "type": "element",
   },
@@ -1097,19 +1097,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "href",
-        "trailingCode": "
+        "trailingSpace": "
                 ",
         "value": "\\"#\\"",
       },
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
               ",
         "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
       },
     ],
-    "codeAfterTagName": "
-                ",
     "index": 3,
     "location": {
       "column": 14,
@@ -1117,6 +1115,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3:5",
     "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
     "tagName": "a",
     "type": "element",
   },
@@ -1124,11 +1124,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "aria-hidden",
-        "trailingCode": "",
+        "trailingSpace": "",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": " ",
     "index": 1,
     "location": {
       "column": 27,
@@ -1136,6 +1135,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:3:3:5:3",
     "selfClosing": false,
+    "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
@@ -1143,19 +1143,17 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "\\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\\"",
       },
       {
         "name": "aria-hidden",
-        "trailingCode": "
+        "trailingSpace": "
         ",
         "value": "\\"true\\"",
       },
     ],
-    "codeAfterTagName": "
-          ",
     "index": 5,
     "location": {
       "column": 8,
@@ -1163,6 +1161,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3",
     "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
     "tagName": "div",
     "type": "element",
   },
@@ -1170,13 +1170,13 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "attributes": [
       {
         "name": "className",
-        "trailingCode": "
+        "trailingSpace": "
             ",
         "value": "\\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\\"",
       },
       {
         "name": "style",
-        "trailingCode": "
+        "trailingSpace": "
           ",
         "value": "{{
               clipPath:
@@ -1184,8 +1184,6 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
             }}",
       },
     ],
-    "codeAfterTagName": "
-            ",
     "index": 1,
     "location": {
       "column": 10,
@@ -1193,6 +1191,8 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     },
     "parent": "element:Example:3:5",
     "selfClosing": true,
+    "spaceAfterTagName": "
+            ",
     "tagName": "div",
     "type": "element",
   },

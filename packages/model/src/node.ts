@@ -136,11 +136,11 @@ export class ComponentNode extends BaseNode<
 export interface Attribute {
   name: string;
   value?: string; // stringified value of StringLiteral or JSXExpressionContainer (`"foo"` or `{foo}`)
-  trailingCode: string; // trailing code (spaces, newlines, etc.)
+  trailingSpace: string; // trailing code (spaces, newlines, etc.)
 }
 export interface SpreadAttribute {
   spread: string; // stringified value of JSXSpreadAttribute (`{...foo}`)
-  trailingCode: string;
+  trailingSpace: string;
 }
 
 // JSXElement
@@ -148,7 +148,7 @@ export class ElementNode extends BaseNode<
   typeof nodeTypes,
   {
     tagName: string;
-    codeAfterTagName: string;
+    spaceAfterTagName: string;
     attributes: (Attribute | SpreadAttribute)[];
     selfClosing: boolean;
   }
@@ -171,8 +171,8 @@ export class ElementNode extends BaseNode<
     this.data.set({ attributes });
   }
 
-  get codeAfterTagName(): string {
-    return this.data.get("codeAfterTagName") ?? " ";
+  get spaceAfterTagName(): string {
+    return this.data.get("spaceAfterTagName") ?? " ";
   }
   get selfClosing(): boolean {
     return this.data.get("selfClosing") ?? false;
@@ -181,11 +181,11 @@ export class ElementNode extends BaseNode<
   stringify(options: StringifyOptions = {}): string {
     const attributes = this.attributes.map((attr) => {
       if ("spread" in attr) {
-        return attr.spread + attr.trailingCode;
+        return attr.spread + attr.trailingSpace;
       } else if (attr.value) {
-        return `${attr.name}=${attr.value}${attr.trailingCode}`;
+        return `${attr.name}=${attr.value}${attr.trailingSpace}`;
       } else {
-        return attr.name + attr.trailingCode;
+        return attr.name + attr.trailingSpace;
       }
     });
     if (options.id) {
@@ -194,10 +194,12 @@ export class ElementNode extends BaseNode<
 
     const children = this.children;
     if (children.length === 0 && this.selfClosing) {
-      return `<${this.tagName}${this.codeAfterTagName}${attributes.join("")}/>`;
+      return `<${this.tagName}${this.spaceAfterTagName}${attributes.join(
+        ""
+      )}/>`;
     }
 
-    return `<${this.tagName}${this.codeAfterTagName}${attributes.join(
+    return `<${this.tagName}${this.spaceAfterTagName}${attributes.join(
       ""
     )}>${children.map((child) => child.stringify(options)).join("")}</${
       this.tagName

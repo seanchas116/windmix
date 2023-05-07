@@ -52,7 +52,7 @@ function loadElement(
 
     const attributeASTs = element.openingElement.attributes;
 
-    const codeAfterTagName =
+    const spaceAfterTagName =
       attributeASTs.length > 0
         ? code.slice(
             element.openingElement.name.end ?? 0,
@@ -67,7 +67,7 @@ function loadElement(
 
     const attributes: (Attribute | SpreadAttribute)[] = attributeASTs.map(
       (attr, i) => {
-        const trailingCode =
+        const trailingSpace =
           i === attributeASTs.length - 1
             ? code
                 .slice(attr.end ?? 0, element.openingElement.end ?? 0)
@@ -78,12 +78,12 @@ function loadElement(
           return {
             name: codeForNode(code, attr.name),
             value: attr.value ? codeForNode(code, attr.value) : undefined,
-            trailingCode,
+            trailingSpace,
           };
         } else {
           return {
             spread: codeForNode(code, attr),
-            trailingCode,
+            trailingSpace,
           };
         }
       }
@@ -91,7 +91,7 @@ function loadElement(
 
     elementNode.data.set({
       tagName,
-      codeAfterTagName,
+      spaceAfterTagName,
       attributes,
       selfClosing: element.openingElement.selfClosing,
       location: locationForNode(element),
