@@ -62,7 +62,13 @@ export class EditorSession {
     );
     this.reloadTextDocument();
 
-    let unsubscribeDoc: (() => void) | undefined;
+    const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
+      rpc.remote.update(update);
+    });
+    this._doc.on("update", onDocUpdate);
+    disposables.push({
+      dispose: () => this._doc.off("update", onDocUpdate),
+    });
 
     const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
@@ -76,14 +82,7 @@ export class EditorSession {
       },
       {
         ready: async (data) => {
-          unsubscribeDoc?.();
           Y.applyUpdate(this._doc, data);
-
-          const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
-            rpc.remote.update(update);
-          });
-          this._doc.on("update", onDocUpdate);
-          unsubscribeDoc = () => this._doc.off("update", onDocUpdate);
           rpc.remote.init(Y.encodeStateAsUpdate(this._doc));
         },
         update: async (data) => {
