@@ -78,7 +78,7 @@ const NodeRow = observer(function NodeRow({
       className={twMerge(
         "h-full",
         hover && "ring-1 ring-inset ring-blue-500",
-        selected && "bg-blue-500"
+        selected && "bg-blue-500 text-white"
       )}
       onClick={action(() => {
         updateNodeDimension(node);
