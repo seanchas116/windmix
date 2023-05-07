@@ -10,12 +10,12 @@ export class Document {
     makeObservable(this);
   }
 
-  get nodesData(): Y.Map<any> {
-    return this.ydoc.getMap("nodes");
+  get nodesData(): ObservableYMap<any> {
+    return ObservableYMap.from(this.ydoc.getMap("nodes"));
   }
 
   get selectionData(): ObservableYMap<true> {
-    return ObservableYMap.get(this.ydoc.getMap("selection"));
+    return ObservableYMap.from(this.ydoc.getMap("selection"));
   }
 
   readonly ydoc: Y.Doc;
