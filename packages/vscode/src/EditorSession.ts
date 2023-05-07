@@ -126,6 +126,24 @@ export class EditorSession {
             });
           }
         },
+        // https://stackoverflow.com/q/75551534
+        undo: async () => {
+          const { edTabCol, webTabCol } = this.findTabs();
+
+          if (edTabCol) {
+            const opts = {
+              preserveFocus: false,
+              preview: false,
+              viewColumn: edTabCol,
+            };
+            await vscode.window.showTextDocument(
+              this._textEditor!.document,
+              opts
+            );
+            await vscode.commands.executeCommand("undo");
+            if (webTabCol) this._panel.reveal(webTabCol, false);
+          }
+        },
       }
     );
     disposables.push({ dispose: () => rpc.dispose() });
@@ -135,6 +153,27 @@ export class EditorSession {
         disposable.dispose();
       }
     });
+  }
+
+  private findTabs() {
+    let edTabCol: vscode.ViewColumn | null = null,
+      webTabCol: vscode.ViewColumn | null = null;
+    for (const tab of vscode.window.tabGroups.all.flatMap(
+      (group) => group.tabs
+    )) {
+      if (tab.input instanceof vscode.TabInputText) {
+        if (tab.input.uri.fsPath === this.textEditor?.document.uri.fsPath) {
+          edTabCol = tab.group.viewColumn;
+        }
+      } else if (tab.input instanceof vscode.TabInputWebview) {
+        // TODO: input.viewType does not exactly match the viewType
+        // supplied during creation of the webview; why?
+        if (/windmixEditor$/.test(tab.input.viewType)) {
+          webTabCol = tab.group.viewColumn;
+        }
+      }
+    }
+    return { edTabCol, webTabCol };
   }
 
   private _panel: vscode.WebviewPanel;
