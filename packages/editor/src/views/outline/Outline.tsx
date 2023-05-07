@@ -170,7 +170,22 @@ export const Outline: React.FC = observer(() => {
           const nodeApi = nodeApis.get(selected);
           if (nodeApi) {
             nodeApi.openParents();
-            // TODO: scroll to node
+
+            setTimeout(() => {
+              const listEl = nodeApi.tree.listEl.current;
+              if (listEl && nodeApi.rowIndex) {
+                // scroll into if it is not visible
+
+                const rowOffset = nodeApi.rowIndex * 22;
+
+                const scrollTop = listEl.scrollTop;
+                const scrollBottom = scrollTop + listEl.clientHeight;
+
+                if (rowOffset < scrollTop || rowOffset > scrollBottom) {
+                  listEl.scrollTop = rowOffset;
+                }
+              }
+            }, 0);
           }
         }
       }
