@@ -4,7 +4,7 @@ import { NodeMap } from "./node";
 export class Document {
   constructor(ydoc: Y.Doc = new Y.Doc()) {
     this.ydoc = ydoc;
-    this.nodes = new NodeMap(this.nodesData);
+    this.nodes = new NodeMap(this);
   }
 
   get nodesData(): Y.Map<any> {

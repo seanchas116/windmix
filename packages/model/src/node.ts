@@ -3,6 +3,7 @@ import {
   CollaborativeNodeMap,
 } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
 import * as Y from "yjs";
+import { Document } from "./document";
 
 export { CollaborativeNode, CollaborativeNodeMap };
 
@@ -15,7 +16,29 @@ interface Location {
   column: number;
 }
 
-export class FileNode extends CollaborativeNode<
+export abstract class BaseNode<
+  NodeTypes extends Record<
+    string,
+    {
+      new (
+        nodeMap: CollaborativeNodeMap<NodeTypes>,
+        id: string
+      ): CollaborativeNode<NodeTypes, any>;
+    }
+  >,
+  ExtraNodeData
+> extends CollaborativeNode<
+  NodeTypes,
+  ExtraNodeData & {
+    location: Location;
+  }
+> {
+  get location(): Location {
+    return this.data.get("location") ?? { line: 1, column: 0 };
+  }
+}
+
+export class FileNode extends BaseNode<
   typeof nodeTypes,
   {
     filePath: string; // path in project (e.g. `/src/components/MyComponent.tsx`)
@@ -39,13 +62,9 @@ export class FileNode extends CollaborativeNode<
       this.children.map((child) => child.stringify(options)).join("")
     );
   }
-
-  get location(): Location {
-    return { line: 1, column: 0 };
-  }
 }
 
-export class ComponentNode extends CollaborativeNode<
+export class ComponentNode extends BaseNode<
   typeof nodeTypes,
   {
     header: string; // header code of component (e.g. `function MyComponent() { return `)
@@ -70,10 +89,6 @@ export class ComponentNode extends CollaborativeNode<
       this.children.map((child) => child.stringify(options)).join("") +
       this.footer
     );
-  }
-
-  get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
   }
 }
 
@@ -110,10 +125,6 @@ export class ElementNode extends CollaborativeNode<
   }
   set attributes(attributes: (Attribute | SpreadAttribute)[]) {
     this.data.set({ attributes });
-  }
-
-  get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
   }
 
   stringify(options: StringifyOptions = {}): string {
@@ -157,10 +168,6 @@ export class TextNode extends CollaborativeNode<
     this.data.set({ text });
   }
 
-  get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
-  }
-
   stringify(): string {
     // TODO: escape?
     return this.text;
@@ -187,10 +194,6 @@ export class WrappingExpressionNode extends CollaborativeNode<
     return this.data.get("footer") ?? "";
   }
 
-  get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
-  }
-
   stringify(options: StringifyOptions = {}): string {
     return (
       this.header +
@@ -213,10 +216,6 @@ export class ExpressionNode extends CollaborativeNode<
     return this.data.get("code") ?? "";
   }
 
-  get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
-  }
-
   stringify(): string {
     return this.code;
   }
@@ -234,7 +233,10 @@ export const nodeTypes = {
 export type Node = InstanceType<(typeof nodeTypes)[keyof typeof nodeTypes]>;
 
 export class NodeMap extends CollaborativeNodeMap<typeof nodeTypes> {
-  constructor(nodes: Y.Map<any>) {
-    super(nodes, nodeTypes);
+  constructor(document: Document) {
+    super(document.nodesData, nodeTypes);
+    this.document = document;
   }
+
+  readonly document: Document;
 }
