@@ -32,10 +32,10 @@ export const Renderer: React.FC = observer(() => {
 `;
 
   return (
-    <div className="w-[1024px] h-[768px] relative">
+    <div className="w-[1024px] relative">
       <iframe
         srcDoc={srcdoc}
-        className="w-[1024px] h-[768px]"
+        className="w-[1024px] h-[2048px]"
         ref={iframeRef}
         onLoad={(e) => {
           domLocator.window = e.currentTarget.contentWindow ?? undefined;

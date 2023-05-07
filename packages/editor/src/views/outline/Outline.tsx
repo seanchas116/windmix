@@ -1,20 +1,25 @@
 import { observer } from "mobx-react-lite";
-import { MoveHandler, NodeRendererProps, Tree } from "react-arborist";
+import { MoveHandler, NodeApi, NodeRendererProps, Tree } from "react-arborist";
 import { FillFlexParent } from "../../components/FillFlexParent";
 import { Icon } from "@iconify/react";
 import { Node } from "@windmix/model";
 import { appState } from "../../state/AppState";
-import { action } from "mobx";
+import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
 import { updateNodeDimension } from "../NodeDimension";
+import { useEffect } from "react";
+
+const nodeApis = new WeakMap<Node, NodeApi>();
 
 const NodeRow = observer(function NodeRow({
-  node: treeNode,
+  node: nodeApi,
   style,
   dragHandle,
 }: NodeRendererProps<TreeData>) {
+  nodeApis.set(nodeApi.data.node, nodeApi);
+
   /* This node instance can do many things. See the API reference. */
-  const node = treeNode.data.node;
+  const node = nodeApi.data.node;
 
   const hover = appState.hover === node;
   const selected = node.selected;
@@ -99,10 +104,10 @@ const NodeRow = observer(function NodeRow({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                treeNode.toggle();
+                nodeApi.toggle();
               }}
             >
-              {treeNode.isOpen ? (
+              {nodeApi.isOpen ? (
                 <Icon icon="material-symbols:chevron-right" rotate={1} />
               ) : (
                 <Icon icon="material-symbols:chevron-right" />
@@ -156,6 +161,21 @@ export const Outline: React.FC = observer(() => {
     const selectedNodes = appState.document.selectedNodes;
     parent.insertBefore(selectedNodes, next);
   });
+
+  useEffect(() => {
+    return reaction(
+      () => appState.document.selectedNodes,
+      (selectedNodes) => {
+        for (const selected of selectedNodes) {
+          const nodeApi = nodeApis.get(selected);
+          if (nodeApi) {
+            nodeApi.openParents();
+            // TODO: scroll to node
+          }
+        }
+      }
+    );
+  }, []);
 
   return (
     <FillFlexParent>
