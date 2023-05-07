@@ -188,7 +188,7 @@ export class ElementNode extends BaseNode<
         return attr.name + attr.trailingSpace;
       }
     });
-    if (options.id) {
+    if (options.id && this.tagName) {
       attributes.push(` data-windmixid="${this.id}"`);
     }
 
