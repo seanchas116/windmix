@@ -52,6 +52,11 @@ export class EditorSession {
         if (editor) {
           this.textEditor = editor;
         }
+      }),
+      vscode.workspace.onDidChangeTextDocument((event) => {
+        if (this._textEditor?.document === event.document) {
+          this.reloadTextDocument();
+        }
       })
     );
 
@@ -119,9 +124,15 @@ export class EditorSession {
       return;
     }
 
-    if (textEditor) {
-      const filePath = this.projectPathForEditor(textEditor);
-      const code = textEditor.document.getText();
+    this._textEditor = textEditor;
+    this._panel.title = this.titleForEditor(textEditor);
+    this.reloadTextDocument();
+  }
+
+  reloadTextDocument() {
+    if (this._textEditor) {
+      const filePath = this.projectPathForEditor(this._textEditor);
+      const code = this._textEditor.document.getText();
       const file = loadFile(this._doc, filePath, code);
 
       DevServer.fileContentWithID = {
@@ -129,9 +140,6 @@ export class EditorSession {
         content: file.stringify({ id: true }),
       };
     }
-
-    this._textEditor = textEditor;
-    this._panel.title = this.titleForEditor(textEditor);
   }
 
   titleForEditor(editor: vscode.TextEditor | undefined) {
