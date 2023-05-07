@@ -18,7 +18,7 @@ export class DOMLocator {
 
     console.log("clicked", id);
 
-    const node = appState.nodeMap.get(id);
+    const node = appState.document.nodes.get(id);
     if (!node) {
       return;
     }

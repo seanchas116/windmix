@@ -4,7 +4,7 @@ import { Style } from "../models/style/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { Node, NodeMap } from "@windmix/model";
+import { Node, Document } from "@windmix/model";
 import { Rect } from "paintvec";
 
 function vscodeParentTarget(): Target {
@@ -31,15 +31,15 @@ class VSCodeConnection {
       vscodeParentTarget(),
       {
         update: action(async (data: Uint8Array) => {
-          Y.applyUpdate(appState.doc, data);
+          Y.applyUpdate(appState.document.ydoc, data);
         }),
         init: action(async (data: Uint8Array) => {
-          Y.applyUpdate(appState.doc, data);
+          Y.applyUpdate(appState.document.ydoc, data);
         }),
       }
     );
 
-    this.rpc.remote.ready(Y.encodeStateAsUpdate(appState.doc));
+    this.rpc.remote.ready(Y.encodeStateAsUpdate(appState.document.ydoc));
   }
 
   rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
@@ -50,9 +50,8 @@ export class AppState {
     makeObservable(this);
   }
 
-  readonly doc = new Y.Doc();
-  readonly nodeMap = new NodeMap(this.doc.getMap("nodes"));
-  readonly fileNode = this.nodeMap.getOrCreate("file", "file");
+  readonly document = new Document();
+  readonly fileNode = this.document.nodes.getOrCreate("file", "file");
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
 
   // TODO: cache rect for node

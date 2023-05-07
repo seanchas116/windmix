@@ -2,13 +2,13 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
+import { Document } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
-import { DevServer } from "./DevServer";
 import { devServer } from "./extension";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
@@ -65,9 +65,9 @@ export class EditorSession {
     const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
       rpc.remote.update(update);
     });
-    this._doc.on("update", onDocUpdate);
+    this._document.ydoc.on("update", onDocUpdate);
     disposables.push({
-      dispose: () => this._doc.off("update", onDocUpdate),
+      dispose: () => this._document.ydoc.off("update", onDocUpdate),
     });
 
     const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
@@ -82,11 +82,11 @@ export class EditorSession {
       },
       {
         ready: async (data) => {
-          Y.applyUpdate(this._doc, data);
-          rpc.remote.init(Y.encodeStateAsUpdate(this._doc));
+          Y.applyUpdate(this._document.ydoc, data);
+          rpc.remote.init(Y.encodeStateAsUpdate(this._document.ydoc));
         },
         update: async (data) => {
-          Y.applyUpdate(this._doc, data);
+          Y.applyUpdate(this._document.ydoc, data);
         },
         reveal: async (location: { line: number; column: number }) => {
           const textEditor = this._textEditor;
@@ -114,7 +114,7 @@ export class EditorSession {
 
   private _panel: vscode.WebviewPanel;
   private _textEditor: vscode.TextEditor | undefined;
-  private _doc = new Y.Doc();
+  private _document = new Document();
 
   get textEditor(): vscode.TextEditor | undefined {
     return this._textEditor;
@@ -136,7 +136,7 @@ export class EditorSession {
     }
     const filePath = this.projectPathForEditor(this._textEditor);
     const code = this._textEditor.document.getText();
-    const file = loadFile(this._doc, filePath, code);
+    const file = loadFile(this._document, filePath, code);
 
     if (devServer) {
       devServer.setPreview(filePath, file.stringify({ id: true }));
