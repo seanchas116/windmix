@@ -8,6 +8,7 @@ WYSIWYG editor for React+Tailwind components in VS Code
 git clone git@github.com:seanchas116/windmix.git
 cd windmix
 pnpm install
+pnpm dev
 code .
 ```
 
