@@ -89,7 +89,12 @@ const NodeRow = observer(function NodeRow({
       <div className="flex items-center h-full pl-1">
         <span className="w-5 h-hull opacity-50 flex items-center justify-center">
           {mayHaveChildren() && (
-            <button onClick={() => treeNode.toggle()}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                treeNode.toggle();
+              }}
+            >
               {treeNode.isOpen ? (
                 <Icon icon="material-symbols:chevron-right" rotate={1} />
               ) : (
