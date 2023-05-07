@@ -26,10 +26,42 @@
     "vscode:prepublish": "pnpm run build"
   },
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "windmix-workbench",
+          "title": "Windmix",
+          "icon": "media/workbench.svg"
+        }
+      ]
+    },
+    "views": {
+      "windmix-workbench": [
+        {
+          "id": "windmix-outline",
+          "name": "Outline",
+          "icon": "media/workbench.svg",
+          "contextualTitle": "Outline"
+        },
+        {
+          "id": "windmix-inspector",
+          "name": "Inspector",
+          "icon": "media/workbench.svg",
+          "contextualTitle": "Inspector"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "windmix-outline",
+        "contents": "[Open Editor](command:windmix-vscode.openEditor)"
+      }
+    ],
     "commands": [
       {
         "command": "windmix-vscode.openEditor",
-        "title": "Windmix: Open Editor"
+        "title": "Windmix: Open Editor",
+        "icon": "media/workbench.svg"
       },
       {
         "command": "windmix-vscode.openEditorExternal",
