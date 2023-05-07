@@ -49,23 +49,51 @@ function loadElement(
 
   if (element.type === "JSXElement") {
     const tagName = codeForNode(code, element.openingElement.name);
-    const attributes: (Attribute | SpreadAttribute)[] =
-      element.openingElement.attributes.map((attr) => {
+
+    const attributeASTs = element.openingElement.attributes;
+
+    const codeAfterTagName =
+      attributeASTs.length > 0
+        ? code.slice(
+            element.openingElement.name.end ?? 0,
+            attributeASTs[0].start ?? 0
+          )
+        : code
+            .slice(
+              element.openingElement.name.end ?? 0,
+              element.openingElement.end ?? 0
+            )
+            .replace(/\/?>/, "");
+
+    const attributes: (Attribute | SpreadAttribute)[] = attributeASTs.map(
+      (attr, i) => {
+        const trailingCode =
+          i === attributeASTs.length - 1
+            ? code
+                .slice(attr.end ?? 0, element.openingElement.end ?? 0)
+                .replace(/\/?>/, "")
+            : code.slice(attr.end ?? 0, attributeASTs[i + 1].start ?? 0);
+
         if (attr.type === "JSXAttribute") {
           return {
             name: codeForNode(code, attr.name),
             value: attr.value ? codeForNode(code, attr.value) : undefined,
+            trailingCode,
           };
         } else {
           return {
             spread: codeForNode(code, attr),
+            trailingCode,
           };
         }
-      });
+      }
+    );
 
     elementNode.data.set({
       tagName,
+      codeAfterTagName,
       attributes,
+      selfClosing: element.openingElement.selfClosing,
       location: locationForNode(element),
     });
   }

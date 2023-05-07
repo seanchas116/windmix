@@ -28,7 +28,7 @@ describe("File load/stringify", () => {
     expect(file.childCount).toEqual(1);
     expect(doc.nodesData.toJSON()).toMatchSnapshot("nodes");
 
-    expect(formatJS(file.stringify())).toEqual(formatJS(demoFile));
+    expect(file.stringify()).toEqual(demoFile);
     expect(formatJS(file.stringify({ id: true }))).toMatchSnapshot(
       "stringifyWithID"
     );
