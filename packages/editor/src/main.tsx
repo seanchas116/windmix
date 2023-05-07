@@ -12,10 +12,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 
 window.addEventListener("keydown", (e) => {
-  // on undo
-  if (e.metaKey && !e.shiftKey && e.key === "z") {
-    console.log("TODO: undo");
-
-    appState.connection.rpc.remote.undo();
+  // undo/redo
+  if (e.metaKey && e.key === "z") {
+    if (e.shiftKey) {
+      appState.connection.rpc.remote.redo();
+    } else {
+      appState.connection.rpc.remote.undo();
+    }
   }
 });

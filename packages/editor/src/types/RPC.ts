@@ -8,4 +8,5 @@ export interface IEditorToRootRPCHandler {
   update(data: Uint8Array): Promise<void>;
   reveal(location: { line: number; column: number }): Promise<void>;
   undo(): Promise<void>;
+  redo(): Promise<void>;
 }

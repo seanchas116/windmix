@@ -126,23 +126,11 @@ export class EditorSession {
             });
           }
         },
-        // https://stackoverflow.com/q/75551534
         undo: async () => {
-          const { edTabCol, webTabCol } = this.findTabs();
-
-          if (edTabCol) {
-            const opts = {
-              preserveFocus: false,
-              preview: false,
-              viewColumn: edTabCol,
-            };
-            await vscode.window.showTextDocument(
-              this._textEditor!.document,
-              opts
-            );
-            await vscode.commands.executeCommand("undo");
-            if (webTabCol) this._panel.reveal(webTabCol, false);
-          }
+          await this.undoOrRedo("undo");
+        },
+        redo: async () => {
+          await this.undoOrRedo("redo");
         },
       }
     );
@@ -155,9 +143,28 @@ export class EditorSession {
     });
   }
 
+  // https://stackoverflow.com/q/75551534
+  private async undoOrRedo(command: "undo" | "redo") {
+    const { edTabCol, webTabCol } = this.findTabs();
+
+    if (edTabCol) {
+      const opts = {
+        preserveFocus: false,
+        preview: false,
+        viewColumn: edTabCol,
+      };
+      await vscode.window.showTextDocument(this._textEditor!.document, opts);
+      await vscode.commands.executeCommand(command);
+      if (webTabCol) {
+        this._panel.reveal(webTabCol, false);
+      }
+    }
+  }
+
   private findTabs() {
-    let edTabCol: vscode.ViewColumn | null = null,
-      webTabCol: vscode.ViewColumn | null = null;
+    let edTabCol: vscode.ViewColumn | undefined;
+    let webTabCol: vscode.ViewColumn | undefined;
+
     for (const tab of vscode.window.tabGroups.all.flatMap(
       (group) => group.tabs
     )) {
@@ -166,8 +173,6 @@ export class EditorSession {
           edTabCol = tab.group.viewColumn;
         }
       } else if (tab.input instanceof vscode.TabInputWebview) {
-        // TODO: input.viewType does not exactly match the viewType
-        // supplied during creation of the webview; why?
         if (/windmixEditor$/.test(tab.input.viewType)) {
           webTabCol = tab.group.viewColumn;
         }
