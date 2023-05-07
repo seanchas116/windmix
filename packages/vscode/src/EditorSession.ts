@@ -71,6 +71,7 @@ export class EditorSession {
           const newText = this._document.nodes.get("file")?.stringify() ?? "";
           const oldText = textEditor.document.getText();
           if (newText === oldText) {
+            // TODO: compare by AST?
             return;
           }
 
