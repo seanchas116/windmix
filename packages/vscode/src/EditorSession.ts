@@ -107,18 +107,11 @@ export class EditorSession {
         },
         update: async (data) => {
           Y.applyUpdate(this._document.ydoc, data);
-
-          // TODO: update text document
-          const file = this._document.nodes.get("file") as FileNode;
-          const fileContent = file.stringify();
-          console.log(fileContent);
         },
         reveal: async (location: { line: number; column: number }) => {
           const textEditor = this._textEditor;
           if (textEditor) {
             const pos = new vscode.Position(location.line, location.column);
-            // textEditor.selection = new vscode.Selection(pos, pos);
-            // textEditor.revealRange(new vscode.Range(pos, pos));
 
             vscode.window.showTextDocument(textEditor.document, {
               viewColumn: textEditor.viewColumn,
