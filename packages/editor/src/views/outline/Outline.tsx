@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { NodeRendererProps, Tree } from "react-arborist";
+import { MoveHandler, NodeRendererProps, Tree } from "react-arborist";
 import { FillFlexParent } from "../../components/FillFlexParent";
 import { Icon } from "@iconify/react";
 import { Node } from "@windmix/model";
@@ -80,9 +80,11 @@ const NodeRow = observer(function NodeRow({
         hover && "ring-1 ring-inset ring-blue-500",
         selected && "bg-blue-500 text-white"
       )}
-      onClick={action(() => {
+      onMouseDown={action((e) => {
         updateNodeDimension(node);
-        appState.document.deselectAll();
+        if (!e.shiftKey && !node.selected) {
+          appState.document.deselectAll();
+        }
         node.select();
       })}
       onDoubleClick={() => {
@@ -138,11 +140,29 @@ function buildTreeData(node: Node): TreeData {
 
 export const Outline: React.FC = observer(() => {
   const data = buildTreeData(appState.fileNode).children;
+
+  const onMove: MoveHandler<TreeData> = action(({ parentNode, index }) => {
+    const parent = parentNode?.data.node;
+    if (!parent) {
+      return;
+    }
+
+    if (parent.type !== "element") {
+      return;
+    }
+
+    const next = (parentNode.children ?? [])[index]?.data.node;
+    console.log(index, next);
+    const selectedNodes = appState.document.selectedNodes;
+    parent.insertBefore(selectedNodes, next);
+  });
+
   return (
     <FillFlexParent>
       {({ width, height }) => (
         <Tree
           data={data}
+          onMove={onMove}
           openByDefault={true}
           width={width}
           height={height}
