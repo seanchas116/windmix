@@ -54,8 +54,7 @@ export class AppState {
   readonly fileNode = this.document.nodes.getOrCreate("file", "file");
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
 
-  // TODO: cache rect for node
-  @observable hover: { node: Node; rect?: Rect } | undefined = undefined;
+  @observable hover: Node | undefined = undefined;
 
   @computed get tabPath(): string | undefined {
     return this.fileNode.data.get("filePath");

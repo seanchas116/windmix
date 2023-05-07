@@ -2,8 +2,10 @@ import React, { useRef } from "react";
 import { appState } from "../state/AppState";
 import { observer } from "mobx-react-lite";
 import { domLocator } from "./DOMLocator";
-import { Rect } from "paintvec";
 import { action } from "mobx";
+import { getNodeDimension, updateNodeDimension } from "./NodeDimension";
+import { Rect } from "paintvec";
+import { compact } from "lodash-es";
 
 export const Renderer: React.FC = observer(() => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -63,6 +65,7 @@ const MouseOverlay = ({
         }
 
         const [node] = nodeElem;
+        updateNodeDimension(node);
         appState.document.deselectAll();
         node.select();
       })}
@@ -86,19 +89,28 @@ const MouseOverlay = ({
         if (!nodeElem) {
           return;
         }
-
-        const [node, elem] = nodeElem;
-        appState.hover = {
-          node,
-          rect: Rect.from(elem.getBoundingClientRect()),
-        };
+        const [node] = nodeElem;
+        updateNodeDimension(node);
+        appState.hover = node;
       })}
     />
   );
 };
 
 const HUD = observer(() => {
-  const hoveredRect = appState.hover?.rect;
+  if (!appState.hover) {
+    return null;
+  }
+
+  const hoveredRect = getNodeDimension(appState.hover).rect;
+
+  const selectedRect = Rect.union(
+    ...compact(
+      appState.document.selectedNodes.map((node) => getNodeDimension(node).rect)
+    )
+  );
+
+  console.log(hoveredRect);
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
@@ -109,7 +121,18 @@ const HUD = observer(() => {
           width={hoveredRect.width}
           height={hoveredRect.height}
           fill="none"
-          stroke="red"
+          stroke="blue"
+          strokeWidth={1}
+        />
+      )}
+      {selectedRect && (
+        <rect
+          x={selectedRect.left}
+          y={selectedRect.top}
+          width={selectedRect.width}
+          height={selectedRect.height}
+          fill="none"
+          stroke="blue"
           strokeWidth={1}
         />
       )}

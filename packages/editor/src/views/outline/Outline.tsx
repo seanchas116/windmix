@@ -5,9 +5,8 @@ import { Icon } from "@iconify/react";
 import { Node } from "@windmix/model";
 import { appState } from "../../state/AppState";
 import { action } from "mobx";
-import { domLocator } from "../DOMLocator";
-import { Rect } from "paintvec";
 import { twMerge } from "tailwind-merge";
+import { updateNodeDimension } from "../NodeDimension";
 
 const NodeRow = observer(function NodeRow({
   node: treeNode,
@@ -17,7 +16,7 @@ const NodeRow = observer(function NodeRow({
   /* This node instance can do many things. See the API reference. */
   const node = treeNode.data.node;
 
-  const hover = appState.hover?.node === node;
+  const hover = appState.hover === node;
   const selected = node.selected;
 
   const getName = () => {
@@ -64,12 +63,8 @@ const NodeRow = observer(function NodeRow({
   };
 
   const onMouseEnter = action(() => {
-    const elem = domLocator.findDOM(node);
-
-    appState.hover = {
-      node,
-      rect: elem && Rect.from(elem.getBoundingClientRect()),
-    };
+    updateNodeDimension(node);
+    appState.hover = node;
   });
 
   const onMouseLeave = action(() => {
@@ -86,6 +81,7 @@ const NodeRow = observer(function NodeRow({
         selected && "bg-blue-500"
       )}
       onClick={action(() => {
+        updateNodeDimension(node);
         appState.document.deselectAll();
         node.select();
       })}
