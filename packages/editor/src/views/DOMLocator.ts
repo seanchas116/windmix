@@ -6,7 +6,6 @@ export class DOMLocator {
 
   findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
     const elem = this.window?.document.elementFromPoint(offsetX, offsetY);
-    console.log(elem);
     if (!elem) {
       return;
     }
@@ -15,8 +14,6 @@ export class DOMLocator {
     if (!id) {
       return;
     }
-
-    console.log("clicked", id);
 
     const node = appState.document.nodes.get(id);
     if (!node) {
