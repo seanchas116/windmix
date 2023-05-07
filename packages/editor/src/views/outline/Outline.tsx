@@ -18,6 +18,7 @@ const NodeRow = observer(function NodeRow({
   const node = treeNode.data.node;
 
   const hover = appState.hover?.node === node;
+  const selected = node.selected;
 
   const getName = () => {
     switch (node.type) {
@@ -79,7 +80,15 @@ const NodeRow = observer(function NodeRow({
     <div
       style={style}
       ref={dragHandle}
-      className={twMerge("h-full", hover && "ring-1 ring-inset ring-blue-500")}
+      className={twMerge(
+        "h-full",
+        hover && "ring-1 ring-inset ring-blue-500",
+        selected && "bg-blue-500"
+      )}
+      onClick={action(() => {
+        appState.document.deselectAll();
+        node.select();
+      })}
       onDoubleClick={() => {
         appState.reveal(node.location);
       }}

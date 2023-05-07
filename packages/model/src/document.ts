@@ -29,4 +29,8 @@ export class Document {
     const ids = Array.from(this.selectionData.keys());
     return ids.map((id) => this.nodes.get(id)).filter(Boolean) as Node[];
   }
+
+  deselectAll(): void {
+    this.selectionData.clear();
+  }
 }

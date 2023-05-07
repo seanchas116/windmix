@@ -53,29 +53,45 @@ const MouseOverlay = ({
   return (
     <div
       className="absolute inset-0 w-full h-full"
+      onClick={action((event) => {
+        const nodeElem = domLocator.findNode(
+          event.nativeEvent.offsetX,
+          event.nativeEvent.offsetY
+        );
+        if (!nodeElem) {
+          return;
+        }
+
+        const [node] = nodeElem;
+        appState.document.deselectAll();
+        node.select();
+      })}
       onDoubleClick={action((event) => {
         const nodeElem = domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-
-        if (nodeElem) {
-          const [node, elem] = nodeElem;
-          appState.reveal(node.location);
+        if (!nodeElem) {
+          return;
         }
+
+        const [node] = nodeElem;
+        appState.reveal(node.location);
       })}
       onMouseMove={action((event) => {
         const nodeElem = domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-        if (nodeElem) {
-          const [node, elem] = nodeElem;
-          appState.hover = {
-            node,
-            rect: Rect.from(elem.getBoundingClientRect()),
-          };
+        if (!nodeElem) {
+          return;
         }
+
+        const [node, elem] = nodeElem;
+        appState.hover = {
+          node,
+          rect: Rect.from(elem.getBoundingClientRect()),
+        };
       })}
     />
   );
