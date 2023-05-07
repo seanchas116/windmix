@@ -3,9 +3,9 @@ import { StyleInspectorState } from "./StyleInspectorState";
 import { Style } from "../models/style/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
+import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
 import { Node, Document } from "@windmix/model";
-import { Rect } from "paintvec";
 
 function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -40,6 +40,11 @@ class VSCodeConnection {
     );
 
     this.rpc.remote.ready(Y.encodeStateAsUpdate(appState.document.ydoc));
+
+    const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
+      this.rpc.remote.update(update);
+    });
+    appState.document.ydoc.on("update", onDocUpdate);
   }
 
   rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;

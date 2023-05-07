@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { Document } from "@windmix/model";
+import { Document, FileNode } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import {
   IEditorToRootRPCHandler,
@@ -87,6 +87,11 @@ export class EditorSession {
         },
         update: async (data) => {
           Y.applyUpdate(this._document.ydoc, data);
+
+          // TODO: update text document
+          const file = this._document.nodes.get("file") as FileNode;
+          const fileContent = file.stringify();
+          console.log(fileContent);
         },
         reveal: async (location: { line: number; column: number }) => {
           const textEditor = this._textEditor;
