@@ -3,15 +3,15 @@ import { createServer, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
 
+const virtualModulePrefix = "/virtual:windmix/";
+const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
+
 export class DevServer {
-  static async start() {
+  async start() {
     const workspace = vscode.workspace.workspaceFolders?.[0];
     if (!workspace) {
       throw new Error("No workspace found");
     }
-
-    const virtualModulePrefix = "/virtual:windmix/";
-    const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
 
     const server = await createServer({
       configFile: false,
@@ -19,23 +19,23 @@ export class DevServer {
         react(),
         {
           name: "windmix-renderer", // required, will show up in warnings and errors
-          resolveId(id) {
+          resolveId: (id) => {
             console.log(id);
             if (id.startsWith(virtualModulePrefix)) {
               return "\0" + id;
             }
           },
-          load(id) {
-            console.log("load", id, DevServer.fileContentWithID);
+          load: (id) => {
+            console.log("load", id, this.fileContentWithID);
 
             if (
-              DevServer.fileContentWithID &&
+              this.fileContentWithID &&
               path.resolve(
                 workspace.uri.fsPath,
-                DevServer.fileContentWithID.filePath.slice(1)
+                this.fileContentWithID.filePath.slice(1)
               ) === id
             ) {
-              return DevServer.fileContentWithID.content;
+              return this.fileContentWithID.content;
             }
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
@@ -62,23 +62,44 @@ export class DevServer {
       },
     });
     await server.listen();
-
     server.printUrls();
 
-    return new DevServer(server);
+    this.server = server;
   }
 
-  private constructor(server: ViteDevServer) {
-    this._server = server;
-  }
-
-  private _server: ViteDevServer;
+  server: ViteDevServer | undefined;
 
   async dispose() {
-    this._server.close();
+    this.server?.close();
   }
 
-  static fileContentWithID:
+  setCurrentFileContent(filePath: string, content: string) {
+    this.fileContentWithID = {
+      filePath,
+      content,
+    };
+
+    if (!this.server) {
+      return;
+    }
+    const workspace = vscode.workspace.workspaceFolders?.[0];
+    if (!workspace) {
+      return;
+    }
+
+    const module = this.server.moduleGraph.getModuleById(
+      path.join(workspace.uri.fsPath, filePath.slice(1))
+    );
+
+    console.log("module", module);
+
+    if (module) {
+      console.log("invalidateModule", module);
+      this.server.reloadModule(module);
+    }
+  }
+
+  private fileContentWithID:
     | {
         filePath: string;
         content: string;

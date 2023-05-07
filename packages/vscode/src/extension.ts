@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 import { EditorPanelSerializer, EditorSession } from "./EditorSession";
 import { DevServer } from "./DevServer";
 
-let devServer: DevServer | undefined;
+export let devServer: DevServer | undefined;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -34,7 +34,8 @@ export async function activate(context: vscode.ExtensionContext) {
     new EditorPanelSerializer()
   );
 
-  devServer = await DevServer.start();
+  devServer = new DevServer();
+  await devServer.start();
 }
 
 // This method is called when your extension is deactivated

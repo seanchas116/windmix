@@ -9,6 +9,7 @@ import {
 } from "../../editor/src/types/RPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import { DevServer } from "./DevServer";
+import { devServer } from "./extension";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -137,10 +138,9 @@ export class EditorSession {
     const code = this._textEditor.document.getText();
     const file = loadFile(this._doc, filePath, code);
 
-    DevServer.fileContentWithID = {
-      filePath,
-      content: file.stringify({ id: true }),
-    };
+    if (devServer) {
+      devServer.setCurrentFileContent(filePath, file.stringify({ id: true }));
+    }
   }
 
   titleForEditor(editor: vscode.TextEditor | undefined) {
