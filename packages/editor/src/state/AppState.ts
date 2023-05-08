@@ -5,7 +5,7 @@ import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
-import { Node, Document } from "@windmix/model";
+import { Node, Document, FileNode } from "@windmix/model";
 
 function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -56,13 +56,16 @@ export class AppState {
   }
 
   readonly document = new Document();
-  readonly fileNode = this.document.nodes.getOrCreate("file", "file");
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
 
   @observable hover: Node | undefined = undefined;
 
   @computed get tabPath(): string | undefined {
-    return this.fileNode.data.get("filePath");
+    return this.fileNode?.data.get("filePath");
+  }
+
+  @computed get fileNode(): FileNode | undefined {
+    return this.document.nodes.get("file") as FileNode | undefined;
   }
 
   readonly styleInspectorState = new StyleInspectorState({

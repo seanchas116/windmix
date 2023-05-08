@@ -148,7 +148,8 @@ function buildTreeData(node: Node): TreeData {
 }
 
 export const Outline: React.FC = observer(() => {
-  const data = buildTreeData(appState.fileNode).children;
+  const fileNode = appState.fileNode;
+  const data = fileNode ? buildTreeData(fileNode).children : [];
 
   const onMove: MoveHandler<TreeData> = action(({ parentNode, index }) => {
     const parent = parentNode?.data.node;
