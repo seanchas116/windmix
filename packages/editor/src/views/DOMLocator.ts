@@ -43,11 +43,12 @@ export class DOMLocator {
     return [node, elem];
   }
 
-  findDOM(node: Node): Element | undefined {
-    const elem = this.window?.document.querySelector(
-      `[data-windmixid="${node.id}"]`
-    );
-    return elem ?? undefined;
+  findDOMs(node: Node): Element[] {
+    return [
+      ...(this.window?.document.querySelectorAll(
+        `[data-windmixid="${node.id}"]`
+      ) ?? []),
+    ];
   }
 
   dimensions = new WeakMap<Node, NodeDimension>();
@@ -75,13 +76,11 @@ export class NodeDimension {
 
   readonly node: Node;
   readonly domLocator: DOMLocator;
-  @observable rect: Rect | undefined = undefined;
+  @observable.ref rects: Rect[] = [];
 
   update() {
-    const dom = this.domLocator.findDOM(this.node);
-    if (dom) {
-      this.rect = Rect.from(dom.getBoundingClientRect());
-    }
+    const doms = this.domLocator.findDOMs(this.node);
+    this.rects = doms.map((dom) => Rect.from(dom.getBoundingClientRect()));
   }
 }
 

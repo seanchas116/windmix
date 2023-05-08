@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import { DOMLocator, domLocators } from "../DOMLocator";
 import { action } from "mobx";
 import { Rect } from "paintvec";
-import { compact } from "lodash-es";
 
 declare global {
   interface Window {
@@ -120,35 +119,27 @@ const HUD: React.FC<{
     return null;
   }
 
-  const hoveredRect = domLocator.getDimension(appState.hover).rect;
+  const hoveredRects = domLocator.getDimension(appState.hover).rects;
 
   const selectedRect = Rect.union(
-    ...compact(
-      appState.document.selectedNodes.map(
-        (node) => domLocator.getDimension(node).rect
-      )
+    ...appState.document.selectedNodes.flatMap(
+      (node) => domLocator.getDimension(node).rects
     )
   );
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
-      {hoveredRect && (
+      {hoveredRects.map((rect) => (
         <rect
-          x={hoveredRect.left}
-          y={hoveredRect.top}
-          width={hoveredRect.width}
-          height={hoveredRect.height}
+          {...rect.toSVGRectProps()}
           fill="none"
           stroke="blue"
           strokeWidth={1}
         />
-      )}
+      ))}
       {selectedRect && (
         <rect
-          x={selectedRect.left}
-          y={selectedRect.top}
-          width={selectedRect.width}
-          height={selectedRect.height}
+          {...selectedRect.toSVGRectProps()}
           fill="none"
           stroke="blue"
           strokeWidth={1}
