@@ -96,9 +96,16 @@ function loadElement(
       selfClosing: element.openingElement.selfClosing,
       location: locationForNode(element),
     });
+  } else {
+    // fragment
+    elementNode.data.set({
+      tagName: "",
+      spaceAfterTagName: "",
+      attributes: [],
+      selfClosing: false,
+      location: locationForNode(element),
+    });
   }
-
-  // TODO: attributes
 
   const childNodes: Node[] = [];
   for (const [i, child] of element.children.entries()) {
