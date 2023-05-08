@@ -4,6 +4,8 @@ import App from "./views/App.tsx";
 import "./index.css";
 import "./state/AppState.ts";
 import { appState } from "./state/AppState.ts";
+import hotkeys from "hotkeys-js";
+import { scrollState } from "./state/ScrollState.ts";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -11,13 +13,24 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   </React.StrictMode>
 );
 
-window.addEventListener("keydown", (e) => {
-  // undo/redo
-  if (e.metaKey && e.key === "z") {
-    if (e.shiftKey) {
-      appState.connection.rpc.remote.redo();
-    } else {
-      appState.connection.rpc.remote.undo();
-    }
-  }
+hotkeys("ctrl+z,command+z", (e) => {
+  e.stopPropagation();
+  appState.connection.rpc.remote.undo();
+});
+
+hotkeys("ctrl+shift+z,command+shift+z", (e) => {
+  e.stopPropagation();
+  appState.connection.rpc.remote.redo();
+});
+
+// zoom in
+hotkeys("ctrl+=,command+=", (e) => {
+  e.stopPropagation();
+  scrollState.zoomIn();
+});
+
+// zoom out
+hotkeys("ctrl+-,command+-", (e) => {
+  e.stopPropagation();
+  scrollState.zoomOut();
 });

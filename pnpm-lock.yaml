@@ -46,6 +46,9 @@ importers:
       '@windmix/model':
         specifier: workspace:*
         version: link:../model
+      hotkeys-js:
+        specifier: ^3.10.2
+        version: 3.10.2
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7617,6 +7620,10 @@ packages:
     dependencies:
       lru-cache: 7.18.3
     dev: true
+
+  /hotkeys-js@3.10.2:
+    resolution: {integrity: sha512-Z6vLmJTYzkbZZXlBkhrYB962Q/rZGc/WHQiyEGu9ZZVF7bAeFDjjDa31grWREuw9Ygb4zmlov2bTkPYqj0aFnQ==}
+    dev: false
 
   /html-dom-parser@3.1.7:
     resolution: {integrity: sha512-cDgNF4YgF6J3H+d9mcldGL19p0GzVdS3iGuDNzYWQpU47q3+IRM85X3Xo07E+nntF4ek4s78A9V24EwxlPTjig==}
