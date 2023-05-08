@@ -49,6 +49,7 @@ export const Renderer: React.FC<{
       style={{
         width: `${width}px`,
         height: `${domLocator.windowBodyHeight ?? 1024}px`,
+        contain: "strict",
       }}
     >
       <iframe
