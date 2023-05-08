@@ -1,15 +1,15 @@
 import React, { useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { domLocator } from "../DOMLocator";
+import { DOMLocator, domLocators } from "../DOMLocator";
 import { action } from "mobx";
-import { getNodeDimension, updateNodeDimension } from "../NodeDimension";
 import { Rect } from "paintvec";
 import { compact } from "lodash-es";
 
 export const Renderer: React.FC<{
   width: number;
-}> = observer(({ width }) => {
+  domLocator: DOMLocator;
+}> = observer(({ width, domLocator }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const srcdoc = `<!DOCTYPE html>
@@ -48,17 +48,13 @@ export const Renderer: React.FC<{
           domLocator.window = e.currentTarget.contentWindow ?? undefined;
         }}
       />
-      <MouseOverlay iframeRef={iframeRef} />
-      <HUD />
+      <MouseOverlay domLocator={domLocator} />
+      <HUD domLocator={domLocator} />
     </div>
   );
 });
 
-const MouseOverlay = ({
-  iframeRef,
-}: {
-  iframeRef: React.RefObject<HTMLIFrameElement>;
-}) => {
+const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
   return (
     <div
       className="absolute inset-0 w-full h-full"
@@ -72,7 +68,8 @@ const MouseOverlay = ({
         }
 
         const [node] = nodeElem;
-        updateNodeDimension(node);
+
+        domLocators.updateDimension(node);
         appState.document.deselectAll();
         node.select();
       })}
@@ -97,23 +94,27 @@ const MouseOverlay = ({
           return;
         }
         const [node] = nodeElem;
-        updateNodeDimension(node);
+        domLocators.updateDimension(node);
         appState.hover = node;
       })}
     />
   );
 };
 
-const HUD = observer(() => {
+const HUD: React.FC<{
+  domLocator: DOMLocator;
+}> = observer(({ domLocator }) => {
   if (!appState.hover) {
     return null;
   }
 
-  const hoveredRect = getNodeDimension(appState.hover).rect;
+  const hoveredRect = domLocator.getDimension(appState.hover).rect;
 
   const selectedRect = Rect.union(
     ...compact(
-      appState.document.selectedNodes.map((node) => getNodeDimension(node).rect)
+      appState.document.selectedNodes.map(
+        (node) => domLocator.getDimension(node).rect
+      )
     )
   );
 

@@ -6,8 +6,8 @@ import { Node } from "@windmix/model";
 import { appState } from "../../state/AppState";
 import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
-import { updateNodeDimension } from "../NodeDimension";
 import { useEffect } from "react";
+import { domLocators } from "../DOMLocator";
 
 const nodeApis = new WeakMap<Node, NodeApi>();
 
@@ -68,7 +68,9 @@ const NodeRow = observer(function NodeRow({
   };
 
   const onMouseEnter = action(() => {
-    updateNodeDimension(node);
+    domLocators.desktop.updateDimension(node);
+    domLocators.mobile.updateDimension(node);
+
     appState.hover = node;
   });
 
@@ -86,7 +88,9 @@ const NodeRow = observer(function NodeRow({
         selected && "bg-blue-500 text-white"
       )}
       onMouseDown={action((e) => {
-        updateNodeDimension(node);
+        domLocators.desktop.updateDimension(node);
+        domLocators.mobile.updateDimension(node);
+
         if (!e.shiftKey && !node.selected) {
           appState.document.deselectAll();
         }

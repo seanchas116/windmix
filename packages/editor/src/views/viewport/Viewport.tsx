@@ -6,6 +6,7 @@ import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
 import { createRef, useEffect } from "react";
+import { domLocators } from "../DOMLocator";
 
 export const Viewport: React.FC = observer(() => {
   const ref = createRef<HTMLDivElement>();
@@ -73,14 +74,14 @@ export const Viewport: React.FC = observer(() => {
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <Renderer width={1440} />
+            <Renderer width={1440} domLocator={domLocators.desktop} />
           </div>
           <div>
             <h2 className="font-semibold mb-1">
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <Renderer width={375} />
+            <Renderer width={375} domLocator={domLocators.mobile} />
           </div>
         </div>
       </div>
