@@ -54,6 +54,11 @@ export class DevServer {
                 import.meta.hot.accept(() => {
                   console.log("updated");
                 });
+
+                const resizeObserver = new ResizeObserver(() => {
+                  console.log(document.body.clientHeight);
+                });
+                resizeObserver.observe(document.body);
               `;
             }
           },
