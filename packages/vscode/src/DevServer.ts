@@ -42,13 +42,13 @@ export class DevServer {
               const targetPath = id.slice(resolvedVirtualModulePrefix.length);
 
               return `
-                import Component from "/${targetPath}";
+                import * as module from "/${targetPath}";
                 import React from 'react';
                 import { createRoot } from 'react-dom/client';
 
                 const root = document.getElementById('root');
                 createRoot(root).render(
-                  React.createElement(Component)
+                  React.createElement(module.default, module.getWindmixProps?.())
                 );
 
                 import.meta.hot.accept(() => {

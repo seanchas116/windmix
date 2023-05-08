@@ -2,21 +2,22 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
-];
-
-export function windmixPreviews() {
-  return [
-    { width: 1440, render: () => <Example /> },
-    { width: 375, render: () => <Example data={[]} /> },
-  ];
+export function getWindmixProps(): React.ComponentProps<typeof Example> {
+  return {
+    navigation: [
+      { name: "Product", href: "#" },
+      { name: "Features", href: "#" },
+      { name: "Marketplace", href: "#" },
+      { name: "Company", href: "#" },
+    ],
+  };
 }
 
-export default function Example() {
+export default function Example({
+  navigation,
+}: {
+  navigation: { name: string; href: string }[];
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
