@@ -7,7 +7,9 @@ import { getNodeDimension, updateNodeDimension } from "../NodeDimension";
 import { Rect } from "paintvec";
 import { compact } from "lodash-es";
 
-export const Renderer: React.FC = observer(() => {
+export const Renderer: React.FC<{
+  width: number;
+}> = observer(({ width }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const srcdoc = `<!DOCTYPE html>
@@ -32,10 +34,15 @@ export const Renderer: React.FC = observer(() => {
 `;
 
   return (
-    <div className="w-[1024px] relative">
+    <div
+      className="relative bg-white"
+      style={{
+        width: `${width}px`,
+      }}
+    >
       <iframe
         srcDoc={srcdoc}
-        className="w-[1024px] h-[2048px]"
+        className="w-full h-[2048px]"
         ref={iframeRef}
         onLoad={(e) => {
           domLocator.window = e.currentTarget.contentWindow ?? undefined;

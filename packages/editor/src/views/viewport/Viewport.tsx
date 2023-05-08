@@ -67,13 +67,20 @@ export const Viewport: React.FC = observer(() => {
           transform: scrollState.documentToViewport.toCSSMatrixString(),
         }}
       >
-        <div className="absolute left-4 top-4">
-          <h2 className="font-semibold mb-1">
-            {appState.tabPath &&
-              path.basename(appState.tabPath, path.extname(appState.tabPath))}
-          </h2>
-          <div className="w-[1024px] bg-white">
-            <Renderer />
+        <div className="absolute left-4 top-4 flex gap-4">
+          <div>
+            <h2 className="font-semibold mb-1">
+              {appState.tabPath &&
+                path.basename(appState.tabPath, path.extname(appState.tabPath))}
+            </h2>
+            <Renderer width={1024} />
+          </div>
+          <div>
+            <h2 className="font-semibold mb-1">
+              {appState.tabPath &&
+                path.basename(appState.tabPath, path.extname(appState.tabPath))}
+            </h2>
+            <Renderer width={375} />
           </div>
         </div>
       </div>
