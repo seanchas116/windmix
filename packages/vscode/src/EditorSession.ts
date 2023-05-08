@@ -8,12 +8,48 @@ import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
+import { ViewState } from "../../editor/src/types/ViewState";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import { devServer } from "./extension";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
-  async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
+  async deserializeWebviewPanel(
+    webviewPanel: vscode.WebviewPanel,
+    state: ViewState
+  ) {
     console.log(`Got state: ${state}`);
+
+    const tabPath = state.tabPath;
+    if (tabPath && vscode.workspace.rootPath) {
+      const tabFullPath = path.join(
+        vscode.workspace.rootPath,
+        tabPath.slice(1)
+      );
+
+      let editorViewColumn: vscode.ViewColumn | undefined;
+
+      for (const tab of vscode.window.tabGroups.all.flatMap(
+        (group) => group.tabs
+      )) {
+        if (tab.input instanceof vscode.TabInputText) {
+          if (tab.input.uri.fsPath === tabFullPath) {
+            editorViewColumn = tab.group.viewColumn;
+          }
+        }
+      }
+
+      const textEditor = await vscode.window.showTextDocument(
+        vscode.Uri.file(tabFullPath),
+        { viewColumn: editorViewColumn }
+      );
+
+      new EditorSession({
+        webviewPanel,
+        textEditor,
+      });
+
+      return;
+    }
 
     new EditorSession({
       webviewPanel,
