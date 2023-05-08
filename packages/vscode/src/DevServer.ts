@@ -50,6 +50,10 @@ export class DevServer {
                 createRoot(root).render(
                   React.createElement(Component)
                 );
+
+                import.meta.hot.accept(() => {
+                  console.log("updated");
+                });
               `;
             }
           },
