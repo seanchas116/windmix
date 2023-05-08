@@ -40,7 +40,6 @@ export class DevServer {
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
               const targetPath = id.slice(resolvedVirtualModulePrefix.length);
-              console.log("targetPath", targetPath);
 
               return `
                 import Component from "/${targetPath}";
@@ -90,11 +89,7 @@ export class DevServer {
     const module = this.server.moduleGraph.getModuleById(
       path.join(workspace.uri.fsPath, filePath.slice(1))
     );
-
-    console.log("module", module);
-
     if (module) {
-      console.log("invalidateModule", module);
       this.server.reloadModule(module);
     }
   }
