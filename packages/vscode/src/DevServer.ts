@@ -26,7 +26,7 @@ export class DevServer {
             }
           },
           load: (id) => {
-            console.log("load", id, this.preview);
+            console.log("load", id);
 
             if (
               this.preview &&
