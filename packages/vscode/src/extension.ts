@@ -29,13 +29,13 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
+  devServer = new DevServer();
+  await devServer.start();
+
   vscode.window.registerWebviewPanelSerializer(
     "windmixEditor",
     new EditorPanelSerializer()
   );
-
-  devServer = new DevServer();
-  await devServer.start();
 }
 
 // This method is called when your extension is deactivated
