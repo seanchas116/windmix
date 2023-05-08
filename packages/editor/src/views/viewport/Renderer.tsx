@@ -8,12 +8,12 @@ import { compact } from "lodash-es";
 
 declare global {
   interface Window {
-    __uimixOnBodyHeightChange(window: Window, height: number): void;
+    __windmixOnUpdate(window: Window): void;
   }
 }
 
-window.__uimixOnBodyHeightChange = (window: Window, height: number) => {
-  console.log("body height change", height);
+window.__windmixOnUpdate = (window: Window) => {
+  console.log("on update");
 };
 
 export const Renderer: React.FC<{

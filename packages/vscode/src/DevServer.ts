@@ -52,16 +52,8 @@ export class DevServer {
                 );
 
                 import.meta.hot.accept(() => {
-                  console.log("updated");
+                  window.parent.__windmixOnUpdate(window);
                 });
-
-                const resizeObserver = new ResizeObserver(() => {
-                  window.parent.__uimixOnBodyHeightChange(
-                    window,
-                    document.body.clientHeight
-                  );
-                });
-                resizeObserver.observe(document.body);
               `;
             }
           },
