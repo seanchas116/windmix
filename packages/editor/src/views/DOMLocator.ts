@@ -4,7 +4,25 @@ import { makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 
 export class DOMLocator {
+  constructor() {
+    makeObservable(this);
+  }
+
   window: Window | undefined;
+
+  @observable windowBodyHeight: number | undefined = undefined;
+
+  setWindow(window: Window | undefined) {
+    this.window = window;
+
+    if (window) {
+      const resizeObserver = new ResizeObserver(() => {
+        console.log(window.document.body.clientHeight);
+        this.windowBodyHeight = window.document.body.clientHeight || undefined;
+      });
+      resizeObserver.observe(window.document.body);
+    }
+  }
 
   findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
     const elem = this.window?.document.elementFromPoint(offsetX, offsetY);

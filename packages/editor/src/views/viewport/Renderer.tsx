@@ -6,6 +6,16 @@ import { action } from "mobx";
 import { Rect } from "paintvec";
 import { compact } from "lodash-es";
 
+declare global {
+  interface Window {
+    __uimixOnBodyHeightChange(window: Window, height: number): void;
+  }
+}
+
+window.__uimixOnBodyHeightChange = (window: Window, height: number) => {
+  console.log("body height change", height);
+};
+
 export const Renderer: React.FC<{
   width: number;
   domLocator: DOMLocator;
@@ -38,6 +48,7 @@ export const Renderer: React.FC<{
       className="relative bg-white"
       style={{
         width: `${width}px`,
+        height: `${domLocator.windowBodyHeight ?? 1024}px`,
       }}
     >
       <iframe
@@ -45,7 +56,7 @@ export const Renderer: React.FC<{
         className="w-full h-[2048px]"
         ref={iframeRef}
         onLoad={(e) => {
-          domLocator.window = e.currentTarget.contentWindow ?? undefined;
+          domLocator.setWindow(e.currentTarget.contentWindow ?? undefined);
         }}
       />
       <MouseOverlay domLocator={domLocator} />

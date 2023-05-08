@@ -56,7 +56,10 @@ export class DevServer {
                 });
 
                 const resizeObserver = new ResizeObserver(() => {
-                  console.log(document.body.clientHeight);
+                  window.parent.__uimixOnBodyHeightChange(
+                    window,
+                    document.body.clientHeight
+                  );
                 });
                 resizeObserver.observe(document.body);
               `;
