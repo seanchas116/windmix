@@ -32,5 +32,15 @@ describe("File load/stringify", () => {
     expect(formatJS(file.stringify({ id: true }))).toMatchSnapshot(
       "stringifyWithID"
     );
+
+    const exampleDir = path.resolve(__dirname, "../../example/src");
+    const exampleFiles = fs.readdirSync(exampleDir);
+
+    for (const exampleFile of exampleFiles) {
+      const filePath = path.resolve(exampleDir, exampleFile);
+      const fileText = fs.readFileSync(filePath, "utf-8");
+      const file = loadFile(doc, filePath, fileText);
+      expect(file.stringify()).toEqual(fileText);
+    }
   });
 });
