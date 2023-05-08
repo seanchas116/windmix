@@ -9,6 +9,13 @@ const navigation = [
   { name: "Company", href: "#" },
 ];
 
+export function windmixPreviews() {
+  return [
+    { width: 1440, render: () => <Example /> },
+    { width: 375, render: () => <Example data={[]} /> },
+  ];
+}
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
