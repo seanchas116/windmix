@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { appState } from "../state/AppState";
+import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { domLocator } from "./DOMLocator";
+import { domLocator } from "../DOMLocator";
 import { action } from "mobx";
-import { getNodeDimension, updateNodeDimension } from "./NodeDimension";
+import { getNodeDimension, updateNodeDimension } from "../NodeDimension";
 import { Rect } from "paintvec";
 import { compact } from "lodash-es";
 
