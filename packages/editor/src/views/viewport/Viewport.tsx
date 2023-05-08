@@ -73,7 +73,7 @@ export const Viewport: React.FC = observer(() => {
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <Renderer width={1024} />
+            <Renderer width={1440} />
           </div>
           <div>
             <h2 className="font-semibold mb-1">
