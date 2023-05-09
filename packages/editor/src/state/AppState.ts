@@ -80,21 +80,23 @@ export class AppState {
     return this.document.nodes.get("file") as FileNode | undefined;
   }
 
-  readonly styleInspectorState = new StyleInspectorState({
-    getTargets: () => {
-      const targets: NodeStyleInspectorTarget[] = [];
-      for (const node of this.document.selectedNodes.values()) {
-        if (node.type === "element") {
-          targets.push(new NodeStyleInspectorTarget(node));
-        }
+  @computed get styleInspectorTargets(): NodeStyleInspectorTarget[] {
+    const targets: NodeStyleInspectorTarget[] = [];
+    for (const node of this.document.selectedNodes.values()) {
+      if (node.type === "element") {
+        targets.push(new NodeStyleInspectorTarget(node));
       }
-      return targets;
-    },
+    }
+    return targets;
+  }
+
+  readonly styleInspectorState = new StyleInspectorState({
+    getTargets: () => this.styleInspectorTargets,
     notifyChange: () => {
-      // TODO
+      this.styleInspectorTargets.forEach((target) => target.saveChanges());
     },
     notifyChangeEnd: () => {
-      // TODO
+      // no op
     },
   });
 
@@ -142,4 +144,17 @@ class NodeStyleInspectorTarget implements StyleInspectorTarget {
 
   computedStyle = new Style();
   style = new Style();
+
+  saveChanges(): void {
+    this.element.attributes = [
+      ...this.element.attributes.filter(
+        (attribute) => !("name" in attribute && attribute.name === "className")
+      ),
+      {
+        name: "className",
+        value: `"${this.style.toTailwind()}"`,
+        trailingSpace: "",
+      },
+    ];
+  }
 }
