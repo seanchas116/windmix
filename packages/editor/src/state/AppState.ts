@@ -5,8 +5,9 @@ import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
-import { Node, Document, FileNode } from "@windmix/model";
+import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
+import { StyleInspectorTarget } from "../models/StyleInspectorTarget";
 
 const vscode = acquireVsCodeApi();
 
@@ -81,13 +82,13 @@ export class AppState {
 
   readonly styleInspectorState = new StyleInspectorState({
     getTargets: () => {
-      return [
-        {
-          tagName: "div",
-          style: new Style(),
-          computedStyle: new Style(),
-        },
-      ];
+      const targets: NodeStyleInspectorTarget[] = [];
+      for (const node of this.document.selectedNodes.values()) {
+        if (node.type === "element") {
+          targets.push(new NodeStyleInspectorTarget(node));
+        }
+      }
+      return targets;
     },
     notifyChange: () => {
       // TODO
@@ -103,3 +104,42 @@ export class AppState {
 }
 
 export const appState = new AppState();
+
+class NodeStyleInspectorTarget implements StyleInspectorTarget {
+  constructor(element: ElementNode) {
+    this.element = element;
+
+    reaction(
+      () => element.attributes,
+      (attributes) => {
+        let className = "";
+
+        for (const attribute of attributes) {
+          if (
+            "name" in attribute &&
+            attribute.name === "className" &&
+            attribute.value &&
+            attribute.value.startsWith('"')
+          ) {
+            className = attribute.value.slice(1, -1);
+          }
+        }
+        console.log(className);
+
+        this.style.loadTailwind(className);
+      },
+      {
+        fireImmediately: true,
+      }
+    );
+  }
+
+  readonly element: ElementNode;
+
+  get tagName(): string {
+    return this.element.tagName;
+  }
+
+  computedStyle = new Style();
+  style = new Style();
+}
