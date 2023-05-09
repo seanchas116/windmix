@@ -50,19 +50,19 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <StyleDimensionInput
-                icon="W"
+                icon={{ letter: "W" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.width}
               />
               <StyleDimensionInput
-                icon=">"
+                icon={{ letter: ">" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minWidth}
               />
               <StyleDimensionInput
-                icon="<"
+                icon={{ letter: "<" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxWidth}
@@ -70,19 +70,19 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <StyleDimensionInput
-                icon="H"
+                icon={{ letter: "H" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.height}
               />
               <StyleDimensionInput
-                icon=">"
+                icon={{ letter: ">" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minHeight}
               />
               <StyleDimensionInput
-                icon="<"
+                icon={{ letter: "<" }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxHeight}
@@ -92,13 +92,13 @@ export const SizePane: React.FC<{
         ) : (
           <Row11>
             <StyleDimensionInput
-              icon="W"
+              icon={{ letter: "W" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.width}
             />
             <StyleDimensionInput
-              icon="H"
+              icon={{ letter: "H" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.height}

@@ -43,25 +43,25 @@ export const PositionPane: React.FC<{
         {state.props.position.computed !== "static" && (
           <FourEdgeGrid>
             <StyleDimensionInput
-              icon="T"
+              icon={{ letter: "T" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.top}
             />
             <StyleDimensionInput
-              icon="R"
+              icon={{ letter: "R" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.right}
             />
             <StyleDimensionInput
-              icon="B"
+              icon={{ letter: "B" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.bottom}
             />
             <StyleDimensionInput
-              icon="L"
+              icon={{ letter: "L" }}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.left}

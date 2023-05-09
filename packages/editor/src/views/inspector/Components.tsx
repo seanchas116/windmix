@@ -5,7 +5,7 @@ import {
   IconRadio,
   IconRadioOption,
 } from "@seanchas116/paintkit/src/components/IconRadio";
-import { Input } from "@seanchas116/paintkit/src/components/Input";
+import { Input, InputProps } from "@seanchas116/paintkit/src/components/Input";
 import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
 import {
   Select,
@@ -19,7 +19,7 @@ import { StylePropertyState } from "../../state/StyleInspectorState";
 export const StyleDimensionInput: React.FC<{
   className?: string;
   property: StylePropertyState;
-  icon?: IconifyIcon | string;
+  icon?: InputProps["icon"];
   units?: readonly string[];
   keywords?: readonly string[];
 }> = observer(({ property, ...props }) => {
@@ -37,7 +37,7 @@ export const StyleDimensionInput: React.FC<{
 export const StyleInput: React.FC<{
   className?: string;
   property: StylePropertyState;
-  icon?: IconifyIcon | string;
+  icon?: InputProps["icon"];
 }> = observer(({ property, ...props }) => {
   return (
     <Input
@@ -53,7 +53,7 @@ export const StyleInput: React.FC<{
 export const StyleComboBox: React.FC<{
   className?: string;
   property: StylePropertyState;
-  icon?: IconifyIcon | string;
+  icon?: InputProps["icon"];
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {
   return (
