@@ -7,13 +7,7 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import relativePositionIcon from "@seanchas116/paintkit/src/icon/RelativePosition";
-import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
-import absolutePositionIcon from "@seanchas116/paintkit/src/icon/AbsolutePosition";
-import marginTopIcon from "@seanchas116/paintkit/src/icon/MarginTop";
-import marginRightIcon from "@seanchas116/paintkit/src/icon/MarginRight";
-import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
-import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
+import * as icons from "@seanchas116/design-icons";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput, StyleIconRadio } from "./Components";
@@ -21,15 +15,15 @@ import { StyleDimensionInput, StyleIconRadio } from "./Components";
 const positionOptions = [
   {
     value: "static",
-    icon: staticPositionIcon,
+    icon: icons.staticPosition,
   },
   {
     value: "relative",
-    icon: relativePositionIcon,
+    icon: icons.relativePosition,
   },
   {
     value: "absolute",
-    icon: absolutePositionIcon,
+    icon: icons.absolutePosition,
   },
 ];
 
@@ -76,25 +70,25 @@ export const PositionPane: React.FC<{
         )}
         <FourEdgeGrid>
           <StyleDimensionInput
-            icon={marginTopIcon}
+            icon={icons.marginTop}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginTop}
           />
           <StyleDimensionInput
-            icon={marginRightIcon}
+            icon={icons.marginRight}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginRight}
           />
           <StyleDimensionInput
-            icon={marginBottomIcon}
+            icon={icons.marginBottom}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginBottom}
           />
           <StyleDimensionInput
-            icon={marginLeftIcon}
+            icon={icons.marginLeft}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginLeft}

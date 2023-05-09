@@ -8,8 +8,7 @@ import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
 import lineWeightIcon from "@iconify-icons/ic/outline-line-weight";
 import fontDownloadIcon from "@iconify-icons/ic/outline-font-download";
-import noItalicIcon from "@seanchas116/paintkit/src/icon/NoItalic";
-import italicIcon from "@seanchas116/paintkit/src/icon/Italic";
+import * as icons from "@seanchas116/design-icons";
 import {
   Pane,
   PaneHeading,
@@ -51,11 +50,11 @@ const textAlignOptions = [
 const fontStyleOptions = [
   {
     value: "normal",
-    icon: noItalicIcon,
+    icon: icons.noItalic,
   },
   {
     value: "italic",
-    icon: italicIcon,
+    icon: icons.italic,
   },
 ];
 

@@ -9,13 +9,7 @@ import {
   RowPackLeft,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Button } from "@seanchas116/paintkit/src/components/Button";
-import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
-import hStackIcon from "@seanchas116/paintkit/src/icon/HStack";
-import textIcon from "@seanchas116/paintkit/src/icon/Text";
-import edgeTopIcon from "@seanchas116/paintkit/src/icon/EdgeTop";
-import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
-import edgeBottomIcon from "@seanchas116/paintkit/src/icon/EdgeBottom";
-import edgeLeftIcon from "@seanchas116/paintkit/src/icon/EdgeLeft";
+import * as icons from "@seanchas116/design-icons";
 import visibilityOffIcon from "@iconify-icons/ic/outline-visibility-off";
 import arrowForwardIcon from "@iconify-icons/ic/outline-arrow-forward";
 import closeIcon from "@iconify-icons/ic/outline-close";
@@ -23,11 +17,6 @@ import wrapTextIcon from "@iconify-icons/ic/outline-wrap-text";
 import alignVerticalTopIcon from "@iconify-icons/ic/outline-align-vertical-top";
 import alignVerticalCenterIcon from "@iconify-icons/ic/outline-align-vertical-center";
 import alignVerticalBottomIcon from "@iconify-icons/ic/outline-align-vertical-bottom";
-import alignStretchIcon from "@seanchas116/paintkit/src/icon/AlignStretch";
-import justifyStartIcon from "@seanchas116/paintkit/src/icon/JustifyStart";
-import justifyCenterIcon from "@seanchas116/paintkit/src/icon/JustifyCenter";
-import justifyEndIcon from "@seanchas116/paintkit/src/icon/JustifyEnd";
-import justifySpaceBetweenIcon from "@seanchas116/paintkit/src/icon/JustifySpaceBetween";
 import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
@@ -42,16 +31,16 @@ const verticalSpaceBarIcon = {
 const displayOptions = [
   {
     value: "block",
-    icon: staticPositionIcon,
+    icon: icons.staticPosition,
   },
   {
     value: "flex",
-    icon: hStackIcon,
+    icon: icons.hStack,
   },
   // TODO: grid
   {
     value: "inline",
-    icon: textIcon,
+    icon: icons.text,
   },
   {
     value: "none",
@@ -96,7 +85,7 @@ const flexWrapOptions = [
 const alignItemsOptionsRow = [
   {
     value: "stretch",
-    icon: alignStretchIcon,
+    icon: icons.alignStretch,
   },
   {
     value: "flex-start",
@@ -120,20 +109,20 @@ const alignItemsOptionsColumn = alignItemsOptionsRow.map((option) => ({
 const justifyContentOptionsRow = [
   {
     value: "flex-start",
-    icon: justifyStartIcon,
+    icon: icons.justifyStart,
   },
   {
     value: "center",
-    icon: justifyCenterIcon,
+    icon: icons.justifyCenter,
   },
 
   {
     value: "flex-end",
-    icon: justifyEndIcon,
+    icon: icons.justifyEnd,
   },
   {
     value: "space-between",
-    icon: justifySpaceBetweenIcon,
+    icon: icons.justifySpaceBetween,
   },
 ];
 
@@ -216,22 +205,22 @@ export const LayoutPane: React.FC<{
     computedDisplay !== "none" ? (
       <FourEdgeGrid>
         <StyleDimensionInput
-          icon={edgeTopIcon}
+          icon={icons.edgeTop}
           units={lengthPercentageUnits}
           property={state.props.paddingTop}
         />
         <StyleDimensionInput
-          icon={edgeRightIcon}
+          icon={icons.edgeRight}
           units={lengthPercentageUnits}
           property={state.props.paddingRight}
         />
         <StyleDimensionInput
-          icon={edgeBottomIcon}
+          icon={icons.edgeBottom}
           units={lengthPercentageUnits}
           property={state.props.paddingBottom}
         />
         <StyleDimensionInput
-          icon={edgeLeftIcon}
+          icon={icons.edgeLeft}
           units={lengthPercentageUnits}
           property={state.props.paddingLeft}
         />

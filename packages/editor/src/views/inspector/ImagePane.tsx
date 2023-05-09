@@ -6,9 +6,7 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import sizeFillIcon from "@seanchas116/paintkit/src/icon/SizeFill";
-import sizeCoverIcon from "@seanchas116/paintkit/src/icon/SizeCover";
-import sizeContainIcon from "@seanchas116/paintkit/src/icon/SizeContain";
+import * as icons from "@seanchas116/design-icons";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { IconRadioOption } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
@@ -17,15 +15,15 @@ import { StyleIconRadio } from "./Components";
 const objectFitOptions: IconRadioOption<string>[] = [
   {
     value: "fill",
-    icon: sizeFillIcon,
+    icon: icons.sizeFill,
   },
   {
     value: "cover",
-    icon: sizeCoverIcon,
+    icon: icons.sizeCover,
   },
   {
     value: "contain",
-    icon: sizeContainIcon,
+    icon: icons.sizeContain,
   },
   {
     value: "none",

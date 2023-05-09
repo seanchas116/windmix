@@ -12,8 +12,7 @@ import {
   IconButton,
   MoreButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
-import separateCornersIcon from "@seanchas116/paintkit/src/icon/SeparateCorners";
-import radiusIcon from "@seanchas116/paintkit/src/icon/Radius";
+import * as icons from "@seanchas116/design-icons";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
@@ -27,7 +26,7 @@ export const SizePane: React.FC<{
       style={{
         justifySelf: "flex-end",
       }}
-      icon={separateCornersIcon}
+      icon={icons.separateCorners}
       pressed={state.showsSeparateRadiuses}
       onClick={state.onToggleShowSeparateRadiuses}
     />
@@ -110,13 +109,13 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <StyleDimensionInput
-                icon={radiusIcon}
+                icon={icons.radius}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderTopLeftRadius}
               />
               <StyleDimensionInput
-                icon={{ ...radiusIcon, rotate: 1 }}
+                icon={{ ...icons.radius, rotate: 1 }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderTopRightRadius}
@@ -125,13 +124,13 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <StyleDimensionInput
-                icon={{ ...radiusIcon, rotate: 3 }}
+                icon={{ ...icons.radius, rotate: 3 }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderBottomLeftRadius}
               />
               <StyleDimensionInput
-                icon={{ ...radiusIcon, rotate: 2 }}
+                icon={{ ...icons.radius, rotate: 2 }}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderBottomRightRadius}
@@ -141,7 +140,7 @@ export const SizePane: React.FC<{
         ) : (
           <Row111>
             <StyleDimensionInput
-              icon={radiusIcon}
+              icon={icons.radius}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.borderRadius}

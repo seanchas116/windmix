@@ -9,16 +9,9 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import lineWeightIcon from "@iconify-icons/ic/outline-line-weight";
 import closeIcon from "@iconify-icons/ic/outline-close";
-import solidLineIcon from "@seanchas116/paintkit/src/icon/SolidLine";
-import dottedLineIcon from "@seanchas116/paintkit/src/icon/DottedLine";
-import dashedLineIcon from "@seanchas116/paintkit/src/icon/DashedLine";
-import edgeAllIcon from "@seanchas116/paintkit/src/icon/EdgeAll";
-import edgeTopIcon from "@seanchas116/paintkit/src/icon/EdgeTop";
-import edgeBottomIcon from "@seanchas116/paintkit/src/icon/EdgeBottom";
-import edgeLeftIcon from "@seanchas116/paintkit/src/icon/EdgeLeft";
-import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
-import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import * as icons from "@seanchas116/design-icons";
 import Tippy from "@tippyjs/react";
+import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
   StyleInspectorState,
   StylePropertyState,
@@ -37,15 +30,15 @@ const borderStyleOptions = [
   },
   {
     value: "solid",
-    icon: solidLineIcon,
+    icon: icons.solidLine,
   },
   {
     value: "dotted",
-    icon: dottedLineIcon,
+    icon: icons.dottedLine,
   },
   {
     value: "dashed",
-    icon: dashedLineIcon,
+    icon: icons.dashedLine,
   },
 ];
 
@@ -89,35 +82,35 @@ export const BorderPane: React.FC<{
         <PaneHeading>Border</PaneHeading>
         <Tippy content="All">
           <IconButton
-            icon={edgeAllIcon}
+            icon={icons.edgeAll}
             pressed={state.borderEdgeMode === "all"}
             onClick={state.setBorderEdgeModeToAll}
           />
         </Tippy>
         <Tippy content="Top">
           <IconButton
-            icon={edgeTopIcon}
+            icon={icons.edgeTop}
             pressed={state.borderEdgeMode === "top"}
             onClick={state.setBorderEdgeModeToTop}
           />
         </Tippy>
         <Tippy content="Right">
           <IconButton
-            icon={edgeRightIcon}
+            icon={icons.edgeRight}
             pressed={state.borderEdgeMode === "right"}
             onClick={state.setBorderEdgeModeToRight}
           />
         </Tippy>
         <Tippy content="Bottom">
           <IconButton
-            icon={edgeBottomIcon}
+            icon={icons.edgeBottom}
             pressed={state.borderEdgeMode === "bottom"}
             onClick={state.setBorderEdgeModeToBottom}
           />
         </Tippy>
         <Tippy content="Left">
           <IconButton
-            icon={edgeLeftIcon}
+            icon={icons.edgeLeft}
             pressed={state.borderEdgeMode === "left"}
             onClick={state.setBorderEdgeModeToLeft}
           />

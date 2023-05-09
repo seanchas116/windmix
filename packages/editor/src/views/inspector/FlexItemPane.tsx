@@ -13,7 +13,7 @@ import fullscreenIcon from "@iconify-icons/ic/outline-fullscreen";
 import alignVerticalTopIcon from "@iconify-icons/ic/outline-align-vertical-top";
 import alignVerticalCenterIcon from "@iconify-icons/ic/outline-align-vertical-center";
 import alignVerticalBottomIcon from "@iconify-icons/ic/outline-align-vertical-bottom";
-import alignStretchIcon from "@seanchas116/paintkit/src/icon/AlignStretch";
+import * as icons from "@seanchas116/design-icons";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { StyleDimensionInput, StyleIconRadio, StyleInput } from "./Components";
 import { lengthPercentageUnits } from "./Units";
@@ -21,7 +21,7 @@ import { lengthPercentageUnits } from "./Units";
 const alignSelfOptionsRow = [
   {
     value: "stretch",
-    icon: alignStretchIcon,
+    icon: icons.alignStretch,
   },
   {
     value: "flex-start",
