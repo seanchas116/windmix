@@ -15,11 +15,11 @@ import { devServer } from "./extension";
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(
     webviewPanel: vscode.WebviewPanel,
-    state: ViewState
+    state?: ViewState
   ) {
     console.log(`Got state: ${state}`);
 
-    const tabPath = state.tabPath;
+    const tabPath = state?.tabPath;
     if (tabPath && vscode.workspace.rootPath) {
       const tabFullPath = path.join(
         vscode.workspace.rootPath,
