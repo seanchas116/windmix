@@ -17,7 +17,7 @@ const App: React.FC = observer(() => {
         <Outline />
       </aside>
       <Viewport />
-      <aside className="w-[224px] h-full bg-white/5 border-l border-white/5 relative contain-strict">
+      <aside className="w-[224px] h-full bg-white/5 border-l border-white/5 relative">
         <ScrollArea>
           <PaintkitRoot colorScheme="dark">
             <StyleInspector state={appState.styleInspectorState} />
