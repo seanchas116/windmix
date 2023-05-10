@@ -11,6 +11,7 @@ import lineWeightIcon from "@iconify-icons/ic/outline-line-weight";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import * as icons from "@seanchas116/design-icons";
 import Tippy from "@tippyjs/react";
+import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
   StyleInspectorState,
@@ -121,7 +122,7 @@ export const BorderPane: React.FC<{
           <StyleIconRadio options={borderStyleOptions} property={style} />
           {style.computed !== "none" && (
             <StyleDimensionInput
-              icon={lineWeightIcon}
+              icon={<Icon icon={lineWeightIcon} />}
               units={lengthPercentageUnits}
               property={width}
             />

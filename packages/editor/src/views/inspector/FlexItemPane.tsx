@@ -17,6 +17,7 @@ import * as icons from "@seanchas116/design-icons";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { StyleDimensionInput, StyleIconRadio, StyleInput } from "./Components";
 import { lengthPercentageUnits } from "./Units";
+import { Icon } from "@iconify/react";
 
 const alignSelfOptionsRow = [
   {
@@ -77,17 +78,29 @@ export const FlexItemPane: React.FC<{
         />
         <Row111>
           <StyleInput
-            icon={direction === "column" ? flexGrowColumnIcon : flexGrowRowIcon}
+            icon={
+              <Icon
+                icon={
+                  direction === "column" ? flexGrowColumnIcon : flexGrowRowIcon
+                }
+              />
+            }
             property={state.props.flexGrow}
           />
           <StyleInput
             icon={
-              direction === "column" ? flexShrinkColumnIcon : flexShrinkRowIcon
+              <Icon
+                icon={
+                  direction === "column"
+                    ? flexShrinkColumnIcon
+                    : flexShrinkRowIcon
+                }
+              />
             }
             property={state.props.flexShrink}
           />
           <StyleDimensionInput
-            icon={fullscreenIcon}
+            icon={<Icon icon={fullscreenIcon} />}
             units={lengthPercentageUnits}
             property={state.props.flexBasis}
           />

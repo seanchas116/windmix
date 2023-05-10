@@ -17,6 +17,8 @@ import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput } from "./Components";
+import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
+import { Icon } from "@iconify/react";
 
 export const SizePane: React.FC<{
   state: StyleInspectorState;
@@ -50,19 +52,19 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <StyleDimensionInput
-                icon={{ letter: "W" }}
+                icon={<LetterIcon>W</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.width}
               />
               <StyleDimensionInput
-                icon={{ letter: ">" }}
+                icon={<LetterIcon>{">"}</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minWidth}
               />
               <StyleDimensionInput
-                icon={{ letter: "<" }}
+                icon={<LetterIcon>{"<"}</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxWidth}
@@ -70,19 +72,19 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <StyleDimensionInput
-                icon={{ letter: "H" }}
+                icon={<LetterIcon>H</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.height}
               />
               <StyleDimensionInput
-                icon={{ letter: ">" }}
+                icon={<LetterIcon>{">"}</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minHeight}
               />
               <StyleDimensionInput
-                icon={{ letter: "<" }}
+                icon={<LetterIcon>{"<"}</LetterIcon>}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxHeight}
@@ -92,13 +94,13 @@ export const SizePane: React.FC<{
         ) : (
           <Row11>
             <StyleDimensionInput
-              icon={{ letter: "W" }}
+              icon={<LetterIcon>W</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.width}
             />
             <StyleDimensionInput
-              icon={{ letter: "H" }}
+              icon={<LetterIcon>H</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.height}
@@ -109,13 +111,13 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <StyleDimensionInput
-                icon={icons.radius}
+                icon={<Icon icon={icons.radius} />}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderTopLeftRadius}
               />
               <StyleDimensionInput
-                icon={{ ...icons.radius, rotate: 1 }}
+                icon={<Icon icon={{ ...icons.radius, rotate: 1 }} />}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderTopRightRadius}
@@ -124,13 +126,13 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <StyleDimensionInput
-                icon={{ ...icons.radius, rotate: 3 }}
+                icon={<Icon icon={{ ...icons.radius, rotate: 3 }} />}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderBottomLeftRadius}
               />
               <StyleDimensionInput
-                icon={{ ...icons.radius, rotate: 2 }}
+                icon={<Icon icon={{ ...icons.radius, rotate: 2 }} />}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.borderBottomRightRadius}
@@ -140,7 +142,7 @@ export const SizePane: React.FC<{
         ) : (
           <Row111>
             <StyleDimensionInput
-              icon={icons.radius}
+              icon={<Icon icon={icons.radius} />}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.borderRadius}

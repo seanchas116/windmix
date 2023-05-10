@@ -8,8 +8,8 @@ import {
   RowGroup,
   RowPackLeft,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { Button } from "@seanchas116/paintkit/src/components/Button";
 import * as icons from "@seanchas116/design-icons";
+import { Icon } from "@iconify/react";
 import visibilityOffIcon from "@iconify-icons/ic/outline-visibility-off";
 import arrowForwardIcon from "@iconify-icons/ic/outline-arrow-forward";
 import closeIcon from "@iconify-icons/ic/outline-close";
@@ -174,7 +174,7 @@ export const LayoutPane: React.FC<{
             property={state.props.alignItems}
           />
           <SizedDimensionInput
-            icon={verticalSpaceBarIcon}
+            icon={<Icon icon={verticalSpaceBarIcon} />}
             units={lengthPercentageUnits}
             property={state.props.rowGap}
           />
@@ -193,7 +193,7 @@ export const LayoutPane: React.FC<{
             property={state.props.justifyContent}
           />
           <SizedDimensionInput
-            icon={spaceBarIcon}
+            icon={<Icon icon={spaceBarIcon} />}
             units={lengthPercentageUnits}
             property={state.props.columnGap}
           />
@@ -205,22 +205,22 @@ export const LayoutPane: React.FC<{
     computedDisplay !== "none" ? (
       <FourEdgeGrid>
         <StyleDimensionInput
-          icon={icons.edgeTop}
+          icon={<Icon icon={icons.edgeTop} />}
           units={lengthPercentageUnits}
           property={state.props.paddingTop}
         />
         <StyleDimensionInput
-          icon={icons.edgeRight}
+          icon={<Icon icon={icons.edgeRight} />}
           units={lengthPercentageUnits}
           property={state.props.paddingRight}
         />
         <StyleDimensionInput
-          icon={icons.edgeBottom}
+          icon={<Icon icon={icons.edgeBottom} />}
           units={lengthPercentageUnits}
           property={state.props.paddingBottom}
         />
         <StyleDimensionInput
-          icon={icons.edgeLeft}
+          icon={<Icon icon={icons.edgeLeft} />}
           units={lengthPercentageUnits}
           property={state.props.paddingLeft}
         />

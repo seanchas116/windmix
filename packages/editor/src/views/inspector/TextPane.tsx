@@ -31,6 +31,7 @@ import {
   StyleDimensionInput,
   StyleIconRadio,
 } from "./Components";
+import { Icon } from "@iconify/react";
 
 const textAlignOptions = [
   {
@@ -99,7 +100,7 @@ export const TextPane: React.FC<{
       </PaneHeadingRow>
       <RowGroup>
         <ComboBox
-          icon={fontDownloadIcon}
+          icon={<Icon icon={fontDownloadIcon} />}
           title="font-family"
           value={state.props.fontFamily.value}
           placeholder={stripQuotes(state.props.fontFamily.computed ?? "")}
@@ -108,7 +109,7 @@ export const TextPane: React.FC<{
         />
         <Row11>
           <StyleComboBox
-            icon={lineWeightIcon}
+            icon={<Icon icon={lineWeightIcon} />}
             options={fontWeightOptions}
             property={state.props.fontWeight}
           />
@@ -116,17 +117,17 @@ export const TextPane: React.FC<{
         </Row11>
         <Row111>
           <StyleDimensionInput
-            icon={formatSizeIcon}
+            icon={<Icon icon={formatSizeIcon} />}
             units={lengthPercentageUnits}
             property={state.props.fontSize}
           />
           <StyleDimensionInput
-            icon={lineSpacingIcon}
+            icon={<Icon icon={lineSpacingIcon} />}
             units={lengthPercentageEmptyUnits}
             property={state.props.lineHeight}
           />
           <StyleDimensionInput
-            icon={spaceBarIcon}
+            icon={<Icon icon={spaceBarIcon} />}
             units={lengthPercentageEmptyUnits}
             property={state.props.letterSpacing}
           />

@@ -13,7 +13,7 @@ import blockIcon from "@iconify-icons/ic/outline-block";
 import cursorPointerIcon from "@iconify-icons/mdi/cursor-pointer";
 import cursorDefaultIcon from "@iconify-icons/mdi/cursor-default";
 import cursorTextIcon from "@iconify-icons/mdi/cursor-text";
-import { Icon } from "@iconify/react/dist/offline";
+import { Icon } from "@iconify/react";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { StyleComboBox, StyleInput } from "./Components";
 
@@ -36,9 +36,12 @@ export const EffectsPane: React.FC<{
 
       <RowGroup>
         <Row12>
-          <StyleInput icon={opacityIcon} property={state.props.opacity} />
+          <StyleInput
+            icon={<Icon icon={opacityIcon} />}
+            property={state.props.opacity}
+          />
           <StyleComboBox
-            icon={mouseIcon}
+            icon={<Icon icon={mouseIcon} />}
             options={cursorOptions}
             property={state.props.cursor}
           />

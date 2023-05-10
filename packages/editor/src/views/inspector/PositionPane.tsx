@@ -11,6 +11,8 @@ import * as icons from "@seanchas116/design-icons";
 import { StyleInspectorState } from "../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput, StyleIconRadio } from "./Components";
+import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
+import { Icon } from "@iconify/react";
 
 const positionOptions = [
   {
@@ -43,25 +45,25 @@ export const PositionPane: React.FC<{
         {state.props.position.computed !== "static" && (
           <FourEdgeGrid>
             <StyleDimensionInput
-              icon={{ letter: "T" }}
+              icon={<LetterIcon>T</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.top}
             />
             <StyleDimensionInput
-              icon={{ letter: "R" }}
+              icon={<LetterIcon>R</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.right}
             />
             <StyleDimensionInput
-              icon={{ letter: "B" }}
+              icon={<LetterIcon>B</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.bottom}
             />
             <StyleDimensionInput
-              icon={{ letter: "L" }}
+              icon={<LetterIcon>L</LetterIcon>}
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.left}
@@ -70,25 +72,25 @@ export const PositionPane: React.FC<{
         )}
         <FourEdgeGrid>
           <StyleDimensionInput
-            icon={icons.marginTop}
+            icon={<Icon icon={icons.marginTop} />}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginTop}
           />
           <StyleDimensionInput
-            icon={icons.marginRight}
+            icon={<Icon icon={icons.marginRight} />}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginRight}
           />
           <StyleDimensionInput
-            icon={icons.marginBottom}
+            icon={<Icon icon={icons.marginBottom} />}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginBottom}
           />
           <StyleDimensionInput
-            icon={icons.marginLeft}
+            icon={<Icon icon={icons.marginLeft} />}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             property={state.props.marginLeft}

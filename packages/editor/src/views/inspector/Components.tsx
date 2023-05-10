@@ -1,4 +1,3 @@
-import { IconifyIcon } from "@iconify/react";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import {
@@ -108,7 +107,7 @@ export const StyleIconRadio: React.FC<{
 export const StyleSelect: React.FC<{
   className?: string;
   property: StylePropertyState;
-  icon?: IconifyIcon | string;
+  icon?: JSX.Element;
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {
   return (
