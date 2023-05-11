@@ -17,7 +17,7 @@ const App: React.FC = observer(() => {
           <Outline />
         </aside>
         <Viewport />
-        <aside className="w-[224px] h-full bg-macaron-uiBackground border-l border-macaron-separator relative">
+        <aside className="w-[224px] h-full bg-macaron-uiBackground border-l border-macaron-separator relative contain-strict">
           <ScrollArea>
             <StyleInspector />
           </ScrollArea>
