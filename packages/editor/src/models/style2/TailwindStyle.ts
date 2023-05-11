@@ -22,9 +22,19 @@ function flattenColorNames(colors: NestedColors): [string, string][] {
   }
   return result;
 }
-const colors = new Map(flattenColorNames(tailwindConfig.theme?.colors ?? {}));
+
 const widths = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
 const heights = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
+const colors = new Map(flattenColorNames(tailwindConfig.theme?.colors ?? {}));
+const fontSizes = new Map(
+  Object.entries(tailwindConfig.theme?.fontSize ?? {}).map(([key, value]) => [
+    key,
+    value[0],
+  ])
+);
+const fontWeights = new Map(
+  Object.entries(tailwindConfig.theme?.fontWeight ?? {})
+);
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
@@ -64,6 +74,18 @@ export class TailwindStyle {
 
   get color(): TailwindValue | undefined {
     return this.getValue("text", colors, /^#/);
+  }
+
+  get fontSize(): TailwindValue | undefined {
+    return this.getValue(
+      "text",
+      fontSizes,
+      /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
+    );
+  }
+
+  get fontWeight(): TailwindValue | undefined {
+    return this.getValue("font", fontWeights, /^[0-9]+$/);
   }
 
   private getValue(
