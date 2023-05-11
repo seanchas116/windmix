@@ -23,6 +23,8 @@ function flattenColorNames(colors: NestedColors): [string, string][] {
   return result;
 }
 const colors = new Map(flattenColorNames(tailwindConfig.theme?.colors ?? {}));
+const widths = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
+const heights = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
@@ -52,37 +54,45 @@ export class TailwindStyle {
     return this.className.trim().split(/\s+/);
   }
 
-  get width(): string | undefined {
-    return this.classNames.find((className) => className.startsWith("w-"));
+  get width(): TailwindValue | undefined {
+    return this.getValue("w", widths);
   }
 
-  get height(): string | undefined {
-    return this.classNames.find((className) => className.startsWith("h-"));
+  get height(): TailwindValue | undefined {
+    return this.getValue("h", heights);
   }
 
   get color(): TailwindValue | undefined {
-    const textClasses = this.classNames.filter((className) =>
-      className.startsWith("text-")
-    );
+    return this.getValue("text", colors, /^#/);
+  }
 
-    for (const textClass of textClasses) {
-      const name = textClass.slice("text-".length);
+  private getValue(
+    prefix: string, // "w", "h", 'text' etc
+    tokens: Map<string, string>, // { "1/2": "50%" } etc
+    arbitraryValuePattern?: RegExp // /^#/ for text colors etc
+  ): TailwindValue | undefined {
+    const classNames = this.classNames
+      .filter((className) => className.startsWith(`${prefix}-`))
+      .reverse();
 
-      // token color
-      const color = colors.get(name);
-      if (color) {
-        return {
-          type: "keyword",
-          keyword: name,
-          value: color,
-        };
-      }
-
-      // arbitrary color
-      if (name.startsWith("[#") && name.endsWith("]")) {
+    for (const className of classNames) {
+      const keyword = className?.slice(prefix.length + 1);
+      if (keyword.startsWith("[") && keyword.endsWith("]")) {
+        if (arbitraryValuePattern && !arbitraryValuePattern.test(keyword)) {
+          continue;
+        }
         return {
           type: "arbitrary",
-          value: name.slice(2, -1),
+          value: keyword.slice(1, -1),
+        };
+      }
+      const value = tokens.get(keyword);
+
+      if (value) {
+        return {
+          type: "keyword",
+          keyword,
+          value,
         };
       }
     }

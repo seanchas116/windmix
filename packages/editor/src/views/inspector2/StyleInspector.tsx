@@ -7,8 +7,8 @@ export const StyleInspector: React.FC = observer(() => {
   console.log(styles.map((s) => s.height));
 
   const color = sameOrNone(styles.map((s) => s.color?.value));
-  const width = sameOrNone(styles.map((s) => s.width));
-  const height = sameOrNone(styles.map((s) => s.height));
+  const width = sameOrNone(styles.map((s) => s.width?.value));
+  const height = sameOrNone(styles.map((s) => s.height?.value));
 
   return (
     <dl>
