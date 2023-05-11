@@ -6,5 +6,5 @@ export const StyleInspector: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
   console.log(styles.map((s) => s.height));
 
-  return <div>{sameOrNone(styles.map((s) => s.text))}</div>;
+  return <div>{sameOrNone(styles.map((s) => s.color?.value))}</div>;
 });
