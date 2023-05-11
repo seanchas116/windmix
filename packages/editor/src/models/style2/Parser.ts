@@ -36,7 +36,7 @@ export class KeywordTailwindParser implements ITailwindParser {
     if (value.type !== "keyword") {
       return;
     }
-    return this.keywordCSSToTailwind.get(value.type);
+    return value.keyword;
   }
 
   parse(tailwindValue: string): TailwindValue | undefined {
