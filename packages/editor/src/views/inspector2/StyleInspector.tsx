@@ -47,7 +47,27 @@ export const StyleInspector: React.FC = observer(() => {
         <PaneHeadingRow>
           <PaneHeading>Size</PaneHeading>
         </PaneHeadingRow>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-1">
+          <SeparateComboBox
+            icon={<LetterIcon>W</LetterIcon>}
+            value={width?.value}
+          />
+          <SeparateComboBox
+            icon={<LetterIcon>H</LetterIcon>}
+            value={height?.value}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-1">
+          <SeparateComboBox
+            icon={<LetterIcon>W</LetterIcon>}
+            value={width?.value}
+          />
+          <SeparateComboBox
+            icon={<LetterIcon>H</LetterIcon>}
+            value={height?.value}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-1">
           <SeparateComboBox
             icon={<LetterIcon>W</LetterIcon>}
             value={width?.value}
@@ -63,7 +83,7 @@ export const StyleInspector: React.FC = observer(() => {
           <PaneHeading>Text</PaneHeading>
         </PaneHeadingRow>
         <ColorComboBox styles={styles} />
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-1">
           <FontSizeComboBox styles={styles} />
           <FontWeightComboBox styles={styles} />
         </div>
