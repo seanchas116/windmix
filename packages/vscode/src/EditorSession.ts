@@ -278,6 +278,11 @@ export class EditorSession {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Windmix Editor</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+          input:focus {
+            outline: none;
+          }
+        </style>
       </head>
       <body>
         <div id="root"></div>
