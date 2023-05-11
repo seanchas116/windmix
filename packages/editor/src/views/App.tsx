@@ -10,7 +10,7 @@ const App: React.FC = observer(() => {
     <PaintkitRoot colorScheme="dark">
       <div
         className="
-    fixed inset-0 flex text-xs
+    fixed inset-0 w-screen h-screen flex text-xs
     "
       >
         <aside className="w-[224px] h-full bg-macaron-uiBackground border-r border-macaron-separator relative contain-strict">
