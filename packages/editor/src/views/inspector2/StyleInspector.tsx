@@ -4,6 +4,7 @@ import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import {
   TailwindStyle,
   TailwindValue,
+  colors,
   fontSizes,
   fontWeights,
   widths,
@@ -61,7 +62,7 @@ export const StyleInspector: React.FC = observer(() => {
         <PaneHeadingRow>
           <PaneHeading>Text</PaneHeading>
         </PaneHeadingRow>
-        <ColorInput value={color?.value} />
+        <ColorComboBox styles={styles} />
         <div className="grid grid-cols-2 gap-2">
           <FontSizeComboBox styles={styles} />
           <FontWeightComboBox styles={styles} />
@@ -82,6 +83,18 @@ export const StyleInspector: React.FC = observer(() => {
     </>
   );
 });
+
+const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
+  const value = sameOrNone(styles.map((s) => s.color));
+
+  return (
+    <ColorInput
+      value={value?.value}
+      tokenValue={value?.type === "keyword" ? value.keyword : undefined}
+      tokens={colors}
+    />
+  );
+};
 
 const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
   styles,
