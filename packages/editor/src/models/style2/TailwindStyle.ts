@@ -23,16 +23,22 @@ function flattenColorNames(colors: NestedColors): [string, string][] {
   return result;
 }
 
-const widths = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
-const heights = new Map(Object.entries(tailwindConfig.theme?.width ?? {}));
-const colors = new Map(flattenColorNames(tailwindConfig.theme?.colors ?? {}));
-const fontSizes = new Map(
+export const widths = new Map(
+  Object.entries(tailwindConfig.theme?.width ?? {})
+);
+export const heights = new Map(
+  Object.entries(tailwindConfig.theme?.width ?? {})
+);
+export const colors = new Map(
+  flattenColorNames(tailwindConfig.theme?.colors ?? {})
+);
+export const fontSizes = new Map(
   Object.entries(tailwindConfig.theme?.fontSize ?? {}).map(([key, value]) => [
     key,
     value[0],
   ])
 );
-const fontWeights = new Map(
+export const fontWeights = new Map(
   Object.entries(tailwindConfig.theme?.fontWeight ?? {})
 );
 

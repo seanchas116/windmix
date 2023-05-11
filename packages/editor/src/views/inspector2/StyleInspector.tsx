@@ -1,7 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { appState } from "../../state/AppState";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import { TailwindValue } from "../../models/style2/TailwindStyle";
+import {
+  TailwindStyle,
+  TailwindValue,
+  fontSizes,
+  fontWeights,
+  widths,
+} from "../../models/style2/TailwindStyle";
 import {
   Pane,
   PaneHeading,
@@ -57,14 +63,8 @@ export const StyleInspector: React.FC = observer(() => {
         </PaneHeadingRow>
         <ColorInput value={color?.value} />
         <div className="grid grid-cols-2 gap-2">
-          <SeparateComboBox
-            icon={<Icon icon="ic:outline-format-size" />}
-            value={fontSize?.value}
-          />
-          <SeparateComboBox
-            icon={<Icon icon="ic:outline-line-weight" />}
-            value={fontWeight?.value}
-          />
+          <FontSizeComboBox styles={styles} />
+          <FontWeightComboBox styles={styles} />
         </div>
       </Pane>
       <dl className="p-2">
@@ -82,3 +82,79 @@ export const StyleInspector: React.FC = observer(() => {
     </>
   );
 });
+
+const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
+  styles,
+}) => {
+  const value = sameOrNone(styles.map((s) => s.fontSize));
+
+  const pxValue = (value: string) => {
+    // rem -> px
+    return value.endsWith("rem") ? `${parseFloat(value) * 16}px` : value;
+  };
+
+  const options = [...fontSizes].map(([name, value]) => {
+    return {
+      value: name,
+      text: (
+        <>
+          {name}{" "}
+          <span
+            style={{
+              opacity: 0.5,
+            }}
+          >
+            {pxValue(value)}
+          </span>
+        </>
+      ),
+    };
+  });
+
+  return (
+    <SeparateComboBox
+      icon={<Icon icon="ic:outline-format-size" />}
+      value={value ? pxValue(value.value) : undefined}
+      selectOptions={options}
+      selectValue={value?.type === "keyword" ? value.keyword : undefined}
+    />
+  );
+};
+
+const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
+  styles,
+}) => {
+  const value = sameOrNone(styles.map((s) => s.fontWeight));
+
+  const pxValue = (value: string) => {
+    // rem -> px
+    return value.endsWith("rem") ? `${parseFloat(value) * 16}px` : value;
+  };
+
+  const options = [...fontWeights].map(([name, value]) => {
+    return {
+      value: name,
+      text: (
+        <>
+          {name}{" "}
+          <span
+            style={{
+              opacity: 0.5,
+            }}
+          >
+            {pxValue(value)}
+          </span>
+        </>
+      ),
+    };
+  });
+
+  return (
+    <SeparateComboBox
+      icon={<Icon icon="ic:outline-line-weight" />}
+      value={value ? pxValue(value.value) : undefined}
+      selectOptions={options}
+      selectValue={value?.type === "keyword" ? value.keyword : undefined}
+    />
+  );
+};
