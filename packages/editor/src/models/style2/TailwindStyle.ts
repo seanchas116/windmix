@@ -1,5 +1,6 @@
 import resolveConfig from "tailwindcss/resolveConfig";
 import defaultConfig from "tailwindcss/defaultConfig";
+import { twMerge } from "tailwind-merge";
 const tailwindConfig = resolveConfig(defaultConfig); // TODO: support custom config
 
 interface NestedColors {
@@ -46,6 +47,15 @@ export type TailwindValue =
   | { type: "arbitrary"; value: string }
   | { type: "keyword"; keyword: string; value: string };
 
+function stringifyTailwindValue(value: TailwindValue): string {
+  switch (value.type) {
+    case "arbitrary":
+      return `[${value.value}]`;
+    case "keyword":
+      return value.keyword;
+  }
+}
+
 export interface ClassNameAccess {
   get(): string;
   set(value: string): void;
@@ -82,6 +92,15 @@ export class TailwindStyle {
     return this.getValue("text", colors, /^#/);
   }
 
+  set color(color: TailwindValue | undefined) {
+    if (color) {
+      const className = "text-" + stringifyTailwindValue(color);
+      this.className = twMerge(this.className, className);
+    } else {
+      // TODO
+    }
+  }
+
   get fontSize(): TailwindValue | undefined {
     return this.getValue(
       "text",
@@ -106,12 +125,13 @@ export class TailwindStyle {
     for (const className of classNames) {
       const keyword = className?.slice(prefix.length + 1);
       if (keyword.startsWith("[") && keyword.endsWith("]")) {
-        if (arbitraryValuePattern && !arbitraryValuePattern.test(keyword)) {
+        const value = keyword.slice(1, -1);
+        if (arbitraryValuePattern && !arbitraryValuePattern.test(value)) {
           continue;
         }
         return {
           type: "arbitrary",
-          value: keyword.slice(1, -1),
+          value,
         };
       }
       const value = tokens.get(keyword);
