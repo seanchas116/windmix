@@ -9,4 +9,5 @@ export interface IEditorToRootRPCHandler {
   reveal(location: { line: number; column: number }): Promise<void>;
   undo(): Promise<void>;
   redo(): Promise<void>;
+  reloadWebviews(): Promise<void>;
 }

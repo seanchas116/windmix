@@ -161,6 +161,9 @@ export class EditorSession {
         redo: async () => {
           await this.undoOrRedo("redo");
         },
+        reloadWebviews: async () => {
+          await vscode.commands.executeCommand("workbench.action.reloadWindow");
+        },
       }
     );
     disposables.push({ dispose: () => rpc.dispose() });

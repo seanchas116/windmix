@@ -34,3 +34,9 @@ hotkeys("ctrl+-,command+-", (e) => {
   e.stopPropagation();
   scrollState.zoomOut();
 });
+
+window.addEventListener("beforeunload", () => {
+  // VSCode webviews should be reloaded explicitly when the iframe reloads
+  // (otherwise the black screen will be shown)
+  appState.connection.rpc.remote.reloadWebviews();
+});
