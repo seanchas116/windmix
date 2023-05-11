@@ -8,6 +8,7 @@ import * as Y from "yjs";
 import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/StyleInspectorTarget";
+import { TailwindStyle } from "../models/style2/TailwindStyle";
 
 const vscode = acquireVsCodeApi();
 
@@ -102,6 +103,23 @@ export class AppState {
 
   reveal(location: { line: number; column: number }): void {
     this.connection.rpc.remote.reveal(location);
+  }
+
+  @computed get tailwindStyles(): TailwindStyle[] {
+    const targets: TailwindStyle[] = [];
+    for (const node of this.document.selectedNodes.values()) {
+      if (node.type === "element") {
+        targets.push(
+          new TailwindStyle({
+            get: () => node.className ?? "",
+            set: (value) => {
+              node.className = value;
+            },
+          })
+        );
+      }
+    }
+    return targets;
   }
 }
 

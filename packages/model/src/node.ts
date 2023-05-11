@@ -171,6 +171,45 @@ export class ElementNode extends BaseNode<
     this.data.set({ attributes });
   }
 
+  get className(): string | undefined {
+    for (const attribute of this.attributes) {
+      if (
+        "name" in attribute &&
+        attribute.name === "className" &&
+        attribute.value &&
+        attribute.value.startsWith('"')
+      ) {
+        return attribute.value.slice(1, -1);
+      }
+    }
+  }
+
+  set className(className: string | undefined) {
+    if (className === this.className) {
+      return;
+    }
+
+    // TODO: preserve order of attributes
+
+    const otherAttrs = this.attributes.filter(
+      (attribute) => !("name" in attribute && attribute.name === "className")
+    );
+
+    if (className === undefined) {
+      this.attributes = otherAttrs;
+      return;
+    } else {
+      this.attributes = [
+        ...otherAttrs,
+        {
+          name: "className",
+          value: `"${className}"`,
+          trailingSpace: "",
+        },
+      ];
+    }
+  }
+
   get spaceAfterTagName(): string {
     return this.data.get("spaceAfterTagName") ?? " ";
   }

@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { appState } from "../state/AppState";
-import { StyleInspector } from "./inspector/StyleInspector";
+import { StyleInspector } from "./inspector2/StyleInspector";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { ScrollArea } from "@seanchas116/paintkit/src/components/ScrollArea";
 import { Outline } from "./outline/Outline";
@@ -20,7 +19,7 @@ const App: React.FC = observer(() => {
         <Viewport />
         <aside className="w-[224px] h-full bg-macaron-uiBackground border-l border-macaron-separator relative">
           <ScrollArea>
-            <StyleInspector state={appState.styleInspectorState} />
+            <StyleInspector />
           </ScrollArea>
         </aside>
       </div>
