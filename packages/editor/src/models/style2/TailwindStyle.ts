@@ -124,6 +124,22 @@ export class TailwindStyle {
     this.setValue("font", fontWeight);
   }
 
+  get textAlign(): string | undefined {
+    const classNames = this.classNames;
+
+    for (const className of classNames) {
+      switch (className) {
+        case "text-center":
+          return "center";
+        case "text-right":
+          return "right";
+        case "text-left":
+          return "left";
+        // TODO: justify/start/end
+      }
+    }
+  }
+
   private getValue(
     prefix: string, // "w", "h", 'text' etc
     tokens: Map<string, string>, // { "1/2": "50%" } etc

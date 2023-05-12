@@ -19,6 +19,25 @@ import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox"
 import { ColorInput } from "@seanchas116/paintkit/src/components/css/ColorInput";
 import { Icon } from "@iconify/react";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
+import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
+import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
+import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
+import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
+
+const textAlignOptions = [
+  {
+    value: "left",
+    icon: <Icon icon={formatAlignLeftIcon} />,
+  },
+  {
+    value: "center",
+    icon: <Icon icon={formatAlignCenterIcon} />,
+  },
+  {
+    value: "right",
+    icon: <Icon icon={formatAlignRightIcon} />,
+  },
+];
 
 function stringifyValue(value: TailwindValue | undefined) {
   if (!value) {
@@ -41,6 +60,7 @@ export const StyleInspector: React.FC = observer(() => {
   const height = sameOrNone(styles.map((s) => s.height));
   const fontSize = sameOrNone(styles.map((s) => s.fontSize));
   const fontWeight = sameOrNone(styles.map((s) => s.fontWeight));
+  const textAlign = sameOrNone(styles.map((s) => s.textAlign));
 
   return (
     <>
@@ -102,6 +122,7 @@ export const StyleInspector: React.FC = observer(() => {
             tokens={fontWeights}
           />
         </div>
+        <IconRadio options={textAlignOptions} value={textAlign} />
       </Pane>
       <dl className="p-2">
         <dt className="text-macaron-disabledText">Width</dt>
@@ -114,6 +135,8 @@ export const StyleInspector: React.FC = observer(() => {
         <dd>{stringifyValue(fontSize)}</dd>
         <dt className="text-macaron-disabledText">Font Weight</dt>
         <dd>{stringifyValue(fontWeight)}</dd>
+        <dt className="text-macaron-disabledText">Text Align</dt>
+        <dd>{textAlign}</dd>
       </dl>
     </>
   );
