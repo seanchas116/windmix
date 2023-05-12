@@ -109,8 +109,26 @@ export class TailwindStyle {
     );
   }
 
+  set fontSize(fontSize: TailwindValue | undefined) {
+    if (fontSize) {
+      const className = "text-" + stringifyTailwindValue(fontSize);
+      this.className = twMerge(this.className, className);
+    } else {
+      // TODO
+    }
+  }
+
   get fontWeight(): TailwindValue | undefined {
     return this.getValue("font", fontWeights, /^[0-9]+$/);
+  }
+
+  set fontWeight(fontWeight: TailwindValue | undefined) {
+    if (fontWeight) {
+      const className = "font-" + stringifyTailwindValue(fontWeight);
+      this.className = twMerge(this.className, className);
+    } else {
+      // TODO
+    }
   }
 
   private getValue(

@@ -171,6 +171,29 @@ const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
       value={value ? pxValue(value.value) : undefined}
       selectOptions={options}
       selectValue={value?.type === "keyword" ? value.keyword : undefined}
+      onChange={(value) => {
+        if (value) {
+          for (const style of styles) {
+            style.fontSize = {
+              type: "arbitrary",
+              value,
+            };
+          }
+        }
+        return true;
+      }}
+      onSelectChange={(keyword) => {
+        if (keyword) {
+          for (const style of styles) {
+            style.fontSize = {
+              type: "keyword",
+              keyword,
+              value: "", // unnecessary
+            };
+          }
+        }
+        return true;
+      }}
     />
   );
 };
@@ -209,6 +232,29 @@ const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
       value={value ? pxValue(value.value) : undefined}
       selectOptions={options}
       selectValue={value?.type === "keyword" ? value.keyword : undefined}
+      onChange={(value) => {
+        if (value) {
+          for (const style of styles) {
+            style.fontWeight = {
+              type: "arbitrary",
+              value,
+            };
+          }
+        }
+        return true;
+      }}
+      onSelectChange={(keyword) => {
+        if (keyword) {
+          for (const style of styles) {
+            style.fontWeight = {
+              type: "keyword",
+              keyword,
+              value: "", // unnecessary
+            };
+          }
+        }
+        return true;
+      }}
     />
   );
 };
