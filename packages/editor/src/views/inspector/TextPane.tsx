@@ -36,41 +36,41 @@ import { Icon } from "@iconify/react";
 const textAlignOptions = [
   {
     value: "left",
-    icon: formatAlignLeftIcon,
+    icon: <Icon icon={formatAlignLeftIcon} />,
   },
   {
     value: "center",
-    icon: formatAlignCenterIcon,
+    icon: <Icon icon={formatAlignCenterIcon} />,
   },
   {
     value: "right",
-    icon: formatAlignRightIcon,
+    icon: <Icon icon={formatAlignRightIcon} />,
   },
 ];
 
 const fontStyleOptions = [
   {
     value: "normal",
-    icon: icons.noItalic,
+    icon: <Icon icon={icons.noItalic} />,
   },
   {
     value: "italic",
-    icon: icons.italic,
+    icon: <Icon icon={icons.italic} />,
   },
 ];
 
 const textDecorationOptions = [
   {
     value: "none",
-    icon: closeIcon,
+    icon: <Icon icon={closeIcon} />,
   },
   {
     value: "underline",
-    icon: underlineIcon,
+    icon: <Icon icon={underlineIcon} />,
   },
   {
     value: "line-through",
-    icon: strikethroughIcon,
+    icon: <Icon icon={strikethroughIcon} />,
   },
 ];
 

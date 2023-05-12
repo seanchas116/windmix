@@ -17,15 +17,15 @@ import { Icon } from "@iconify/react";
 const positionOptions = [
   {
     value: "static",
-    icon: icons.staticPosition,
+    icon: <Icon icon={icons.staticPosition} />,
   },
   {
     value: "relative",
-    icon: icons.relativePosition,
+    icon: <Icon icon={icons.relativePosition} />,
   },
   {
     value: "absolute",
-    icon: icons.absolutePosition,
+    icon: <Icon icon={icons.absolutePosition} />,
   },
 ];
 

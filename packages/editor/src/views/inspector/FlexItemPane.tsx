@@ -69,11 +69,13 @@ export const FlexItemPane: React.FC<{
       </PaneHeadingRow>
       <RowGroup>
         <StyleIconRadio
-          options={
-            direction === "column"
-              ? alignSelfOptionsColumn
-              : alignSelfOptionsRow
-          }
+          options={(direction === "column"
+            ? alignSelfOptionsColumn
+            : alignSelfOptionsRow
+          ).map((option) => ({
+            value: option.value,
+            icon: <Icon icon={option.icon} />,
+          }))}
           property={state.props.alignSelf}
         />
         <Row111>

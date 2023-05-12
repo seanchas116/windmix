@@ -27,19 +27,19 @@ import {
 const borderStyleOptions = [
   {
     value: "none",
-    icon: closeIcon,
+    icon: <Icon icon={closeIcon} />,
   },
   {
     value: "solid",
-    icon: icons.solidLine,
+    icon: <Icon icon={icons.solidLine} />,
   },
   {
     value: "dotted",
-    icon: icons.dottedLine,
+    icon: <Icon icon={icons.dottedLine} />,
   },
   {
     value: "dashed",
-    icon: icons.dashedLine,
+    icon: <Icon icon={icons.dashedLine} />,
   },
 ];
 

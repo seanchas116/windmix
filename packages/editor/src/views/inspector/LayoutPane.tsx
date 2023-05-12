@@ -31,54 +31,54 @@ const verticalSpaceBarIcon = {
 const displayOptions = [
   {
     value: "block",
-    icon: icons.staticPosition,
+    icon: <Icon icon={icons.staticPosition} />,
   },
   {
     value: "flex",
-    icon: icons.hStack,
+    icon: <Icon icon={icons.hStack} />,
   },
   // TODO: grid
   {
     value: "inline",
-    icon: icons.text,
+    icon: <Icon icon={icons.text} />,
   },
   {
     value: "none",
-    icon: visibilityOffIcon,
+    icon: <Icon icon={visibilityOffIcon} />,
   },
 ];
 
 const flexDirectionOptions = [
   {
     value: "row",
-    icon: arrowForwardIcon,
+    icon: <Icon icon={arrowForwardIcon} />,
   },
   {
     value: "column",
-    icon: { ...arrowForwardIcon, rotate: 1 },
+    icon: <Icon icon={{ ...arrowForwardIcon, rotate: 1 }} />,
   },
   {
     value: "row-reverse",
-    icon: { ...arrowForwardIcon, rotate: 2 },
+    icon: <Icon icon={{ ...arrowForwardIcon, rotate: 2 }} />,
   },
   {
     value: "column-reverse",
-    icon: { ...arrowForwardIcon, rotate: 3 },
+    icon: <Icon icon={{ ...arrowForwardIcon, rotate: 3 }} />,
   },
 ];
 
 const flexWrapOptions = [
   {
     value: "nowrap",
-    icon: closeIcon,
+    icon: <Icon icon={closeIcon} />,
   },
   {
     value: "wrap",
-    icon: wrapTextIcon,
+    icon: <Icon icon={wrapTextIcon} />,
   },
   {
     value: "wrap-reverse",
-    icon: { ...wrapTextIcon, vFlip: true },
+    icon: <Icon icon={{ ...wrapTextIcon, vFlip: true }} />,
   },
 ];
 
@@ -166,11 +166,13 @@ export const LayoutPane: React.FC<{
         </RowPackLeft>
         <RowPackLeft>
           <StyleIconRadio
-            options={
-              computedFlexDirection?.includes("column")
-                ? alignItemsOptionsColumn
-                : alignItemsOptionsRow
-            }
+            options={(computedFlexDirection?.includes("column")
+              ? alignItemsOptionsColumn
+              : alignItemsOptionsRow
+            ).map((option) => ({
+              value: option.value,
+              icon: <Icon icon={option.icon} />,
+            }))}
             property={state.props.alignItems}
           />
           <SizedDimensionInput
@@ -181,15 +183,17 @@ export const LayoutPane: React.FC<{
         </RowPackLeft>
         <RowPackLeft>
           <StyleIconRadio
-            options={
-              computedFlexDirection === "column-reverse"
-                ? justifyContentOptionsColumnReverse
-                : computedFlexDirection === "row-reverse"
-                ? justifyContentOptionsRowReverse
-                : computedFlexDirection === "column"
-                ? justifyContentOptionsColumn
-                : justifyContentOptionsRow
-            }
+            options={(computedFlexDirection === "column-reverse"
+              ? justifyContentOptionsColumnReverse
+              : computedFlexDirection === "row-reverse"
+              ? justifyContentOptionsRowReverse
+              : computedFlexDirection === "column"
+              ? justifyContentOptionsColumn
+              : justifyContentOptionsRow
+            ).map((option) => ({
+              value: option.value,
+              icon: <Icon icon={option.icon} />,
+            }))}
             property={state.props.justifyContent}
           />
           <SizedDimensionInput
