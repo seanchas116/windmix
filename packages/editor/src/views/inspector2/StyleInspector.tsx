@@ -7,7 +7,6 @@ import {
   colors,
   fontSizes,
   fontWeights,
-  widths,
 } from "../../models/style2/TailwindStyle";
 import {
   Pane,
@@ -140,60 +139,12 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
 const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
   styles,
 }) => {
-  const value = sameOrNone(styles.map((s) => s.fontSize));
-
-  const pxValue = (value: string) => {
-    // rem -> px
-    return value.endsWith("rem") ? `${parseFloat(value) * 16}px` : value;
-  };
-
-  const options = [...fontSizes].map(([name, value]) => {
-    return {
-      value: name,
-      text: (
-        <>
-          {name}{" "}
-          <span
-            style={{
-              opacity: 0.5,
-            }}
-          >
-            {pxValue(value)}
-          </span>
-        </>
-      ),
-    };
-  });
-
   return (
-    <SeparateComboBox
+    <StyleComboBox
+      styles={styles}
       icon={<Icon icon="ic:outline-format-size" />}
-      value={value ? pxValue(value.value) : undefined}
-      selectOptions={options}
-      selectValue={value?.type === "keyword" ? value.keyword : undefined}
-      onChange={(value) => {
-        if (value) {
-          for (const style of styles) {
-            style.fontSize = {
-              type: "arbitrary",
-              value,
-            };
-          }
-        }
-        return true;
-      }}
-      onSelectChange={(keyword) => {
-        if (keyword) {
-          for (const style of styles) {
-            style.fontSize = {
-              type: "keyword",
-              keyword,
-              value: "", // unnecessary
-            };
-          }
-        }
-        return true;
-      }}
+      name="fontSize"
+      tokens={fontSizes}
     />
   );
 };
@@ -201,14 +152,30 @@ const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
 const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
   styles,
 }) => {
-  const value = sameOrNone(styles.map((s) => s.fontWeight));
+  return (
+    <StyleComboBox
+      styles={styles}
+      icon={<Icon icon="ic:outline-line-weight" />}
+      name="fontWeight"
+      tokens={fontWeights}
+    />
+  );
+};
+
+const StyleComboBox: React.FC<{
+  styles: TailwindStyle[];
+  icon: JSX.Element;
+  name: "fontSize" | "fontWeight";
+  tokens: Map<string, string>;
+}> = observer(({ styles, name, tokens, icon }) => {
+  const value = sameOrNone(styles.map((s) => s[name]));
 
   const pxValue = (value: string) => {
     // rem -> px
     return value.endsWith("rem") ? `${parseFloat(value) * 16}px` : value;
   };
 
-  const options = [...fontWeights].map(([name, value]) => {
+  const options = [...tokens].map(([name, value]) => {
     return {
       value: name,
       text: (
@@ -228,14 +195,14 @@ const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
 
   return (
     <SeparateComboBox
-      icon={<Icon icon="ic:outline-line-weight" />}
+      icon={icon}
       value={value ? pxValue(value.value) : undefined}
       selectOptions={options}
       selectValue={value?.type === "keyword" ? value.keyword : undefined}
       onChange={(value) => {
         if (value) {
           for (const style of styles) {
-            style.fontWeight = {
+            style[name] = {
               type: "arbitrary",
               value,
             };
@@ -246,7 +213,7 @@ const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
       onSelectChange={(keyword) => {
         if (keyword) {
           for (const style of styles) {
-            style.fontWeight = {
+            style[name] = {
               type: "keyword",
               keyword,
               value: "", // unnecessary
@@ -257,4 +224,4 @@ const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
       }}
     />
   );
-};
+});
