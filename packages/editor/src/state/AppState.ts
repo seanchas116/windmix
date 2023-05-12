@@ -105,18 +105,11 @@ export class AppState {
     this.connection.rpc.remote.reveal(location);
   }
 
-  @computed get tailwindStyles(): TailwindStyle[] {
-    const targets: TailwindStyle[] = [];
+  @computed get tailwindStyles(): NodeTailwindStyle[] {
+    const targets: NodeTailwindStyle[] = [];
     for (const node of this.document.selectedNodes.values()) {
       if (node.type === "element") {
-        targets.push(
-          new TailwindStyle({
-            get: () => node.className ?? "",
-            set: (value) => {
-              node.className = value;
-            },
-          })
-        );
+        targets.push(new NodeTailwindStyle(node));
       }
     }
     return targets;
@@ -124,6 +117,22 @@ export class AppState {
 }
 
 export const appState = new AppState();
+
+export class NodeTailwindStyle extends TailwindStyle {
+  constructor(node: ElementNode) {
+    super();
+    this.node = node;
+  }
+  node: ElementNode;
+
+  get className(): string {
+    return this.node.className ?? "";
+  }
+
+  set className(value: string) {
+    this.node.className = value;
+  }
+}
 
 class NodeStyleInspectorTarget implements StyleInspectorTarget {
   constructor(element: ElementNode) {

@@ -56,25 +56,8 @@ function stringifyTailwindValue(value: TailwindValue): string {
   }
 }
 
-export interface ClassNameAccess {
-  get(): string;
-  set(value: string): void;
-}
-
-export class TailwindStyle {
-  constructor(classNameAccess: ClassNameAccess) {
-    this.classNameAccess = classNameAccess;
-  }
-
-  private readonly classNameAccess: ClassNameAccess;
-
-  get className(): string {
-    return this.classNameAccess.get();
-  }
-
-  set className(value: string) {
-    this.classNameAccess.set(value);
-  }
+export abstract class TailwindStyle {
+  abstract className: string;
 
   get classNames(): string[] {
     return this.className.trim().split(/\s+/);
