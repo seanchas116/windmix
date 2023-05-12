@@ -84,8 +84,16 @@ export class TailwindStyle {
     return this.getValue("w", widths);
   }
 
+  set width(width: TailwindValue | undefined) {
+    this.setValue("w", width);
+  }
+
   get height(): TailwindValue | undefined {
     return this.getValue("h", heights);
+  }
+
+  set height(height: TailwindValue | undefined) {
+    this.setValue("h", height);
   }
 
   get color(): TailwindValue | undefined {
@@ -93,12 +101,7 @@ export class TailwindStyle {
   }
 
   set color(color: TailwindValue | undefined) {
-    if (color) {
-      const className = "text-" + stringifyTailwindValue(color);
-      this.className = twMerge(this.className, className);
-    } else {
-      // TODO
-    }
+    this.setValue("text", color);
   }
 
   get fontSize(): TailwindValue | undefined {
@@ -110,12 +113,7 @@ export class TailwindStyle {
   }
 
   set fontSize(fontSize: TailwindValue | undefined) {
-    if (fontSize) {
-      const className = "text-" + stringifyTailwindValue(fontSize);
-      this.className = twMerge(this.className, className);
-    } else {
-      // TODO
-    }
+    this.setValue("text", fontSize);
   }
 
   get fontWeight(): TailwindValue | undefined {
@@ -123,12 +121,7 @@ export class TailwindStyle {
   }
 
   set fontWeight(fontWeight: TailwindValue | undefined) {
-    if (fontWeight) {
-      const className = "font-" + stringifyTailwindValue(fontWeight);
-      this.className = twMerge(this.className, className);
-    } else {
-      // TODO
-    }
+    this.setValue("font", fontWeight);
   }
 
   private getValue(
@@ -161,6 +154,15 @@ export class TailwindStyle {
           value,
         };
       }
+    }
+  }
+
+  private setValue(prefix: string, value: TailwindValue | undefined) {
+    if (value) {
+      const className = prefix + "-" + stringifyTailwindValue(value);
+      this.className = twMerge(this.className, className);
+    } else {
+      // TODO
     }
   }
 }

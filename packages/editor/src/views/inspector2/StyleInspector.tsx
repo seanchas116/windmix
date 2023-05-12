@@ -7,6 +7,8 @@ import {
   colors,
   fontSizes,
   fontWeights,
+  heights,
+  widths,
 } from "../../models/style2/TailwindStyle";
 import {
   Pane,
@@ -47,13 +49,17 @@ export const StyleInspector: React.FC = observer(() => {
           <PaneHeading>Size</PaneHeading>
         </PaneHeadingRow>
         <div className="grid grid-cols-2 gap-1">
-          <SeparateComboBox
+          <StyleComboBox
+            styles={styles}
             icon={<LetterIcon>W</LetterIcon>}
-            value={width?.value}
+            name="width"
+            tokens={widths}
           />
-          <SeparateComboBox
+          <StyleComboBox
+            styles={styles}
             icon={<LetterIcon>H</LetterIcon>}
-            value={height?.value}
+            name="height"
+            tokens={heights}
           />
         </div>
         <div className="grid grid-cols-2 gap-1">
@@ -83,8 +89,18 @@ export const StyleInspector: React.FC = observer(() => {
         </PaneHeadingRow>
         <ColorComboBox styles={styles} />
         <div className="grid grid-cols-2 gap-1">
-          <FontSizeComboBox styles={styles} />
-          <FontWeightComboBox styles={styles} />
+          <StyleComboBox
+            styles={styles}
+            icon={<Icon icon="ic:outline-format-size" />}
+            name="fontSize"
+            tokens={fontSizes}
+          />
+          <StyleComboBox
+            styles={styles}
+            icon={<Icon icon="ic:outline-line-weight" />}
+            name="fontWeight"
+            tokens={fontWeights}
+          />
         </div>
       </Pane>
       <dl className="p-2">
@@ -136,36 +152,10 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
   );
 };
 
-const FontSizeComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
-  styles,
-}) => {
-  return (
-    <StyleComboBox
-      styles={styles}
-      icon={<Icon icon="ic:outline-format-size" />}
-      name="fontSize"
-      tokens={fontSizes}
-    />
-  );
-};
-
-const FontWeightComboBox: React.FC<{ styles: TailwindStyle[] }> = ({
-  styles,
-}) => {
-  return (
-    <StyleComboBox
-      styles={styles}
-      icon={<Icon icon="ic:outline-line-weight" />}
-      name="fontWeight"
-      tokens={fontWeights}
-    />
-  );
-};
-
 const StyleComboBox: React.FC<{
   styles: TailwindStyle[];
   icon: JSX.Element;
-  name: "fontSize" | "fontWeight";
+  name: "fontSize" | "fontWeight" | "width" | "height";
   tokens: Map<string, string>;
 }> = observer(({ styles, name, tokens, icon }) => {
   const value = sameOrNone(styles.map((s) => s[name]));
