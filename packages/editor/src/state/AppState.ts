@@ -1,13 +1,13 @@
 import { makeObservable, action, computed, observable, reaction } from "mobx";
-import { StyleInspectorState } from "./StyleInspectorState";
-import { Style } from "../models/style/Style";
+import { StyleInspectorState } from "./OldStyleInspectorState";
+import { Style } from "../models/oldStyle/Style";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
 import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
-import { StyleInspectorTarget } from "../models/StyleInspectorTarget";
+import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { TailwindStyle } from "../models/style2/TailwindStyle";
 
 const vscode = acquireVsCodeApi();

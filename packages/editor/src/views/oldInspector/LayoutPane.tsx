@@ -19,7 +19,7 @@ import alignVerticalCenterIcon from "@iconify-icons/ic/outline-align-vertical-ce
 import alignVerticalBottomIcon from "@iconify-icons/ic/outline-align-vertical-bottom";
 import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import styled from "styled-components";
-import { StyleInspectorState } from "../../state/StyleInspectorState";
+import { StyleInspectorState } from "../../state/OldStyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput, StyleIconRadio } from "./Components";
 

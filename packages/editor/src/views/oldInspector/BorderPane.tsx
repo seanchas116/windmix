@@ -15,8 +15,8 @@ import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
   StyleInspectorState,
-  StylePropertyState,
-} from "../../state/StyleInspectorState";
+  OldStylePropertyState,
+} from "../../state/OldStyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,
@@ -46,9 +46,9 @@ const borderStyleOptions = [
 export const BorderPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BorderPane({ state }) {
-  let color: StylePropertyState;
-  let width: StylePropertyState;
-  let style: StylePropertyState;
+  let color: OldStylePropertyState;
+  let width: OldStylePropertyState;
+  let style: OldStylePropertyState;
 
   switch (state.borderEdgeMode) {
     case "all":

@@ -13,11 +13,11 @@ import {
 import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { StylePropertyState } from "../../state/StyleInspectorState";
+import { OldStylePropertyState } from "../../state/OldStyleInspectorState";
 
 export const StyleDimensionInput: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
   icon?: InputProps["icon"];
   units?: readonly string[];
   keywords?: readonly string[];
@@ -35,7 +35,7 @@ export const StyleDimensionInput: React.FC<{
 
 export const StyleInput: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
   icon?: InputProps["icon"];
 }> = observer(({ property, ...props }) => {
   return (
@@ -51,7 +51,7 @@ export const StyleInput: React.FC<{
 
 export const StyleComboBox: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
   icon?: InputProps["icon"];
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {
@@ -68,7 +68,7 @@ export const StyleComboBox: React.FC<{
 
 export const StyleColorInput: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
 }> = observer(({ property, ...props }) => {
   return (
     <CSSColorInput
@@ -86,7 +86,7 @@ export const StyleColorInput: React.FC<{
 
 export const StyleIconRadio: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
   options: IconRadioOption<string>[];
 }> = observer(({ property, options, ...props }) => {
   return (
@@ -106,7 +106,7 @@ export const StyleIconRadio: React.FC<{
 
 export const StyleSelect: React.FC<{
   className?: string;
-  property: StylePropertyState;
+  property: OldStylePropertyState;
   icon?: JSX.Element;
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {

@@ -14,7 +14,7 @@ import {
 } from "@seanchas116/paintkit/src/components/IconButton";
 import * as icons from "@seanchas116/design-icons";
 import Tippy from "@tippyjs/react";
-import { StyleInspectorState } from "../../state/StyleInspectorState";
+import { StyleInspectorState } from "../../state/OldStyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput } from "./Components";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";

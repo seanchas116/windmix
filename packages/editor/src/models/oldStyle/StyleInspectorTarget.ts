@@ -1,4 +1,4 @@
-import { Style } from "./style/Style";
+import { Style } from "./Style";
 
 export interface StyleInspectorTarget {
   readonly tagName: string;

@@ -6,12 +6,11 @@ import {
   AllStyleKey,
   allStyleKeys,
   imageStyleKeys,
-  Style,
   textStyleKeys,
-} from "../models/style/Style";
-import { StyleInspectorTarget } from "../models/StyleInspectorTarget";
+} from "../models/oldStyle/Style";
+import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 
-export class StylePropertyState {
+export class OldStylePropertyState {
   constructor(state: StyleInspectorState, key: AllStyleKey) {
     this.state = state;
     this.key = key;
@@ -89,8 +88,8 @@ export class StyleInspectorState {
     makeObservable(this);
 
     this.props = Object.fromEntries(
-      allStyleKeys.map((key) => [key, new StylePropertyState(this, key)])
-    ) as Record<AllStyleKey, StylePropertyState>;
+      allStyleKeys.map((key) => [key, new OldStylePropertyState(this, key)])
+    ) as Record<AllStyleKey, OldStylePropertyState>;
   }
 
   private readonly delegate: StyleInspectorStateDelegate;
@@ -126,7 +125,7 @@ export class StyleInspectorState {
     return sameOrMixed(this.targets.map((i) => i.tagName));
   }
 
-  readonly props: Record<AllStyleKey, StylePropertyState>;
+  readonly props: Record<AllStyleKey, OldStylePropertyState>;
 
   @observable showsSizeDetails = false;
 
