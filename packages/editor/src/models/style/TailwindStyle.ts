@@ -77,70 +77,70 @@ export abstract class TailwindStyle {
     this.className = classNames.join(" ");
   }
 
-  readonly separateProps = {
+  readonly props = {
     margin: new Property(this, new ValueParser("m-", margins, /.+/)),
     marginX: new Property(
       this,
       new ValueParser("mx-", margins, /.+/),
-      (): Property => this.separateProps.margin
+      (): Property => this.props.margin
     ),
     marginY: new Property(
       this,
       new ValueParser("my-", margins, /.+/),
-      (): Property => this.separateProps.margin
+      (): Property => this.props.margin
     ),
 
     marginLeft: new Property(
       this,
       new ValueParser("ml-", margins, /.+/),
-      (): Property => this.separateProps.marginX
+      (): Property => this.props.marginX
     ),
     marginRight: new Property(
       this,
       new ValueParser("mr-", margins, /.+/),
-      (): Property => this.separateProps.marginX
+      (): Property => this.props.marginX
     ),
     marginTop: new Property(
       this,
       new ValueParser("mt-", margins, /.+/),
-      (): Property => this.separateProps.marginY
+      (): Property => this.props.marginY
     ),
     marginBottom: new Property(
       this,
       new ValueParser("mb-", margins, /.+/),
-      (): Property => this.separateProps.marginY
+      (): Property => this.props.marginY
     ),
 
     padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
     paddingX: new Property(
       this,
       new ValueParser("px-", paddings, /.+/),
-      (): Property => this.separateProps.padding
+      (): Property => this.props.padding
     ),
     paddingY: new Property(
       this,
       new ValueParser("py-", paddings, /.+/),
-      (): Property => this.separateProps.padding
+      (): Property => this.props.padding
     ),
     paddingLeft: new Property(
       this,
       new ValueParser("pl-", paddings, /.+/),
-      (): Property => this.separateProps.paddingX
+      (): Property => this.props.paddingX
     ),
     paddingRight: new Property(
       this,
       new ValueParser("pr-", paddings, /.+/),
-      (): Property => this.separateProps.paddingX
+      (): Property => this.props.paddingX
     ),
     paddingTop: new Property(
       this,
       new ValueParser("pt-", paddings, /.+/),
-      (): Property => this.separateProps.paddingY
+      (): Property => this.props.paddingY
     ),
     paddingBottom: new Property(
       this,
       new ValueParser("pb-", paddings, /.+/),
-      (): Property => this.separateProps.paddingY
+      (): Property => this.props.paddingY
     ),
 
     width: new Property(this, new ValueParser("w-", widths, /.+/)),
@@ -170,37 +170,34 @@ export abstract class TailwindStyle {
         false
       )
     ),
-  };
 
-  readonly props = {
-    ...this.separateProps,
-    mixedMarginX: new ShorthandProperty([
-      this.separateProps.marginLeft,
-      this.separateProps.marginRight,
+    mixedMarginX: new ShorthandProperty((): Property[] => [
+      this.props.marginLeft,
+      this.props.marginRight,
     ]),
-    mixedMarginY: new ShorthandProperty([
-      this.separateProps.marginTop,
-      this.separateProps.marginBottom,
+    mixedMarginY: new ShorthandProperty((): Property[] => [
+      this.props.marginTop,
+      this.props.marginBottom,
     ]),
-    mixedMargin: new ShorthandProperty([
-      this.separateProps.marginLeft,
-      this.separateProps.marginRight,
-      this.separateProps.marginTop,
-      this.separateProps.marginBottom,
+    mixedMargin: new ShorthandProperty((): Property[] => [
+      this.props.marginLeft,
+      this.props.marginRight,
+      this.props.marginTop,
+      this.props.marginBottom,
     ]),
-    mixedPaddingX: new ShorthandProperty([
-      this.separateProps.paddingLeft,
-      this.separateProps.paddingRight,
+    mixedPaddingX: new ShorthandProperty((): Property[] => [
+      this.props.paddingLeft,
+      this.props.paddingRight,
     ]),
-    mixedPaddingY: new ShorthandProperty([
-      this.separateProps.paddingTop,
-      this.separateProps.paddingBottom,
+    mixedPaddingY: new ShorthandProperty((): Property[] => [
+      this.props.paddingTop,
+      this.props.paddingBottom,
     ]),
-    mixedPadding: new ShorthandProperty([
-      this.separateProps.paddingLeft,
-      this.separateProps.paddingRight,
-      this.separateProps.paddingTop,
-      this.separateProps.paddingBottom,
+    mixedPadding: new ShorthandProperty((): Property[] => [
+      this.props.paddingLeft,
+      this.props.paddingRight,
+      this.props.paddingTop,
+      this.props.paddingBottom,
     ]),
   };
 }
@@ -233,14 +230,14 @@ class Property {
 }
 
 class ShorthandProperty {
-  constructor(separate: Property[]) {
-    this.separate = separate;
+  constructor(separateProps: () => Property[]) {
+    this.separateProps = separateProps;
   }
 
-  readonly separate: Property[];
+  readonly separateProps: () => Property[];
 
   get value(): ResolvedTailwindValue | typeof MIXED | undefined {
-    return sameOrMixed(this.separate.map((access) => access.value));
+    return sameOrMixed(this.separateProps().map((access) => access.value));
   }
 
   set value(value: TailwindValue | typeof MIXED | undefined) {
@@ -249,7 +246,7 @@ class ShorthandProperty {
     }
     // TODO: unset separate values and set shorthand value
 
-    for (const access of this.separate) {
+    for (const access of this.separateProps()) {
       access.value = value;
     }
   }
