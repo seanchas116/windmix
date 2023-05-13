@@ -52,28 +52,32 @@ export const MarginPane: React.FC = observer(() => {
       </PaneHeadingRow>
       {open &&
         (separate ? (
-          <FourEdgeGrid>
-            <StyleComboBox
-              icon={<Icon icon={icons.edgeTop} />}
-              property="marginTop"
-              tokens={margins}
-            />
-            <StyleComboBox
-              icon={<Icon icon={icons.edgeTop} rotate={1} />}
-              property="marginRight"
-              tokens={margins}
-            />
-            <StyleComboBox
-              icon={<Icon icon={icons.edgeTop} rotate={2} />}
-              property="marginBottom"
-              tokens={margins}
-            />
-            <StyleComboBox
-              icon={<Icon icon={icons.edgeTop} rotate={3} />}
-              property="marginLeft"
-              tokens={margins}
-            />
-          </FourEdgeGrid>
+          <>
+            <Row11>
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={3} />}
+                property="marginLeft"
+                tokens={margins}
+              />
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={1} />}
+                property="marginRight"
+                tokens={margins}
+              />
+            </Row11>
+            <Row11>
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} />}
+                property="marginTop"
+                tokens={margins}
+              />
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={2} />}
+                property="marginBottom"
+                tokens={margins}
+              />
+            </Row11>
+          </>
         ) : (
           <Row11>
             <StyleComboBox
