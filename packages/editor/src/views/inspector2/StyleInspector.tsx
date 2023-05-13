@@ -35,14 +35,17 @@ import { useState } from "react";
 const textAlignOptions = [
   {
     value: "left",
+    text: "Left",
     icon: <Icon icon={formatAlignLeftIcon} />,
   },
   {
     value: "center",
+    text: "Center",
     icon: <Icon icon={formatAlignCenterIcon} />,
   },
   {
     value: "right",
+    text: "Right",
     icon: <Icon icon={formatAlignRightIcon} />,
   },
 ];
@@ -71,6 +74,42 @@ const positionOptions = [
   {
     value: "absolute",
     icon: <Icon icon={icons.absolutePosition} />,
+  },
+];
+
+const horizontalSizeConstraintOptions = [
+  {
+    value: "hug",
+    text: "Hug Contents",
+    icon: <Icon icon={icons.hugContents} />,
+  },
+  {
+    value: "fixed",
+    text: "Fixed",
+    icon: <Icon icon={icons.fixedSize} />,
+  },
+  {
+    value: "fill",
+    text: "Fill Container",
+    icon: <Icon icon={icons.fillArea} />,
+  },
+];
+
+const verticalSizeConstraintOptions = [
+  {
+    value: "hug",
+    text: "Hug Contents",
+    icon: <Icon icon={icons.hugContents} rotate={1} />,
+  },
+  {
+    value: "fixed",
+    text: "Fixed",
+    icon: <Icon icon={icons.fixedSize} rotate={1} />,
+  },
+  {
+    value: "fill",
+    text: "Fill Container",
+    icon: <Icon icon={icons.fillArea} rotate={1} />,
   },
 ];
 
@@ -112,32 +151,16 @@ export const StyleInspector: React.FC = observer(() => {
             name="width"
             tokens={widths}
           />
+          <IconRadio options={horizontalSizeConstraintOptions} />
+        </Row11>
+        <Row11>
           <StyleComboBox
             styles={styles}
             icon={<LetterIcon>H</LetterIcon>}
             name="height"
             tokens={heights}
           />
-        </Row11>
-        <Row11>
-          <SeparateComboBox
-            icon={<LetterIcon>W</LetterIcon>}
-            value={width?.value}
-          />
-          <SeparateComboBox
-            icon={<LetterIcon>H</LetterIcon>}
-            value={height?.value}
-          />
-        </Row11>
-        <Row11>
-          <SeparateComboBox
-            icon={<LetterIcon>W</LetterIcon>}
-            value={width?.value}
-          />
-          <SeparateComboBox
-            icon={<LetterIcon>H</LetterIcon>}
-            value={height?.value}
-          />
+          <IconRadio options={verticalSizeConstraintOptions} />
         </Row11>
       </Pane>
       <Pane>
