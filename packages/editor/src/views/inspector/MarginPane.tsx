@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import {
-  FourEdgeGrid,
   Pane,
   PaneHeading,
   PaneHeadingRow,
@@ -14,22 +13,32 @@ import {
   PlusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
 import { useState } from "react";
-import { StyleComboBox } from "./components/StyleComboBox";
 import { margins } from "../../models/style/TailwindStyle";
 import { appState } from "../../state/AppState";
+import { StyleComboBox } from "./common/StyleComboBox";
+import { useOnSelectionChange } from "./common/useOnSelectionChange";
 
 export const MarginPane: React.FC = observer(() => {
-  const [forceOpen, setForceOpen] = useState(false);
+  const styles = appState.tailwindStyles;
+
+  const [open, setOpen] = useState(false);
   const [separate, setSeparate] = useState(false);
 
-  const hasMargin = appState.tailwindStyles.some(
-    (style) =>
-      style.marginTop ||
-      style.marginRight ||
-      style.marginBottom ||
-      style.marginLeft
-  );
-  const open = forceOpen || hasMargin;
+  useOnSelectionChange(() => {
+    const hasMargin = styles.some(
+      (style) =>
+        style.marginTop ||
+        style.marginRight ||
+        style.marginBottom ||
+        style.marginLeft
+    );
+
+    if (hasMargin) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  });
 
   return (
     <Pane>
@@ -45,9 +54,9 @@ export const MarginPane: React.FC = observer(() => {
           </IconButton>
         )}
         {open ? (
-          <MinusButton onClick={() => setForceOpen(false)} />
+          <MinusButton onClick={() => setOpen(false)} />
         ) : (
-          <PlusButton onClick={() => setForceOpen(true)} />
+          <PlusButton onClick={() => setOpen(true)} />
         )}
       </PaneHeadingRow>
       {open &&

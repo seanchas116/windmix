@@ -19,7 +19,7 @@ import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
-import { StyleComboBox } from "./components/StyleComboBox";
+import { StyleComboBox } from "./common/StyleComboBox";
 
 const textAlignOptions = [
   {

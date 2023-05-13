@@ -16,7 +16,7 @@ import {
   PlusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
 import { useState } from "react";
-import { StyleComboBox } from "./components/StyleComboBox";
+import { StyleComboBox } from "./common/StyleComboBox";
 
 const horizontalSizeConstraintOptions = [
   {
