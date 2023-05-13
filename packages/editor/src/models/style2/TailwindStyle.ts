@@ -69,8 +69,8 @@ export abstract class TailwindStyle {
     this.className = classNames.join(" ");
   }
 
-  readonly widthParser = new ValueParser("w", widths);
-  readonly heightParser = new ValueParser("h", heights);
+  readonly widthParser = new ValueParser("w", widths, /.+/);
+  readonly heightParser = new ValueParser("h", heights, /.+/);
   readonly colorParser = new ValueParser("text", colors, /^#/);
   readonly fontSizeParser = new ValueParser(
     "text",
@@ -141,7 +141,7 @@ class ValueParser {
   constructor(
     prefix: string, // "w", "h", 'text' etc
     tokens: Map<string, string>, // { "1/2": "50%" } etc
-    arbitraryValuePattern?: RegExp // /^#/ for text colors etc
+    arbitraryValuePattern: RegExp | false // /^#/ for text colors etc or false (no arbitrary values)
   ) {
     this.prefix = prefix;
     this.tokens = tokens;
@@ -150,7 +150,7 @@ class ValueParser {
 
   prefix: string;
   tokens: Map<string, string>;
-  arbitraryValuePattern?: RegExp;
+  arbitraryValuePattern: RegExp | false;
 
   getValue(
     classNames: string[]
@@ -163,9 +163,13 @@ class ValueParser {
 
     for (const className of matchedClassNames) {
       const keyword = className?.slice(prefix.length + 1);
-      if (keyword.startsWith("[") && keyword.endsWith("]")) {
+      if (
+        arbitraryValuePattern &&
+        keyword.startsWith("[") &&
+        keyword.endsWith("]")
+      ) {
         const value = keyword.slice(1, -1);
-        if (arbitraryValuePattern && !arbitraryValuePattern.test(value)) {
+        if (!arbitraryValuePattern.test(value)) {
           continue;
         }
         return {
