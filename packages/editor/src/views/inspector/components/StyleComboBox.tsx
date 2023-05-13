@@ -1,20 +1,18 @@
 import { observer } from "mobx-react-lite";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import {
-  ResolvedTailwindValue,
-  TailwindStyle,
-} from "../../../models/style/TailwindStyle";
+import { ResolvedTailwindValue } from "../../../models/style/TailwindStyle";
 import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { appState } from "../../../state/AppState";
+import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
 
 type Property =
   | "fontSize"
   | "fontWeight"
   | "width"
   | "height"
-  | "margin"
-  | "marginX"
-  | "marginY"
+  | "mixedMargin"
+  | "mixedMarginX"
+  | "mixedMarginY"
   | "marginTop"
   | "marginBottom"
   | "marginLeft"
@@ -55,9 +53,15 @@ export const StyleComboBox: React.FC<{
   return (
     <SeparateComboBox
       icon={icon}
-      value={value ? pxValue(value.value) : undefined}
+      value={value === MIXED ? MIXED : value ? pxValue(value.value) : undefined}
       selectOptions={options}
-      selectValue={value?.type === "keyword" ? value.keyword : undefined}
+      selectValue={
+        value === MIXED
+          ? MIXED
+          : value?.type === "keyword"
+          ? value.keyword
+          : undefined
+      }
       onChange={(value) => {
         if (value) {
           for (const style of styles) {

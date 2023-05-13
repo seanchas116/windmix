@@ -82,12 +82,12 @@ export const MarginPane: React.FC = observer(() => {
           <Row11>
             <StyleComboBox
               icon={<Icon icon={icons.edgeTop} rotate={3} />}
-              property="marginX"
+              property="mixedMarginX"
               tokens={margins}
             />
             <StyleComboBox
               icon={<Icon icon={icons.edgeTop} />}
-              property="marginY"
+              property="mixedMarginY"
               tokens={margins}
             />
           </Row11>

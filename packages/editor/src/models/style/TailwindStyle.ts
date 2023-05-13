@@ -1,5 +1,6 @@
 import resolveConfig from "tailwindcss/resolveConfig";
 import defaultConfig from "tailwindcss/defaultConfig";
+import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 const tailwindConfig = resolveConfig(defaultConfig); // TODO: support custom config
 
 interface NestedColors {
@@ -136,18 +137,21 @@ export abstract class TailwindStyle {
   set margin(margin: TailwindValue | undefined) {
     this.classNames = this.marginParser.setValue(this.classNames, margin);
   }
+
   get marginX(): ResolvedTailwindValue | undefined {
     return this.marginXParser.getValue(this.classNames)?.value ?? this.margin;
   }
   set marginX(marginX: TailwindValue | undefined) {
     this.classNames = this.marginXParser.setValue(this.classNames, marginX);
   }
+
   get marginY(): ResolvedTailwindValue | undefined {
     return this.marginYParser.getValue(this.classNames)?.value ?? this.margin;
   }
   set marginY(marginY: TailwindValue | undefined) {
     this.classNames = this.marginYParser.setValue(this.classNames, marginY);
   }
+
   get marginTop(): ResolvedTailwindValue | undefined {
     return (
       this.marginTopParser.getValue(this.classNames)?.value ?? this.marginY
@@ -188,6 +192,46 @@ export abstract class TailwindStyle {
       this.classNames,
       marginLeft
     );
+  }
+
+  get mixedMarginX(): ResolvedTailwindValue | typeof MIXED | undefined {
+    return sameOrMixed([this.marginLeft, this.marginRight]);
+  }
+  set mixedMarginX(marginX: TailwindValue | typeof MIXED | undefined) {
+    if (marginX === MIXED) {
+      return;
+    }
+    this.marginLeft = marginX;
+    this.marginRight = marginX;
+  }
+
+  get mixedMarginY(): ResolvedTailwindValue | typeof MIXED | undefined {
+    return sameOrMixed([this.marginTop, this.marginBottom]);
+  }
+  set mixedMarginY(marginY: TailwindValue | typeof MIXED | undefined) {
+    if (marginY === MIXED) {
+      return;
+    }
+    this.marginTop = marginY;
+    this.marginBottom = marginY;
+  }
+
+  get mixedMargin(): ResolvedTailwindValue | typeof MIXED | undefined {
+    return sameOrMixed([
+      this.marginTop,
+      this.marginRight,
+      this.marginBottom,
+      this.marginLeft,
+    ]);
+  }
+  set mixedMargin(margin: TailwindValue | typeof MIXED | undefined) {
+    if (margin === MIXED) {
+      return;
+    }
+    this.marginTop = margin;
+    this.marginRight = margin;
+    this.marginBottom = margin;
+    this.marginLeft = margin;
   }
 
   get width(): ResolvedTailwindValue | undefined {
