@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { appState } from "../../state/AppState";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import {
+  ResolvedTailwindValue,
   TailwindStyle,
-  TailwindValue,
   colors,
   fontSizes,
   fontWeights,
@@ -39,7 +39,7 @@ const textAlignOptions = [
   },
 ];
 
-function stringifyValue(value: TailwindValue | undefined) {
+function stringifyValue(value: ResolvedTailwindValue | undefined) {
   if (!value) {
     return;
   }
@@ -166,7 +166,6 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
             style.color = {
               type: "keyword",
               keyword,
-              value: "", // unnecessary
             };
           }
         }
