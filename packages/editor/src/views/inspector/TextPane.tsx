@@ -51,15 +51,13 @@ export const TextPane: React.FC = observer(() => {
       <ColorComboBox styles={styles} />
       <Row11>
         <StyleComboBox
-          styles={styles}
           icon={<Icon icon="ic:outline-format-size" />}
-          name="fontSize"
+          property="fontSize"
           tokens={fontSizes}
         />
         <StyleComboBox
-          styles={styles}
           icon={<Icon icon="ic:outline-line-weight" />}
-          name="fontWeight"
+          property="fontWeight"
           tokens={fontWeights}
         />
       </Row11>

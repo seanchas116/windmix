@@ -55,7 +55,6 @@ const verticalSizeConstraintOptions = [
 ];
 
 export const SizePane: React.FC = observer(() => {
-  const styles = appState.tailwindStyles;
   const [open, setOpen] = useState(false);
 
   return (
@@ -72,18 +71,16 @@ export const SizePane: React.FC = observer(() => {
         <>
           <Row11>
             <StyleComboBox
-              styles={styles}
               icon={<LetterIcon>W</LetterIcon>}
-              name="width"
+              property="width"
               tokens={widths}
             />
             <IconRadio options={horizontalSizeConstraintOptions} />
           </Row11>
           <Row11>
             <StyleComboBox
-              styles={styles}
               icon={<LetterIcon>H</LetterIcon>}
-              name="height"
+              property="height"
               tokens={heights}
             />
             <IconRadio options={verticalSizeConstraintOptions} />

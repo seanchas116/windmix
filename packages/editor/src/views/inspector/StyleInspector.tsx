@@ -7,6 +7,7 @@ import { SizePane } from "./SizePane";
 import { PaddingPane } from "./PaddingPane";
 import { LayoutPane } from "./LayoutPane";
 import { TextPane } from "./TextPane";
+import { MarginPane } from "./MarginPane";
 
 function stringifyValue(value: ResolvedTailwindValue | undefined) {
   if (!value) {
@@ -34,6 +35,7 @@ export const StyleInspector: React.FC = observer(() => {
   return (
     <>
       <PositionPane />
+      <MarginPane />
       <SizePane />
       <PaddingPane />
       <LayoutPane />

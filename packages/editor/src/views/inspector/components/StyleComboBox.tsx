@@ -5,14 +5,29 @@ import {
   TailwindStyle,
 } from "../../../models/style/TailwindStyle";
 import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
+import { appState } from "../../../state/AppState";
+
+type Property =
+  | "fontSize"
+  | "fontWeight"
+  | "width"
+  | "height"
+  | "margin"
+  | "marginX"
+  | "marginY"
+  | "marginTop"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginRight";
 
 export const StyleComboBox: React.FC<{
-  styles: TailwindStyle[];
   icon: JSX.Element;
-  name: "fontSize" | "fontWeight" | "width" | "height";
+  property: Property;
   tokens: Map<string, string>;
-}> = observer(({ styles, name, tokens, icon }) => {
-  const value = sameOrNone(styles.map((s) => s[name]));
+}> = observer(({ property, tokens, icon }) => {
+  const styles = appState.tailwindStyles;
+
+  const value = sameOrNone(styles.map((s) => s[property]));
 
   const pxValue = (value: string) => {
     // rem -> px
@@ -46,7 +61,7 @@ export const StyleComboBox: React.FC<{
       onChange={(value) => {
         if (value) {
           for (const style of styles) {
-            style[name] = {
+            style[property] = {
               type: "arbitrary",
               value,
             };
@@ -56,7 +71,7 @@ export const StyleComboBox: React.FC<{
       }}
       onSelectChange={(keyword) => {
         for (const style of styles) {
-          style[name] = keyword
+          style[property] = keyword
             ? ({
                 type: "keyword",
                 keyword,

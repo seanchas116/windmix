@@ -148,6 +148,47 @@ export abstract class TailwindStyle {
   set marginY(marginY: TailwindValue | undefined) {
     this.classNames = this.marginYParser.setValue(this.classNames, marginY);
   }
+  get marginTop(): ResolvedTailwindValue | undefined {
+    return (
+      this.marginTopParser.getValue(this.classNames)?.value ?? this.marginY
+    );
+  }
+  set marginTop(marginTop: TailwindValue | undefined) {
+    this.classNames = this.marginTopParser.setValue(this.classNames, marginTop);
+  }
+  get marginRight(): ResolvedTailwindValue | undefined {
+    return (
+      this.marginRightParser.getValue(this.classNames)?.value ?? this.marginX
+    );
+  }
+  set marginRight(marginRight: TailwindValue | undefined) {
+    this.classNames = this.marginRightParser.setValue(
+      this.classNames,
+      marginRight
+    );
+  }
+  get marginBottom(): ResolvedTailwindValue | undefined {
+    return (
+      this.marginBottomParser.getValue(this.classNames)?.value ?? this.marginY
+    );
+  }
+  set marginBottom(marginBottom: TailwindValue | undefined) {
+    this.classNames = this.marginBottomParser.setValue(
+      this.classNames,
+      marginBottom
+    );
+  }
+  get marginLeft(): ResolvedTailwindValue | undefined {
+    return (
+      this.marginLeftParser.getValue(this.classNames)?.value ?? this.marginX
+    );
+  }
+  set marginLeft(marginLeft: TailwindValue | undefined) {
+    this.classNames = this.marginLeftParser.setValue(
+      this.classNames,
+      marginLeft
+    );
+  }
 
   get width(): ResolvedTailwindValue | undefined {
     return this.widthParser.getValue(this.classNames)?.value;
