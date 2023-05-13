@@ -78,41 +78,44 @@ export abstract class TailwindStyle {
   }
 
   readonly separateProps = {
-    margin: new ValueAccess(this, new ValueParser("m", margins, /.+/)),
-    marginX: new ValueAccess(this, new ValueParser("mx", margins, /.+/)),
-    marginY: new ValueAccess(this, new ValueParser("my", margins, /.+/)),
-    marginTop: new ValueAccess(this, new ValueParser("mt", margins, /.+/)),
-    marginRight: new ValueAccess(this, new ValueParser("mr", margins, /.+/)),
-    marginBottom: new ValueAccess(this, new ValueParser("mb", margins, /.+/)),
-    marginLeft: new ValueAccess(this, new ValueParser("ml", margins, /.+/)),
+    margin: new ValueAccess(this, new ValueParser("m-", margins, /.+/)),
+    marginX: new ValueAccess(this, new ValueParser("mx-", margins, /.+/)),
+    marginY: new ValueAccess(this, new ValueParser("my-", margins, /.+/)),
+    marginTop: new ValueAccess(this, new ValueParser("mt-", margins, /.+/)),
+    marginRight: new ValueAccess(this, new ValueParser("mr-", margins, /.+/)),
+    marginBottom: new ValueAccess(this, new ValueParser("mb-", margins, /.+/)),
+    marginLeft: new ValueAccess(this, new ValueParser("ml-", margins, /.+/)),
 
-    padding: new ValueAccess(this, new ValueParser("p", paddings, /.+/)),
-    paddingX: new ValueAccess(this, new ValueParser("px", paddings, /.+/)),
-    paddingY: new ValueAccess(this, new ValueParser("py", paddings, /.+/)),
-    paddingTop: new ValueAccess(this, new ValueParser("pt", paddings, /.+/)),
-    paddingRight: new ValueAccess(this, new ValueParser("pr", paddings, /.+/)),
-    paddingBottom: new ValueAccess(this, new ValueParser("pb", paddings, /.+/)),
-    paddingLeft: new ValueAccess(this, new ValueParser("pl", paddings, /.+/)),
+    padding: new ValueAccess(this, new ValueParser("p-", paddings, /.+/)),
+    paddingX: new ValueAccess(this, new ValueParser("px-", paddings, /.+/)),
+    paddingY: new ValueAccess(this, new ValueParser("py-", paddings, /.+/)),
+    paddingTop: new ValueAccess(this, new ValueParser("pt-", paddings, /.+/)),
+    paddingRight: new ValueAccess(this, new ValueParser("pr-", paddings, /.+/)),
+    paddingBottom: new ValueAccess(
+      this,
+      new ValueParser("pb-", paddings, /.+/)
+    ),
+    paddingLeft: new ValueAccess(this, new ValueParser("pl-", paddings, /.+/)),
 
-    width: new ValueAccess(this, new ValueParser("w", widths, /.+/)),
-    height: new ValueAccess(this, new ValueParser("h", heights, /.+/)),
-    color: new ValueAccess(this, new ValueParser("text", colors, /^#/)),
+    width: new ValueAccess(this, new ValueParser("w-", widths, /.+/)),
+    height: new ValueAccess(this, new ValueParser("h-", heights, /.+/)),
+    color: new ValueAccess(this, new ValueParser("text-", colors, /^#/)),
     fontSize: new ValueAccess(
       this,
       new ValueParser(
-        "text",
+        "text-",
         fontSizes,
         /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
       )
     ),
     fontWeight: new ValueAccess(
       this,
-      new ValueParser("font", fontWeights, /^[0-9]+$/)
+      new ValueParser("font-", fontWeights, /^[0-9]+$/)
     ),
     textAlign: new ValueAccess(
       this,
       new ValueParser(
-        "text",
+        "text-",
         new Map([
           ["left", "left"],
           ["center", "center"],
@@ -218,11 +221,11 @@ class ValueParser {
     const { prefix, tokens, arbitraryValuePattern } = this;
 
     const matchedClassNames = classNames
-      .filter((className) => className.startsWith(`${prefix}-`))
+      .filter((className) => className.startsWith(prefix))
       .reverse();
 
     for (const className of matchedClassNames) {
-      const keyword = className?.slice(prefix.length + 1);
+      const keyword = className?.slice(prefix.length);
       if (
         arbitraryValuePattern &&
         keyword.startsWith("[") &&
@@ -260,7 +263,7 @@ class ValueParser {
     const existing = this.getValue(classNames)?.className;
 
     if (value) {
-      const className = prefix + "-" + stringifyTailwindValue(value);
+      const className = prefix + stringifyTailwindValue(value);
       const index = existing ? classNames.indexOf(existing) : -1;
 
       const newClassNames = [...classNames];
