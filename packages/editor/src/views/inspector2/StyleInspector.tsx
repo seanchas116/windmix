@@ -122,7 +122,10 @@ export const StyleInspector: React.FC = observer(() => {
             tokens={fontWeights}
           />
         </div>
-        <IconRadio options={textAlignOptions} value={textAlign} />
+        <IconRadio
+          options={textAlignOptions}
+          value={textAlign?.type === "keyword" ? textAlign.keyword : undefined}
+        />
       </Pane>
       <dl className="p-2">
         <dt className="text-macaron-disabledText">Width</dt>
@@ -136,7 +139,7 @@ export const StyleInspector: React.FC = observer(() => {
         <dt className="text-macaron-disabledText">Font Weight</dt>
         <dd>{stringifyValue(fontWeight)}</dd>
         <dt className="text-macaron-disabledText">Text Align</dt>
-        <dd>{textAlign}</dd>
+        <dd>{stringifyValue(textAlign)}</dd>
       </dl>
     </>
   );

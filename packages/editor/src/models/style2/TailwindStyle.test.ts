@@ -166,4 +166,36 @@ describe(TailwindStyle.name, () => {
       expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-center");
     });
   });
+
+  describe("textAlign", () => {
+    it("gets textAlign", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      expect(style.textAlign).toEqual({
+        type: "keyword",
+        keyword: "center",
+        value: "center",
+      });
+    });
+    it("sets textAlign", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.textAlign = {
+        type: "keyword",
+        keyword: "left",
+      };
+      expect(style.className).toEqual(
+        "w-1/2 h-1/2 text-red-500 text-xl text-left"
+      );
+    });
+    it("removes textAlign", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.textAlign = undefined;
+      expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-xl");
+    });
+  });
 });

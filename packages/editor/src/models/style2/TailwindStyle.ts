@@ -78,6 +78,15 @@ export abstract class TailwindStyle {
     /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
   );
   readonly fontWeightParser = new ValueParser("font", fontWeights, /^[0-9]+$/);
+  readonly textAlignParser = new ValueParser(
+    "text",
+    new Map([
+      ["left", "left"],
+      ["center", "center"],
+      ["right", "right"],
+    ]),
+    false
+  );
 
   get width(): ResolvedTailwindValue | undefined {
     return this.widthParser.getValue(this.classNames)?.value;
@@ -120,20 +129,11 @@ export abstract class TailwindStyle {
     );
   }
 
-  get textAlign(): string | undefined {
-    const classNames = this.classNames;
-
-    for (const className of classNames) {
-      switch (className) {
-        case "text-center":
-          return "center";
-        case "text-right":
-          return "right";
-        case "text-left":
-          return "left";
-        // TODO: justify/start/end
-      }
-    }
+  get textAlign(): ResolvedTailwindValue | undefined {
+    return this.textAlignParser.getValue(this.classNames)?.value;
+  }
+  set textAlign(textAlign: TailwindValue | undefined) {
+    this.classNames = this.textAlignParser.setValue(this.classNames, textAlign);
   }
 }
 
