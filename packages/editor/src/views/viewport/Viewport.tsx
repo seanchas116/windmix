@@ -56,11 +56,16 @@ export const Viewport: React.FC = observer(() => {
     console.log(scroll.documentToViewport.toCSSMatrixString());
   });
 
+  const onMouseLeave = action(() => {
+    appState.hover = undefined;
+  });
+
   return (
     <main
+      ref={ref}
       className="flex-1 min-w-0 contain-strict relative"
       onWheel={onWheel}
-      ref={ref}
+      onMouseLeave={onMouseLeave}
     >
       <div
         style={{
