@@ -29,7 +29,11 @@ import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
 import * as icons from "@seanchas116/design-icons";
-import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import {
+  IconButton,
+  MinusButton,
+  PlusButton,
+} from "@seanchas116/paintkit/src/components/IconButton";
 import { useState } from "react";
 
 const textAlignOptions = [
@@ -124,68 +128,97 @@ export const StyleInspector: React.FC = observer(() => {
   const fontWeight = sameOrNone(styles.map((s) => s.fontWeight));
   const textAlign = sameOrNone(styles.map((s) => s.textAlign));
 
+  const [positionPaneOpen, setPositionPaneOpen] = useState(false);
+  const [sizePaneOpen, setSizePaneOpen] = useState(false);
+  const [paddingPaneOpen, setPaddingPaneOpen] = useState(false);
   const [separateMargins, setSeparateMargins] = useState(false);
 
   return (
     <>
       <Pane>
         <PaneHeadingRow>
-          <PaneHeading>Position</PaneHeading>
+          <PaneHeading dimmed={!positionPaneOpen}>Position</PaneHeading>
+          {positionPaneOpen ? (
+            <MinusButton onClick={() => setPositionPaneOpen(false)} />
+          ) : (
+            <PlusButton onClick={() => setPositionPaneOpen(true)} />
+          )}
         </PaneHeadingRow>
-        <IconRadio options={positionOptions} />
-        <FourEdgeGrid>
-          <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
-          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
-          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
-        </FourEdgeGrid>
-      </Pane>
-      <Pane>
-        <PaneHeadingRow>
-          <PaneHeading>Size</PaneHeading>
-        </PaneHeadingRow>
-        <Row11>
-          <StyleComboBox
-            styles={styles}
-            icon={<LetterIcon>W</LetterIcon>}
-            name="width"
-            tokens={widths}
-          />
-          <IconRadio options={horizontalSizeConstraintOptions} />
-        </Row11>
-        <Row11>
-          <StyleComboBox
-            styles={styles}
-            icon={<LetterIcon>H</LetterIcon>}
-            name="height"
-            tokens={heights}
-          />
-          <IconRadio options={verticalSizeConstraintOptions} />
-        </Row11>
-      </Pane>
-      <Pane>
-        <PaneHeadingRow>
-          <PaneHeading>Padding</PaneHeading>
-          <IconButton
-            className="shrink-0"
-            icon={icons.separateEdges}
-            onClick={() => setSeparateMargins(!separateMargins)}
-            pressed={separateMargins}
-          />
-        </PaneHeadingRow>
-        {separateMargins ? (
-          <FourEdgeGrid>
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
-          </FourEdgeGrid>
-        ) : (
-          <Row11>
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-          </Row11>
+        {positionPaneOpen && (
+          <>
+            <IconRadio options={positionOptions} />
+            <FourEdgeGrid>
+              <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
+            </FourEdgeGrid>
+          </>
         )}
+      </Pane>
+      <Pane>
+        <PaneHeadingRow>
+          <PaneHeading dimmed={!sizePaneOpen}>Size</PaneHeading>
+          {sizePaneOpen ? (
+            <MinusButton onClick={() => setSizePaneOpen(false)} />
+          ) : (
+            <PlusButton onClick={() => setSizePaneOpen(true)} />
+          )}
+        </PaneHeadingRow>
+        {sizePaneOpen && (
+          <>
+            <Row11>
+              <StyleComboBox
+                styles={styles}
+                icon={<LetterIcon>W</LetterIcon>}
+                name="width"
+                tokens={widths}
+              />
+              <IconRadio options={horizontalSizeConstraintOptions} />
+            </Row11>
+            <Row11>
+              <StyleComboBox
+                styles={styles}
+                icon={<LetterIcon>H</LetterIcon>}
+                name="height"
+                tokens={heights}
+              />
+              <IconRadio options={verticalSizeConstraintOptions} />
+            </Row11>
+          </>
+        )}
+      </Pane>
+      <Pane>
+        <PaneHeadingRow>
+          <PaneHeading dimmed={!paddingPaneOpen}>Padding</PaneHeading>
+          {paddingPaneOpen && (
+            <IconButton
+              className="shrink-0"
+              icon={icons.separateEdges}
+              onClick={() => setSeparateMargins(!separateMargins)}
+              pressed={separateMargins}
+            />
+          )}
+          {paddingPaneOpen ? (
+            <MinusButton onClick={() => setPaddingPaneOpen(false)} />
+          ) : (
+            <PlusButton onClick={() => setPaddingPaneOpen(true)} />
+          )}
+        </PaneHeadingRow>
+        {paddingPaneOpen &&
+          (separateMargins ? (
+            <FourEdgeGrid>
+              <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
+            </FourEdgeGrid>
+          ) : (
+            <Row11>
+              <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+              <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+            </Row11>
+          ))}
       </Pane>
       <Pane>
         <PaneHeadingRow>
