@@ -33,6 +33,19 @@ describe(TailwindStyle.name, () => {
         value: "200px",
       });
     });
+    it("sets width", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.width = {
+        type: "keyword",
+        keyword: "4",
+        value: "1rem",
+      };
+      expect(style.className).toEqual(
+        "w-4 h-1/2 text-red-500 text-xl text-center"
+      );
+    });
   });
   describe("height", () => {
     it("gets height", () => {
@@ -53,6 +66,19 @@ describe(TailwindStyle.name, () => {
         type: "arbitrary",
         value: "300px",
       });
+    });
+    it("sets height", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.height = {
+        type: "keyword",
+        keyword: "4",
+        value: "1rem",
+      };
+      expect(style.className).toEqual(
+        "w-1/2 h-4 text-red-500 text-xl text-center"
+      );
     });
   });
 });

@@ -64,27 +64,27 @@ export abstract class TailwindStyle {
   }
 
   get width(): TailwindValue | undefined {
-    return this.getValue("w", widths);
+    return this.getValue("w", widths)?.value;
   }
 
   set width(width: TailwindValue | undefined) {
-    this.setValue("w", width);
+    this.setValue("w", widths, undefined, width);
   }
 
   get height(): TailwindValue | undefined {
-    return this.getValue("h", heights);
+    return this.getValue("h", heights)?.value;
   }
 
   set height(height: TailwindValue | undefined) {
-    this.setValue("h", height);
+    this.setValue("h", heights, undefined, height);
   }
 
   get color(): TailwindValue | undefined {
-    return this.getValue("text", colors, /^#/);
+    return this.getValue("text", colors, /^#/)?.value;
   }
 
   set color(color: TailwindValue | undefined) {
-    this.setValue("text", color);
+    this.setValue("text", colors, /^#/, color);
   }
 
   get fontSize(): TailwindValue | undefined {
@@ -92,19 +92,24 @@ export abstract class TailwindStyle {
       "text",
       fontSizes,
       /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
-    );
+    )?.value;
   }
 
   set fontSize(fontSize: TailwindValue | undefined) {
-    this.setValue("text", fontSize);
+    this.setValue(
+      "text",
+      fontSizes,
+      /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/,
+      fontSize
+    );
   }
 
   get fontWeight(): TailwindValue | undefined {
-    return this.getValue("font", fontWeights, /^[0-9]+$/);
+    return this.getValue("font", fontWeights, /^[0-9]+$/)?.value;
   }
 
   set fontWeight(fontWeight: TailwindValue | undefined) {
-    this.setValue("font", fontWeight);
+    this.setValue("font", fontWeights, /^[0-9]+$/, fontWeight);
   }
 
   get textAlign(): string | undefined {
@@ -127,7 +132,7 @@ export abstract class TailwindStyle {
     prefix: string, // "w", "h", 'text' etc
     tokens: Map<string, string>, // { "1/2": "50%" } etc
     arbitraryValuePattern?: RegExp // /^#/ for text colors etc
-  ): TailwindValue | undefined {
+  ): { className: string; value: TailwindValue } | undefined {
     const classNames = this.classNames
       .filter((className) => className.startsWith(`${prefix}-`))
       .reverse();
@@ -140,28 +145,54 @@ export abstract class TailwindStyle {
           continue;
         }
         return {
-          type: "arbitrary",
-          value,
+          className,
+          value: {
+            type: "arbitrary",
+            value,
+          },
         };
       }
       const value = tokens.get(keyword);
 
       if (value) {
         return {
-          type: "keyword",
-          keyword,
-          value,
+          className,
+          value: {
+            type: "keyword",
+            keyword,
+            value,
+          },
         };
       }
     }
   }
 
-  private setValue(prefix: string, value: TailwindValue | undefined) {
+  private setValue(
+    prefix: string, // "w", "h", 'text' etc
+    tokens: Map<string, string>, // { "1/2": "50%" } etc
+    arbitraryValuePattern: RegExp | undefined, // /^#/ for text colors etc,
+    value: TailwindValue | undefined
+  ) {
+    const existing = this.getValue(
+      prefix,
+      tokens,
+      arbitraryValuePattern
+    )?.className;
+
     if (value) {
       const className = prefix + "-" + stringifyTailwindValue(value);
-      this.className = twMerge(this.className, className);
+      const classNames = this.classNames;
+      const index = existing ? classNames.indexOf(existing) : -1;
+      if (index !== -1) {
+        classNames[index] = className;
+      } else {
+        classNames.push(className);
+      }
+      this.className = classNames.join(" ");
     } else {
-      // TODO
+      this.className = this.classNames
+        .filter((className) => className !== existing)
+        .join(" ");
     }
   }
 }
