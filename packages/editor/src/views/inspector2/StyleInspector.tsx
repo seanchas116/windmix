@@ -194,10 +194,11 @@ export const StyleInspector: React.FC = observer(() => {
           {paddingPaneOpen && (
             <IconButton
               className="shrink-0"
-              icon={icons.separateEdges}
               onClick={() => setSeparateMargins(!separateMargins)}
               pressed={separateMargins}
-            />
+            >
+              <Icon icon={icons.separateEdges} />
+            </IconButton>
           )}
           {paddingPaneOpen ? (
             <MinusButton onClick={() => setPaddingPaneOpen(false)} />

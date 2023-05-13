@@ -83,38 +83,43 @@ export const BorderPane: React.FC<{
         <PaneHeading>Border</PaneHeading>
         <Tippy content="All">
           <IconButton
-            icon={icons.edgeAll}
             pressed={state.borderEdgeMode === "all"}
             onClick={state.setBorderEdgeModeToAll}
-          />
+          >
+            <Icon icon={icons.edgeAll} />
+          </IconButton>
         </Tippy>
         <Tippy content="Top">
           <IconButton
-            icon={icons.edgeTop}
             pressed={state.borderEdgeMode === "top"}
             onClick={state.setBorderEdgeModeToTop}
-          />
+          >
+            <Icon icon={icons.edgeTop} />
+          </IconButton>
         </Tippy>
         <Tippy content="Right">
           <IconButton
-            icon={icons.edgeRight}
             pressed={state.borderEdgeMode === "right"}
             onClick={state.setBorderEdgeModeToRight}
-          />
+          >
+            <Icon icon={icons.edgeRight} />
+          </IconButton>
         </Tippy>
         <Tippy content="Bottom">
           <IconButton
-            icon={icons.edgeBottom}
             pressed={state.borderEdgeMode === "bottom"}
             onClick={state.setBorderEdgeModeToBottom}
-          />
+          >
+            <Icon icon={icons.edgeBottom} />
+          </IconButton>
         </Tippy>
         <Tippy content="Left">
           <IconButton
-            icon={icons.edgeLeft}
             pressed={state.borderEdgeMode === "left"}
             onClick={state.setBorderEdgeModeToLeft}
-          />
+          >
+            <Icon icon={icons.edgeLeft} />
+          </IconButton>
         </Tippy>
       </PaneHeadingRow>
       <RowGroup>

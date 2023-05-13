@@ -28,10 +28,11 @@ export const SizePane: React.FC<{
       style={{
         justifySelf: "flex-end",
       }}
-      icon={icons.separateCorners}
       pressed={state.showsSeparateRadiuses}
       onClick={state.onToggleShowSeparateRadiuses}
-    />
+    >
+      <Icon icon={icons.separateCorners} />
+    </IconButton>
   );
 
   return (
