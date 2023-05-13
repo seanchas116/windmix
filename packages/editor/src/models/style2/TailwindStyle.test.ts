@@ -80,5 +80,96 @@ describe(TailwindStyle.name, () => {
         "w-1/2 h-4 text-red-500 text-xl text-center"
       );
     });
+    it("removes height", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.height = undefined;
+      expect(style.className).toEqual("w-1/2 text-red-500 text-xl text-center");
+    });
+  });
+
+  describe("color", () => {
+    it("gets color", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      expect(style.color).toEqual({
+        type: "keyword",
+        keyword: "red-500",
+        value: "#ef4444",
+      });
+    });
+    it("gets arbitrary color", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-[#f56565] text-xl text-center"
+      );
+      expect(style.color).toEqual({
+        type: "arbitrary",
+        value: "#f56565",
+      });
+    });
+    it("sets color", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.color = {
+        type: "keyword",
+        keyword: "green-500",
+        value: "#48bb78",
+      };
+      expect(style.className).toEqual(
+        "w-1/2 h-1/2 text-green-500 text-xl text-center"
+      );
+    });
+    it("removes color", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.color = undefined;
+      expect(style.className).toEqual("w-1/2 h-1/2 text-xl text-center");
+    });
+  });
+
+  describe("fontSize", () => {
+    it("gets fontSize", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      expect(style.fontSize).toEqual({
+        type: "keyword",
+        keyword: "xl",
+        value: "1.25rem",
+      });
+    });
+    it("gets arbitrary fontSize", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-[2rem] text-center"
+      );
+      expect(style.fontSize).toEqual({
+        type: "arbitrary",
+        value: "2rem",
+      });
+    });
+    it("sets fontSize", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.fontSize = {
+        type: "keyword",
+        keyword: "2xl",
+        value: "1.5rem",
+      };
+      expect(style.className).toEqual(
+        "w-1/2 h-1/2 text-red-500 text-2xl text-center"
+      );
+    });
+    it("removes fontSize", () => {
+      const style = new SimpleTailwindStyle(
+        "w-1/2 h-1/2 text-red-500 text-xl text-center"
+      );
+      style.fontSize = undefined;
+      expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-center");
+    });
   });
 });
