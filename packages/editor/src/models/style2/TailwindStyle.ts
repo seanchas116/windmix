@@ -23,6 +23,13 @@ function flattenColorNames(colors: NestedColors): [string, string][] {
   return result;
 }
 
+export const margins = new Map(
+  Object.entries(tailwindConfig.theme?.margin ?? {})
+);
+export const paddings = new Map(
+  Object.entries(tailwindConfig.theme?.padding ?? {})
+);
+
 export const widths = new Map(
   Object.entries(tailwindConfig.theme?.width ?? {})
 );
@@ -69,6 +76,22 @@ export abstract class TailwindStyle {
     this.className = classNames.join(" ");
   }
 
+  readonly marginParser = new ValueParser("m", margins, /.+/);
+  readonly marginXParser = new ValueParser("mx", margins, /.+/);
+  readonly marginYParser = new ValueParser("my", margins, /.+/);
+  readonly marginTopParser = new ValueParser("mt", margins, /.+/);
+  readonly marginRightParser = new ValueParser("mr", margins, /.+/);
+  readonly marginBottomParser = new ValueParser("mb", margins, /.+/);
+  readonly marginLeftParser = new ValueParser("ml", margins, /.+/);
+
+  readonly paddingParser = new ValueParser("p", paddings, /.+/);
+  readonly paddingXParser = new ValueParser("px", paddings, /.+/);
+  readonly paddingYParser = new ValueParser("py", paddings, /.+/);
+  readonly paddingTopParser = new ValueParser("pt", paddings, /.+/);
+  readonly paddingRightParser = new ValueParser("pr", paddings, /.+/);
+  readonly paddingBottomParser = new ValueParser("pb", paddings, /.+/);
+  readonly paddingLeftParser = new ValueParser("pl", paddings, /.+/);
+
   readonly widthParser = new ValueParser("w", widths, /.+/);
   readonly heightParser = new ValueParser("h", heights, /.+/);
   readonly colorParser = new ValueParser("text", colors, /^#/);
@@ -87,6 +110,44 @@ export abstract class TailwindStyle {
     ]),
     false
   );
+
+  get padding(): ResolvedTailwindValue | undefined {
+    return this.paddingParser.getValue(this.classNames)?.value;
+  }
+  set padding(padding: TailwindValue | undefined) {
+    this.classNames = this.paddingParser.setValue(this.classNames, padding);
+  }
+  get paddingX(): ResolvedTailwindValue | undefined {
+    return this.paddingXParser.getValue(this.classNames)?.value ?? this.padding;
+  }
+  set paddingX(paddingX: TailwindValue | undefined) {
+    this.classNames = this.paddingXParser.setValue(this.classNames, paddingX);
+  }
+  get paddingY(): ResolvedTailwindValue | undefined {
+    return this.paddingYParser.getValue(this.classNames)?.value ?? this.padding;
+  }
+  set paddingY(paddingY: TailwindValue | undefined) {
+    this.classNames = this.paddingYParser.setValue(this.classNames, paddingY);
+  }
+
+  get margin(): ResolvedTailwindValue | undefined {
+    return this.marginParser.getValue(this.classNames)?.value;
+  }
+  set margin(margin: TailwindValue | undefined) {
+    this.classNames = this.marginParser.setValue(this.classNames, margin);
+  }
+  get marginX(): ResolvedTailwindValue | undefined {
+    return this.marginXParser.getValue(this.classNames)?.value ?? this.margin;
+  }
+  set marginX(marginX: TailwindValue | undefined) {
+    this.classNames = this.marginXParser.setValue(this.classNames, marginX);
+  }
+  get marginY(): ResolvedTailwindValue | undefined {
+    return this.marginYParser.getValue(this.classNames)?.value ?? this.margin;
+  }
+  set marginY(marginY: TailwindValue | undefined) {
+    this.classNames = this.marginYParser.setValue(this.classNames, marginY);
+  }
 
   get width(): ResolvedTailwindValue | undefined {
     return this.widthParser.getValue(this.classNames)?.value;

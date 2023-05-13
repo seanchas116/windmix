@@ -11,11 +11,16 @@ import {
   widths,
 } from "../../models/style2/TailwindStyle";
 import {
+  FourEdgeGrid,
   Pane,
   PaneHeading,
   PaneHeadingRow,
+  Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
+import {
+  ComboBox,
+  SeparateComboBox,
+} from "@seanchas116/paintkit/src/components/ComboBox";
 import { ColorInput } from "@seanchas116/paintkit/src/components/css/ColorInput";
 import { Icon } from "@iconify/react";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
@@ -23,6 +28,9 @@ import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
+import * as icons from "@seanchas116/design-icons";
+import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import { useState } from "react";
 
 const textAlignOptions = [
   {
@@ -51,6 +59,21 @@ function stringifyValue(value: ResolvedTailwindValue | undefined) {
   }
 }
 
+const positionOptions = [
+  {
+    value: "static",
+    icon: <Icon icon={icons.staticPosition} />,
+  },
+  {
+    value: "relative",
+    icon: <Icon icon={icons.relativePosition} />,
+  },
+  {
+    value: "absolute",
+    icon: <Icon icon={icons.absolutePosition} />,
+  },
+];
+
 export const StyleInspector: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
   console.log(styles.map((s) => s.height));
@@ -62,13 +85,27 @@ export const StyleInspector: React.FC = observer(() => {
   const fontWeight = sameOrNone(styles.map((s) => s.fontWeight));
   const textAlign = sameOrNone(styles.map((s) => s.textAlign));
 
+  const [separateMargins, setSeparateMargins] = useState(false);
+
   return (
     <>
       <Pane>
         <PaneHeadingRow>
+          <PaneHeading>Position</PaneHeading>
+        </PaneHeadingRow>
+        <IconRadio options={positionOptions} />
+        <FourEdgeGrid>
+          <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
+          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
+          <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
+        </FourEdgeGrid>
+      </Pane>
+      <Pane>
+        <PaneHeadingRow>
           <PaneHeading>Size</PaneHeading>
         </PaneHeadingRow>
-        <div className="grid grid-cols-2 gap-1">
+        <Row11>
           <StyleComboBox
             styles={styles}
             icon={<LetterIcon>W</LetterIcon>}
@@ -81,8 +118,8 @@ export const StyleInspector: React.FC = observer(() => {
             name="height"
             tokens={heights}
           />
-        </div>
-        <div className="grid grid-cols-2 gap-1">
+        </Row11>
+        <Row11>
           <SeparateComboBox
             icon={<LetterIcon>W</LetterIcon>}
             value={width?.value}
@@ -91,8 +128,8 @@ export const StyleInspector: React.FC = observer(() => {
             icon={<LetterIcon>H</LetterIcon>}
             value={height?.value}
           />
-        </div>
-        <div className="grid grid-cols-2 gap-1">
+        </Row11>
+        <Row11>
           <SeparateComboBox
             icon={<LetterIcon>W</LetterIcon>}
             value={width?.value}
@@ -101,14 +138,38 @@ export const StyleInspector: React.FC = observer(() => {
             icon={<LetterIcon>H</LetterIcon>}
             value={height?.value}
           />
-        </div>
+        </Row11>
+      </Pane>
+      <Pane>
+        <PaneHeadingRow>
+          <PaneHeading>Padding</PaneHeading>
+          <IconButton
+            className="shrink-0"
+            icon={icons.separateEdges}
+            onClick={() => setSeparateMargins(!separateMargins)}
+            pressed={separateMargins}
+          />
+        </PaneHeadingRow>
+        {separateMargins ? (
+          <FourEdgeGrid>
+            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
+            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
+            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
+          </FourEdgeGrid>
+        ) : (
+          <Row11>
+            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+          </Row11>
+        )}
       </Pane>
       <Pane>
         <PaneHeadingRow>
           <PaneHeading>Text</PaneHeading>
         </PaneHeadingRow>
         <ColorComboBox styles={styles} />
-        <div className="grid grid-cols-2 gap-1">
+        <Row11>
           <StyleComboBox
             styles={styles}
             icon={<Icon icon="ic:outline-format-size" />}
@@ -121,7 +182,7 @@ export const StyleInspector: React.FC = observer(() => {
             name="fontWeight"
             tokens={fontWeights}
           />
-        </div>
+        </Row11>
         <IconRadio
           options={textAlignOptions}
           value={textAlign?.type === "keyword" ? textAlign.keyword : undefined}
