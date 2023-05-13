@@ -1,31 +1,21 @@
 import { observer } from "mobx-react-lite";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import { ResolvedTailwindValue } from "../../../models/style/TailwindStyle";
+import {
+  ResolvedTailwindValue,
+  TailwindStyle,
+} from "../../../models/style/TailwindStyle";
 import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { appState } from "../../../state/AppState";
 import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
 
-type Property =
-  | "fontSize"
-  | "fontWeight"
-  | "width"
-  | "height"
-  | "mixedMargin"
-  | "mixedMarginX"
-  | "mixedMarginY"
-  | "marginTop"
-  | "marginBottom"
-  | "marginLeft"
-  | "marginRight";
-
 export const StyleComboBox: React.FC<{
   icon: JSX.Element;
-  property: Property;
+  property: keyof TailwindStyle["props"];
   tokens: Map<string, string>;
 }> = observer(({ property, tokens, icon }) => {
   const styles = appState.tailwindStyles;
 
-  const value = sameOrNone(styles.map((s) => s[property]));
+  const value = sameOrNone(styles.map((s) => s.props[property].value));
 
   const pxValue = (value: string) => {
     // rem -> px
@@ -64,7 +54,7 @@ export const StyleComboBox: React.FC<{
       }
       onChange={(value) => {
         for (const style of styles) {
-          style[property] = value
+          style.props[property].value = value
             ? {
                 type: "arbitrary",
                 value,
@@ -75,7 +65,7 @@ export const StyleComboBox: React.FC<{
       }}
       onSelectChange={(keyword) => {
         for (const style of styles) {
-          style[property] = keyword
+          style.props[property].value = keyword
             ? ({
                 type: "keyword",
                 keyword,

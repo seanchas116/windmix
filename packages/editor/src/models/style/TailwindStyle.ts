@@ -77,209 +77,123 @@ export abstract class TailwindStyle {
     this.className = classNames.join(" ");
   }
 
-  readonly marginParser = new ValueParser("m", margins, /.+/);
-  readonly marginXParser = new ValueParser("mx", margins, /.+/);
-  readonly marginYParser = new ValueParser("my", margins, /.+/);
-  readonly marginTopParser = new ValueParser("mt", margins, /.+/);
-  readonly marginRightParser = new ValueParser("mr", margins, /.+/);
-  readonly marginBottomParser = new ValueParser("mb", margins, /.+/);
-  readonly marginLeftParser = new ValueParser("ml", margins, /.+/);
+  readonly separateProps = {
+    margin: new ValueAccess(this, new ValueParser("m", margins, /.+/)),
+    marginX: new ValueAccess(this, new ValueParser("mx", margins, /.+/)),
+    marginY: new ValueAccess(this, new ValueParser("my", margins, /.+/)),
+    marginTop: new ValueAccess(this, new ValueParser("mt", margins, /.+/)),
+    marginRight: new ValueAccess(this, new ValueParser("mr", margins, /.+/)),
+    marginBottom: new ValueAccess(this, new ValueParser("mb", margins, /.+/)),
+    marginLeft: new ValueAccess(this, new ValueParser("ml", margins, /.+/)),
 
-  readonly paddingParser = new ValueParser("p", paddings, /.+/);
-  readonly paddingXParser = new ValueParser("px", paddings, /.+/);
-  readonly paddingYParser = new ValueParser("py", paddings, /.+/);
-  readonly paddingTopParser = new ValueParser("pt", paddings, /.+/);
-  readonly paddingRightParser = new ValueParser("pr", paddings, /.+/);
-  readonly paddingBottomParser = new ValueParser("pb", paddings, /.+/);
-  readonly paddingLeftParser = new ValueParser("pl", paddings, /.+/);
+    padding: new ValueAccess(this, new ValueParser("p", paddings, /.+/)),
+    paddingX: new ValueAccess(this, new ValueParser("px", paddings, /.+/)),
+    paddingY: new ValueAccess(this, new ValueParser("py", paddings, /.+/)),
+    paddingTop: new ValueAccess(this, new ValueParser("pt", paddings, /.+/)),
+    paddingRight: new ValueAccess(this, new ValueParser("pr", paddings, /.+/)),
+    paddingBottom: new ValueAccess(this, new ValueParser("pb", paddings, /.+/)),
+    paddingLeft: new ValueAccess(this, new ValueParser("pl", paddings, /.+/)),
 
-  readonly widthParser = new ValueParser("w", widths, /.+/);
-  readonly heightParser = new ValueParser("h", heights, /.+/);
-  readonly colorParser = new ValueParser("text", colors, /^#/);
-  readonly fontSizeParser = new ValueParser(
-    "text",
-    fontSizes,
-    /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
-  );
-  readonly fontWeightParser = new ValueParser("font", fontWeights, /^[0-9]+$/);
-  readonly textAlignParser = new ValueParser(
-    "text",
-    new Map([
-      ["left", "left"],
-      ["center", "center"],
-      ["right", "right"],
+    width: new ValueAccess(this, new ValueParser("w", widths, /.+/)),
+    height: new ValueAccess(this, new ValueParser("h", heights, /.+/)),
+    color: new ValueAccess(this, new ValueParser("text", colors, /^#/)),
+    fontSize: new ValueAccess(
+      this,
+      new ValueParser(
+        "text",
+        fontSizes,
+        /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
+      )
+    ),
+    fontWeight: new ValueAccess(
+      this,
+      new ValueParser("font", fontWeights, /^[0-9]+$/)
+    ),
+    textAlign: new ValueAccess(
+      this,
+      new ValueParser(
+        "text",
+        new Map([
+          ["left", "left"],
+          ["center", "center"],
+          ["right", "right"],
+        ]),
+        false
+      )
+    ),
+  };
+
+  readonly props = {
+    ...this.separateProps,
+    mixedMarginX: new MixedValueAccess([
+      this.separateProps.marginLeft,
+      this.separateProps.marginRight,
     ]),
-    false
-  );
+    mixedMarginY: new MixedValueAccess([
+      this.separateProps.marginTop,
+      this.separateProps.marginBottom,
+    ]),
+    mixedMargin: new MixedValueAccess([
+      this.separateProps.marginLeft,
+      this.separateProps.marginRight,
+      this.separateProps.marginTop,
+      this.separateProps.marginBottom,
+    ]),
+    mixedPaddingX: new MixedValueAccess([
+      this.separateProps.paddingLeft,
+      this.separateProps.paddingRight,
+    ]),
+    mixedPaddingY: new MixedValueAccess([
+      this.separateProps.paddingTop,
+      this.separateProps.paddingBottom,
+    ]),
+    mixedPadding: new MixedValueAccess([
+      this.separateProps.paddingLeft,
+      this.separateProps.paddingRight,
+      this.separateProps.paddingTop,
+      this.separateProps.paddingBottom,
+    ]),
+  };
+}
 
-  get padding(): ResolvedTailwindValue | undefined {
-    return this.paddingParser.getValue(this.classNames)?.value;
-  }
-  set padding(padding: TailwindValue | undefined) {
-    this.classNames = this.paddingParser.setValue(this.classNames, padding);
-  }
-  get paddingX(): ResolvedTailwindValue | undefined {
-    return this.paddingXParser.getValue(this.classNames)?.value ?? this.padding;
-  }
-  set paddingX(paddingX: TailwindValue | undefined) {
-    this.classNames = this.paddingXParser.setValue(this.classNames, paddingX);
-  }
-  get paddingY(): ResolvedTailwindValue | undefined {
-    return this.paddingYParser.getValue(this.classNames)?.value ?? this.padding;
-  }
-  set paddingY(paddingY: TailwindValue | undefined) {
-    this.classNames = this.paddingYParser.setValue(this.classNames, paddingY);
-  }
-
-  get margin(): ResolvedTailwindValue | undefined {
-    return this.marginParser.getValue(this.classNames)?.value;
-  }
-  set margin(margin: TailwindValue | undefined) {
-    this.classNames = this.marginParser.setValue(this.classNames, margin);
-  }
-
-  get marginX(): ResolvedTailwindValue | undefined {
-    return this.marginXParser.getValue(this.classNames)?.value ?? this.margin;
-  }
-  set marginX(marginX: TailwindValue | undefined) {
-    this.classNames = this.marginXParser.setValue(this.classNames, marginX);
+class ValueAccess {
+  constructor(style: TailwindStyle, parser: ValueParser) {
+    this.style = style;
+    this.parser = parser;
   }
 
-  get marginY(): ResolvedTailwindValue | undefined {
-    return this.marginYParser.getValue(this.classNames)?.value ?? this.margin;
-  }
-  set marginY(marginY: TailwindValue | undefined) {
-    this.classNames = this.marginYParser.setValue(this.classNames, marginY);
+  readonly style: TailwindStyle;
+  readonly parser: ValueParser;
+
+  get value(): ResolvedTailwindValue | undefined {
+    return this.parser.getValue(this.style.classNames)?.value;
   }
 
-  get marginTop(): ResolvedTailwindValue | undefined {
-    return (
-      this.marginTopParser.getValue(this.classNames)?.value ?? this.marginY
-    );
+  set value(value: TailwindValue | undefined) {
+    this.style.classNames = this.parser.setValue(this.style.classNames, value);
   }
-  set marginTop(marginTop: TailwindValue | undefined) {
-    this.classNames = this.marginTopParser.setValue(this.classNames, marginTop);
-  }
-  get marginRight(): ResolvedTailwindValue | undefined {
-    return (
-      this.marginRightParser.getValue(this.classNames)?.value ?? this.marginX
-    );
-  }
-  set marginRight(marginRight: TailwindValue | undefined) {
-    this.classNames = this.marginRightParser.setValue(
-      this.classNames,
-      marginRight
-    );
-  }
-  get marginBottom(): ResolvedTailwindValue | undefined {
-    return (
-      this.marginBottomParser.getValue(this.classNames)?.value ?? this.marginY
-    );
-  }
-  set marginBottom(marginBottom: TailwindValue | undefined) {
-    this.classNames = this.marginBottomParser.setValue(
-      this.classNames,
-      marginBottom
-    );
-  }
-  get marginLeft(): ResolvedTailwindValue | undefined {
-    return (
-      this.marginLeftParser.getValue(this.classNames)?.value ?? this.marginX
-    );
-  }
-  set marginLeft(marginLeft: TailwindValue | undefined) {
-    this.classNames = this.marginLeftParser.setValue(
-      this.classNames,
-      marginLeft
-    );
+}
+
+class MixedValueAccess {
+  constructor(separate: ValueAccess[]) {
+    this.separate = separate;
   }
 
-  get mixedMarginX(): ResolvedTailwindValue | typeof MIXED | undefined {
-    return sameOrMixed([this.marginLeft, this.marginRight]);
+  readonly separate: ValueAccess[];
+
+  get value(): ResolvedTailwindValue | typeof MIXED | undefined {
+    return sameOrMixed(this.separate.map((access) => access.value));
   }
-  set mixedMarginX(marginX: TailwindValue | typeof MIXED | undefined) {
-    if (marginX === MIXED) {
+
+  set value(value: TailwindValue | typeof MIXED | undefined) {
+    if (value === MIXED) {
       return;
     }
-    this.marginLeft = marginX;
-    this.marginRight = marginX;
-  }
+    // TODO: unset separate values and set shorthand value
 
-  get mixedMarginY(): ResolvedTailwindValue | typeof MIXED | undefined {
-    return sameOrMixed([this.marginTop, this.marginBottom]);
-  }
-  set mixedMarginY(marginY: TailwindValue | typeof MIXED | undefined) {
-    if (marginY === MIXED) {
-      return;
+    for (const access of this.separate) {
+      access.value = value;
     }
-    this.marginTop = marginY;
-    this.marginBottom = marginY;
-  }
-
-  get mixedMargin(): ResolvedTailwindValue | typeof MIXED | undefined {
-    return sameOrMixed([
-      this.marginTop,
-      this.marginRight,
-      this.marginBottom,
-      this.marginLeft,
-    ]);
-  }
-  set mixedMargin(margin: TailwindValue | typeof MIXED | undefined) {
-    if (margin === MIXED) {
-      return;
-    }
-    this.marginTop = margin;
-    this.marginRight = margin;
-    this.marginBottom = margin;
-    this.marginLeft = margin;
-  }
-
-  get width(): ResolvedTailwindValue | undefined {
-    return this.widthParser.getValue(this.classNames)?.value;
-  }
-  set width(width: TailwindValue | undefined) {
-    this.classNames = this.widthParser.setValue(this.classNames, width);
-  }
-
-  get height(): ResolvedTailwindValue | undefined {
-    return this.heightParser.getValue(this.classNames)?.value;
-  }
-  set height(height: TailwindValue | undefined) {
-    this.classNames = this.heightParser.setValue(this.classNames, height);
-  }
-
-  get color(): ResolvedTailwindValue | undefined {
-    return this.colorParser.getValue(this.classNames)?.value;
-  }
-
-  set color(color: TailwindValue | undefined) {
-    this.classNames = this.colorParser.setValue(this.classNames, color);
-  }
-
-  get fontSize(): ResolvedTailwindValue | undefined {
-    return this.fontSizeParser.getValue(this.classNames)?.value;
-  }
-
-  set fontSize(fontSize: TailwindValue | undefined) {
-    this.classNames = this.fontSizeParser.setValue(this.classNames, fontSize);
-  }
-
-  get fontWeight(): ResolvedTailwindValue | undefined {
-    return this.fontWeightParser.getValue(this.classNames)?.value;
-  }
-
-  set fontWeight(fontWeight: TailwindValue | undefined) {
-    this.classNames = this.fontWeightParser.setValue(
-      this.classNames,
-      fontWeight
-    );
-  }
-
-  get textAlign(): ResolvedTailwindValue | undefined {
-    return this.textAlignParser.getValue(this.classNames)?.value;
-  }
-  set textAlign(textAlign: TailwindValue | undefined) {
-    this.classNames = this.textAlignParser.setValue(this.classNames, textAlign);
   }
 }
 

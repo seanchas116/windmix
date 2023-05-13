@@ -41,7 +41,7 @@ const textAlignOptions = [
 
 export const TextPane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
-  const textAlign = sameOrNone(styles.map((s) => s.textAlign));
+  const textAlign = sameOrNone(styles.map((s) => s.props.textAlign.value));
 
   return (
     <Pane>
@@ -67,7 +67,7 @@ export const TextPane: React.FC = observer(() => {
         unsettable
         onChange={(value) => {
           for (const style of styles) {
-            style.textAlign = value
+            style.props.textAlign.value = value
               ? {
                   type: "keyword",
                   keyword: value,
@@ -81,7 +81,7 @@ export const TextPane: React.FC = observer(() => {
 });
 
 const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
-  const value = sameOrNone(styles.map((s) => s.color));
+  const value = sameOrNone(styles.map((s) => s.props.color.value));
 
   return (
     <ColorInput
@@ -91,7 +91,7 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
       onChange={(value) => {
         if (value) {
           for (const style of styles) {
-            style.color = {
+            style.props.color.value = {
               type: "arbitrary",
               value,
             };
@@ -101,7 +101,7 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
       onTokenChange={(keyword) => {
         if (keyword) {
           for (const style of styles) {
-            style.color = {
+            style.props.color.value = {
               type: "keyword",
               keyword,
             };

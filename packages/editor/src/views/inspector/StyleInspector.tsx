@@ -23,14 +23,13 @@ function stringifyValue(value: ResolvedTailwindValue | undefined) {
 
 export const StyleInspector: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
-  console.log(styles.map((s) => s.height));
 
-  const color = sameOrNone(styles.map((s) => s.color));
-  const width = sameOrNone(styles.map((s) => s.width));
-  const height = sameOrNone(styles.map((s) => s.height));
-  const fontSize = sameOrNone(styles.map((s) => s.fontSize));
-  const fontWeight = sameOrNone(styles.map((s) => s.fontWeight));
-  const textAlign = sameOrNone(styles.map((s) => s.textAlign));
+  const color = sameOrNone(styles.map((s) => s.props.color.value));
+  const width = sameOrNone(styles.map((s) => s.props.width.value));
+  const height = sameOrNone(styles.map((s) => s.props.height.value));
+  const fontSize = sameOrNone(styles.map((s) => s.props.fontSize.value));
+  const fontWeight = sameOrNone(styles.map((s) => s.props.fontWeight.value));
+  const textAlign = sameOrNone(styles.map((s) => s.props.textAlign.value));
 
   return (
     <>
