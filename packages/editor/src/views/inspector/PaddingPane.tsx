@@ -1,12 +1,10 @@
 import { observer } from "mobx-react-lite";
 import {
-  FourEdgeGrid,
   Pane,
   PaneHeading,
   PaneHeadingRow,
   Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { Icon } from "@iconify/react";
 import * as icons from "@seanchas116/design-icons";
 import {
@@ -15,10 +13,34 @@ import {
   PlusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
 import { useState } from "react";
+import { paddings } from "../../models/style/TailwindStyle";
+import { appState } from "../../state/AppState";
+import { StyleComboBox } from "./common/StyleComboBox";
+import { useOnSelectionChange } from "./common/useOnSelectionChange";
 
 export const PaddingPane: React.FC = observer(() => {
+  const styles = appState.tailwindStyles;
+
   const [open, setOpen] = useState(false);
-  const [separate, setSeparate] = useState(false);
+  const [separate, setSeparate] = useState(true);
+
+  useOnSelectionChange(() => {
+    const shouldOpen = styles.some(
+      (style) =>
+        style.props.paddingTop.value ||
+        style.props.paddingRight.value ||
+        style.props.paddingBottom.value ||
+        style.props.paddingLeft.value
+    );
+    const shouldSeparate = styles.some(
+      (style) =>
+        style.props.paddingTop.value !== style.props.paddingBottom.value ||
+        style.props.paddingLeft.value !== style.props.paddingRight.value
+    );
+
+    setOpen(shouldOpen);
+    setSeparate(shouldSeparate);
+  });
 
   return (
     <Pane>
@@ -41,16 +63,44 @@ export const PaddingPane: React.FC = observer(() => {
       </PaneHeadingRow>
       {open &&
         (separate ? (
-          <FourEdgeGrid>
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={2} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} rotate={3} />} />
-          </FourEdgeGrid>
+          <>
+            <Row11>
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={3} />}
+                property="paddingLeft"
+                tokens={paddings}
+              />
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={1} />}
+                property="paddingRight"
+                tokens={paddings}
+              />
+            </Row11>
+            <Row11>
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} />}
+                property="paddingTop"
+                tokens={paddings}
+              />
+              <StyleComboBox
+                icon={<Icon icon={icons.edgeTop} rotate={2} />}
+                property="paddingBottom"
+                tokens={paddings}
+              />
+            </Row11>
+          </>
         ) : (
           <Row11>
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
-            <ComboBox icon={<Icon icon={icons.edgeTop} />} />
+            <StyleComboBox
+              icon={<Icon icon={icons.edgeTop} rotate={3} />}
+              property="mixedPaddingX"
+              tokens={paddings}
+            />
+            <StyleComboBox
+              icon={<Icon icon={icons.edgeTop} />}
+              property="mixedPaddingY"
+              tokens={paddings}
+            />
           </Row11>
         ))}
     </Pane>
