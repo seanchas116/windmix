@@ -22,7 +22,7 @@ export const MarginPane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
 
   const [open, setOpen] = useState(false);
-  const [separate, setSeparate] = useState(false);
+  const [separate, setSeparate] = useState(true);
 
   useOnSelectionChange(() => {
     const hasMargin = styles.some(
@@ -32,12 +32,14 @@ export const MarginPane: React.FC = observer(() => {
         style.marginBottom ||
         style.marginLeft
     );
+    const hasSeparateMargin = styles.some(
+      (style) =>
+        style.marginTop !== style.marginBottom ||
+        style.marginLeft !== style.marginRight
+    );
 
-    if (hasMargin) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
+    setOpen(hasMargin);
+    setSeparate(hasSeparateMargin);
   });
 
   return (
