@@ -8,7 +8,7 @@ import * as Y from "yjs";
 import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
-import { TailwindStyle } from "../models/style2/TailwindStyle";
+import { TailwindStyle } from "../models/style/TailwindStyle";
 
 const vscode = acquireVsCodeApi();
 

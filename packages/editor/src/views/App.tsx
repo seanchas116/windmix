@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { StyleInspector } from "./inspector2/StyleInspector";
+import { StyleInspector } from "./inspector/StyleInspector";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { ScrollArea } from "@seanchas116/paintkit/src/components/ScrollArea";
 import { Outline } from "./outline/Outline";

@@ -9,7 +9,7 @@ import {
   fontWeights,
   heights,
   widths,
-} from "../../models/style2/TailwindStyle";
+} from "../../models/style/TailwindStyle";
 import {
   FourEdgeGrid,
   Pane,
