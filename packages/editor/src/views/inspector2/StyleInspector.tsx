@@ -125,6 +125,17 @@ export const StyleInspector: React.FC = observer(() => {
         <IconRadio
           options={textAlignOptions}
           value={textAlign?.type === "keyword" ? textAlign.keyword : undefined}
+          unsettable
+          onChange={(value) => {
+            for (const style of styles) {
+              style.textAlign = value
+                ? {
+                    type: "keyword",
+                    keyword: value,
+                  }
+                : undefined;
+            }
+          }}
         />
       </Pane>
       <dl className="p-2">
@@ -226,14 +237,13 @@ const StyleComboBox: React.FC<{
         return true;
       }}
       onSelectChange={(keyword) => {
-        if (keyword) {
-          for (const style of styles) {
-            style[name] = {
-              type: "keyword",
-              keyword,
-              value: "", // unnecessary
-            };
-          }
+        for (const style of styles) {
+          style[name] = keyword
+            ? ({
+                type: "keyword",
+                keyword,
+              } as ResolvedTailwindValue)
+            : undefined;
         }
         return true;
       }}
