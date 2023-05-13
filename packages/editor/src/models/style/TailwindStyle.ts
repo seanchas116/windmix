@@ -78,29 +78,26 @@ export abstract class TailwindStyle {
   }
 
   readonly separateProps = {
-    margin: new ValueAccess(this, new ValueParser("m-", margins, /.+/)),
-    marginX: new ValueAccess(this, new ValueParser("mx-", margins, /.+/)),
-    marginY: new ValueAccess(this, new ValueParser("my-", margins, /.+/)),
-    marginTop: new ValueAccess(this, new ValueParser("mt-", margins, /.+/)),
-    marginRight: new ValueAccess(this, new ValueParser("mr-", margins, /.+/)),
-    marginBottom: new ValueAccess(this, new ValueParser("mb-", margins, /.+/)),
-    marginLeft: new ValueAccess(this, new ValueParser("ml-", margins, /.+/)),
+    margin: new Property(this, new ValueParser("m-", margins, /.+/)),
+    marginX: new Property(this, new ValueParser("mx-", margins, /.+/)),
+    marginY: new Property(this, new ValueParser("my-", margins, /.+/)),
+    marginTop: new Property(this, new ValueParser("mt-", margins, /.+/)),
+    marginRight: new Property(this, new ValueParser("mr-", margins, /.+/)),
+    marginBottom: new Property(this, new ValueParser("mb-", margins, /.+/)),
+    marginLeft: new Property(this, new ValueParser("ml-", margins, /.+/)),
 
-    padding: new ValueAccess(this, new ValueParser("p-", paddings, /.+/)),
-    paddingX: new ValueAccess(this, new ValueParser("px-", paddings, /.+/)),
-    paddingY: new ValueAccess(this, new ValueParser("py-", paddings, /.+/)),
-    paddingTop: new ValueAccess(this, new ValueParser("pt-", paddings, /.+/)),
-    paddingRight: new ValueAccess(this, new ValueParser("pr-", paddings, /.+/)),
-    paddingBottom: new ValueAccess(
-      this,
-      new ValueParser("pb-", paddings, /.+/)
-    ),
-    paddingLeft: new ValueAccess(this, new ValueParser("pl-", paddings, /.+/)),
+    padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
+    paddingX: new Property(this, new ValueParser("px-", paddings, /.+/)),
+    paddingY: new Property(this, new ValueParser("py-", paddings, /.+/)),
+    paddingTop: new Property(this, new ValueParser("pt-", paddings, /.+/)),
+    paddingRight: new Property(this, new ValueParser("pr-", paddings, /.+/)),
+    paddingBottom: new Property(this, new ValueParser("pb-", paddings, /.+/)),
+    paddingLeft: new Property(this, new ValueParser("pl-", paddings, /.+/)),
 
-    width: new ValueAccess(this, new ValueParser("w-", widths, /.+/)),
-    height: new ValueAccess(this, new ValueParser("h-", heights, /.+/)),
-    color: new ValueAccess(this, new ValueParser("text-", colors, /^#/)),
-    fontSize: new ValueAccess(
+    width: new Property(this, new ValueParser("w-", widths, /.+/)),
+    height: new Property(this, new ValueParser("h-", heights, /.+/)),
+    color: new Property(this, new ValueParser("text-", colors, /^#/)),
+    fontSize: new Property(
       this,
       new ValueParser(
         "text-",
@@ -108,11 +105,11 @@ export abstract class TailwindStyle {
         /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
       )
     ),
-    fontWeight: new ValueAccess(
+    fontWeight: new Property(
       this,
       new ValueParser("font-", fontWeights, /^[0-9]+$/)
     ),
-    textAlign: new ValueAccess(
+    textAlign: new Property(
       this,
       new ValueParser(
         "text-",
@@ -128,29 +125,29 @@ export abstract class TailwindStyle {
 
   readonly props = {
     ...this.separateProps,
-    mixedMarginX: new MixedValueAccess([
+    mixedMarginX: new ShorthandProperty([
       this.separateProps.marginLeft,
       this.separateProps.marginRight,
     ]),
-    mixedMarginY: new MixedValueAccess([
+    mixedMarginY: new ShorthandProperty([
       this.separateProps.marginTop,
       this.separateProps.marginBottom,
     ]),
-    mixedMargin: new MixedValueAccess([
+    mixedMargin: new ShorthandProperty([
       this.separateProps.marginLeft,
       this.separateProps.marginRight,
       this.separateProps.marginTop,
       this.separateProps.marginBottom,
     ]),
-    mixedPaddingX: new MixedValueAccess([
+    mixedPaddingX: new ShorthandProperty([
       this.separateProps.paddingLeft,
       this.separateProps.paddingRight,
     ]),
-    mixedPaddingY: new MixedValueAccess([
+    mixedPaddingY: new ShorthandProperty([
       this.separateProps.paddingTop,
       this.separateProps.paddingBottom,
     ]),
-    mixedPadding: new MixedValueAccess([
+    mixedPadding: new ShorthandProperty([
       this.separateProps.paddingLeft,
       this.separateProps.paddingRight,
       this.separateProps.paddingTop,
@@ -159,7 +156,7 @@ export abstract class TailwindStyle {
   };
 }
 
-class ValueAccess {
+class Property {
   constructor(style: TailwindStyle, parser: ValueParser) {
     this.style = style;
     this.parser = parser;
@@ -177,12 +174,12 @@ class ValueAccess {
   }
 }
 
-class MixedValueAccess {
-  constructor(separate: ValueAccess[]) {
+class ShorthandProperty {
+  constructor(separate: Property[]) {
     this.separate = separate;
   }
 
-  readonly separate: ValueAccess[];
+  readonly separate: Property[];
 
   get value(): ResolvedTailwindValue | typeof MIXED | undefined {
     return sameOrMixed(this.separate.map((access) => access.value));
