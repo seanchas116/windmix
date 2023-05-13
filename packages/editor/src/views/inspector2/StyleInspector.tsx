@@ -16,6 +16,7 @@ import {
   PaneHeading,
   PaneHeadingRow,
   Row11,
+  RowPackLeft,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import {
   ComboBox,
@@ -23,7 +24,7 @@ import {
 } from "@seanchas116/paintkit/src/components/ComboBox";
 import { ColorInput } from "@seanchas116/paintkit/src/components/css/ColorInput";
 import { Icon } from "@iconify/react";
-import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
+import { Input, LetterIcon } from "@seanchas116/paintkit/src/components/Input";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
@@ -34,6 +35,7 @@ import {
   MinusButton,
   PlusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
+import { AlignmentEdit } from "@seanchas116/paintkit/src/components/alignment/AlignmentEdit";
 import { useState } from "react";
 
 const textAlignOptions = [
@@ -114,6 +116,47 @@ const verticalSizeConstraintOptions = [
     value: "fill",
     text: "Fill Container",
     icon: <Icon icon={icons.fillArea} rotate={1} />,
+  },
+];
+
+const layoutOptions = [
+  {
+    value: "block",
+    tooltip: "Block",
+    icon: <Icon icon={icons.staticPosition} />,
+  },
+  {
+    value: "flex",
+    tooltip: "Flex",
+    icon: <Icon icon={icons.hStack} />,
+  },
+  {
+    value: "grid",
+    tooltip: "Grid",
+    icon: <Icon icon="icon-park-outline:all-application" />,
+  },
+];
+
+const layoutDirectionOptions = [
+  {
+    value: "row",
+    tooltip: "Row",
+    icon: <Icon icon="ic:arrow-forward" />,
+  },
+  {
+    value: "column",
+    tooltip: "Column",
+    icon: <Icon icon="ic:arrow-forward" rotate={1} />,
+  },
+  {
+    value: "row-reverse",
+    tooltip: "Row Reverse",
+    icon: <Icon icon="ic:arrow-forward" rotate={2} />,
+  },
+  {
+    value: "column-reverse",
+    tooltip: "Column Reverse",
+    icon: <Icon icon="ic:arrow-forward" rotate={3} />,
   },
 ];
 
@@ -220,6 +263,39 @@ export const StyleInspector: React.FC = observer(() => {
               <ComboBox icon={<Icon icon={icons.edgeTop} />} />
             </Row11>
           ))}
+      </Pane>
+      <Pane>
+        <PaneHeadingRow>
+          <PaneHeading>Layout</PaneHeading>
+        </PaneHeadingRow>
+        <RowPackLeft>
+          <IconRadio options={layoutOptions} />
+          <IconRadio options={layoutDirectionOptions} />
+        </RowPackLeft>
+        <Row11>
+          <ComboBox icon={<Icon icon="ic:space-bar" />} />
+          <ComboBox icon={<Icon icon="ic:space-bar" rotate={1} />} />
+        </Row11>
+        <div className="flex gap-1">
+          <AlignmentEdit
+            className="w-[52px]"
+            direction="x"
+            align="start"
+            justify="start"
+            onChange={(align, justify) => {
+              // TODO
+            }}
+          />
+          <div
+            className="min-w-0 flex flex-col gap-1"
+            style={{
+              width: "calc((100% - 8px) / 2)",
+            }}
+          >
+            <Input icon={<Icon icon="ic:space-bar" />} value="Auto" />
+            <Input icon={<Icon icon="ic:space-bar" />} value="Start" />
+          </div>
+        </div>
       </Pane>
       <Pane>
         <PaneHeadingRow>
