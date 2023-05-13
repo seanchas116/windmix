@@ -79,20 +79,69 @@ export abstract class TailwindStyle {
 
   readonly separateProps = {
     margin: new Property(this, new ValueParser("m-", margins, /.+/)),
-    marginX: new Property(this, new ValueParser("mx-", margins, /.+/)),
-    marginY: new Property(this, new ValueParser("my-", margins, /.+/)),
-    marginTop: new Property(this, new ValueParser("mt-", margins, /.+/)),
-    marginRight: new Property(this, new ValueParser("mr-", margins, /.+/)),
-    marginBottom: new Property(this, new ValueParser("mb-", margins, /.+/)),
-    marginLeft: new Property(this, new ValueParser("ml-", margins, /.+/)),
+    marginX: new Property(
+      this,
+      new ValueParser("mx-", margins, /.+/),
+      (): Property => this.separateProps.margin
+    ),
+    marginY: new Property(
+      this,
+      new ValueParser("my-", margins, /.+/),
+      (): Property => this.separateProps.margin
+    ),
+
+    marginLeft: new Property(
+      this,
+      new ValueParser("ml-", margins, /.+/),
+      (): Property => this.separateProps.marginX
+    ),
+    marginRight: new Property(
+      this,
+      new ValueParser("mr-", margins, /.+/),
+      (): Property => this.separateProps.marginX
+    ),
+    marginTop: new Property(
+      this,
+      new ValueParser("mt-", margins, /.+/),
+      (): Property => this.separateProps.marginY
+    ),
+    marginBottom: new Property(
+      this,
+      new ValueParser("mb-", margins, /.+/),
+      (): Property => this.separateProps.marginY
+    ),
 
     padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
-    paddingX: new Property(this, new ValueParser("px-", paddings, /.+/)),
-    paddingY: new Property(this, new ValueParser("py-", paddings, /.+/)),
-    paddingTop: new Property(this, new ValueParser("pt-", paddings, /.+/)),
-    paddingRight: new Property(this, new ValueParser("pr-", paddings, /.+/)),
-    paddingBottom: new Property(this, new ValueParser("pb-", paddings, /.+/)),
-    paddingLeft: new Property(this, new ValueParser("pl-", paddings, /.+/)),
+    paddingX: new Property(
+      this,
+      new ValueParser("px-", paddings, /.+/),
+      (): Property => this.separateProps.padding
+    ),
+    paddingY: new Property(
+      this,
+      new ValueParser("py-", paddings, /.+/),
+      (): Property => this.separateProps.padding
+    ),
+    paddingLeft: new Property(
+      this,
+      new ValueParser("pl-", paddings, /.+/),
+      (): Property => this.separateProps.paddingX
+    ),
+    paddingRight: new Property(
+      this,
+      new ValueParser("pr-", paddings, /.+/),
+      (): Property => this.separateProps.paddingX
+    ),
+    paddingTop: new Property(
+      this,
+      new ValueParser("pt-", paddings, /.+/),
+      (): Property => this.separateProps.paddingY
+    ),
+    paddingBottom: new Property(
+      this,
+      new ValueParser("pb-", paddings, /.+/),
+      (): Property => this.separateProps.paddingY
+    ),
 
     width: new Property(this, new ValueParser("w-", widths, /.+/)),
     height: new Property(this, new ValueParser("h-", heights, /.+/)),
@@ -157,16 +206,25 @@ export abstract class TailwindStyle {
 }
 
 class Property {
-  constructor(style: TailwindStyle, parser: ValueParser) {
+  constructor(
+    style: TailwindStyle,
+    parser: ValueParser,
+    shorthand?: () => Property
+  ) {
     this.style = style;
     this.parser = parser;
+    this.shorthand = shorthand;
   }
 
   readonly style: TailwindStyle;
   readonly parser: ValueParser;
+  readonly shorthand?: () => Property;
 
   get value(): ResolvedTailwindValue | undefined {
-    return this.parser.getValue(this.style.classNames)?.value;
+    return (
+      this.parser.getValue(this.style.classNames)?.value ??
+      this.shorthand?.()?.value
+    );
   }
 
   set value(value: TailwindValue | undefined) {
