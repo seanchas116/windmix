@@ -6,7 +6,6 @@ import {
   PaneHeadingRow,
   Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { Icon } from "@iconify/react";
 import * as icons from "@seanchas116/design-icons";
 import {
@@ -17,10 +16,20 @@ import {
 import { useState } from "react";
 import { StyleComboBox } from "./components/StyleComboBox";
 import { margins } from "../../models/style/TailwindStyle";
+import { appState } from "../../state/AppState";
 
 export const MarginPane: React.FC = observer(() => {
-  const [open, setOpen] = useState(false);
+  const [forceOpen, setForceOpen] = useState(false);
   const [separate, setSeparate] = useState(false);
+
+  const hasMargin = appState.tailwindStyles.some(
+    (style) =>
+      style.marginTop ||
+      style.marginRight ||
+      style.marginBottom ||
+      style.marginLeft
+  );
+  const open = forceOpen || hasMargin;
 
   return (
     <Pane>
@@ -36,9 +45,9 @@ export const MarginPane: React.FC = observer(() => {
           </IconButton>
         )}
         {open ? (
-          <MinusButton onClick={() => setOpen(false)} />
+          <MinusButton onClick={() => setForceOpen(false)} />
         ) : (
-          <PlusButton onClick={() => setOpen(true)} />
+          <PlusButton onClick={() => setForceOpen(true)} />
         )}
       </PaneHeadingRow>
       {open &&
