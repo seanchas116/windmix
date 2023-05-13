@@ -292,8 +292,16 @@ export const StyleInspector: React.FC = observer(() => {
               width: "calc((100% - 8px) / 2)",
             }}
           >
-            <Input icon={<Icon icon="ic:space-bar" />} value="Auto" />
-            <Input icon={<Icon icon="ic:space-bar" />} value="Start" />
+            <Input
+              icon={
+                <Icon icon="icon-park-outline:align-horizontal-center-two" />
+              }
+              value="Auto"
+            />
+            <Input
+              icon={<Icon icon="icon-park-outline:align-horizontally" />}
+              value="Start"
+            />
           </div>
         </div>
       </Pane>
