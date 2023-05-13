@@ -31,19 +31,19 @@ const positionOptions = [
 ];
 
 export const PositionPane: React.FC = observer(() => {
-  const [positionPaneOpen, setPositionPaneOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Pane>
       <PaneHeadingRow>
-        <PaneHeading dimmed={!positionPaneOpen}>Position</PaneHeading>
-        {positionPaneOpen ? (
-          <MinusButton onClick={() => setPositionPaneOpen(false)} />
+        <PaneHeading dimmed={!open}>Position</PaneHeading>
+        {open ? (
+          <MinusButton onClick={() => setOpen(false)} />
         ) : (
-          <PlusButton onClick={() => setPositionPaneOpen(true)} />
+          <PlusButton onClick={() => setOpen(true)} />
         )}
       </PaneHeadingRow>
-      {positionPaneOpen && (
+      {open && (
         <>
           <IconRadio options={positionOptions} />
           <FourEdgeGrid>

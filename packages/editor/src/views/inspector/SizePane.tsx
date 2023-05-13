@@ -56,19 +56,19 @@ const verticalSizeConstraintOptions = [
 
 export const SizePane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
-  const [sizePaneOpen, setSizePaneOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Pane>
       <PaneHeadingRow>
-        <PaneHeading dimmed={!sizePaneOpen}>Size</PaneHeading>
-        {sizePaneOpen ? (
-          <MinusButton onClick={() => setSizePaneOpen(false)} />
+        <PaneHeading dimmed={!open}>Size</PaneHeading>
+        {open ? (
+          <MinusButton onClick={() => setOpen(false)} />
         ) : (
-          <PlusButton onClick={() => setSizePaneOpen(true)} />
+          <PlusButton onClick={() => setOpen(true)} />
         )}
       </PaneHeadingRow>
-      {sizePaneOpen && (
+      {open && (
         <>
           <Row11>
             <StyleComboBox

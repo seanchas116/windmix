@@ -17,30 +17,30 @@ import {
 import { useState } from "react";
 
 export const PaddingPane: React.FC = observer(() => {
-  const [paddingPaneOpen, setPaddingPaneOpen] = useState(false);
-  const [separateMargins, setSeparateMargins] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [separate, setSeparate] = useState(false);
 
   return (
     <Pane>
       <PaneHeadingRow>
-        <PaneHeading dimmed={!paddingPaneOpen}>Padding</PaneHeading>
-        {paddingPaneOpen && (
+        <PaneHeading dimmed={!open}>Padding</PaneHeading>
+        {open && (
           <IconButton
             className="shrink-0"
-            onClick={() => setSeparateMargins(!separateMargins)}
-            pressed={separateMargins}
+            onClick={() => setSeparate(!separate)}
+            pressed={separate}
           >
             <Icon icon={icons.separateEdges} />
           </IconButton>
         )}
-        {paddingPaneOpen ? (
-          <MinusButton onClick={() => setPaddingPaneOpen(false)} />
+        {open ? (
+          <MinusButton onClick={() => setOpen(false)} />
         ) : (
-          <PlusButton onClick={() => setPaddingPaneOpen(true)} />
+          <PlusButton onClick={() => setOpen(true)} />
         )}
       </PaneHeadingRow>
-      {paddingPaneOpen &&
-        (separateMargins ? (
+      {open &&
+        (separate ? (
           <FourEdgeGrid>
             <ComboBox icon={<Icon icon={icons.edgeTop} />} />
             <ComboBox icon={<Icon icon={icons.edgeTop} rotate={1} />} />
