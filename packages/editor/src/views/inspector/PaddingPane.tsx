@@ -17,6 +17,7 @@ import { paddings } from "../../models/style/TailwindStyle";
 import { appState } from "../../state/AppState";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { useOnSelectionChange } from "./common/useOnSelectionChange";
+import { isEqual } from "lodash-es";
 
 export const PaddingPane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
@@ -25,21 +26,24 @@ export const PaddingPane: React.FC = observer(() => {
   const [separate, setSeparate] = useState(true);
 
   useOnSelectionChange(() => {
-    const shouldOpen = styles.some(
+    const hasPadding = styles.some(
       (style) =>
         style.props.paddingTop.value ||
         style.props.paddingRight.value ||
         style.props.paddingBottom.value ||
         style.props.paddingLeft.value
     );
-    const shouldSeparate = styles.some(
+    const hasSeparatePadding = styles.some(
       (style) =>
-        style.props.paddingTop.value !== style.props.paddingBottom.value ||
-        style.props.paddingLeft.value !== style.props.paddingRight.value
+        !isEqual(
+          style.props.paddingTop.value,
+          style.props.paddingBottom.value
+        ) ||
+        !isEqual(style.props.paddingLeft.value, style.props.paddingRight.value)
     );
 
-    setOpen(shouldOpen);
-    setSeparate(shouldSeparate);
+    setOpen(hasPadding);
+    setSeparate(hasSeparatePadding);
   });
 
   return (

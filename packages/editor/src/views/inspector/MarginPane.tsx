@@ -17,6 +17,7 @@ import { margins } from "../../models/style/TailwindStyle";
 import { appState } from "../../state/AppState";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { useOnSelectionChange } from "./common/useOnSelectionChange";
+import { isEqual } from "lodash-es";
 
 export const MarginPane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
@@ -34,8 +35,8 @@ export const MarginPane: React.FC = observer(() => {
     );
     const hasSeparateMargin = styles.some(
       (style) =>
-        style.props.marginTop.value !== style.props.marginBottom.value ||
-        style.props.marginLeft.value !== style.props.marginRight.value
+        !isEqual(style.props.marginTop.value, style.props.marginBottom.value) ||
+        !isEqual(style.props.marginLeft.value, style.props.marginRight.value)
     );
 
     setOpen(hasMargin);
