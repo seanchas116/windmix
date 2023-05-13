@@ -1,8 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { TailwindStyle } from "./TailwindStyle";
 
-const className = "w-1/2 h-1/2 text-red-500 text-xl text-center";
-
 class SimpleTailwindStyle extends TailwindStyle {
   constructor(className: string) {
     super();
@@ -40,7 +38,6 @@ describe(TailwindStyle.name, () => {
       style.width = {
         type: "keyword",
         keyword: "4",
-        value: "1rem",
       };
       expect(style.className).toEqual(
         "w-4 h-1/2 text-red-500 text-xl text-center"
@@ -74,7 +71,6 @@ describe(TailwindStyle.name, () => {
       style.height = {
         type: "keyword",
         keyword: "4",
-        value: "1rem",
       };
       expect(style.className).toEqual(
         "w-1/2 h-4 text-red-500 text-xl text-center"
@@ -116,7 +112,6 @@ describe(TailwindStyle.name, () => {
       style.color = {
         type: "keyword",
         keyword: "green-500",
-        value: "#48bb78",
       };
       expect(style.className).toEqual(
         "w-1/2 h-1/2 text-green-500 text-xl text-center"
@@ -158,7 +153,6 @@ describe(TailwindStyle.name, () => {
       style.fontSize = {
         type: "keyword",
         keyword: "2xl",
-        value: "1.5rem",
       };
       expect(style.className).toEqual(
         "w-1/2 h-1/2 text-red-500 text-2xl text-center"

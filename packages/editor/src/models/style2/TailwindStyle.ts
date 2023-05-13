@@ -44,6 +44,9 @@ export const fontWeights = new Map(
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
+  | { type: "keyword"; keyword: string };
+export type ResolvedTailwindValue =
+  | { type: "arbitrary"; value: string }
   | { type: "keyword"; keyword: string; value: string };
 
 function stringifyTailwindValue(value: TailwindValue): string {
@@ -76,22 +79,21 @@ export abstract class TailwindStyle {
   );
   readonly fontWeightParser = new ValueParser("font", fontWeights, /^[0-9]+$/);
 
-  get width(): TailwindValue | undefined {
+  get width(): ResolvedTailwindValue | undefined {
     return this.widthParser.getValue(this.classNames)?.value;
   }
   set width(width: TailwindValue | undefined) {
     this.classNames = this.widthParser.setValue(this.classNames, width);
   }
 
-  get height(): TailwindValue | undefined {
+  get height(): ResolvedTailwindValue | undefined {
     return this.heightParser.getValue(this.classNames)?.value;
   }
-
   set height(height: TailwindValue | undefined) {
     this.classNames = this.heightParser.setValue(this.classNames, height);
   }
 
-  get color(): TailwindValue | undefined {
+  get color(): ResolvedTailwindValue | undefined {
     return this.colorParser.getValue(this.classNames)?.value;
   }
 
@@ -99,7 +101,7 @@ export abstract class TailwindStyle {
     this.classNames = this.colorParser.setValue(this.classNames, color);
   }
 
-  get fontSize(): TailwindValue | undefined {
+  get fontSize(): ResolvedTailwindValue | undefined {
     return this.fontSizeParser.getValue(this.classNames)?.value;
   }
 
@@ -107,7 +109,7 @@ export abstract class TailwindStyle {
     this.classNames = this.fontSizeParser.setValue(this.classNames, fontSize);
   }
 
-  get fontWeight(): TailwindValue | undefined {
+  get fontWeight(): ResolvedTailwindValue | undefined {
     return this.fontWeightParser.getValue(this.classNames)?.value;
   }
 
@@ -133,74 +135,6 @@ export abstract class TailwindStyle {
       }
     }
   }
-
-  private getValue(
-    prefix: string, // "w", "h", 'text' etc
-    tokens: Map<string, string>, // { "1/2": "50%" } etc
-    arbitraryValuePattern?: RegExp // /^#/ for text colors etc
-  ): { className: string; value: TailwindValue } | undefined {
-    const classNames = this.classNames
-      .filter((className) => className.startsWith(`${prefix}-`))
-      .reverse();
-
-    for (const className of classNames) {
-      const keyword = className?.slice(prefix.length + 1);
-      if (keyword.startsWith("[") && keyword.endsWith("]")) {
-        const value = keyword.slice(1, -1);
-        if (arbitraryValuePattern && !arbitraryValuePattern.test(value)) {
-          continue;
-        }
-        return {
-          className,
-          value: {
-            type: "arbitrary",
-            value,
-          },
-        };
-      }
-      const value = tokens.get(keyword);
-
-      if (value) {
-        return {
-          className,
-          value: {
-            type: "keyword",
-            keyword,
-            value,
-          },
-        };
-      }
-    }
-  }
-
-  private setValue(
-    prefix: string, // "w", "h", 'text' etc
-    tokens: Map<string, string>, // { "1/2": "50%" } etc
-    arbitraryValuePattern: RegExp | undefined, // /^#/ for text colors etc,
-    value: TailwindValue | undefined
-  ) {
-    const existing = this.getValue(
-      prefix,
-      tokens,
-      arbitraryValuePattern
-    )?.className;
-
-    if (value) {
-      const className = prefix + "-" + stringifyTailwindValue(value);
-      const classNames = this.classNames;
-      const index = existing ? classNames.indexOf(existing) : -1;
-      if (index !== -1) {
-        classNames[index] = className;
-      } else {
-        classNames.push(className);
-      }
-      this.className = classNames.join(" ");
-    } else {
-      this.className = this.classNames
-        .filter((className) => className !== existing)
-        .join(" ");
-    }
-  }
 }
 
 class ValueParser {
@@ -220,7 +154,7 @@ class ValueParser {
 
   getValue(
     classNames: string[]
-  ): { className: string; value: TailwindValue } | undefined {
+  ): { className: string; value: ResolvedTailwindValue } | undefined {
     const { prefix, tokens, arbitraryValuePattern } = this;
 
     const matchedClassNames = classNames
