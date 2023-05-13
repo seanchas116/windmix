@@ -21,7 +21,7 @@ type Property =
   | "marginRight";
 
 export const StyleComboBox: React.FC<{
-  icon: JSX.Element;
+  icon?: JSX.Element;
   property: Property;
   tokens: Map<string, string>;
 }> = observer(({ property, tokens, icon }) => {
