@@ -63,13 +63,13 @@ export const StyleComboBox: React.FC<{
           : undefined
       }
       onChange={(value) => {
-        if (value) {
-          for (const style of styles) {
-            style[property] = {
-              type: "arbitrary",
-              value,
-            };
-          }
+        for (const style of styles) {
+          style[property] = value
+            ? {
+                type: "arbitrary",
+                value,
+              }
+            : undefined;
         }
         return true;
       }}
