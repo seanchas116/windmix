@@ -51,11 +51,13 @@ export const TextPane: React.FC = observer(() => {
       <ColorComboBox styles={styles} />
       <Row11>
         <StyleComboBox
+          tooltip="Font Size"
           icon={<Icon icon="ic:outline-format-size" />}
           property="fontSize"
           tokens={fontSizes}
         />
         <StyleComboBox
+          tooltip="Font Weight"
           icon={<Icon icon="ic:outline-line-weight" />}
           property="fontWeight"
           tokens={fontWeights}

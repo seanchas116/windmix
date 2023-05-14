@@ -71,6 +71,7 @@ export const SizePane: React.FC = observer(() => {
         <>
           <Row11>
             <StyleComboBox
+              tooltip="Width"
               icon={<LetterIcon>W</LetterIcon>}
               property="width"
               tokens={widths}
@@ -79,6 +80,7 @@ export const SizePane: React.FC = observer(() => {
           </Row11>
           <Row11>
             <StyleComboBox
+              tooltip="Height"
               icon={<LetterIcon>H</LetterIcon>}
               property="height"
               tokens={heights}

@@ -76,21 +76,25 @@ export const DimensionPane: React.FC = observer(() => {
       <IconRadio options={positionOptions} />
       <FourEdgeGrid>
         <StyleComboBox
+          tooltip="Margin Top"
           icon={<Icon icon={icons.edgeTop} />}
           property="marginTop"
           tokens={margins}
         />
         <StyleComboBox
+          tooltip="Margin Right"
           icon={<Icon icon={icons.edgeTop} rotate={1} />}
           property="marginRight"
           tokens={margins}
         />
         <StyleComboBox
+          tooltip="Margin Bottom"
           icon={<Icon icon={icons.edgeTop} rotate={2} />}
           property="marginBottom"
           tokens={margins}
         />
         <StyleComboBox
+          tooltip="Margin Left"
           icon={<Icon icon={icons.edgeTop} rotate={3} />}
           property="marginLeft"
           tokens={margins}
@@ -98,6 +102,7 @@ export const DimensionPane: React.FC = observer(() => {
       </FourEdgeGrid>
       <Row11>
         <StyleComboBox
+          tooltip="Width"
           icon={<LetterIcon>W</LetterIcon>}
           property="width"
           tokens={widths}
@@ -106,6 +111,7 @@ export const DimensionPane: React.FC = observer(() => {
       </Row11>
       <Row11>
         <StyleComboBox
+          tooltip="Height"
           icon={<LetterIcon>H</LetterIcon>}
           property="height"
           tokens={heights}

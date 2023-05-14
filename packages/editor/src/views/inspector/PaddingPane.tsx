@@ -70,11 +70,13 @@ export const PaddingPane: React.FC = observer(() => {
           <>
             <Row11>
               <StyleComboBox
+                tooltip="Padding left"
                 icon={<Icon icon={icons.edgeTop} rotate={3} />}
                 property="paddingLeft"
                 tokens={paddings}
               />
               <StyleComboBox
+                tooltip="Padding right"
                 icon={<Icon icon={icons.edgeTop} rotate={1} />}
                 property="paddingRight"
                 tokens={paddings}
@@ -82,11 +84,13 @@ export const PaddingPane: React.FC = observer(() => {
             </Row11>
             <Row11>
               <StyleComboBox
+                tooltip="Padding top"
                 icon={<Icon icon={icons.edgeTop} />}
                 property="paddingTop"
                 tokens={paddings}
               />
               <StyleComboBox
+                tooltip="Padding bottom"
                 icon={<Icon icon={icons.edgeTop} rotate={2} />}
                 property="paddingBottom"
                 tokens={paddings}
@@ -96,11 +100,13 @@ export const PaddingPane: React.FC = observer(() => {
         ) : (
           <Row11>
             <StyleComboBox
+              tooltip="Padding X"
               icon={<Icon icon={icons.edgeTop} rotate={3} />}
               property="mixedPaddingX"
               tokens={paddings}
             />
             <StyleComboBox
+              tooltip="Padding Y"
               icon={<Icon icon={icons.edgeTop} />}
               property="mixedPaddingY"
               tokens={paddings}

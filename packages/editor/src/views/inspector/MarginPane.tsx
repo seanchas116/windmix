@@ -67,11 +67,13 @@ export const MarginPane: React.FC = observer(() => {
           <>
             <Row11>
               <StyleComboBox
+                tooltip="Margin left"
                 icon={<Icon icon={icons.edgeTop} rotate={3} />}
                 property="marginLeft"
                 tokens={margins}
               />
               <StyleComboBox
+                tooltip="Margin right"
                 icon={<Icon icon={icons.edgeTop} rotate={1} />}
                 property="marginRight"
                 tokens={margins}
@@ -79,11 +81,13 @@ export const MarginPane: React.FC = observer(() => {
             </Row11>
             <Row11>
               <StyleComboBox
+                tooltip="Margin top"
                 icon={<Icon icon={icons.edgeTop} />}
                 property="marginTop"
                 tokens={margins}
               />
               <StyleComboBox
+                tooltip="Margin bottom"
                 icon={<Icon icon={icons.edgeTop} rotate={2} />}
                 property="marginBottom"
                 tokens={margins}
@@ -93,11 +97,13 @@ export const MarginPane: React.FC = observer(() => {
         ) : (
           <Row11>
             <StyleComboBox
+              tooltip="Margin X"
               icon={<Icon icon={icons.edgeTop} rotate={3} />}
               property="mixedMarginX"
               tokens={margins}
             />
             <StyleComboBox
+              tooltip="Margin Y"
               icon={<Icon icon={icons.edgeTop} />}
               property="mixedMarginY"
               tokens={margins}
