@@ -92,23 +92,17 @@ const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
         tokenValue={value?.type === "keyword" ? value.keyword : undefined}
         tokens={colors}
         onChange={(value) => {
-          if (value) {
-            for (const style of styles) {
-              style.props.color.value = {
-                type: "arbitrary",
-                value,
-              };
-            }
+          for (const style of styles) {
+            style.props.color.value = value
+              ? { type: "arbitrary", value }
+              : undefined;
           }
         }}
         onTokenChange={(keyword) => {
-          if (keyword) {
-            for (const style of styles) {
-              style.props.color.value = {
-                type: "keyword",
-                keyword,
-              };
-            }
+          for (const style of styles) {
+            style.props.color.value = keyword
+              ? { type: "keyword", keyword }
+              : undefined;
           }
         }}
       />

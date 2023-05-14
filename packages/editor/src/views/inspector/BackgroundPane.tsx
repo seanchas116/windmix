@@ -36,23 +36,17 @@ const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
         tokenValue={value?.type === "keyword" ? value.keyword : undefined}
         tokens={backgroundColors}
         onChange={(value) => {
-          if (value) {
-            for (const style of styles) {
-              style.props.background.value = {
-                type: "arbitrary",
-                value,
-              };
-            }
+          for (const style of styles) {
+            style.props.background.value = value
+              ? { type: "arbitrary", value }
+              : undefined;
           }
         }}
         onTokenChange={(keyword) => {
-          if (keyword) {
-            for (const style of styles) {
-              style.props.background.value = {
-                type: "keyword",
-                keyword,
-              };
-            }
+          for (const style of styles) {
+            style.props.background.value = keyword
+              ? { type: "keyword", keyword }
+              : undefined;
           }
         }}
       />
