@@ -305,6 +305,24 @@ class ValueParser {
   ): { className: string; value: ResolvedTailwindValue } | undefined {
     const { prefix, tokens, arbitraryValuePattern } = this;
 
+    // "rounded" for "rounded-" prefix
+    const defaultTokenValue = tokens.get("DEFAULT");
+    if (defaultTokenValue) {
+      const matched = classNames.find(
+        (className) => className === prefix.slice(0, -1) // "rounded"
+      );
+      if (matched) {
+        return {
+          className: matched,
+          value: {
+            type: "keyword",
+            keyword: "DEFAULT",
+            value: defaultTokenValue,
+          },
+        };
+      }
+    }
+
     const matchedClassNames = classNames
       .filter((className) => className.startsWith(prefix))
       .reverse();
@@ -348,7 +366,11 @@ class ValueParser {
     const existing = this.getValue(classNames)?.className;
 
     if (value) {
-      const className = prefix + stringifyTailwindValue(value);
+      const className =
+        value.type === "keyword" && value.keyword === "DEFAULT"
+          ? prefix.slice(0, -1)
+          : prefix + stringifyTailwindValue(value);
+
       const index = existing ? classNames.indexOf(existing) : -1;
 
       const newClassNames = [...classNames];

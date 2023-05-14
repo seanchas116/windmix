@@ -198,4 +198,39 @@ describe(TailwindStyle.name, () => {
       expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-xl");
     });
   });
+
+  describe("radius", () => {
+    it("gets radius", () => {
+      const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
+      expect(style.props.radius.value).toEqual({
+        type: "keyword",
+        keyword: "2xl",
+        value: "1rem",
+      });
+    });
+    it("gets default radius", () => {
+      const style = new SimpleTailwindStyle("w-1/2 rounded text-center");
+      expect(style.props.radius.value).toEqual({
+        type: "keyword",
+        keyword: "DEFAULT",
+        value: "0.25rem",
+      });
+    });
+    it("sets radius", () => {
+      const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
+      style.props.radius.value = {
+        type: "keyword",
+        keyword: "lg",
+      };
+      expect(style.className).toEqual("w-1/2 rounded-lg text-center");
+    });
+    it("sets default radius", () => {
+      const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
+      style.props.radius.value = {
+        type: "keyword",
+        keyword: "DEFAULT",
+      };
+      expect(style.className).toEqual("w-1/2 rounded text-center");
+    });
+  });
 });
