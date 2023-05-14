@@ -37,6 +37,19 @@ export const widths = new Map(
 export const heights = new Map(
   Object.entries(tailwindConfig.theme?.width ?? {})
 );
+export const minWidths = new Map(
+  Object.entries(tailwindConfig.theme?.minWidth ?? {})
+);
+export const minHeights = new Map(
+  Object.entries(tailwindConfig.theme?.minHeight ?? {})
+);
+export const maxWidths = new Map(
+  Object.entries(tailwindConfig.theme?.maxWidth ?? {})
+);
+export const maxHeights = new Map(
+  Object.entries(tailwindConfig.theme?.maxHeight ?? {})
+);
+
 export const colors = new Map(
   flattenColorNames(tailwindConfig.theme?.colors ?? {})
 );
@@ -145,6 +158,10 @@ export abstract class TailwindStyle {
 
     width: new Property(this, new ValueParser("w-", widths, /.+/)),
     height: new Property(this, new ValueParser("h-", heights, /.+/)),
+    minWidth: new Property(this, new ValueParser("min-w-", minWidths, /.+/)),
+    minHeight: new Property(this, new ValueParser("min-h-", minHeights, /.+/)),
+    maxWidth: new Property(this, new ValueParser("max-w-", maxWidths, /.+/)),
+    maxHeight: new Property(this, new ValueParser("max-h-", maxHeights, /.+/)),
     color: new Property(this, new ValueParser("text-", colors, /^#/)),
     fontSize: new Property(
       this,

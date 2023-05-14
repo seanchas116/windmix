@@ -1,6 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { appState } from "../../state/AppState";
-import { heights, widths } from "../../models/style/TailwindStyle";
+import {
+  heights,
+  maxHeights,
+  maxWidths,
+  minHeights,
+  minWidths,
+  widths,
+} from "../../models/style/TailwindStyle";
 import {
   Pane,
   PaneHeading,
@@ -75,15 +82,35 @@ export const SizePane: React.FC = observer(() => {
               property="width"
               tokens={widths}
             />
-            <IconRadio options={horizontalSizeConstraintOptions} />
-          </Row11>
-          <Row11>
             <StyleComboBox
               icon={<LetterIcon>H</LetterIcon>}
               property="height"
               tokens={heights}
             />
-            <IconRadio options={verticalSizeConstraintOptions} />
+          </Row11>
+          <Row11>
+            <StyleComboBox
+              icon={<LetterIcon>{">"}</LetterIcon>}
+              property="minWidth"
+              tokens={minWidths}
+            />
+            <StyleComboBox
+              icon={<LetterIcon>{">"}</LetterIcon>}
+              property="minHeight"
+              tokens={minHeights}
+            />
+          </Row11>
+          <Row11>
+            <StyleComboBox
+              icon={<LetterIcon>{"<"}</LetterIcon>}
+              property="maxWidth"
+              tokens={maxWidths}
+            />
+            <StyleComboBox
+              icon={<LetterIcon>{"<"}</LetterIcon>}
+              property="maxHeight"
+              tokens={maxHeights}
+            />
           </Row11>
         </>
       )}
