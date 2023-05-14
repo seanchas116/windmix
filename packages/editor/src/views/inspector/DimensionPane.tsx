@@ -16,7 +16,12 @@ import {
 } from "@seanchas116/paintkit/src/components/IconButton";
 import { useState } from "react";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
-import { widths, heights, margins } from "../../models/style/TailwindStyle";
+import {
+  widths,
+  heights,
+  margins,
+  maxWidths,
+} from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 
 const positionOptions = [
@@ -72,54 +77,66 @@ const verticalSizeConstraintOptions = [
 
 export const DimensionPane: React.FC = observer(() => {
   return (
-    <Pane>
-      <IconRadio options={positionOptions} />
-      <Row11>
-        <StyleComboBox
-          tooltip="Margin left"
-          icon={<Icon icon={icons.edgeTop} rotate={3} />}
-          property="marginLeft"
-          tokens={margins}
-        />
-        <StyleComboBox
-          tooltip="Margin right"
-          icon={<Icon icon={icons.edgeTop} rotate={1} />}
-          property="marginRight"
-          tokens={margins}
-        />
-      </Row11>
-      <Row11>
-        <StyleComboBox
-          tooltip="Margin top"
-          icon={<Icon icon={icons.edgeTop} />}
-          property="marginTop"
-          tokens={margins}
-        />
-        <StyleComboBox
-          tooltip="Margin bottom"
-          icon={<Icon icon={icons.edgeTop} rotate={2} />}
-          property="marginBottom"
-          tokens={margins}
-        />
-      </Row11>
-      <Row11>
-        <StyleComboBox
-          tooltip="Width"
-          icon={<LetterIcon>W</LetterIcon>}
-          property="width"
-          tokens={widths}
-        />
-        <IconRadio options={horizontalSizeConstraintOptions} />
-      </Row11>
-      <Row11>
-        <StyleComboBox
-          tooltip="Height"
-          icon={<LetterIcon>H</LetterIcon>}
-          property="height"
-          tokens={heights}
-        />
-        <IconRadio options={verticalSizeConstraintOptions} />
-      </Row11>
-    </Pane>
+    <>
+      <Pane>
+        <IconRadio options={positionOptions} />
+        <Row11>
+          <StyleComboBox
+            tooltip="Margin left"
+            icon={<Icon icon={icons.edgeTop} rotate={3} />}
+            property="marginLeft"
+            tokens={margins}
+          />
+          <StyleComboBox
+            tooltip="Margin right"
+            icon={<Icon icon={icons.edgeTop} rotate={1} />}
+            property="marginRight"
+            tokens={margins}
+          />
+        </Row11>
+        <Row11>
+          <StyleComboBox
+            tooltip="Margin top"
+            icon={<Icon icon={icons.edgeTop} />}
+            property="marginTop"
+            tokens={margins}
+          />
+          <StyleComboBox
+            tooltip="Margin bottom"
+            icon={<Icon icon={icons.edgeTop} rotate={2} />}
+            property="marginBottom"
+            tokens={margins}
+          />
+        </Row11>
+      </Pane>
+      <Pane>
+        <Row11>
+          <StyleComboBox
+            tooltip="Width"
+            icon={<LetterIcon>W</LetterIcon>}
+            property="width"
+            tokens={widths}
+          />
+          <IconRadio options={horizontalSizeConstraintOptions} />
+        </Row11>
+        <Row11>
+          <StyleComboBox
+            tooltip="Height"
+            icon={<LetterIcon>H</LetterIcon>}
+            property="height"
+            tokens={heights}
+          />
+          <IconRadio options={verticalSizeConstraintOptions} />
+        </Row11>
+        <Row11>
+          <StyleComboBox
+            tooltip="Max Width"
+            icon={<LetterIcon>{"<"}</LetterIcon>}
+            property="maxWidth"
+            tokens={maxWidths}
+          />
+        </Row11>
+      </Pane>
+    </>
   );
 });
