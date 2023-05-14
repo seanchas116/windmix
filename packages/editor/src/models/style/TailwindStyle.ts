@@ -256,6 +256,20 @@ export abstract class TailwindStyle {
       )
     ),
 
+    flexDirection: new Property(
+      this,
+      new ValueParser(
+        "flex-",
+        new Map([
+          ["row", "row"],
+          ["row-reverse", "row-reverse"],
+          ["col", "column"],
+          ["col-reverse", "column-reverse"],
+        ]),
+        false
+      )
+    ),
+
     mixedMarginX: new ShorthandProperty((): Property[] => [
       this.props.marginLeft,
       this.props.marginRight,

@@ -42,7 +42,7 @@ const layoutDirectionOptions = [
     icon: <Icon icon="ic:arrow-forward" />,
   },
   {
-    value: "column",
+    value: "col",
     tooltip: "Column",
     icon: <Icon icon="ic:arrow-forward" rotate={1} />,
   },
@@ -52,7 +52,7 @@ const layoutDirectionOptions = [
     icon: <Icon icon="ic:arrow-forward" rotate={2} />,
   },
   {
-    value: "column-reverse",
+    value: "col-reverse",
     tooltip: "Column Reverse",
     icon: <Icon icon="ic:arrow-forward" rotate={3} />,
   },
@@ -66,7 +66,10 @@ export const LayoutPane: React.FC = observer(() => {
       </PaneHeadingRow>
       <RowPackLeft>
         <StyleIconRadio options={layoutOptions} property="display" />
-        <IconRadio options={layoutDirectionOptions} />
+        <StyleIconRadio
+          options={layoutDirectionOptions}
+          property="flexDirection"
+        />
       </RowPackLeft>
       <Row11>
         <ComboBox icon={<Icon icon="ic:space-bar" />} />
