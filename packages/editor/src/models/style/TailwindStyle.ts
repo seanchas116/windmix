@@ -97,6 +97,8 @@ export abstract class TailwindStyle {
   }
 
   readonly props = {
+    // position
+
     position: new Property(
       this,
       new ValueParser(
@@ -132,6 +134,8 @@ export abstract class TailwindStyle {
       (): Property => this.props.inset
     ),
 
+    // margin
+
     margin: new Property(this, new ValueParser("m-", margins, /.+/)),
     marginX: new Property(
       this,
@@ -165,7 +169,58 @@ export abstract class TailwindStyle {
       (): Property => this.props.marginY
     ),
 
+    mixedMarginX: new ShorthandProperty((): Property[] => [
+      this.props.marginLeft,
+      this.props.marginRight,
+    ]),
+    mixedMarginY: new ShorthandProperty((): Property[] => [
+      this.props.marginTop,
+      this.props.marginBottom,
+    ]),
+    mixedMargin: new ShorthandProperty((): Property[] => [
+      this.props.marginLeft,
+      this.props.marginRight,
+      this.props.marginTop,
+      this.props.marginBottom,
+    ]),
+
+    // size
+
+    width: new Property(this, new ValueParser("w-", widths, /.+/)),
+    height: new Property(this, new ValueParser("h-", heights, /.+/)),
+    maxWidth: new Property(this, new ValueParser("max-w-", maxWidths, /.+/)),
+    radius: new Property(this, new ValueParser("rounded-", radiuses, /.+/)),
+
+    // layout
+
+    display: new Property(
+      this,
+      new ValueParser(
+        "",
+        new Map([
+          ["block", "block"],
+          ["flex", "flex"],
+          ["grid", "grid"],
+        ]),
+        false
+      )
+    ),
+    flexDirection: new Property(
+      this,
+      new ValueParser(
+        "flex-",
+        new Map([
+          ["row", "row"],
+          ["row-reverse", "row-reverse"],
+          ["col", "column"],
+          ["col-reverse", "column-reverse"],
+        ]),
+        false
+      )
+    ),
+
     padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
+
     paddingX: new Property(
       this,
       new ValueParser("px-", paddings, /.+/),
@@ -176,6 +231,7 @@ export abstract class TailwindStyle {
       new ValueParser("py-", paddings, /.+/),
       (): Property => this.props.padding
     ),
+
     paddingLeft: new Property(
       this,
       new ValueParser("pl-", paddings, /.+/),
@@ -197,10 +253,22 @@ export abstract class TailwindStyle {
       (): Property => this.props.paddingY
     ),
 
-    width: new Property(this, new ValueParser("w-", widths, /.+/)),
-    height: new Property(this, new ValueParser("h-", heights, /.+/)),
-    maxWidth: new Property(this, new ValueParser("max-w-", maxWidths, /.+/)),
-    radius: new Property(this, new ValueParser("rounded-", radiuses, /.+/)),
+    mixedPaddingX: new ShorthandProperty((): Property[] => [
+      this.props.paddingLeft,
+      this.props.paddingRight,
+    ]),
+    mixedPaddingY: new ShorthandProperty((): Property[] => [
+      this.props.paddingTop,
+      this.props.paddingBottom,
+    ]),
+    mixedPadding: new ShorthandProperty((): Property[] => [
+      this.props.paddingLeft,
+      this.props.paddingRight,
+      this.props.paddingTop,
+      this.props.paddingBottom,
+    ]),
+
+    // color
 
     color: new Property(this, new ValueParser("text-", colors, /^#/)),
     fontSize: new Property(
@@ -228,10 +296,14 @@ export abstract class TailwindStyle {
       )
     ),
 
+    // background
+
     background: new Property(
       this,
       new ValueParser("bg-", backgroundColors, /.+/)
     ),
+
+    // ring
 
     ringColor: new Property(this, new ValueParser("ring-", colors, /^#/)),
     ringWidth: new Property(
@@ -242,62 +314,6 @@ export abstract class TailwindStyle {
         /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
       )
     ),
-
-    display: new Property(
-      this,
-      new ValueParser(
-        "",
-        new Map([
-          ["block", "block"],
-          ["flex", "flex"],
-          ["grid", "grid"],
-        ]),
-        false
-      )
-    ),
-
-    flexDirection: new Property(
-      this,
-      new ValueParser(
-        "flex-",
-        new Map([
-          ["row", "row"],
-          ["row-reverse", "row-reverse"],
-          ["col", "column"],
-          ["col-reverse", "column-reverse"],
-        ]),
-        false
-      )
-    ),
-
-    mixedMarginX: new ShorthandProperty((): Property[] => [
-      this.props.marginLeft,
-      this.props.marginRight,
-    ]),
-    mixedMarginY: new ShorthandProperty((): Property[] => [
-      this.props.marginTop,
-      this.props.marginBottom,
-    ]),
-    mixedMargin: new ShorthandProperty((): Property[] => [
-      this.props.marginLeft,
-      this.props.marginRight,
-      this.props.marginTop,
-      this.props.marginBottom,
-    ]),
-    mixedPaddingX: new ShorthandProperty((): Property[] => [
-      this.props.paddingLeft,
-      this.props.paddingRight,
-    ]),
-    mixedPaddingY: new ShorthandProperty((): Property[] => [
-      this.props.paddingTop,
-      this.props.paddingBottom,
-    ]),
-    mixedPadding: new ShorthandProperty((): Property[] => [
-      this.props.paddingLeft,
-      this.props.paddingRight,
-      this.props.paddingTop,
-      this.props.paddingBottom,
-    ]),
   };
 }
 
