@@ -22,6 +22,7 @@ import {
   heights,
   margins,
   maxWidths,
+  radiuses,
 } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import Tippy from "@tippyjs/react";
@@ -167,6 +168,14 @@ export const DimensionPane: React.FC = observer(() => {
             icon={<LetterIcon>{"<"}</LetterIcon>}
             property="maxWidth"
             tokens={maxWidths}
+          />
+        </Row11>
+        <Row11>
+          <StyleComboBox
+            tooltip="Radius"
+            icon={<Icon icon="material-symbols:line-curve" />}
+            property="radius"
+            tokens={radiuses}
           />
         </Row11>
       </Pane>

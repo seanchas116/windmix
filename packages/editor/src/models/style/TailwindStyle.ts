@@ -61,6 +61,9 @@ export const ringColors = new Map(
 export const ringWidths = new Map(
   Object.entries(tailwindConfig.theme?.ringWidth ?? {})
 );
+export const radiuses = new Map(
+  Object.entries(tailwindConfig.theme?.borderRadius ?? {})
+);
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
@@ -158,6 +161,8 @@ export abstract class TailwindStyle {
     width: new Property(this, new ValueParser("w-", widths, /.+/)),
     height: new Property(this, new ValueParser("h-", heights, /.+/)),
     maxWidth: new Property(this, new ValueParser("max-w-", maxWidths, /.+/)),
+    radius: new Property(this, new ValueParser("rounded-", radiuses, /.+/)),
+
     color: new Property(this, new ValueParser("text-", colors, /^#/)),
     fontSize: new Property(
       this,
