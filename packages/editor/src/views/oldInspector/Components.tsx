@@ -25,7 +25,7 @@ export const StyleDimensionInput: React.FC<{
   return (
     <DimensionInput
       {...props}
-      title={kebabCase(property.key)}
+      tooltip={kebabCase(property.key)}
       placeholder={property.computed}
       value={property.value}
       onChange={property.onChange}
@@ -41,7 +41,7 @@ export const StyleInput: React.FC<{
   return (
     <Input
       {...props}
-      title={kebabCase(property.key)}
+      tooltip={kebabCase(property.key)}
       placeholder={property.computed}
       value={property.value}
       onChange={property.onChange}
@@ -58,7 +58,7 @@ export const StyleComboBox: React.FC<{
   return (
     <ComboBox
       {...props}
-      title={kebabCase(property.key)}
+      tooltip={kebabCase(property.key)}
       placeholder={property.computed}
       value={property.value}
       onChange={property.onChange}
@@ -113,7 +113,7 @@ export const StyleSelect: React.FC<{
   return (
     <Select
       {...props}
-      title={kebabCase(property.key)}
+      tooltip={kebabCase(property.key)}
       placeholder={property.computed}
       value={property.value}
       onChange={property.onChange}

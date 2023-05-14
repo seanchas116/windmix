@@ -101,7 +101,7 @@ export const TextPane: React.FC<{
       <RowGroup>
         <ComboBox
           icon={<Icon icon={fontDownloadIcon} />}
-          title="font-family"
+          tooltip="font-family"
           value={state.props.fontFamily.value}
           placeholder={stripQuotes(state.props.fontFamily.computed ?? "")}
           //options={editorState.fontFamilyOptions}

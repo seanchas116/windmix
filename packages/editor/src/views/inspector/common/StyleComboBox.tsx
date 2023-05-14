@@ -37,7 +37,7 @@ export const StyleComboBox: React.FC<{
 
   return (
     <SeparateComboBox
-      title={tooltip}
+      tooltip={tooltip}
       className={className}
       icon={icon}
       value={value === MIXED ? MIXED : value ? pxValue(value.value) : undefined}
