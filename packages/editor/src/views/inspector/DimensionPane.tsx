@@ -2,20 +2,11 @@ import { observer } from "mobx-react-lite";
 import {
   FourEdgeGrid,
   Pane,
-  PaneHeading,
-  PaneHeadingRow,
   Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { Icon } from "@iconify/react";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import * as icons from "@seanchas116/design-icons";
-import {
-  IconButton,
-  MinusButton,
-  PlusButton,
-} from "@seanchas116/paintkit/src/components/IconButton";
-import { useState } from "react";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
 import {
   widths,
@@ -26,9 +17,7 @@ import {
   insets,
 } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
-import Tippy from "@tippyjs/react";
-import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import { appState } from "../../state/AppState";
+import { StyleIconRadio } from "./common/StyleIconRadio";
 
 const positionOptions = [
   {
@@ -105,24 +94,10 @@ const flexItemConstraintsOptions = [
 ];
 
 export const DimensionPane: React.FC = observer(() => {
-  const styles = appState.tailwindStyles;
-  const position = sameOrNone(styles.map((s) => s.props.position.value));
-
   return (
     <>
       <Pane>
-        <IconRadio
-          options={positionOptions}
-          value={position?.type === "keyword" ? position.keyword : undefined}
-          unsettable
-          onChange={(value) => {
-            for (const style of styles) {
-              style.props.position.value = value
-                ? { type: "keyword", keyword: value }
-                : undefined;
-            }
-          }}
-        />
+        <StyleIconRadio options={positionOptions} property="position" />
         <FourEdgeGrid>
           <StyleComboBox
             tooltip="Top"

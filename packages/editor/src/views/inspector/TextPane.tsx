@@ -20,6 +20,7 @@ import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
 import { StyleComboBox } from "./common/StyleComboBox";
+import { StyleIconRadio } from "./common/StyleIconRadio";
 
 const textAlignOptions = [
   {
@@ -63,21 +64,7 @@ export const TextPane: React.FC = observer(() => {
           tokens={fontWeights}
         />
       </Row11>
-      <IconRadio
-        options={textAlignOptions}
-        value={textAlign?.type === "keyword" ? textAlign.keyword : undefined}
-        unsettable
-        onChange={(value) => {
-          for (const style of styles) {
-            style.props.textAlign.value = value
-              ? {
-                  type: "keyword",
-                  keyword: value,
-                }
-              : undefined;
-          }
-        }}
-      />
+      <StyleIconRadio options={textAlignOptions} property="textAlign" />
     </Pane>
   );
 });
