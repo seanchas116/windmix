@@ -26,6 +26,8 @@ import {
 } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import Tippy from "@tippyjs/react";
+import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
+import { appState } from "../../state/AppState";
 
 const positionOptions = [
   {
@@ -102,10 +104,24 @@ const flexItemConstraintsOptions = [
 ];
 
 export const DimensionPane: React.FC = observer(() => {
+  const styles = appState.tailwindStyles;
+  const position = sameOrNone(styles.map((s) => s.props.position.value));
+
   return (
     <>
       <Pane>
-        <IconRadio options={positionOptions} />
+        <IconRadio
+          options={positionOptions}
+          value={position?.type === "keyword" ? position.keyword : undefined}
+          unsettable
+          onChange={(value) => {
+            for (const style of styles) {
+              style.props.position.value = value
+                ? { type: "keyword", keyword: value }
+                : undefined;
+            }
+          }}
+        />
         <FourEdgeGrid>
           <ComboBox icon={<LetterIcon>T</LetterIcon>} />
           <ComboBox icon={<LetterIcon>R</LetterIcon>} />

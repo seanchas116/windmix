@@ -93,6 +93,19 @@ export abstract class TailwindStyle {
   }
 
   readonly props = {
+    position: new Property(
+      this,
+      new ValueParser(
+        "",
+        new Map([
+          ["static", "static"],
+          ["relative", "relative"],
+          ["absolute", "absolute"],
+        ]),
+        false
+      )
+    ),
+
     margin: new Property(this, new ValueParser("m-", margins, /.+/)),
     marginX: new Property(
       this,
