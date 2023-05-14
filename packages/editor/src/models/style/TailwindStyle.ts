@@ -243,6 +243,19 @@ export abstract class TailwindStyle {
       )
     ),
 
+    display: new Property(
+      this,
+      new ValueParser(
+        "",
+        new Map([
+          ["block", "block"],
+          ["flex", "flex"],
+          ["grid", "grid"],
+        ]),
+        false
+      )
+    ),
+
     mixedMarginX: new ShorthandProperty((): Property[] => [
       this.props.marginLeft,
       this.props.marginRight,

@@ -15,6 +15,7 @@ import { AlignmentEdit } from "@seanchas116/paintkit/src/components/alignment/Al
 import { paddings } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import { StyleIconRadio } from "./common/StyleIconRadio";
 
 const layoutOptions = [
   {
@@ -64,7 +65,7 @@ export const LayoutPane: React.FC = observer(() => {
         <PaneHeading>Layout</PaneHeading>
       </PaneHeadingRow>
       <RowPackLeft>
-        <IconRadio options={layoutOptions} />
+        <StyleIconRadio options={layoutOptions} property="display" />
         <IconRadio options={layoutDirectionOptions} />
       </RowPackLeft>
       <Row11>
