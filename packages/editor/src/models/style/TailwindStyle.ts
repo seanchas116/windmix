@@ -324,6 +324,7 @@ class ShorthandProperty {
   }
 }
 
+// TODO: minus prefix
 class ValueParser {
   constructor(
     prefix: string, // "w", "h", 'text' etc
