@@ -9,10 +9,11 @@ import { appState } from "../../../state/AppState";
 import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
 
 export const StyleComboBox: React.FC<{
+  className?: string;
   icon: JSX.Element;
   property: keyof TailwindStyle["props"];
   tokens: Map<string, string>;
-}> = observer(({ property, tokens, icon }) => {
+}> = observer(({ className, property, tokens, icon }) => {
   const styles = appState.tailwindStyles;
 
   const value = sameOrNone(styles.map((s) => s.props[property].value));
@@ -35,6 +36,7 @@ export const StyleComboBox: React.FC<{
 
   return (
     <SeparateComboBox
+      className={className}
       icon={icon}
       value={value === MIXED ? MIXED : value ? pxValue(value.value) : undefined}
       selectOptions={[

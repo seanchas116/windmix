@@ -1,0 +1,117 @@
+import { observer } from "mobx-react-lite";
+import {
+  FourEdgeGrid,
+  Pane,
+  PaneHeading,
+  PaneHeadingRow,
+  Row11,
+} from "@seanchas116/paintkit/src/components/sidebar/Inspector";
+import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
+import { Icon } from "@iconify/react";
+import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
+import * as icons from "@seanchas116/design-icons";
+import {
+  MinusButton,
+  PlusButton,
+} from "@seanchas116/paintkit/src/components/IconButton";
+import { useState } from "react";
+import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";
+import { widths, heights, margins } from "../../models/style/TailwindStyle";
+import { StyleComboBox } from "./common/StyleComboBox";
+
+const positionOptions = [
+  {
+    value: "static",
+    icon: <Icon icon={icons.staticPosition} />,
+  },
+  {
+    value: "relative",
+    icon: <Icon icon={icons.relativePosition} />,
+  },
+  {
+    value: "absolute",
+    icon: <Icon icon={icons.absolutePosition} />,
+  },
+];
+
+const horizontalSizeConstraintOptions = [
+  {
+    value: "hug",
+    text: "Hug Contents",
+    icon: <Icon icon={icons.hugContents} />,
+  },
+  {
+    value: "fixed",
+    text: "Fixed",
+    icon: <Icon icon={icons.fixedSize} />,
+  },
+  {
+    value: "fill",
+    text: "Fill Container",
+    icon: <Icon icon={icons.fillArea} />,
+  },
+];
+
+const verticalSizeConstraintOptions = [
+  {
+    value: "hug",
+    text: "Hug Contents",
+    icon: <Icon icon={icons.hugContents} rotate={1} />,
+  },
+  {
+    value: "fixed",
+    text: "Fixed",
+    icon: <Icon icon={icons.fixedSize} rotate={1} />,
+  },
+  {
+    value: "fill",
+    text: "Fill Container",
+    icon: <Icon icon={icons.fillArea} rotate={1} />,
+  },
+];
+
+export const DimensionPane: React.FC = observer(() => {
+  return (
+    <Pane>
+      <IconRadio options={positionOptions} />
+      <FourEdgeGrid>
+        <StyleComboBox
+          icon={<Icon icon={icons.edgeTop} />}
+          property="marginTop"
+          tokens={margins}
+        />
+        <StyleComboBox
+          icon={<Icon icon={icons.edgeTop} rotate={1} />}
+          property="marginRight"
+          tokens={margins}
+        />
+        <StyleComboBox
+          icon={<Icon icon={icons.edgeTop} rotate={2} />}
+          property="marginBottom"
+          tokens={margins}
+        />
+        <StyleComboBox
+          icon={<Icon icon={icons.edgeTop} rotate={3} />}
+          property="marginLeft"
+          tokens={margins}
+        />
+      </FourEdgeGrid>
+      <Row11>
+        <StyleComboBox
+          icon={<LetterIcon>W</LetterIcon>}
+          property="width"
+          tokens={widths}
+        />
+        <IconRadio options={horizontalSizeConstraintOptions} />
+      </Row11>
+      <Row11>
+        <StyleComboBox
+          icon={<LetterIcon>H</LetterIcon>}
+          property="height"
+          tokens={heights}
+        />
+        <IconRadio options={verticalSizeConstraintOptions} />
+      </Row11>
+    </Pane>
+  );
+});

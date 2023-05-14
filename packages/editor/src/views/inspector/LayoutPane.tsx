@@ -12,6 +12,9 @@ import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import * as icons from "@seanchas116/design-icons";
 import { AlignmentEdit } from "@seanchas116/paintkit/src/components/alignment/AlignmentEdit";
+import { margins } from "../../models/style/TailwindStyle";
+import { StyleComboBox } from "./common/StyleComboBox";
+import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 
 const layoutOptions = [
   {
@@ -93,6 +96,23 @@ export const LayoutPane: React.FC = observer(() => {
             value="Start"
           />
         </div>
+      </div>
+      <div className="flex gap-1 items-center">
+        <StyleComboBox
+          className="flex-1"
+          icon={<Icon icon={icons.edgeTop} rotate={3} />}
+          property="mixedMarginX"
+          tokens={margins}
+        />
+        <StyleComboBox
+          className="flex-1"
+          icon={<Icon icon={icons.edgeTop} />}
+          property="mixedMarginY"
+          tokens={margins}
+        />
+        <IconButton className="shrink-0">
+          <Icon icon={icons.separateEdges} />
+        </IconButton>
       </div>
     </Pane>
   );
