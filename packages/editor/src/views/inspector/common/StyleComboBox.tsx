@@ -29,7 +29,7 @@ export const StyleComboBox: React.FC<{
       value: name,
       text: (
         <>
-          {name} <span className="opacity-50">{pxValue(value)}</span>
+          {pxValue(value)} <span className="opacity-50">{name}</span>
         </>
       ),
     };
