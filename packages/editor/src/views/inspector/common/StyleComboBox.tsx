@@ -27,14 +27,7 @@ export const StyleComboBox: React.FC<{
       value: name,
       text: (
         <>
-          {name}{" "}
-          <span
-            style={{
-              opacity: 0.5,
-            }}
-          >
-            {pxValue(value)}
-          </span>
+          {name} <span className="opacity-50">{pxValue(value)}</span>
         </>
       ),
     };
@@ -44,7 +37,10 @@ export const StyleComboBox: React.FC<{
     <SeparateComboBox
       icon={icon}
       value={value === MIXED ? MIXED : value ? pxValue(value.value) : undefined}
-      selectOptions={options}
+      selectOptions={[
+        { value: "", text: <span className="opacity-50">No Value</span> },
+        ...options,
+      ]}
       selectValue={
         value === MIXED
           ? MIXED
