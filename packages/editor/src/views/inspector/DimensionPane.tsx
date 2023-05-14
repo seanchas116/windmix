@@ -23,6 +23,7 @@ import {
   margins,
   maxWidths,
   radiuses,
+  insets,
 } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import Tippy from "@tippyjs/react";
@@ -123,10 +124,30 @@ export const DimensionPane: React.FC = observer(() => {
           }}
         />
         <FourEdgeGrid>
-          <ComboBox icon={<LetterIcon>T</LetterIcon>} />
-          <ComboBox icon={<LetterIcon>R</LetterIcon>} />
-          <ComboBox icon={<LetterIcon>B</LetterIcon>} />
-          <ComboBox icon={<LetterIcon>L</LetterIcon>} />
+          <StyleComboBox
+            tooltip="Top"
+            icon={<LetterIcon>T</LetterIcon>}
+            property="top"
+            tokens={insets}
+          />
+          <StyleComboBox
+            tooltip="Right"
+            icon={<LetterIcon>R</LetterIcon>}
+            property="right"
+            tokens={insets}
+          />
+          <StyleComboBox
+            tooltip="Bottom"
+            icon={<LetterIcon>B</LetterIcon>}
+            property="bottom"
+            tokens={insets}
+          />
+          <StyleComboBox
+            tooltip="Left"
+            icon={<LetterIcon>L</LetterIcon>}
+            property="left"
+            tokens={insets}
+          />
         </FourEdgeGrid>
         <Row11>
           <StyleComboBox

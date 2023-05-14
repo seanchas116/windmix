@@ -24,6 +24,10 @@ function flattenColorNames(colors: NestedColors): [string, string][] {
   return result;
 }
 
+export const insets = new Map(
+  Object.entries(tailwindConfig.theme?.inset ?? {})
+);
+
 export const margins = new Map(
   Object.entries(tailwindConfig.theme?.margin ?? {})
 );
@@ -104,6 +108,28 @@ export abstract class TailwindStyle {
         ]),
         false
       )
+    ),
+
+    inset: new Property(this, new ValueParser("inset-", insets, /.+/)),
+    left: new Property(
+      this,
+      new ValueParser("left-", insets, /.+/),
+      (): Property => this.props.inset
+    ),
+    right: new Property(
+      this,
+      new ValueParser("right-", insets, /.+/),
+      (): Property => this.props.inset
+    ),
+    top: new Property(
+      this,
+      new ValueParser("top-", insets, /.+/),
+      (): Property => this.props.inset
+    ),
+    bottom: new Property(
+      this,
+      new ValueParser("bottom-", insets, /.+/),
+      (): Property => this.props.inset
     ),
 
     margin: new Property(this, new ValueParser("m-", margins, /.+/)),
