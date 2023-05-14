@@ -82,34 +82,36 @@ export const TextPane: React.FC = observer(() => {
   );
 });
 
-const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = ({ styles }) => {
-  const value = sameOrNone(styles.map((s) => s.props.color.value));
+const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
+  ({ styles }) => {
+    const value = sameOrNone(styles.map((s) => s.props.color.value));
 
-  return (
-    <ColorInput
-      value={value?.value}
-      tokenValue={value?.type === "keyword" ? value.keyword : undefined}
-      tokens={colors}
-      onChange={(value) => {
-        if (value) {
-          for (const style of styles) {
-            style.props.color.value = {
-              type: "arbitrary",
-              value,
-            };
+    return (
+      <ColorInput
+        value={value?.value}
+        tokenValue={value?.type === "keyword" ? value.keyword : undefined}
+        tokens={colors}
+        onChange={(value) => {
+          if (value) {
+            for (const style of styles) {
+              style.props.color.value = {
+                type: "arbitrary",
+                value,
+              };
+            }
           }
-        }
-      }}
-      onTokenChange={(keyword) => {
-        if (keyword) {
-          for (const style of styles) {
-            style.props.color.value = {
-              type: "keyword",
-              keyword,
-            };
+        }}
+        onTokenChange={(keyword) => {
+          if (keyword) {
+            for (const style of styles) {
+              style.props.color.value = {
+                type: "keyword",
+                keyword,
+              };
+            }
           }
-        }
-      }}
-    />
-  );
-};
+        }}
+      />
+    );
+  }
+);

@@ -52,6 +52,9 @@ export const fontSizes = new Map(
 export const fontWeights = new Map(
   Object.entries(tailwindConfig.theme?.fontWeight ?? {})
 );
+export const backgroundColors = new Map(
+  flattenColorNames(tailwindConfig.theme?.backgroundColor ?? {})
+);
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
@@ -173,6 +176,11 @@ export abstract class TailwindStyle {
         ]),
         false
       )
+    ),
+
+    background: new Property(
+      this,
+      new ValueParser("bg-", backgroundColors, /.+/)
     ),
 
     mixedMarginX: new ShorthandProperty((): Property[] => [

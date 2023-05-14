@@ -2,13 +2,10 @@ import { observer } from "mobx-react-lite";
 import { appState } from "../../state/AppState";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { ResolvedTailwindValue } from "../../models/style/TailwindStyle";
-import { PositionPane } from "./PositionPane";
-import { SizePane } from "./SizePane";
-import { PaddingPane } from "./PaddingPane";
 import { LayoutPane } from "./LayoutPane";
 import { TextPane } from "./TextPane";
-import { MarginPane } from "./MarginPane";
 import { DimensionPane } from "./DimensionPane";
+import { BackgroundPane } from "./BackgroundPane";
 
 function stringifyValue(value: ResolvedTailwindValue | undefined) {
   if (!value) {
@@ -37,6 +34,7 @@ export const StyleInspector: React.FC = observer(() => {
       <DimensionPane />
       <LayoutPane />
       <TextPane />
+      <BackgroundPane />
       <dl className="p-2">
         <dt className="text-macaron-disabledText">Width</dt>
         <dd>{stringifyValue(width)}</dd>
