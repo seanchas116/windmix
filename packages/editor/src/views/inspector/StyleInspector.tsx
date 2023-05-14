@@ -6,6 +6,7 @@ import { LayoutPane } from "./LayoutPane";
 import { TextPane } from "./TextPane";
 import { DimensionPane } from "./DimensionPane";
 import { BackgroundPane } from "./BackgroundPane";
+import { RingPane } from "./RingPane";
 
 function stringifyValue(value: ResolvedTailwindValue | undefined) {
   if (!value) {
@@ -35,6 +36,7 @@ export const StyleInspector: React.FC = observer(() => {
       <LayoutPane />
       <TextPane />
       <BackgroundPane />
+      <RingPane />
       <dl className="p-2">
         <dt className="text-macaron-disabledText">Width</dt>
         <dd>{stringifyValue(width)}</dd>

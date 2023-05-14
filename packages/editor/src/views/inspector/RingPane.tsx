@@ -3,47 +3,59 @@ import { appState } from "../../state/AppState";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import {
   TailwindStyle,
-  backgroundColors,
+  ringColors,
+  ringWidths,
 } from "../../models/style/TailwindStyle";
 import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
+  Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ColorInput } from "@seanchas116/paintkit/src/components/css/ColorInput";
+import { Icon } from "@iconify/react";
+import { StyleComboBox } from "./common/StyleComboBox";
 
-export const BackgroundPane: React.FC = observer(() => {
+export const RingPane: React.FC = observer(() => {
   const styles = appState.tailwindStyles;
 
   return (
     <Pane>
       <PaneHeadingRow>
-        <PaneHeading>Background</PaneHeading>
+        <PaneHeading>Ring</PaneHeading>
       </PaneHeadingRow>
       <BackgroundComboBox styles={styles} />
+      <Row11>
+        <StyleComboBox
+          tooltip="Ring Width"
+          icon={<Icon icon="ic:outline-line-weight" />}
+          property="ringWidth"
+          tokens={ringWidths}
+        />
+      </Row11>
     </Pane>
   );
 });
 
 const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
   ({ styles }) => {
-    const value = sameOrNone(styles.map((s) => s.props.background.value));
+    const value = sameOrNone(styles.map((s) => s.props.ringColor.value));
 
     return (
       <ColorInput
         value={value?.value}
         tokenValue={value?.type === "keyword" ? value.keyword : undefined}
-        tokens={backgroundColors}
+        tokens={ringColors}
         onChange={(value) => {
           for (const style of styles) {
-            style.props.background.value = value
+            style.props.ringColor.value = value
               ? { type: "arbitrary", value }
               : undefined;
           }
         }}
         onTokenChange={(keyword) => {
           for (const style of styles) {
-            style.props.background.value = keyword
+            style.props.ringColor.value = keyword
               ? { type: "keyword", keyword }
               : undefined;
           }

@@ -55,6 +55,12 @@ export const fontWeights = new Map(
 export const backgroundColors = new Map(
   flattenColorNames(tailwindConfig.theme?.backgroundColor ?? {})
 );
+export const ringColors = new Map(
+  flattenColorNames(tailwindConfig.theme?.ringColor ?? {})
+);
+export const ringWidths = new Map(
+  Object.entries(tailwindConfig.theme?.ringWidth ?? {})
+);
 
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
@@ -181,6 +187,16 @@ export abstract class TailwindStyle {
     background: new Property(
       this,
       new ValueParser("bg-", backgroundColors, /.+/)
+    ),
+
+    ringColor: new Property(this, new ValueParser("ring-", colors, /^#/)),
+    ringWidth: new Property(
+      this,
+      new ValueParser(
+        "ring-",
+        ringWidths,
+        /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
+      )
     ),
 
     mixedMarginX: new ShorthandProperty((): Property[] => [
