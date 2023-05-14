@@ -12,7 +12,7 @@ import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import * as icons from "@seanchas116/design-icons";
 import { AlignmentEdit } from "@seanchas116/paintkit/src/components/alignment/AlignmentEdit";
-import { paddings } from "../../models/style/TailwindStyle";
+import { gaps, paddings } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import { StyleIconRadio } from "./common/StyleIconRadio";
@@ -72,8 +72,18 @@ export const LayoutPane: React.FC = observer(() => {
         />
       </RowPackLeft>
       <Row11>
-        <ComboBox icon={<Icon icon="ic:space-bar" />} />
-        <ComboBox icon={<Icon icon="ic:space-bar" rotate={1} />} />
+        <StyleComboBox
+          icon={<Icon icon="ic:space-bar" />}
+          tooltip="Column Gap"
+          property="columnGap"
+          tokens={gaps}
+        />
+        <StyleComboBox
+          icon={<Icon icon="ic:space-bar" rotate={1} />}
+          tooltip="Row Gap"
+          property="rowGap"
+          tokens={gaps}
+        />
       </Row11>
       <div className="flex gap-1">
         <AlignmentEdit

@@ -35,6 +35,8 @@ export const paddings = new Map(
   Object.entries(tailwindConfig.theme?.padding ?? {})
 );
 
+export const gaps = new Map(Object.entries(tailwindConfig.theme?.gap ?? {}));
+
 export const widths = new Map(
   Object.entries(tailwindConfig.theme?.width ?? {})
 );
@@ -44,6 +46,10 @@ export const heights = new Map(
 export const maxWidths = new Map(
   Object.entries(tailwindConfig.theme?.maxWidth ?? {})
 );
+export const radiuses = new Map(
+  Object.entries(tailwindConfig.theme?.borderRadius ?? {})
+);
+
 export const colors = new Map(
   flattenColorNames(tailwindConfig.theme?.colors ?? {})
 );
@@ -64,9 +70,6 @@ export const ringColors = new Map(
 );
 export const ringWidths = new Map(
   Object.entries(tailwindConfig.theme?.ringWidth ?? {})
-);
-export const radiuses = new Map(
-  Object.entries(tailwindConfig.theme?.borderRadius ?? {})
 );
 
 export type TailwindValue =
@@ -217,6 +220,18 @@ export abstract class TailwindStyle {
         ]),
         false
       )
+    ),
+
+    gap: new Property(this, new ValueParser("gap-", gaps, /.+/)),
+    columnGap: new Property(
+      this,
+      new ValueParser("gap-x-", gaps, /.+/),
+      (): Property => this.props.gap
+    ),
+    rowGap: new Property(
+      this,
+      new ValueParser("gap-y-", gaps, /.+/),
+      (): Property => this.props.gap
     ),
 
     padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
