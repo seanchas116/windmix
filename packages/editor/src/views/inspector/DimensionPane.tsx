@@ -106,6 +106,12 @@ export const DimensionPane: React.FC = observer(() => {
     <>
       <Pane>
         <IconRadio options={positionOptions} />
+        <FourEdgeGrid>
+          <ComboBox icon={<LetterIcon>T</LetterIcon>} />
+          <ComboBox icon={<LetterIcon>R</LetterIcon>} />
+          <ComboBox icon={<LetterIcon>B</LetterIcon>} />
+          <ComboBox icon={<LetterIcon>L</LetterIcon>} />
+        </FourEdgeGrid>
         <Row11>
           <StyleComboBox
             tooltip="Margin left"
