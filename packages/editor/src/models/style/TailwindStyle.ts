@@ -72,6 +72,24 @@ export const ringWidths = new Map(
   Object.entries(tailwindConfig.theme?.ringWidth ?? {})
 );
 
+export const alignItemsTokens = new Map([
+  ["start", "flex-start"],
+  ["end", "flex-end"],
+  ["center", "center"],
+  ["baseline", "baseline"],
+  ["stretch", "stretch"],
+]);
+export const justifyContentTokens = new Map([
+  ["normal", "normal"],
+  ["start", "flex-start"],
+  ["end", "flex-end"],
+  ["center", "center"],
+  ["between", "space-between"],
+  ["around", "space-around"],
+  ["evenly", "space-evenly"],
+  ["stretch", "stretch"],
+]);
+
 export type TailwindValue =
   | { type: "arbitrary"; value: string }
   | { type: "keyword"; keyword: string };
@@ -220,6 +238,14 @@ export abstract class TailwindStyle {
         ]),
         false
       )
+    ),
+    alignItems: new Property(
+      this,
+      new ValueParser("items-", alignItemsTokens, false)
+    ),
+    justifyContent: new Property(
+      this,
+      new ValueParser("justify-", justifyContentTokens, false)
     ),
 
     gap: new Property(this, new ValueParser("gap-", gaps, /.+/)),

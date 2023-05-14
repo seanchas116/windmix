@@ -12,7 +12,12 @@ import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import * as icons from "@seanchas116/design-icons";
 import { AlignmentEdit } from "@seanchas116/paintkit/src/components/alignment/AlignmentEdit";
-import { gaps, paddings } from "../../models/style/TailwindStyle";
+import {
+  alignItemsTokens,
+  gaps,
+  justifyContentTokens,
+  paddings,
+} from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import { StyleIconRadio } from "./common/StyleIconRadio";
@@ -101,13 +106,17 @@ export const LayoutPane: React.FC = observer(() => {
             width: "calc((100% - 8px) / 2)",
           }}
         >
-          <Input
+          <StyleComboBox
             icon={<Icon icon="icon-park-outline:align-horizontal-center-two" />}
-            value="Auto"
+            tooltip="Align Items"
+            property="alignItems"
+            tokens={alignItemsTokens}
           />
-          <Input
+          <StyleComboBox
             icon={<Icon icon="icon-park-outline:align-horizontally" />}
-            value="Start"
+            tooltip="Justify Content"
+            property="justifyContent"
+            tokens={justifyContentTokens}
           />
         </div>
       </div>
