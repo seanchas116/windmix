@@ -11,6 +11,7 @@ import { Icon } from "@iconify/react";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import * as icons from "@seanchas116/design-icons";
 import {
+  IconButton,
   MinusButton,
   PlusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
@@ -23,6 +24,7 @@ import {
   maxWidths,
 } from "../../models/style/TailwindStyle";
 import { StyleComboBox } from "./common/StyleComboBox";
+import Tippy from "@tippyjs/react";
 
 const positionOptions = [
   {
@@ -75,6 +77,29 @@ const verticalSizeConstraintOptions = [
   },
 ];
 
+const flexItemConstraintsOptions = [
+  {
+    value: "start",
+    text: "Flex Start",
+    icon: <Icon icon="material-symbols:align-flex-start" />,
+  },
+  {
+    value: "center",
+    text: "Flex Center",
+    icon: <Icon icon="material-symbols:align-flex-center" />,
+  },
+  {
+    value: "end",
+    text: "Flex End",
+    icon: <Icon icon="material-symbols:align-flex-end" />,
+  },
+  {
+    value: "fill",
+    text: "Stretch",
+    icon: <Icon icon="material-symbols:align-self-stretch" />,
+  },
+];
+
 export const DimensionPane: React.FC = observer(() => {
   return (
     <>
@@ -117,7 +142,15 @@ export const DimensionPane: React.FC = observer(() => {
             property="width"
             tokens={widths}
           />
-          <IconRadio options={horizontalSizeConstraintOptions} />
+          <IconRadio
+            options={[
+              {
+                value: "flex-1",
+                text: "Flex 1",
+                icon: <Icon icon={icons.fillArea} />,
+              },
+            ]}
+          />
         </Row11>
         <Row11>
           <StyleComboBox
@@ -126,7 +159,7 @@ export const DimensionPane: React.FC = observer(() => {
             property="height"
             tokens={heights}
           />
-          <IconRadio options={verticalSizeConstraintOptions} />
+          <IconRadio options={flexItemConstraintsOptions} />
         </Row11>
         <Row11>
           <StyleComboBox
