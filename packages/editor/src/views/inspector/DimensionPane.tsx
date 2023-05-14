@@ -74,32 +74,34 @@ export const DimensionPane: React.FC = observer(() => {
   return (
     <Pane>
       <IconRadio options={positionOptions} />
-      <FourEdgeGrid>
+      <Row11>
         <StyleComboBox
-          tooltip="Margin Top"
+          tooltip="Margin left"
+          icon={<Icon icon={icons.edgeTop} rotate={3} />}
+          property="marginLeft"
+          tokens={margins}
+        />
+        <StyleComboBox
+          tooltip="Margin right"
+          icon={<Icon icon={icons.edgeTop} rotate={1} />}
+          property="marginRight"
+          tokens={margins}
+        />
+      </Row11>
+      <Row11>
+        <StyleComboBox
+          tooltip="Margin top"
           icon={<Icon icon={icons.edgeTop} />}
           property="marginTop"
           tokens={margins}
         />
         <StyleComboBox
-          tooltip="Margin Right"
-          icon={<Icon icon={icons.edgeTop} rotate={1} />}
-          property="marginRight"
-          tokens={margins}
-        />
-        <StyleComboBox
-          tooltip="Margin Bottom"
+          tooltip="Margin bottom"
           icon={<Icon icon={icons.edgeTop} rotate={2} />}
           property="marginBottom"
           tokens={margins}
         />
-        <StyleComboBox
-          tooltip="Margin Left"
-          icon={<Icon icon={icons.edgeTop} rotate={3} />}
-          property="marginLeft"
-          tokens={margins}
-        />
-      </FourEdgeGrid>
+      </Row11>
       <Row11>
         <StyleComboBox
           tooltip="Width"
