@@ -37,7 +37,6 @@ export const Viewport: React.FC = observer(() => {
   }, []);
 
   const onWheel = action((e: React.WheelEvent) => {
-    console.log("onWheel");
     const scroll = scrollState;
 
     if (e.ctrlKey || e.metaKey) {
@@ -45,15 +44,12 @@ export const Viewport: React.FC = observer(() => {
       const pos = new Vec2(e.clientX, e.clientY).sub(
         viewportGeometry.domClientRect.topLeft
       );
-      console.log(factor, pos);
       scroll.zoomAround(pos, scroll.scale * factor);
-      console.log(scroll.scale, scroll.translation);
     } else {
       scroll.setTranslation(
         scroll.translation.sub(new Vec2(e.deltaX, e.deltaY).round)
       );
     }
-    console.log(scroll.documentToViewport.toCSSMatrixString());
   });
 
   const onMouseLeave = action(() => {

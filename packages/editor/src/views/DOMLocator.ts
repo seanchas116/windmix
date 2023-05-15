@@ -128,7 +128,6 @@ export class DOMLocator {
 
   async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
     const id = await this.findNodeID(offsetX, offsetY);
-    console.log("findNode", id);
     if (!id) {
       return;
     }
