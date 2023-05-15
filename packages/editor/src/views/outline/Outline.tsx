@@ -68,8 +68,7 @@ const NodeRow = observer(function NodeRow({
   };
 
   const onMouseEnter = action(() => {
-    domLocators.desktop.updateDimension(node);
-    domLocators.mobile.updateDimension(node);
+    domLocators.updateDimension(node);
 
     appState.hover = node;
   });
@@ -88,8 +87,7 @@ const NodeRow = observer(function NodeRow({
         selected && "bg-blue-500 text-white"
       )}
       onMouseDown={action((e) => {
-        domLocators.desktop.updateDimension(node);
-        domLocators.mobile.updateDimension(node);
+        domLocators.updateDimension(node);
 
         if (!e.shiftKey && !node.selected) {
           appState.document.deselectAll();
