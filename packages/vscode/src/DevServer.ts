@@ -39,7 +39,7 @@ export class DevServer {
                 </head>
                 <body>
                     <div id="root"></div>
-                    <script type="module" src="/virtual:windmix?path=${path}&component=${component}"></script>
+                    <script type="module" src="${virtualModulePrefix}path=${path}&component=${component}"></script>
                 </body>
                 </html>`;
                 template = await server.transformIndexHtml(
