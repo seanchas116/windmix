@@ -39,10 +39,13 @@ export const Renderer: React.FC<{
   );
 });
 
-const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
+const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
+  const cursor = appState.insertMode ? "crosshair" : "default";
+
   return (
     <div
       className="absolute inset-0 w-full h-full"
+      style={{ cursor }}
       onClick={async (event) => {
         const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
@@ -84,7 +87,8 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
       })}
     />
   );
-};
+});
+MouseOverlay.displayName = "MouseOverlay";
 
 const HUD: React.FC<{
   domLocator: DOMLocator;
