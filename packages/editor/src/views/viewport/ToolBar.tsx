@@ -1,11 +1,14 @@
 import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import Tippy from "@tippyjs/react";
+import { action } from "mobx";
 import { twMerge } from "tailwind-merge";
+import { appState } from "../../state/AppState";
+import { observer } from "mobx-react-lite";
 
 export const ToolBar: React.FC<{
   className?: string;
-}> = ({ className }) => {
+}> = observer(({ className }) => {
   return (
     <div
       className={twMerge(
@@ -14,15 +17,27 @@ export const ToolBar: React.FC<{
       )}
     >
       <Tippy content="Insert Text">
-        <IconButton>
+        <IconButton
+          pressed={appState.insertMode === "text"}
+          onClick={action(() => {
+            appState.insertMode = "text";
+          })}
+        >
           <Icon icon="icon-park-outline:font-size" />
         </IconButton>
       </Tippy>
-      <Tippy content="Insert Rectangle">
-        <IconButton>
+      <Tippy content="Insert Box">
+        <IconButton
+          pressed={appState.insertMode === "box"}
+          onClick={action(() => {
+            appState.insertMode = "box";
+          })}
+        >
           <Icon icon="icon-park-outline:square" />
         </IconButton>
       </Tippy>
     </div>
   );
-};
+});
+
+ToolBar.displayName = "ToolBar";

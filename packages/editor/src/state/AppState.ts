@@ -115,6 +115,8 @@ export class AppState {
     }
     return targets;
   }
+
+  @observable insertMode: "text" | "box" | undefined = undefined;
 }
 
 export const appState = new AppState();
