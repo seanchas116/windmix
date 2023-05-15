@@ -141,6 +141,10 @@ export class DevServer {
                   }, '*');
                 });
                 resizeObserver.observe(document.body);
+                window.parent.postMessage({
+                  type: 'windmix:resize',
+                  height: document.body.clientHeight,
+                }, '*');
 
                 const observer = new MutationObserver(() => {
                   console.log("DOM change");
