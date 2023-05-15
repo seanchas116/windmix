@@ -20,6 +20,13 @@ type MessageFromWindow =
           height: number;
         };
       }[];
+    }
+  | {
+      type: "windmix:resize";
+      height: number;
+    }
+  | {
+      type: "windmix:hotReload";
     };
 
 type MessageToWindow =
@@ -38,6 +45,7 @@ type MessageToWindow =
 export class DOMLocator {
   constructor() {
     makeObservable(this);
+    window.addEventListener("message", this.onMessage);
   }
 
   window: Window | undefined;
@@ -46,15 +54,16 @@ export class DOMLocator {
 
   setWindow(window: Window | undefined) {
     this.window = window;
-
-    // if (window) {
-    //   const resizeObserver = new ResizeObserver(() => {
-    //     console.log(window.document.body.clientHeight);
-    //     this.windowBodyHeight = window.document.body.clientHeight || undefined;
-    //   });
-    //   resizeObserver.observe(window.document.body);
-    // }
   }
+
+  readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {
+    if (event.source === this.window && event.data.type === "windmix:resize") {
+      const height = event.data.height;
+      runInAction(() => {
+        this.windowBodyHeight = height;
+      });
+    }
+  };
 
   async findNodeID(
     offsetX: number,

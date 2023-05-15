@@ -27,6 +27,7 @@ export class DevServer {
                   req.originalUrl.slice("/windmix?".length)
                 );
                 const path = query.get("path");
+                console.log(req.originalUrl, path);
 
                 let template = `<!DOCTYPE html>
                 <html lang="en">
@@ -119,6 +120,15 @@ export class DevServer {
                     }, '*');
                   }
                 });
+
+                const resizeObserver = new ResizeObserver(() => {
+                  console.log(document.body.clientHeight);
+                  window.parent.postMessage({
+                    type: 'windmix:resize',
+                    height: document.body.clientHeight,
+                  }, '*');
+                });
+                resizeObserver.observe(document.body);
 
                 import.meta.hot.accept(() => {
                   window.parent.postMessage({
