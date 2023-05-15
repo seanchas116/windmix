@@ -21,7 +21,7 @@ export const ZoomControl: React.FC<{
   return (
     <div
       className={twMerge(
-        "flex items-center bg-macaron-background border border-macaron-popoverBorder rounded-full",
+        "flex items-center bg-macaron-background border border-macaron-popoverBorder rounded-full shadow-lg",
         className
       )}
       onDoubleClick={(e) => e.stopPropagation()}
