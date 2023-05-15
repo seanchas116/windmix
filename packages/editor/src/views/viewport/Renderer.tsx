@@ -56,8 +56,19 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
         }
         await domLocators.updateDimension(node);
         runInAction(() => {
-          appState.document.deselectAll();
-          node.select();
+          if (appState.insertMode) {
+            // insert node
+
+            const element = appState.document.nodes.create("element");
+            element.tagName = "div";
+            const text = appState.document.nodes.create("text");
+            text.text = "Hello World";
+            element.append([text]);
+            node.append([element]);
+          } else {
+            appState.document.deselectAll();
+            node.select();
+          }
         });
       }}
       onDoubleClick={action(async (event) => {
