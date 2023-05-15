@@ -89,11 +89,8 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
 const HUD: React.FC<{
   domLocator: DOMLocator;
 }> = observer(({ domLocator }) => {
-  if (!appState.hover) {
-    return null;
-  }
-
-  const hoveredRects = domLocator.getDimension(appState.hover).rects;
+  const { hover } = appState;
+  const hoveredRects = hover ? domLocator.getDimension(hover).rects : [];
 
   const selectedRect = Rect.union(
     ...appState.document.selectedNodes.flatMap(

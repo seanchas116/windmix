@@ -26,7 +26,7 @@ type MessageFromWindow =
       height: number;
     }
   | {
-      type: "windmix:hotReload";
+      type: "windmix:reloadComputed";
     };
 
 type MessageToWindow =
@@ -57,11 +57,23 @@ export class DOMLocator {
   }
 
   readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {
-    if (event.source === this.window && event.data.type === "windmix:resize") {
-      const height = event.data.height;
+    if (event.source !== this.window) {
+      return;
+    }
+    const data = event.data;
+
+    if (data.type === "windmix:resize") {
+      const height = data.height;
       runInAction(() => {
+        console.log("resize", height);
         this.windowBodyHeight = height;
       });
+    } else if (data.type === "windmix:reloadComputed") {
+      const nodes = new Set([
+        ...(appState.hover ? [appState.hover] : []),
+        ...appState.document.selectedNodes,
+      ]);
+      Promise.all([...nodes].map((node) => this.updateDimension(node)));
     }
   };
 

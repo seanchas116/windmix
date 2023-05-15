@@ -137,11 +137,13 @@ export class DevServer {
                 });
                 resizeObserver.observe(document.body);
 
-                import.meta.hot.accept(() => {
+                const observer = new MutationObserver(() => {
+                  console.log("DOM change");
                   window.parent.postMessage({
-                    type: 'windmix:hotReload',
+                    type: 'windmix:reloadComputed',
                   }, '*');
                 });
+                observer.observe(document.body,  { attributes: true, childList: true, subtree: true });
               `;
             }
           },
