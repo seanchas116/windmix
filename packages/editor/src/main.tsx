@@ -6,6 +6,7 @@ import "./state/AppState.ts";
 import { appState } from "./state/AppState.ts";
 import hotkeys from "hotkeys-js";
 import { scrollState } from "./state/ScrollState.ts";
+import { action } from "mobx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -13,41 +14,72 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   </React.StrictMode>
 );
 
-hotkeys("ctrl+z,command+z", (e) => {
-  e.stopPropagation();
-  appState.connection.rpc.remote.undo();
-});
+hotkeys(
+  "ctrl+z,command+z",
+  action((e) => {
+    e.stopPropagation();
+    appState.connection.rpc.remote.undo();
+  })
+);
 
-hotkeys("ctrl+shift+z,command+shift+z", (e) => {
-  e.stopPropagation();
-  appState.connection.rpc.remote.redo();
-});
+hotkeys(
+  "ctrl+shift+z,command+shift+z",
+  action((e) => {
+    e.stopPropagation();
+    appState.connection.rpc.remote.redo();
+  })
+);
 
 // zoom in
-hotkeys("ctrl+=,command+=", (e) => {
-  e.stopPropagation();
-  scrollState.zoomIn();
-});
+hotkeys(
+  "ctrl+=,command+=",
+  action((e) => {
+    e.stopPropagation();
+    scrollState.zoomIn();
+  })
+);
 
 // zoom out
-hotkeys("ctrl+-,command+-", (e) => {
-  e.stopPropagation();
-  scrollState.zoomOut();
-});
+hotkeys(
+  "ctrl+-,command+-",
+  action((e) => {
+    e.stopPropagation();
+    scrollState.zoomOut();
+  })
+);
 
 // insert mode
-hotkeys("esc", (e) => {
-  e.stopPropagation();
-  appState.insertMode = undefined;
-});
-hotkeys("t", (e) => {
-  e.stopPropagation();
-  appState.insertMode = "text";
-});
-hotkeys("f,r,b", (e) => {
-  e.stopPropagation();
-  appState.insertMode = "box";
-});
+hotkeys(
+  "esc",
+  action((e) => {
+    e.stopPropagation();
+    appState.insertMode = undefined;
+  })
+);
+hotkeys(
+  "t",
+  action((e) => {
+    e.stopPropagation();
+    appState.insertMode = "text";
+  })
+);
+hotkeys(
+  "f,r,b",
+  action((e) => {
+    e.stopPropagation();
+    appState.insertMode = "box";
+  })
+);
+
+hotkeys(
+  "backspace,delete",
+  action((e) => {
+    e.stopPropagation();
+    for (const selected of appState.document.selectedNodes) {
+      selected.remove();
+    }
+  })
+);
 
 window.addEventListener("beforeunload", () => {
   // VSCode webviews should be reloaded explicitly when the iframe reloads
