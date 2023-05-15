@@ -208,6 +208,7 @@ export const Outline: React.FC = observer(() => {
           rowHeight={22}
           paddingTop={12}
           paddingBottom={12}
+          overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
         >
           {NodeRow}
         </Tree>
