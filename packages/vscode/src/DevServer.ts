@@ -3,7 +3,7 @@ import { createServer, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
 
-const virtualModulePrefix = "/virtual:windmix/";
+const virtualModulePrefix = "/virtual:windmix?";
 const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
 
 export class DevServer {
@@ -27,6 +27,7 @@ export class DevServer {
                   req.originalUrl.slice("/windmix?".length)
                 );
                 const path = query.get("path");
+                const component = query.get("component");
                 console.log(req.originalUrl, path);
 
                 let template = `<!DOCTYPE html>
@@ -38,7 +39,7 @@ export class DevServer {
                 </head>
                 <body>
                     <div id="root"></div>
-                    <script type="module" src="/virtual:windmix${path}"></script>
+                    <script type="module" src="/virtual:windmix?path=${path}&component=${component}"></script>
                 </body>
                 </html>`;
                 template = await server.transformIndexHtml(
@@ -76,16 +77,22 @@ export class DevServer {
             }
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
-              const targetPath = id.slice(resolvedVirtualModulePrefix.length);
+              const query = new URLSearchParams(
+                id.slice(resolvedVirtualModulePrefix.length)
+              );
+              const path = query.get("path");
+              const component = query.get("component");
 
               return `
-                import * as module from "/${targetPath}";
+                import * as module from "${path}";
                 import React from 'react';
                 import { createRoot } from 'react-dom/client';
 
                 const root = document.getElementById('root');
                 createRoot(root).render(
-                  React.createElement(module.default, module.getWindmixProps?.())
+                  React.createElement(module[${JSON.stringify(
+                    component
+                  )}], module.getWindmixProps?.())
                 );
 
                 window.addEventListener('message', (event) => {

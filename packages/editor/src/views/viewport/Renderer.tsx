@@ -22,7 +22,7 @@ export const Renderer: React.FC<{
     >
       <iframe
         //srcDoc={srcdoc}
-        src={`http://localhost:1337/windmix?path=${appState.tabPath}`}
+        src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
         className="w-full h-[2048px]"
         ref={iframeRef}
         onLoad={(e) => {
