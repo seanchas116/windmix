@@ -5,42 +5,11 @@ import { DOMLocator, domLocators } from "../DOMLocator";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
-declare global {
-  interface Window {
-    __windmixOnUpdate(window: Window): void;
-  }
-}
-
-window.__windmixOnUpdate = (window: Window) => {
-  console.log("on update");
-};
-
 export const Renderer: React.FC<{
   width: number;
   domLocator: DOMLocator;
 }> = observer(({ width, domLocator }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  const srcdoc = `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script type="module">
-      import RefreshRuntime from "http://localhost:1337/@react-refresh"
-      RefreshRuntime.injectIntoGlobalHook(window)
-      window.$RefreshReg$ = () => {}
-      window.$RefreshSig$ = () => (type) => type
-      window.__vite_plugin_react_preamble_installed__ = true
-      </script>
-    <script type="module" src="http://localhost:1337/@vite/client"></script>
-    <meta charset="UTF-8" />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="http://localhost:1337/virtual:windmix${appState.tabPath}"></script>
-  </body>
-</html>
-`;
 
   return (
     <div
