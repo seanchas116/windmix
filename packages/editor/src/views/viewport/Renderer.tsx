@@ -95,7 +95,7 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
           return;
         }
         runInAction(() => {
-          appState.reveal(node.location);
+          appState.jumpToLocation(node.location);
         });
       })}
       onMouseMove={action(async (event) => {

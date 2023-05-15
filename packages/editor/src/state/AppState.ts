@@ -67,6 +67,15 @@ export class AppState {
         vscode.setState(state);
       }
     );
+
+    reaction(
+      () => this.document.selectedNodes,
+      (selecteNodes) => {
+        if (selecteNodes.length) {
+          this.revealLocation(selecteNodes[0].location);
+        }
+      }
+    );
   }
 
   readonly document = new Document();
@@ -102,8 +111,11 @@ export class AppState {
     },
   });
 
-  reveal(location: { line: number; column: number }): void {
-    this.connection.rpc.remote.reveal(location);
+  revealLocation(location: { line: number; column: number }): void {
+    this.connection.rpc.remote.revealLocation(location);
+  }
+  jumpToLocation(location: { line: number; column: number }): void {
+    this.connection.rpc.remote.jumpToLocation(location);
   }
 
   @computed get tailwindStyles(): NodeTailwindStyle[] {

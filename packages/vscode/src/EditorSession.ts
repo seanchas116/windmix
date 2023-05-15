@@ -144,7 +144,7 @@ export class EditorSession {
         update: async (data) => {
           Y.applyUpdate(this._document.ydoc, data);
         },
-        reveal: async (location: { line: number; column: number }) => {
+        jumpToLocation: async (location: { line: number; column: number }) => {
           const textEditor = this._textEditor;
           if (textEditor) {
             const pos = new vscode.Position(location.line, location.column);
@@ -153,6 +153,14 @@ export class EditorSession {
               viewColumn: textEditor.viewColumn,
               selection: new vscode.Selection(pos, pos),
             });
+          }
+        },
+        revealLocation: async (location: { line: number; column: number }) => {
+          const textEditor = this._textEditor;
+          if (textEditor) {
+            const pos = new vscode.Position(location.line, location.column);
+            textEditor.revealRange(new vscode.Range(pos, pos));
+            textEditor.selection = new vscode.Selection(pos, pos);
           }
         },
         undo: async () => {

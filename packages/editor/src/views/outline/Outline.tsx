@@ -95,7 +95,7 @@ const NodeRow = observer(function NodeRow({
         node.select();
       })}
       onDoubleClick={() => {
-        appState.reveal(node.location);
+        appState.jumpToLocation(node.location);
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
