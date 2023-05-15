@@ -122,7 +122,7 @@ export class DevServer {
                 });
 
                 const resizeObserver = new ResizeObserver(() => {
-                  console.log(document.body.clientHeight);
+                  console.log("resize", document.body.clientWidth, document.body.clientHeight);
                   window.parent.postMessage({
                     type: 'windmix:resize',
                     height: document.body.clientHeight,

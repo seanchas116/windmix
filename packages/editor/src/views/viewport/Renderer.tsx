@@ -16,7 +16,7 @@ export const Renderer: React.FC<{
       className="relative bg-white"
       style={{
         width: `${width}px`,
-        height: `${domLocator.windowBodyHeight ?? 1024}px`,
+        height: `${Math.max(domLocator.windowBodyHeight, 1)}px`,
         contain: "strict",
       }}
     >

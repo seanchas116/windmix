@@ -50,7 +50,7 @@ export class DOMLocator {
 
   window: Window | undefined;
 
-  @observable windowBodyHeight: number | undefined = undefined;
+  @observable windowBodyHeight = 0;
 
   setWindow(window: Window | undefined) {
     this.window = window;
