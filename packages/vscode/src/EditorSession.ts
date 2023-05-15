@@ -282,6 +282,9 @@ export class EditorSession {
           input:focus {
             outline: none;
           }
+          :root {
+            --macaron-background: var(--vscode-editor-background);
+          }
         </style>
       </head>
       <body>
