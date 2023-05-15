@@ -10,20 +10,24 @@ export const Renderer: React.FC<{
   domLocator: DOMLocator;
 }> = observer(({ width, domLocator }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const height = Math.max(domLocator.windowBodyHeight, 1);
 
   return (
     <div
       className="relative bg-white"
       style={{
         width: `${width}px`,
-        height: `${Math.max(domLocator.windowBodyHeight, 1)}px`,
+        height: `${height}px`,
         contain: "strict",
       }}
     >
       <iframe
         //srcDoc={srcdoc}
         src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
-        className="w-full h-[2048px]"
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
         ref={iframeRef}
         onLoad={(e) => {
           console.log(e.currentTarget.contentWindow);
