@@ -4,6 +4,20 @@ import { twMerge } from "tailwind-merge";
 import { observer } from "mobx-react-lite";
 import { Icon } from "@iconify/react";
 import { scrollState } from "../../state/ScrollState";
+import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import styled from "styled-components";
+import { Input } from "@seanchas116/paintkit/src/components/Input";
+
+const ZoomInput = styled(Input)`
+  width: 40px;
+  background: none;
+  padding: 0;
+  input {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+`;
 
 export const ZoomControl: React.FC<{
   className?: string;
@@ -21,20 +35,18 @@ export const ZoomControl: React.FC<{
   return (
     <div
       className={twMerge(
-        "flex items-center bg-macaron-background border border-macaron-popoverBorder rounded-full shadow-lg",
+        "flex items-center bg-macaron-background border border-macaron-popoverBorder rounded-full shadow-lg px-1",
         className
       )}
       onDoubleClick={(e) => e.stopPropagation()}
     >
-      <button onClick={onZoomOut} className="px-2 py-1">
+      <IconButton onClick={onZoomOut}>
         <Icon icon="ic:remove" />
-      </button>
-      <input
-        className="w-10 h-6 rounded text-xs text-center bg-transparent"
+      </IconButton>
+      <ZoomInput
         value={`${percentage}%`}
-        disabled // TODO: enable
-        onChange={action((e) => {
-          const newPercent = Number.parseFloat(e.currentTarget.value);
+        onChange={action((value) => {
+          const newPercent = Number.parseFloat(value);
           if (isNaN(newPercent)) {
             return false;
           }
@@ -42,9 +54,9 @@ export const ZoomControl: React.FC<{
           return true;
         })}
       />
-      <button onClick={onZoomIn} className="px-2 p-1">
+      <IconButton onClick={onZoomIn}>
         <Icon icon="ic:add" />
-      </button>
+      </IconButton>
     </div>
   );
 };
