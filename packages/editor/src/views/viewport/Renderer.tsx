@@ -65,6 +65,8 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
             text.text = "Hello World";
             element.append([text]);
             node.append([element]);
+
+            appState.insertMode = undefined;
           } else {
             appState.document.deselectAll();
             node.select();
