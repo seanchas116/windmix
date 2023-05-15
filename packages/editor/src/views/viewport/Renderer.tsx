@@ -22,7 +22,6 @@ export const Renderer: React.FC<{
       }}
     >
       <iframe
-        //srcDoc={srcdoc}
         src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
         style={{
           width: `${width}px`,
