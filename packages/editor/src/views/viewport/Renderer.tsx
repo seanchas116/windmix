@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
 import { DOMLocator, domLocators } from "../DOMLocator";
-import { action } from "mobx";
+import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
 declare global {
@@ -71,7 +71,7 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
   return (
     <div
       className="absolute inset-0 w-full h-full"
-      onClick={action(async (event) => {
+      onClick={async (event) => {
         const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
@@ -80,9 +80,11 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
           return;
         }
         await domLocators.updateDimension(node);
-        appState.document.deselectAll();
-        node.select();
-      })}
+        runInAction(() => {
+          appState.document.deselectAll();
+          node.select();
+        });
+      }}
       onDoubleClick={action(async (event) => {
         const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
@@ -91,7 +93,9 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
         if (!node) {
           return;
         }
-        appState.reveal(node.location);
+        runInAction(() => {
+          appState.reveal(node.location);
+        });
       })}
       onMouseMove={action(async (event) => {
         const node = await domLocator.findNode(
@@ -102,7 +106,9 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
           return;
         }
         await domLocators.updateDimension(node);
-        appState.hover = node;
+        runInAction(() => {
+          appState.hover = node;
+        });
       })}
     />
   );

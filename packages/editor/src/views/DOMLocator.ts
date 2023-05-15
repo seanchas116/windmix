@@ -1,6 +1,6 @@
 import { Node } from "@windmix/model";
 import { appState } from "../state/AppState";
-import { makeObservable, observable } from "mobx";
+import { makeObservable, observable, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
 type MessageFromWindow =
@@ -163,9 +163,12 @@ export class NodeDimension {
   @observable.ref rects: Rect[] = [];
 
   async update() {
-    this.rects = (await this.domLocator.getComputedStyles(this.node.id)).map(
+    const rects = (await this.domLocator.getComputedStyles(this.node.id)).map(
       (result) => result.rect
     );
+    runInAction(() => {
+      this.rects = rects;
+    });
   }
 }
 
