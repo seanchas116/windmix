@@ -46,10 +46,10 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
     <div
       className="absolute inset-0 w-full h-full"
       style={{ cursor }}
-      onClick={async (event) => {
+      onClick={async (e) => {
         const node = await domLocator.findNode(
-          event.nativeEvent.offsetX,
-          event.nativeEvent.offsetY
+          e.nativeEvent.offsetX,
+          e.nativeEvent.offsetY
         );
         if (!node) {
           return;
@@ -79,7 +79,9 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
 
             appState.insertMode = undefined;
           } else {
-            appState.document.deselectAll();
+            if (!(e.shiftKey || e.altKey)) {
+              appState.document.deselectAll();
+            }
             node.select();
           }
         });

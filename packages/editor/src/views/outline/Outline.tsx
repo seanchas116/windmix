@@ -89,7 +89,7 @@ const NodeRow = observer(function NodeRow({
       onMouseDown={action((e) => {
         domLocators.updateDimension(node);
 
-        if (!e.shiftKey && !node.selected) {
+        if (!(e.shiftKey || e.altKey) && !node.selected) {
           appState.document.deselectAll();
         }
         node.select();
