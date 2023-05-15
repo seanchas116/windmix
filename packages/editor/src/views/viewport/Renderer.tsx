@@ -57,6 +57,7 @@ export const Renderer: React.FC<{
         className="w-full h-[2048px]"
         ref={iframeRef}
         onLoad={(e) => {
+          console.log(e.currentTarget.contentWindow);
           domLocator.setWindow(e.currentTarget.contentWindow ?? undefined);
         }}
       />
@@ -70,43 +71,37 @@ const MouseOverlay = ({ domLocator }: { domLocator: DOMLocator }) => {
   return (
     <div
       className="absolute inset-0 w-full h-full"
-      onClick={action((event) => {
-        const nodeElem = domLocator.findNode(
+      onClick={action(async (event) => {
+        const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-        if (!nodeElem) {
+        if (!node) {
           return;
         }
-
-        const [node] = nodeElem;
-
-        domLocators.updateDimension(node);
+        await domLocators.updateDimension(node);
         appState.document.deselectAll();
         node.select();
       })}
-      onDoubleClick={action((event) => {
-        const nodeElem = domLocator.findNode(
+      onDoubleClick={action(async (event) => {
+        const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-        if (!nodeElem) {
+        if (!node) {
           return;
         }
-
-        const [node] = nodeElem;
         appState.reveal(node.location);
       })}
-      onMouseMove={action((event) => {
-        const nodeElem = domLocator.findNode(
+      onMouseMove={action(async (event) => {
+        const node = await domLocator.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-        if (!nodeElem) {
+        if (!node) {
           return;
         }
-        const [node] = nodeElem;
-        domLocators.updateDimension(node);
+        await domLocators.updateDimension(node);
         appState.hover = node;
       })}
     />

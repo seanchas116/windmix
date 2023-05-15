@@ -7,17 +7,19 @@ type MessageFromWindow =
   | {
       type: "windmix:elementFromPointResult";
       callID: number;
-      id?: string;
+      result: string | undefined;
     }
   | {
       type: "windmix:getComputedStyleResult";
       callID: number;
-      rect?: {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-      };
+      result: {
+        rect: {
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+        };
+      }[];
     };
 
 type MessageToWindow =
@@ -45,21 +47,21 @@ export class DOMLocator {
   setWindow(window: Window | undefined) {
     this.window = window;
 
-    if (window) {
-      const resizeObserver = new ResizeObserver(() => {
-        console.log(window.document.body.clientHeight);
-        this.windowBodyHeight = window.document.body.clientHeight || undefined;
-      });
-      resizeObserver.observe(window.document.body);
-    }
+    // if (window) {
+    //   const resizeObserver = new ResizeObserver(() => {
+    //     console.log(window.document.body.clientHeight);
+    //     this.windowBodyHeight = window.document.body.clientHeight || undefined;
+    //   });
+    //   resizeObserver.observe(window.document.body);
+    // }
   }
 
   async findNodeID(
     offsetX: number,
     offsetY: number
   ): Promise<string | undefined> {
-    const window = this.window;
-    if (!window) {
+    const targetWindow = this.window;
+    if (!targetWindow) {
       return;
     }
 
@@ -75,37 +77,62 @@ export class DOMLocator {
         }
 
         window.removeEventListener("message", listener);
-        resolve(event.data.id);
+        resolve(event.data.result);
       };
       window.addEventListener("message", listener);
+
+      const message: MessageToWindow = {
+        type: "windmix:elementFromPoint",
+        callID,
+        x: offsetX,
+        y: offsetY,
+      };
+      targetWindow.postMessage(message, "*");
     });
   }
 
-  findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
-    const elem = this.window?.document.elementFromPoint(offsetX, offsetY);
-    if (!elem) {
-      return;
+  async getComputedStyles(id: string): Promise<{ rect: Rect }[]> {
+    const targetWindow = this.window;
+    if (!targetWindow) {
+      return [];
     }
 
-    const id = elem?.getAttribute("data-windmixid");
+    const callID = Math.random();
+    return new Promise<{ rect: Rect }[]>((resolve) => {
+      const listener = (event: MessageEvent<MessageFromWindow>) => {
+        if (event.data.type !== "windmix:getComputedStyleResult") {
+          return;
+        }
+
+        if (event.data.callID !== callID) {
+          return;
+        }
+
+        window.removeEventListener("message", listener);
+        resolve(
+          event.data.result.map((result) => ({
+            rect: Rect.from(result.rect),
+          }))
+        );
+      };
+      window.addEventListener("message", listener);
+
+      const message: MessageToWindow = {
+        type: "windmix:getComputedStyle",
+        callID,
+        id,
+      };
+      targetWindow.postMessage(message, "*");
+    });
+  }
+
+  async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
+    const id = await this.findNodeID(offsetX, offsetY);
+    console.log("findNode", id);
     if (!id) {
       return;
     }
-
-    const node = appState.document.nodes.get(id);
-    if (!node) {
-      return;
-    }
-
-    return [node, elem];
-  }
-
-  findDOMs(node: Node): Element[] {
-    return [
-      ...(this.window?.document.querySelectorAll(
-        `[data-windmixid="${node.id}"]`
-      ) ?? []),
-    ];
+    return appState.document.nodes.get(id);
   }
 
   dimensions = new WeakMap<Node, NodeDimension>();
@@ -135,9 +162,10 @@ export class NodeDimension {
   readonly domLocator: DOMLocator;
   @observable.ref rects: Rect[] = [];
 
-  update() {
-    const doms = this.domLocator.findDOMs(this.node);
-    this.rects = doms.map((dom) => Rect.from(dom.getBoundingClientRect()));
+  async update() {
+    this.rects = (await this.domLocator.getComputedStyles(this.node.id)).map(
+      (result) => result.rect
+    );
   }
 }
 
@@ -149,10 +177,8 @@ export class DOMLocators {
     return [this.desktop, this.mobile];
   }
 
-  updateDimension(node: Node) {
-    for (const locator of this.all) {
-      locator.updateDimension(node);
-    }
+  async updateDimension(node: Node) {
+    await Promise.all(this.all.map((locator) => locator.updateDimension(node)));
   }
 }
 

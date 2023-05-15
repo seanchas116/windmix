@@ -96,30 +96,26 @@ export class DevServer {
                     window.parent.postMessage({
                       type: 'windmix:elementFromPointResult',
                       callID: data.callID,
-                      id,
+                      result: id,
                     }, '*');
                   } else if (data.type === 'windmix:getComputedStyle') {
-                    const elem = document.querySelector('[data-windmixid="' + data.id + '"]');
-                    if (!elem) {
-                      window.parent.postMessage({
-                        type: 'windmix:getComputedStyleResult',
-                        callID: data.callID,
-                      }, '*');
-                      return;
-                    }
-
-                    const style = window.getComputedStyle(elem);
-                    const rect = elem.getBoundingClientRect();
+                    const elems = document.querySelectorAll('[data-windmixid="' + data.id + '"]');
+                    const results = [...elems].map((elem) => {
+                      const rect = elem.getBoundingClientRect();
+                      return {
+                        rect: {
+                          x: rect.x,
+                          y: rect.y,
+                          width: rect.width,
+                          height: rect.height,
+                        },
+                      };
+                    });
 
                     window.parent.postMessage({
                       type: 'windmix:getComputedStyleResult',
                       callID: data.callID,
-                      rect: {
-                        x: rect.x,
-                        y: rect.y,
-                        width: rect.width,
-                        height: rect.height,
-                      }
+                      result: results
                     }, '*');
                   }
                 });
