@@ -35,6 +35,20 @@ hotkeys("ctrl+-,command+-", (e) => {
   scrollState.zoomOut();
 });
 
+// insert mode
+hotkeys("esc", (e) => {
+  e.stopPropagation();
+  appState.insertMode = undefined;
+});
+hotkeys("t", (e) => {
+  e.stopPropagation();
+  appState.insertMode = "text";
+});
+hotkeys("f,r,b", (e) => {
+  e.stopPropagation();
+  appState.insertMode = "box";
+});
+
 window.addEventListener("beforeunload", () => {
   // VSCode webviews should be reloaded explicitly when the iframe reloads
   // (otherwise the black screen will be shown)
