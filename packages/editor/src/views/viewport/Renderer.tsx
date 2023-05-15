@@ -129,8 +129,9 @@ const HUD: React.FC<{
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
-      {hoveredRects.map((rect) => (
+      {hoveredRects.map((rect, i) => (
         <rect
+          key={i}
           {...rect.toSVGRectProps()}
           fill="none"
           stroke="blue"
