@@ -19,6 +19,31 @@ export class DevServer {
         react(),
         {
           name: "windmix-renderer", // required, will show up in warnings and errors
+          configureServer: (server) => {
+            server.middlewares.use(async (req, res, next) => {
+              console.log(req.originalUrl);
+              if (req.originalUrl === "/windmix") {
+                res.setHeader("Content-Type", "text/html");
+                res.writeHead(200);
+                res.write(
+                  `<!DOCTYPE html>
+                  <html lang="en">
+                    <head>
+                      <meta charset="UTF-8" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                      <title>Document</title>
+                    </head>
+                    <body>
+                      <h1>TODO</h1>
+                      </body>
+                  </html>`
+                );
+                res.end();
+              }
+
+              next();
+            });
+          },
           resolveId: (id) => {
             console.log(id);
             if (id.startsWith(virtualModulePrefix)) {
