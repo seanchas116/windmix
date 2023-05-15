@@ -121,7 +121,9 @@ export class DevServer {
                 });
 
                 import.meta.hot.accept(() => {
-                  window.parent.__windmixOnUpdate(window);
+                  window.parent.postMessage({
+                    type: 'windmix:hotReload',
+                  }, '*');
                 });
               `;
             }
