@@ -125,6 +125,11 @@ export class DevServer {
                       callID: data.callID,
                       result: results
                     }, '*');
+                  } else if (data.type === "windmix:setClassName") {
+                    const elems = document.querySelectorAll('[data-windmixid="' + data.id + '"]');
+                    for (const elem of elems) {
+                      elem.className = data.className;
+                    }
                   }
                 });
 

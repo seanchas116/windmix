@@ -40,6 +40,11 @@ type MessageToWindow =
       type: "windmix:getComputedStyle";
       callID: number;
       id: string;
+    }
+  | {
+      type: "windmix:setClassName";
+      id: string;
+      className: string;
     };
 
 export class DOMLocator {
@@ -153,6 +158,15 @@ export class DOMLocator {
       return;
     }
     return appState.document.nodes.get(id);
+  }
+
+  setClassName(node: Node, className: string) {
+    const message: MessageToWindow = {
+      type: "windmix:setClassName",
+      id: node.id,
+      className,
+    };
+    this.window?.postMessage(message, "*");
   }
 
   dimensions = new WeakMap<Node, NodeDimension>();
