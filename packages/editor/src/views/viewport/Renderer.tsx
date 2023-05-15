@@ -61,9 +61,20 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
 
             const element = appState.document.nodes.create("element");
             element.tagName = "div";
-            const text = appState.document.nodes.create("text");
-            text.text = "Hello World";
-            element.append([text]);
+
+            if (appState.insertMode === "text") {
+              const text = appState.document.nodes.create("text");
+              text.text = "Hello World";
+              element.append([text]);
+            } else {
+              element.attributes = [
+                {
+                  name: "className",
+                  value: JSON.stringify("w-20 h-20 bg-blue-300"),
+                  trailingSpace: " ",
+                },
+              ];
+            }
             node.append([element]);
 
             appState.insertMode = undefined;
