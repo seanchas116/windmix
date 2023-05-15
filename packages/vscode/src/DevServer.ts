@@ -87,6 +87,43 @@ export class DevServer {
                   React.createElement(module.default, module.getWindmixProps?.())
                 );
 
+                window.addEventListener('message', (event) => {
+                  const data = event.data;
+                  if (data.type === 'windmix:elementFromPoint') {
+                    const elem = document.elementFromPoint(data.x, data.y);
+                    const id = elem?.getAttribute('data-windmixid');
+
+                    window.parent.postMessage({
+                      type: 'windmix:elementFromPointResult',
+                      callID: data.callID,
+                      id,
+                    }, '*');
+                  } else if (data.type === 'windmix:getComputedStyle') {
+                    const elem = document.querySelector('[data-windmixid="' + data.id + '"]');
+                    if (!elem) {
+                      window.parent.postMessage({
+                        type: 'windmix:getComputedStyleResult',
+                        callID: data.callID,
+                      }, '*');
+                      return;
+                    }
+
+                    const style = window.getComputedStyle(elem);
+                    const rect = elem.getBoundingClientRect();
+
+                    window.parent.postMessage({
+                      type: 'windmix:getComputedStyleResult',
+                      callID: data.callID,
+                      rect: {
+                        x: rect.x,
+                        y: rect.y,
+                        width: rect.width,
+                        height: rect.height,
+                      }
+                    }, '*');
+                  }
+                });
+
                 import.meta.hot.accept(() => {
                   window.parent.__windmixOnUpdate(window);
                 });

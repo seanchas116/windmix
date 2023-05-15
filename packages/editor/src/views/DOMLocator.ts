@@ -3,6 +3,36 @@ import { appState } from "../state/AppState";
 import { makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 
+type MessageFromWindow =
+  | {
+      type: "windmix:elementFromPointResult";
+      callID: number;
+      id?: string;
+    }
+  | {
+      type: "windmix:getComputedStyleResult";
+      callID: number;
+      rect?: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+      };
+    };
+
+type MessageToWindow =
+  | {
+      type: "windmix:elementFromPoint";
+      callID: number;
+      x: number;
+      y: number;
+    }
+  | {
+      type: "windmix:getComputedStyle";
+      callID: number;
+      id: string;
+    };
+
 export class DOMLocator {
   constructor() {
     makeObservable(this);
@@ -22,6 +52,33 @@ export class DOMLocator {
       });
       resizeObserver.observe(window.document.body);
     }
+  }
+
+  async findNodeID(
+    offsetX: number,
+    offsetY: number
+  ): Promise<string | undefined> {
+    const window = this.window;
+    if (!window) {
+      return;
+    }
+
+    const callID = Math.random();
+    return new Promise<string | undefined>((resolve) => {
+      const listener = (event: MessageEvent<MessageFromWindow>) => {
+        if (event.data.type !== "windmix:elementFromPointResult") {
+          return;
+        }
+
+        if (event.data.callID !== callID) {
+          return;
+        }
+
+        window.removeEventListener("message", listener);
+        resolve(event.data.id);
+      };
+      window.addEventListener("message", listener);
+    });
   }
 
   findNode(offsetX: number, offsetY: number): [Node, Element] | undefined {
