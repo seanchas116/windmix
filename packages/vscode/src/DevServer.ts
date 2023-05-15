@@ -22,20 +22,33 @@ export class DevServer {
           configureServer: (server) => {
             server.middlewares.use(async (req, res, next) => {
               console.log(req.originalUrl);
-              if (req.originalUrl === "/windmix") {
+              if (req.originalUrl?.startsWith("/windmix?")) {
+                const query = new URLSearchParams(
+                  req.originalUrl.slice("/windmix?".length)
+                );
+                const path = query.get("path");
+
                 res.setHeader("Content-Type", "text/html");
                 res.writeHead(200);
                 res.write(
                   `<!DOCTYPE html>
                   <html lang="en">
-                    <head>
-                      <meta charset="UTF-8" />
-                      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                      <title>Document</title>
-                    </head>
-                    <body>
-                      <h1>TODO</h1>
-                      </body>
+                  <head>
+                    <script type="module">
+                      import RefreshRuntime from "/@react-refresh"
+                      RefreshRuntime.injectIntoGlobalHook(window)
+                      window.$RefreshReg$ = () => {}
+                      window.$RefreshSig$ = () => (type) => type
+                      window.__vite_plugin_react_preamble_installed__ = true
+                    </script>
+                    <script type="module" src="/@vite/client"></script>
+                    <meta charset="UTF-8" />
+                    <script src="https://cdn.tailwindcss.com"></script>
+                  </head>
+                  <body>
+                      <div id="root"></div>
+                      <script type="module" src="/virtual:windmix${path}"></script>
+                  </body>
                   </html>`
                 );
                 res.end();
