@@ -9,11 +9,15 @@ import {
 } from "@seanchas116/paintkit/src/util/Snapping";
 import { scrollState } from "./ScrollState";
 import { ElementNode } from "@windmix/model";
+import { Artboard } from "./Artboard";
 
 export class Snapper {
-  constructor() {
+  constructor(artboard: Artboard) {
+    this.artboard = artboard;
     makeObservable(this);
   }
+
+  readonly artboard: Artboard;
 
   private get threshold(): number {
     return scrollState.snapThreshold;
@@ -62,18 +66,28 @@ export class Snapper {
     return this.snapPoint(this.targetRects(parent, []), point);
   }
 
-  private targetRects(parent: ElementNode, excludes: ElementNode[]): Rect[] {
+  private async targetRects(
+    parent: ElementNode,
+    excludes: ElementNode[]
+  ): Promise<Rect[]> {
     const siblings = new Set<ElementNode>();
-    for (const child of parent.offsetChildren) {
-      siblings.add(child);
+    for (const child of parent.children) {
+      if (child.type === "element") {
+        siblings.add(child);
+      }
     }
     for (const selectable of excludes) {
       siblings.delete(selectable);
     }
 
+    const siblingMeasures = (
+      await Promise.all([...siblings].map((c) => this.artboard.measure(c)))
+    ).flat();
+    const parentMeasures = await this.artboard.measure(parent);
+
     return [
-      ...[...siblings].map((c) => c.computedRect),
-      ...(!parent.originalNode.isAbstract ? [parent.computedPaddingRect] : []),
+      ...siblingMeasures.map((m) => m.rect),
+      ...parentMeasures.map((m) => m.paddingRect),
     ];
   }
 
