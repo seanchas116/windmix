@@ -75,7 +75,7 @@ export class Artboard {
     makeObservable(this);
     window.addEventListener("message", this.onMessage);
 
-    // TODO: better reaction
+    // TODO: use createAtom
     queueMicrotask(() => {
       reaction(
         () => appState.hover,
@@ -90,6 +90,17 @@ export class Artboard {
           const dims = await this.getDimension(hover).get();
           runInAction(() => {
             this.hoverRects = dims.map((m) => Rect.from(m.rect));
+          });
+        }
+      );
+      reaction(
+        () => appState.document.selectedNodes,
+        async (nodes) => {
+          const dims = await Promise.all(
+            nodes.map((node) => this.getDimension(node).get())
+          );
+          runInAction(() => {
+            this.selectedRects = dims.flat().map((m) => Rect.from(m.rect));
           });
         }
       );
