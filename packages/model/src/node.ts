@@ -47,7 +47,7 @@ export abstract class BaseNode<
   }
 
   @computed private get _selected(): boolean {
-    return this.document.selectionData.has(this.id);
+    return this.document.selectionData.has(this.indexPath.join(","));
   }
 
   private set _selected(value: boolean) {
@@ -55,9 +55,9 @@ export abstract class BaseNode<
       return;
     }
     if (value) {
-      this.document.selectionData.set(this.id, true);
+      this.document.selectionData.set(this.indexPath.join(","), true);
     } else {
-      this.document.selectionData.delete(this.id);
+      this.document.selectionData.delete(this.indexPath.join(","));
     }
   }
 

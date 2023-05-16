@@ -1,6 +1,6 @@
 import * as Y from "yjs";
 import { computed, makeObservable } from "mobx";
-import { Node, NodeMap } from "./node";
+import { FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 
 export class Document {
@@ -8,6 +8,10 @@ export class Document {
     this.ydoc = ydoc;
     this.nodes = new NodeMap(this);
     makeObservable(this);
+  }
+
+  get fileNode(): FileNode | undefined {
+    return this.nodes.get("file") as FileNode | undefined;
   }
 
   get nodesData(): ObservableYMap<any> {
@@ -26,8 +30,16 @@ export class Document {
   }
 
   @computed get selectedNodes(): Node[] {
-    const ids = Array.from(this.selectionData.keys());
-    return ids.map((id) => this.nodes.get(id)).filter(Boolean) as Node[];
+    const idPaths = Array.from(this.selectionData.keys());
+    const fileNode = this.fileNode;
+    if (!fileNode) return [];
+
+    const nodes: Node[] = [];
+    for (const idPath of idPaths) {
+      const node = fileNode.getByPath(idPath.split(",").map(Number));
+      if (node) nodes.push(node);
+    }
+    return nodes;
   }
 
   deselectAll(): void {
