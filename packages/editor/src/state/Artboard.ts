@@ -36,15 +36,19 @@ export class Artboard {
     this.adapter.setClassName(node, className);
   }
 
-  dimensions = new WeakMap<ElementNode, NodeMeasurements>();
+  private measurementsCaches = new WeakMap<ElementNode, MeasurementsCache>();
 
-  getDimension(node: ElementNode): NodeMeasurements {
-    let computation = this.dimensions.get(node);
+  private getMeasurementsCache(node: ElementNode): MeasurementsCache {
+    let computation = this.measurementsCaches.get(node);
     if (!computation) {
-      computation = new NodeMeasurements(node, this);
-      this.dimensions.set(node, computation);
+      computation = new MeasurementsCache(node, this);
+      this.measurementsCaches.set(node, computation);
     }
     return computation;
+  }
+
+  measure(node: ElementNode): Promise<Measurement[]> {
+    return this.getMeasurementsCache(node).get();
   }
 
   @observable hoverRects: Rect[] = [];
@@ -53,13 +57,13 @@ export class Artboard {
   async updateRects() {
     const hoverDims =
       appState.hover?.type === "element"
-        ? await this.getDimension(appState.hover).get()
+        ? await this.getMeasurementsCache(appState.hover).get()
         : [];
     const selectedDims = (
       await Promise.all(
         appState.document.selectedNodes
           .filter((node): node is ElementNode => node.type === "element")
-          .map((node) => this.getDimension(node).get())
+          .map((node) => this.getMeasurementsCache(node).get())
       )
     ).flat();
     runInAction(() => {
@@ -69,7 +73,7 @@ export class Artboard {
   }
 }
 
-export class NodeMeasurements {
+class MeasurementsCache {
   constructor(node: ElementNode, artboard: Artboard) {
     this.node = node;
     this.artboard = artboard;
