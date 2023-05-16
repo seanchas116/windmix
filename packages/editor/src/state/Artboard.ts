@@ -2,6 +2,7 @@ import { Node } from "@windmix/model";
 import { appState } from "./AppState";
 import { makeObservable, observable, runInAction } from "mobx";
 import { Rect } from "paintvec";
+import { compact } from "lodash-es";
 
 type MessageFromWindow =
   | {
@@ -151,12 +152,13 @@ export class Artboard {
     });
   }
 
-  async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
+  async findNodes(offsetX: number, offsetY: number): Promise<Node[]> {
     const ids = await this.findNodeIDs(offsetX, offsetY);
-    if (!ids.length) {
-      return;
-    }
-    return appState.document.nodes.get(ids[0]);
+    return compact(ids.map((id) => appState.document.nodes.get(id)));
+  }
+
+  async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
+    return (await this.findNodes(offsetX, offsetY))[0];
   }
 
   setClassName(node: Node, className: string) {

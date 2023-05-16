@@ -2,6 +2,7 @@ import { Vec2 } from "paintvec";
 import { Node } from "@windmix/model";
 import { appState } from "../../../state/AppState";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { Artboard } from "../../../state/Artboard";
 
 function clickableAncestor(
   instanceAtPos: Node,
@@ -34,31 +35,46 @@ function clickableAncestor(
 }
 
 export class ViewportEvent {
-  constructor(
+  static async create(
+    artboard: Artboard,
     event: MouseEvent | DragEvent,
     options: {
-      all?: readonly Node[];
-      clientPos?: Vec2;
-      pos?: Vec2;
-      mode?: "click" | "doubleClick";
-    } = {}
+      all?: readonly Node[]; // nodes at pos (optional)
+      clientPos: Vec2; // position in editor
+      pos: Vec2; // position in iframe
+      mode?: "click" | "doubleClick"; // mode (optional)
+    }
   ) {
-    const clientPos =
-      options.clientPos ?? new Vec2(event.clientX, event.clientY);
+    return new ViewportEvent(
+      artboard,
+      options.all ?? (await artboard.findNodes(options.pos.x, options.pos.y)),
+      options.clientPos,
+      options.pos,
+      event,
+      options.mode ?? "click"
+    );
+  }
 
-    this.selectablesIncludingLocked =
-      options.all ?? nodePicker.instancesFromPoint(clientPos.x, clientPos.y);
+  constructor(
+    artboard: Artboard,
+    selectedables: readonly Node[],
+    clientPos: Vec2,
+    pos: Vec2,
+    event: MouseEvent | DragEvent,
+    mode: "click" | "doubleClick"
+  ) {
+    this.artboard = artboard;
+    this.selectablesIncludingLocked = selectedables;
     this.selectables = this.selectablesIncludingLocked.filter(
       (s) => !s.ancestorLocked
     );
-
     this.clientPos = clientPos;
-    this.pos =
-      options.pos ?? projectState.scroll.documentPosForClientPos(clientPos);
+    this.pos = pos;
     this.event = event;
-    this.mode = options.mode ?? "click";
+    this.mode = mode;
   }
 
+  readonly artboard: Artboard;
   readonly selectablesIncludingLocked: readonly Node[];
   readonly selectables: readonly Node[];
   readonly clientPos: Vec2;
