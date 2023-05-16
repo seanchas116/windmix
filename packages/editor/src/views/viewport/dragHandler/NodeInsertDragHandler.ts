@@ -12,10 +12,16 @@ export class NodeInsertDragHandler implements DragHandler {
     this.artboard = event.artboard;
     this.mode = mode;
 
-    const parent = assertNonNull(event.selectable); // TODO: null case
+    const parent = event.selectable; // TODO: null case
+    if (parent?.type !== "element") {
+      throw new Error("parent is not element");
+    }
 
     this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
-    this.initPos = this.artboard.snapper.snapInsertPoint(parent, event.pos);
+    this.initPos = await this.artboard.snapper.snapInsertPoint(
+      parent,
+      event.pos
+    );
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
