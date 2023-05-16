@@ -76,6 +76,8 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
               ];
             }
             node.append([element]);
+            appState.document.deselectAll();
+            element.select();
 
             appState.insertMode = undefined;
           } else {
