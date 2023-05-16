@@ -1,5 +1,5 @@
 import { Vec2 } from "paintvec";
-import { Node } from "@windmix/model";
+import { ElementNode, Node } from "@windmix/model";
 import { appState } from "../../../state/AppState";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Artboard } from "../../../state/Artboard";
@@ -39,7 +39,7 @@ export class ViewportEvent {
     artboard: Artboard,
     event: MouseEvent | DragEvent,
     options: {
-      all?: readonly Node[]; // nodes at pos (optional)
+      all?: readonly ElementNode[]; // nodes at pos (optional)
       clientPos?: Vec2; // position in editor
       pos?: Vec2; // position in iframe
       mode?: "click" | "doubleClick"; // mode (optional)
@@ -61,7 +61,7 @@ export class ViewportEvent {
 
   constructor(
     artboard: Artboard,
-    selectedables: readonly Node[],
+    selectedables: readonly ElementNode[],
     clientPos: Vec2,
     pos: Vec2,
     event: MouseEvent | DragEvent,
@@ -79,8 +79,8 @@ export class ViewportEvent {
   }
 
   readonly artboard: Artboard;
-  readonly selectablesIncludingLocked: readonly Node[];
-  readonly selectables: readonly Node[];
+  readonly selectablesIncludingLocked: readonly ElementNode[];
+  readonly selectables: readonly ElementNode[];
   readonly clientPos: Vec2;
   readonly pos: Vec2;
   readonly event: MouseEvent | DragEvent;

@@ -24,9 +24,18 @@ export class Artboard {
 
   adapter = new RendererAdapter(this);
 
-  async findNodes(offsetX: number, offsetY: number): Promise<Node[]> {
+  async findNodes(offsetX: number, offsetY: number): Promise<ElementNode[]> {
     const ids = await this.adapter.findNodeIDs(offsetX, offsetY);
-    return compact(ids.map((id) => appState.document.nodes.get(id)));
+
+    const result: ElementNode[] = [];
+    for (const id of ids) {
+      const node = appState.document.nodes.get(id);
+      if (node && node.type === "element") {
+        result.push(node);
+      }
+    }
+
+    return result;
   }
 
   async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
