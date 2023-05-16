@@ -9,7 +9,7 @@ import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { TailwindStyle } from "../models/style/TailwindStyle";
-import { domLocators } from "../views/DOMLocator";
+import { artboards } from "../views/viewport/Artboard";
 
 const vscode = acquireVsCodeApi();
 
@@ -170,7 +170,7 @@ export class NodeTailwindStyle extends TailwindStyle {
   set className(value: string) {
     this.node.className = value;
 
-    domLocators.all.forEach((locator) => {
+    artboards.all.forEach((locator) => {
       locator.setClassName(this.node, value);
     });
   }

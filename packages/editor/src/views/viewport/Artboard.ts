@@ -1,5 +1,5 @@
 import { Node } from "@windmix/model";
-import { appState } from "../state/AppState";
+import { appState } from "../../state/AppState";
 import { makeObservable, observable, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
@@ -47,7 +47,7 @@ type MessageToWindow =
       className: string;
     };
 
-export class DOMLocator {
+export class Artboard {
   constructor() {
     makeObservable(this);
     window.addEventListener("message", this.onMessage);
@@ -185,19 +185,19 @@ export class DOMLocator {
 }
 
 export class NodeDimension {
-  constructor(node: Node, domLocator: DOMLocator) {
+  constructor(node: Node, artboard: Artboard) {
     this.node = node;
-    this.domLocator = domLocator;
+    this.artboard = artboard;
     makeObservable(this);
   }
 
   readonly node: Node;
-  readonly domLocator: DOMLocator;
+  readonly artboard: Artboard;
   @observable.ref rects: Rect[] = [];
 
   async update() {
     const rects = (
-      await this.domLocator.getComputedStyles([this.node.id])
+      await this.artboard.getComputedStyles([this.node.id])
     )[0].map((result) => result.rect);
     runInAction(() => {
       this.rects = rects;
@@ -205,11 +205,11 @@ export class NodeDimension {
   }
 }
 
-export class DOMLocators {
-  readonly desktop = new DOMLocator();
-  readonly mobile = new DOMLocator();
+export class Artboards {
+  readonly desktop = new Artboard();
+  readonly mobile = new Artboard();
 
-  get all(): DOMLocator[] {
+  get all(): Artboard[] {
     return [this.desktop, this.mobile];
   }
 
@@ -218,4 +218,4 @@ export class DOMLocators {
   }
 }
 
-export const domLocators = new DOMLocators();
+export const artboards = new Artboards();

@@ -7,7 +7,7 @@ import { appState } from "../../state/AppState";
 import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
 import { useEffect } from "react";
-import { domLocators } from "../DOMLocator";
+import { artboards } from "../viewport/Artboard";
 
 const nodeApis = new WeakMap<Node, NodeApi>();
 
@@ -68,7 +68,7 @@ const NodeRow = observer(function NodeRow({
   };
 
   const onMouseEnter = action(() => {
-    domLocators.updateDimension(node);
+    artboards.updateDimension(node);
 
     appState.hover = node;
   });
@@ -87,7 +87,7 @@ const NodeRow = observer(function NodeRow({
         selected && "bg-blue-500 text-white"
       )}
       onMouseDown={action((e) => {
-        domLocators.updateDimension(node);
+        artboards.updateDimension(node);
 
         if (!(e.shiftKey || e.altKey) && !node.selected) {
           appState.document.deselectAll();

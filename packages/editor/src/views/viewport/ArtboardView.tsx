@@ -1,16 +1,16 @@
 import React, { useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { DOMLocator, domLocators } from "../DOMLocator";
+import { Artboard, artboards } from "./Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
-export const Renderer: React.FC<{
+export const ArtboardView: React.FC<{
   width: number;
-  domLocator: DOMLocator;
-}> = observer(({ width, domLocator }) => {
+  artboard: Artboard;
+}> = observer(({ width, artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const height = Math.max(domLocator.windowBodyHeight, 1);
+  const height = Math.max(artboard.windowBodyHeight, 1);
 
   return (
     <div
@@ -30,16 +30,16 @@ export const Renderer: React.FC<{
         ref={iframeRef}
         onLoad={(e) => {
           console.log(e.currentTarget.contentWindow);
-          domLocator.setWindow(e.currentTarget.contentWindow ?? undefined);
+          artboard.setWindow(e.currentTarget.contentWindow ?? undefined);
         }}
       />
-      <MouseOverlay domLocator={domLocator} />
-      <HUD domLocator={domLocator} />
+      <MouseOverlay artboard={artboard} />
+      <HUD artboard={artboard} />
     </div>
   );
 });
 
-const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
+const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
   const cursor = appState.insertMode ? "crosshair" : "default";
 
   return (
@@ -47,14 +47,14 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
       className="absolute inset-0 w-full h-full"
       style={{ cursor }}
       onClick={async (e) => {
-        const node = await domLocator.findNode(
+        const node = await artboard.findNode(
           e.nativeEvent.offsetX,
           e.nativeEvent.offsetY
         );
         if (!node) {
           return;
         }
-        await domLocators.updateDimension(node);
+        await artboards.updateDimension(node);
         runInAction(() => {
           if (appState.insertMode) {
             // insert node
@@ -89,7 +89,7 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
         });
       }}
       onDoubleClick={action(async (event) => {
-        const node = await domLocator.findNode(
+        const node = await artboard.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
@@ -101,14 +101,14 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
         });
       })}
       onMouseMove={action(async (event) => {
-        const node = await domLocator.findNode(
+        const node = await artboard.findNode(
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
         if (!node) {
           return;
         }
-        await domLocators.updateDimension(node);
+        await artboards.updateDimension(node);
         runInAction(() => {
           appState.hover = node;
         });
@@ -119,14 +119,14 @@ const MouseOverlay = observer(({ domLocator }: { domLocator: DOMLocator }) => {
 MouseOverlay.displayName = "MouseOverlay";
 
 const HUD: React.FC<{
-  domLocator: DOMLocator;
-}> = observer(({ domLocator }) => {
+  artboard: Artboard;
+}> = observer(({ artboard }) => {
   const { hover } = appState;
-  const hoveredRects = hover ? domLocator.getDimension(hover).rects : [];
+  const hoveredRects = hover ? artboard.getDimension(hover).rects : [];
 
   const selectedRect = Rect.union(
     ...appState.document.selectedNodes.flatMap(
-      (node) => domLocator.getDimension(node).rects
+      (node) => artboard.getDimension(node).rects
     )
   );
 

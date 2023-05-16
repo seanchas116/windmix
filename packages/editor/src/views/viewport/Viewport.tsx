@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
 import * as path from "path-browserify";
 import { appState } from "../../state/AppState";
-import { Renderer } from "./Renderer";
+import { ArtboardView } from "./ArtboardView";
 import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
 import { createRef, useEffect } from "react";
-import { domLocators } from "../DOMLocator";
+import { artboards } from "./Artboard";
 import { ZoomControlController } from "./ZoomControl";
 import { ToolBar } from "./ToolBar";
 import { PanOverlay } from "./PanOverlay";
@@ -78,14 +78,14 @@ export const Viewport: React.FC = observer(() => {
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <Renderer width={1440} domLocator={domLocators.desktop} />
+            <ArtboardView width={1440} artboard={artboards.desktop} />
           </div>
           <div>
             <h2 className="font-semibold mb-1">
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <Renderer width={375} domLocator={domLocators.mobile} />
+            <ArtboardView width={375} artboard={artboards.mobile} />
           </div>
         </div>
       </div>
