@@ -129,9 +129,30 @@ export class AppState {
   }
 
   @observable insertMode: "text" | "box" | undefined = undefined;
+
+  readonly elementStates = new WeakMap<ElementNode, ElementState>();
+
+  elementState(elementNode: ElementNode): ElementState {
+    let state = this.elementStates.get(elementNode);
+    if (!state) {
+      state = new ElementState(elementNode);
+      this.elementStates.set(elementNode, state);
+    }
+    return state;
+  }
 }
 
 export const appState = new AppState();
+
+export class ElementState {
+  constructor(node: ElementNode) {
+    this.node = node;
+    this.style = new NodeTailwindStyle(node);
+  }
+
+  readonly node: ElementNode;
+  readonly style: NodeTailwindStyle;
+}
 
 export class NodeTailwindStyle extends TailwindStyle {
   constructor(node: ElementNode) {
