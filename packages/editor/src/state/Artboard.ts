@@ -1,9 +1,10 @@
-import { Node } from "@windmix/model";
+import { ElementNode, Node } from "@windmix/model";
 import { appState } from "./AppState";
 import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { Rect } from "paintvec";
-import { Measurement, RendererAdapter } from "./RendererAdapter";
+import { RendererAdapter } from "./RendererAdapter";
 import { compact } from "lodash-es";
+import { Measurement } from "./Measurement";
 
 export class Artboard {
   constructor() {
@@ -35,9 +36,9 @@ export class Artboard {
     this.adapter.setClassName(node, className);
   }
 
-  dimensions = new WeakMap<Node, NodeMeasurements>();
+  dimensions = new WeakMap<ElementNode, NodeMeasurements>();
 
-  getDimension(node: Node): NodeMeasurements {
+  getDimension(node: ElementNode): NodeMeasurements {
     let computation = this.dimensions.get(node);
     if (!computation) {
       computation = new NodeMeasurements(node, this);
@@ -50,30 +51,31 @@ export class Artboard {
   @observable selectedRects: Rect[] = [];
 
   async updateRects() {
-    const hoverDims = appState.hover
-      ? await this.getDimension(appState.hover).get()
-      : [];
+    const hoverDims =
+      appState.hover?.type === "element"
+        ? await this.getDimension(appState.hover).get()
+        : [];
     const selectedDims = (
       await Promise.all(
-        appState.document.selectedNodes.map((node) =>
-          this.getDimension(node).get()
-        )
+        appState.document.selectedNodes
+          .filter((node): node is ElementNode => node.type === "element")
+          .map((node) => this.getDimension(node).get())
       )
     ).flat();
     runInAction(() => {
-      this.hoverRects = hoverDims.map((m) => Rect.from(m.rect));
-      this.selectedRects = selectedDims.map((m) => Rect.from(m.rect));
+      this.hoverRects = hoverDims.map((m) => m.rect);
+      this.selectedRects = selectedDims.map((m) => m.rect);
     });
   }
 }
 
 export class NodeMeasurements {
-  constructor(node: Node, artboard: Artboard) {
+  constructor(node: ElementNode, artboard: Artboard) {
     this.node = node;
     this.artboard = artboard;
   }
 
-  readonly node: Node;
+  readonly node: ElementNode;
   readonly artboard: Artboard;
   private _cache: Measurement[] = [];
   private _cacheRevision = 0;
@@ -82,7 +84,7 @@ export class NodeMeasurements {
     if (this.artboard.adapter.revision > this._cacheRevision) {
       this._cache = (
         await this.artboard.adapter.getComputedStyles([this.node.id])
-      )[0];
+      )[0].map((data) => new Measurement(this.node, data));
       this._cacheRevision = this.artboard.adapter.revision;
     }
     return this._cache;

@@ -1,36 +1,7 @@
 import { Node } from "@windmix/model";
 import { makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
-
-export interface ComputedStyle {
-  display: string;
-  flexDirection: string;
-
-  marginTop: string;
-  marginRight: string;
-  marginBottom: string;
-  marginLeft: string;
-
-  borderTopWidth: string;
-  borderRightWidth: string;
-  borderBottomWidth: string;
-  borderLeftWidth: string;
-
-  paddingTop: string;
-  paddingRight: string;
-  paddingBottom: string;
-  paddingLeft: string;
-}
-
-export interface Measurement {
-  rect: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  style: ComputedStyle;
-}
+import { MeasurementData } from "./Measurement";
 
 type MessageFromWindow =
   | {
@@ -41,7 +12,7 @@ type MessageFromWindow =
   | {
       type: "windmix:getComputedStylesResult";
       callID: number;
-      result: Measurement[][];
+      result: MeasurementData[][];
     }
   | {
       type: "windmix:resize";
@@ -138,14 +109,14 @@ export class RendererAdapter {
     });
   }
 
-  async getComputedStyles(ids: string[]): Promise<Measurement[][]> {
+  async getComputedStyles(ids: string[]): Promise<MeasurementData[][]> {
     const targetWindow = this.window;
     if (!targetWindow) {
       return [];
     }
 
     const callID = Math.random();
-    return new Promise<Measurement[][]>((resolve) => {
+    return new Promise<MeasurementData[][]>((resolve) => {
       const listener = (event: MessageEvent<MessageFromWindow>) => {
         if (event.data.type !== "windmix:getComputedStylesResult") {
           return;
