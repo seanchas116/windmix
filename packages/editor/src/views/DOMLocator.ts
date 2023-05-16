@@ -5,12 +5,12 @@ import { Rect } from "paintvec";
 
 type MessageFromWindow =
   | {
-      type: "windmix:elementFromPointResult";
+      type: "windmix:elementsFromPointResult";
       callID: number;
-      result: string | undefined;
+      result: string[];
     }
   | {
-      type: "windmix:getComputedStyleResult";
+      type: "windmix:getComputedStylesResult";
       callID: number;
       result: {
         rect: {
@@ -19,7 +19,7 @@ type MessageFromWindow =
           width: number;
           height: number;
         };
-      }[];
+      }[][];
     }
   | {
       type: "windmix:resize";
@@ -31,15 +31,15 @@ type MessageFromWindow =
 
 type MessageToWindow =
   | {
-      type: "windmix:elementFromPoint";
+      type: "windmix:elementsFromPoint";
       callID: number;
       x: number;
       y: number;
     }
   | {
-      type: "windmix:getComputedStyle";
+      type: "windmix:getComputedStyles";
       callID: number;
-      id: string;
+      ids: string[];
     }
   | {
       type: "windmix:setClassName";
@@ -82,24 +82,21 @@ export class DOMLocator {
     }
   };
 
-  async findNodeID(
-    offsetX: number,
-    offsetY: number
-  ): Promise<string | undefined> {
+  async findNodeIDs(offsetX: number, offsetY: number): Promise<string[]> {
     const targetWindow = this.window;
     if (!targetWindow) {
-      return;
+      return [];
     }
 
     const callID = Math.random();
-    return new Promise<string | undefined>((resolve) => {
+    return new Promise<string[]>((resolve) => {
       const listener = (event: MessageEvent<MessageFromWindow>) => {
-        if (event.data.type !== "windmix:elementFromPointResult") {
-          return;
+        if (event.data.type !== "windmix:elementsFromPointResult") {
+          return [];
         }
 
         if (event.data.callID !== callID) {
-          return;
+          return [];
         }
 
         window.removeEventListener("message", listener);
@@ -108,7 +105,7 @@ export class DOMLocator {
       window.addEventListener("message", listener);
 
       const message: MessageToWindow = {
-        type: "windmix:elementFromPoint",
+        type: "windmix:elementsFromPoint",
         callID,
         x: offsetX,
         y: offsetY,
@@ -117,16 +114,16 @@ export class DOMLocator {
     });
   }
 
-  async getComputedStyles(id: string): Promise<{ rect: Rect }[]> {
+  async getComputedStyles(ids: string[]): Promise<{ rect: Rect }[][]> {
     const targetWindow = this.window;
     if (!targetWindow) {
       return [];
     }
 
     const callID = Math.random();
-    return new Promise<{ rect: Rect }[]>((resolve) => {
+    return new Promise<{ rect: Rect }[][]>((resolve) => {
       const listener = (event: MessageEvent<MessageFromWindow>) => {
-        if (event.data.type !== "windmix:getComputedStyleResult") {
+        if (event.data.type !== "windmix:getComputedStylesResult") {
           return;
         }
 
@@ -136,28 +133,30 @@ export class DOMLocator {
 
         window.removeEventListener("message", listener);
         resolve(
-          event.data.result.map((result) => ({
-            rect: Rect.from(result.rect),
-          }))
+          event.data.result.map((results) =>
+            results.map((result) => ({
+              rect: Rect.from(result.rect),
+            }))
+          )
         );
       };
       window.addEventListener("message", listener);
 
       const message: MessageToWindow = {
-        type: "windmix:getComputedStyle",
+        type: "windmix:getComputedStyles",
         callID,
-        id,
+        ids,
       };
       targetWindow.postMessage(message, "*");
     });
   }
 
   async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
-    const id = await this.findNodeID(offsetX, offsetY);
-    if (!id) {
+    const ids = await this.findNodeIDs(offsetX, offsetY);
+    if (!ids.length) {
       return;
     }
-    return appState.document.nodes.get(id);
+    return appState.document.nodes.get(ids[0]);
   }
 
   setClassName(node: Node, className: string) {
@@ -197,9 +196,9 @@ export class NodeDimension {
   @observable.ref rects: Rect[] = [];
 
   async update() {
-    const rects = (await this.domLocator.getComputedStyles(this.node.id)).map(
-      (result) => result.rect
-    );
+    const rects = (
+      await this.domLocator.getComputedStyles([this.node.id])
+    )[0].map((result) => result.rect);
     runInAction(() => {
       this.rects = rects;
     });

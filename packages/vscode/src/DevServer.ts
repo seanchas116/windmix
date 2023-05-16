@@ -97,33 +97,45 @@ export class DevServer {
 
                 window.addEventListener('message', (event) => {
                   const data = event.data;
-                  if (data.type === 'windmix:elementFromPoint') {
-                    const elem = document.elementFromPoint(data.x, data.y);
-                    const id = elem?.getAttribute('data-windmixid');
+                  if (data.type === 'windmix:elementsFromPoint') {
+                    const elems = document.elementsFromPoint(data.x, data.y);
+                    const ids = [];
+                    for (const elem of elems) {
+                      const id = elem.getAttribute('data-windmixid');
+                      if (id) {
+                        ids.push(id);
+                      }
+                    }
 
                     window.parent.postMessage({
-                      type: 'windmix:elementFromPointResult',
+                      type: 'windmix:elementsFromPointResult',
                       callID: data.callID,
-                      result: id,
+                      result: ids,
                     }, '*');
-                  } else if (data.type === 'windmix:getComputedStyle') {
-                    const elems = document.querySelectorAll('[data-windmixid="' + data.id + '"]');
-                    const results = [...elems].map((elem) => {
-                      const rect = elem.getBoundingClientRect();
-                      return {
-                        rect: {
-                          x: rect.x,
-                          y: rect.y,
-                          width: rect.width,
-                          height: rect.height,
-                        },
-                      };
-                    });
+                  } else if (data.type === 'windmix:getComputedStyles') {
+                    const result = [];
+
+                    for (const id of data.ids) {
+                      const elems = document.querySelectorAll('[data-windmixid="' + id + '"]');
+                      const resultsForElem = [];
+                      for (const elem of elems) {
+                        const rect = elem.getBoundingClientRect();
+                        resultsForElem.push({
+                          rect: {
+                            x: rect.x,
+                            y: rect.y,
+                            width: rect.width,
+                            height: rect.height,
+                          },
+                        });
+                      }
+                      result.push(resultsForElem);
+                    }
 
                     window.parent.postMessage({
-                      type: 'windmix:getComputedStyleResult',
+                      type: 'windmix:getComputedStylesResult',
                       callID: data.callID,
-                      result: results
+                      result: result
                     }, '*');
                   } else if (data.type === "windmix:setClassName") {
                     const elems = document.querySelectorAll('[data-windmixid="' + data.id + '"]');
