@@ -78,6 +78,16 @@ export abstract class BaseNode<
       child.deselect();
     }
   }
+
+  get locked(): boolean {
+    // TODO
+    return false;
+  }
+
+  get ancestorLocked(): boolean {
+    // TODO
+    return false;
+  }
 }
 
 export class FileNode extends BaseNode<
