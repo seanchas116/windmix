@@ -1,26 +1,21 @@
 import { Rect, Vec2 } from "paintvec";
-import { Selectable } from "@uimix/model/src/models";
-import { projectState } from "../../../state/ProjectState";
-import { InsertMode } from "../../../state/InsertMode";
-import { snapper } from "../../../state/Snapper";
-import { viewportState } from "../../../state/ViewportState";
-import { Color } from "@uimix/foundation/src/utils/Color";
-import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
-import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { action } from "mobx";
+import { InsertMode } from "../../../state/Tool";
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { Artboard } from "../../../state/Artboard";
 
 export class NodeInsertDragHandler implements DragHandler {
   constructor(mode: InsertMode, event: ViewportEvent) {
+    this.artboard = event.artboard;
     this.mode = mode;
 
-    const parent =
-      event.selectable ?? assertNonNull(projectState.page).selectable;
+    const parent = assertNonNull(event.selectable); // TODO: null case
 
     this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
-    this.initPos = snapper.snapInsertPoint(parent, event.pos);
+    this.initPos = this.artboard.snapper.snapInsertPoint(parent, event.pos);
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
@@ -113,6 +108,7 @@ export class NodeInsertDragHandler implements DragHandler {
     projectState.undoManager.stopCapturing();
   }
 
+  private readonly artboard: Artboard;
   private readonly mode: InsertMode;
   private readonly selectable: Selectable;
   private readonly initPos: Vec2;

@@ -5,6 +5,7 @@ import { Rect } from "paintvec";
 import { RendererAdapter } from "./RendererAdapter";
 import { compact } from "lodash-es";
 import { Measurement } from "./Measurement";
+import { Snapper } from "./Snapper";
 
 export class Artboard {
   constructor() {
@@ -71,6 +72,8 @@ export class Artboard {
       this.selectedRects = selectedDims.map((m) => m.rect);
     });
   }
+
+  readonly snapper = new Snapper(this);
 }
 
 class MeasurementsCache {
