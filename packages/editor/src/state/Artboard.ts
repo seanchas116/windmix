@@ -1,8 +1,37 @@
 import { Node } from "@windmix/model";
 import { appState } from "./AppState";
-import { makeObservable, observable, runInAction } from "mobx";
+import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { compact } from "lodash-es";
+
+interface ComputedStyle {
+  display: string;
+  flexDirection: string;
+
+  marginTop: string;
+  marginRight: string;
+  marginBottom: string;
+  marginLeft: string;
+
+  borderTopWidth: string;
+  borderRightWidth: string;
+  borderBottomWidth: string;
+  borderLeftWidth: string;
+
+  paddingTop: string;
+  paddingRight: string;
+  paddingBottom: string;
+  paddingLeft: string;
+}
+interface ComputedValue {
+  rect: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  style: ComputedStyle;
+}
 
 type MessageFromWindow =
   | {
@@ -13,14 +42,7 @@ type MessageFromWindow =
   | {
       type: "windmix:getComputedStylesResult";
       callID: number;
-      result: {
-        rect: {
-          x: number;
-          y: number;
-          width: number;
-          height: number;
-        };
-      }[][];
+      result: ComputedValue[][];
     }
   | {
       type: "windmix:resize";
@@ -115,14 +137,14 @@ export class Artboard {
     });
   }
 
-  async getComputedStyles(ids: string[]): Promise<{ rect: Rect }[][]> {
+  async getComputedStyles(ids: string[]): Promise<ComputedValue[][]> {
     const targetWindow = this.window;
     if (!targetWindow) {
       return [];
     }
 
     const callID = Math.random();
-    return new Promise<{ rect: Rect }[][]>((resolve) => {
+    return new Promise<ComputedValue[][]>((resolve) => {
       const listener = (event: MessageEvent<MessageFromWindow>) => {
         if (event.data.type !== "windmix:getComputedStylesResult") {
           return;
@@ -133,13 +155,7 @@ export class Artboard {
         }
 
         window.removeEventListener("message", listener);
-        resolve(
-          event.data.result.map((results) =>
-            results.map((result) => ({
-              rect: Rect.from(result.rect),
-            }))
-          )
-        );
+        resolve(event.data.result);
       };
       window.addEventListener("message", listener);
 
@@ -195,14 +211,18 @@ export class NodeDimension {
 
   readonly node: Node;
   readonly artboard: Artboard;
-  @observable.ref rects: Rect[] = [];
+  @observable.ref computedValues: ComputedValue[] = [];
+
+  @computed get rects(): Rect[] {
+    return this.computedValues.map((value) => Rect.from(value.rect));
+  }
 
   async update() {
-    const rects = (
+    const computedValues = (
       await this.artboard.getComputedStyles([this.node.id])
-    )[0].map((result) => result.rect);
+    )[0];
     runInAction(() => {
-      this.rects = rects;
+      this.computedValues = computedValues;
     });
   }
 }

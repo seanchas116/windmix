@@ -120,6 +120,7 @@ export class DevServer {
                       const resultsForElem = [];
                       for (const elem of elems) {
                         const rect = elem.getBoundingClientRect();
+                        const style = getComputedStyle(elem);
                         resultsForElem.push({
                           rect: {
                             x: rect.x,
@@ -127,6 +128,22 @@ export class DevServer {
                             width: rect.width,
                             height: rect.height,
                           },
+                          style: {
+                            display: style.display,
+                            flexDirection: style.flexDirection,
+                            marginTop: style.marginTop,
+                            marginRight: style.marginRight,
+                            marginBottom: style.marginBottom,
+                            marginLeft: style.marginLeft,
+                            borderTopWidth: style.borderTopWidth,
+                            borderRightWidth: style.borderRightWidth,
+                            borderBottomWidth: style.borderBottomWidth,
+                            borderLeftWidth: style.borderLeftWidth,
+                            paddingTop: style.paddingTop,
+                            paddingRight: style.paddingRight,
+                            paddingBottom: style.paddingBottom,
+                            paddingLeft: style.paddingLeft,
+                          }
                         });
                       }
                       result.push(resultsForElem);
