@@ -81,8 +81,6 @@ export class AppState {
   readonly document = new Document();
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
 
-  @observable hover: Node | undefined = undefined;
-
   @computed get tabPath(): string | undefined {
     return this.fileNode?.data.get("filePath");
   }
@@ -128,9 +126,10 @@ export class AppState {
     return targets;
   }
 
-  @observable insertMode: "text" | "box" | undefined = undefined;
-
+  @observable hover: Node | undefined = undefined;
+  @observable tool: Tool | undefined = undefined;
   @observable panMode = false;
+  @observable resizeBoxVisible = false;
 
   readonly elementStates = new WeakMap<ElementNode, ElementState>();
 
@@ -143,6 +142,11 @@ export class AppState {
     return state;
   }
 }
+
+type Tool = {
+  type: "insert";
+  nodeType: "text" | "box";
+};
 
 export const appState = new AppState();
 

@@ -40,16 +40,20 @@ export class ViewportEvent {
     event: MouseEvent | DragEvent,
     options: {
       all?: readonly Node[]; // nodes at pos (optional)
-      clientPos: Vec2; // position in editor
-      pos: Vec2; // position in iframe
+      clientPos?: Vec2; // position in editor
+      pos?: Vec2; // position in iframe
       mode?: "click" | "doubleClick"; // mode (optional)
-    }
+    } = {}
   ) {
+    const clientPos =
+      options.clientPos ?? new Vec2(event.clientX, event.clientY);
+    const pos = options.pos ?? new Vec2(event.offsetX, event.offsetY);
+
     return new ViewportEvent(
       artboard,
-      options.all ?? (await artboard.findNodes(options.pos.x, options.pos.y)),
-      options.clientPos,
-      options.pos,
+      options.all ?? (await artboard.findNodes(pos.x, pos.y)),
+      clientPos,
+      pos,
       event,
       options.mode ?? "click"
     );
