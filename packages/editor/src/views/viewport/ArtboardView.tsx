@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { Artboard, artboards } from "../../state/Artboard";
+import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
@@ -10,7 +10,7 @@ export const ArtboardView: React.FC<{
   artboard: Artboard;
 }> = observer(({ width, artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const height = Math.max(artboard.windowBodyHeight, 1);
+  const height = Math.max(artboard.adapter.windowBodyHeight, 1);
 
   return (
     <div
@@ -30,7 +30,9 @@ export const ArtboardView: React.FC<{
         ref={iframeRef}
         onLoad={(e) => {
           console.log(e.currentTarget.contentWindow);
-          artboard.setWindow(e.currentTarget.contentWindow ?? undefined);
+          artboard.adapter.setWindow(
+            e.currentTarget.contentWindow ?? undefined
+          );
         }}
       />
       <MouseOverlay artboard={artboard} />
