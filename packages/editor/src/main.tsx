@@ -81,6 +81,21 @@ hotkeys(
   })
 );
 
+hotkeys(
+  "space",
+  {
+    keydown: true,
+    keyup: true,
+  },
+  action((e) => {
+    if (e.type === "keydown") {
+      appState.panMode = true;
+    } else if (e.type === "keyup") {
+      appState.panMode = false;
+    }
+  })
+);
+
 window.addEventListener("beforeunload", () => {
   // VSCode webviews should be reloaded explicitly when the iframe reloads
   // (otherwise the black screen will be shown)

@@ -9,6 +9,7 @@ import { createRef, useEffect } from "react";
 import { domLocators } from "../DOMLocator";
 import { ZoomControlController } from "./ZoomControl";
 import { ToolBar } from "./ToolBar";
+import { PanOverlay } from "./PanOverlay";
 
 export const Viewport: React.FC = observer(() => {
   const ref = createRef<HTMLDivElement>();
@@ -88,6 +89,7 @@ export const Viewport: React.FC = observer(() => {
           </div>
         </div>
       </div>
+      <PanOverlay />
       <ZoomControlController className="absolute right-2 top-2" />
       <ToolBar className="absolute left-2 top-2" />
     </main>

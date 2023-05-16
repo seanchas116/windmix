@@ -130,6 +130,8 @@ export class AppState {
 
   @observable insertMode: "text" | "box" | undefined = undefined;
 
+  @observable panMode = false;
+
   readonly elementStates = new WeakMap<ElementNode, ElementState>();
 
   elementState(elementNode: ElementNode): ElementState {
