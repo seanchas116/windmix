@@ -6,7 +6,7 @@ import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
 import { createRef, useEffect } from "react";
-import { artboards } from "./Artboard";
+import { artboards } from "../../state/Artboard";
 import { ZoomControlController } from "./ZoomControl";
 import { ToolBar } from "./ToolBar";
 import { PanOverlay } from "./PanOverlay";

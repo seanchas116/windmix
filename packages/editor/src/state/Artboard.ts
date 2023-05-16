@@ -1,5 +1,5 @@
 import { Node } from "@windmix/model";
-import { appState } from "../../state/AppState";
+import { appState } from "./AppState";
 import { makeObservable, observable, runInAction } from "mobx";
 import { Rect } from "paintvec";
 

@@ -9,7 +9,7 @@ import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { TailwindStyle } from "../models/style/TailwindStyle";
-import { artboards } from "../views/viewport/Artboard";
+import { artboards } from "./Artboard";
 
 const vscode = acquireVsCodeApi();
 

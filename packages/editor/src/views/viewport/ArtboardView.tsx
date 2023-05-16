@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { Artboard, artboards } from "./Artboard";
+import { Artboard, artboards } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 

@@ -7,7 +7,7 @@ import { appState } from "../../state/AppState";
 import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
 import { useEffect } from "react";
-import { artboards } from "../viewport/Artboard";
+import { artboards } from "../../state/Artboard";
 
 const nodeApis = new WeakMap<Node, NodeApi>();
 
