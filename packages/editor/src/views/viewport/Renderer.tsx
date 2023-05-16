@@ -65,7 +65,7 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
             const element = appState.document.nodes.create("element");
             element.tagName = "div";
 
-            if (appState.tool.nodeType === "text") {
+            if (appState.tool.insertMode === "text") {
               const text = appState.document.nodes.create("text");
               text.text = "Hello World";
               element.append([text]);

@@ -10,6 +10,7 @@ import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { TailwindStyle } from "../models/style/TailwindStyle";
 import { artboards } from "./Artboard";
+import { Tool } from "./Tool";
 
 const vscode = acquireVsCodeApi();
 
@@ -142,11 +143,6 @@ export class AppState {
     return state;
   }
 }
-
-type Tool = {
-  type: "insert";
-  nodeType: "text" | "box";
-};
 
 export const appState = new AppState();
 

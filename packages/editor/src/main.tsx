@@ -62,7 +62,7 @@ hotkeys(
     e.stopPropagation();
     appState.tool = {
       type: "insert",
-      nodeType: "text",
+      insertMode: "text",
     };
   })
 );
@@ -72,7 +72,7 @@ hotkeys(
     e.stopPropagation();
     appState.tool = {
       type: "insert",
-      nodeType: "box",
+      insertMode: "box",
     };
   })
 );

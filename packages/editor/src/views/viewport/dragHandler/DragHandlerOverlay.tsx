@@ -52,7 +52,7 @@ export const DragHandlerOverlay: React.FC<{
 
       if (appState.tool?.type === "insert") {
         dragHandlerRef.current = new NodeInsertDragHandler(
-          appState.tool.nodeType,
+          appState.tool.insertMode,
           viewportEvent
         );
         return;

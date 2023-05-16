@@ -20,11 +20,11 @@ export const ToolBar: React.FC<{
     >
       <Tippy content="Insert Text">
         <IconButton
-          pressed={tool?.type === "insert" && tool.nodeType === "text"}
+          pressed={tool?.type === "insert" && tool.insertMode === "text"}
           onClick={action(() => {
             appState.tool = {
               type: "insert",
-              nodeType: "text",
+              insertMode: "text",
             };
           })}
         >
@@ -33,11 +33,11 @@ export const ToolBar: React.FC<{
       </Tippy>
       <Tippy content="Insert Box">
         <IconButton
-          pressed={tool?.type === "insert" && tool.nodeType === "box"}
+          pressed={tool?.type === "insert" && tool.insertMode === "box"}
           onClick={action(() => {
             appState.tool = {
               type: "insert",
-              nodeType: "box",
+              insertMode: "box",
             };
           })}
         >
