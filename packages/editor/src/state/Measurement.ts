@@ -38,9 +38,9 @@ export class Measurement {
     this.style = data.style;
   }
 
-  node: ElementNode;
-  rect: Rect;
-  style: ComputedStyle;
+  readonly node: ElementNode;
+  readonly rect: Rect;
+  readonly style: ComputedStyle;
 
   get paddingRect(): Rect {
     const bt = parseFloat(this.style.borderTopWidth);
