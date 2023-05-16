@@ -75,33 +75,12 @@ export class Artboard {
     makeObservable(this);
     window.addEventListener("message", this.onMessage);
 
-    // TODO: use createAtom
+    // TODO: use createAtom?
     queueMicrotask(() => {
       reaction(
-        () => appState.hover,
-        async (hover) => {
-          if (!hover) {
-            runInAction(() => {
-              this.hoverRects = [];
-            });
-            return;
-          }
-
-          const dims = await this.getDimension(hover).get();
-          runInAction(() => {
-            this.hoverRects = dims.map((m) => Rect.from(m.rect));
-          });
-        }
-      );
-      reaction(
-        () => appState.document.selectedNodes,
-        async (nodes) => {
-          const dims = await Promise.all(
-            nodes.map((node) => this.getDimension(node).get())
-          );
-          runInAction(() => {
-            this.selectedRects = dims.flat().map((m) => Rect.from(m.rect));
-          });
+        () => [appState.hover, appState.document.selectedNodes],
+        async () => {
+          await this.updateRects();
         }
       );
     });
@@ -131,6 +110,7 @@ export class Artboard {
       });
     } else if (data.type === "windmix:reloadComputed") {
       this.revision = Date.now();
+      this.updateRects();
     }
   };
 
@@ -228,6 +208,23 @@ export class Artboard {
 
   @observable hoverRects: Rect[] = [];
   @observable selectedRects: Rect[] = [];
+
+  async updateRects() {
+    const hoverDims = appState.hover
+      ? await this.getDimension(appState.hover).get()
+      : [];
+    const selectedDims = (
+      await Promise.all(
+        appState.document.selectedNodes.map((node) =>
+          this.getDimension(node).get()
+        )
+      )
+    ).flat();
+    runInAction(() => {
+      this.hoverRects = hoverDims.map((m) => Rect.from(m.rect));
+      this.selectedRects = selectedDims.map((m) => Rect.from(m.rect));
+    });
+  }
 }
 
 export class NodeMeasurements {
