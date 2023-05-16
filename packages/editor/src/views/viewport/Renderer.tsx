@@ -5,7 +5,7 @@ import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 
-export const ArtboardView: React.FC<{
+export const Renderer: React.FC<{
   width: number;
   artboard: Artboard;
 }> = observer(({ width, artboard }) => {
@@ -40,6 +40,7 @@ export const ArtboardView: React.FC<{
     </div>
   );
 });
+Renderer.displayName = "Renderer";
 
 const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
   const cursor = appState.tool ? "crosshair" : "default";

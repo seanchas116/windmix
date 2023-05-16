@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import * as path from "path-browserify";
 import { appState } from "../../state/AppState";
-import { ArtboardView } from "./ArtboardView";
+import { Renderer } from "./Renderer";
 import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
@@ -78,14 +78,14 @@ export const Viewport: React.FC = observer(() => {
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <ArtboardView width={1440} artboard={artboards.desktop} />
+            <Renderer width={1440} artboard={artboards.desktop} />
           </div>
           <div>
             <h2 className="font-semibold mb-1">
               {appState.tabPath &&
                 path.basename(appState.tabPath, path.extname(appState.tabPath))}
             </h2>
-            <ArtboardView width={375} artboard={artboards.mobile} />
+            <Renderer width={375} artboard={artboards.mobile} />
           </div>
         </div>
       </div>
