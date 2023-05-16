@@ -9,6 +9,8 @@ import { observer } from "mobx-react-lite";
 export const ToolBar: React.FC<{
   className?: string;
 }> = observer(({ className }) => {
+  const tool = appState.tool;
+
   return (
     <div
       className={twMerge(
@@ -18,9 +20,12 @@ export const ToolBar: React.FC<{
     >
       <Tippy content="Insert Text">
         <IconButton
-          pressed={appState.insertMode === "text"}
+          pressed={tool?.type === "insert" && tool.nodeType === "text"}
           onClick={action(() => {
-            appState.insertMode = "text";
+            appState.tool = {
+              type: "insert",
+              nodeType: "text",
+            };
           })}
         >
           <Icon icon="icon-park-outline:font-size" />
@@ -28,9 +33,12 @@ export const ToolBar: React.FC<{
       </Tippy>
       <Tippy content="Insert Box">
         <IconButton
-          pressed={appState.insertMode === "box"}
+          pressed={tool?.type === "insert" && tool.nodeType === "box"}
           onClick={action(() => {
-            appState.insertMode = "box";
+            appState.tool = {
+              type: "insert",
+              nodeType: "box",
+            };
           })}
         >
           <Icon icon="icon-park-outline:square" />

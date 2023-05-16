@@ -53,21 +53,27 @@ hotkeys(
   "esc",
   action((e) => {
     e.stopPropagation();
-    appState.insertMode = undefined;
+    appState.tool = undefined;
   })
 );
 hotkeys(
   "t",
   action((e) => {
     e.stopPropagation();
-    appState.insertMode = "text";
+    appState.tool = {
+      type: "insert",
+      nodeType: "text",
+    };
   })
 );
 hotkeys(
   "f,r,b",
   action((e) => {
     e.stopPropagation();
-    appState.insertMode = "box";
+    appState.tool = {
+      type: "insert",
+      nodeType: "box",
+    };
   })
 );
 

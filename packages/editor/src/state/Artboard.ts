@@ -1,8 +1,8 @@
 import { Node } from "@windmix/model";
 import { appState } from "./AppState";
-import { computed, makeObservable, observable, runInAction } from "mobx";
-import { Rect } from "paintvec";
+import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { compact } from "lodash-es";
+import { Rect } from "paintvec";
 
 interface ComputedStyle {
   display: string;
@@ -23,7 +23,7 @@ interface ComputedStyle {
   paddingBottom: string;
   paddingLeft: string;
 }
-interface ComputedValue {
+interface Measurement {
   rect: {
     x: number;
     y: number;
@@ -42,7 +42,7 @@ type MessageFromWindow =
   | {
       type: "windmix:getComputedStylesResult";
       callID: number;
-      result: ComputedValue[][];
+      result: Measurement[][];
     }
   | {
       type: "windmix:resize";
@@ -74,11 +74,33 @@ export class Artboard {
   constructor() {
     makeObservable(this);
     window.addEventListener("message", this.onMessage);
+
+    // TODO: better reaction
+    queueMicrotask(() => {
+      reaction(
+        () => appState.hover,
+        async (hover) => {
+          if (!hover) {
+            runInAction(() => {
+              this.hoverRects = [];
+            });
+            return;
+          }
+
+          const dims = await this.getDimension(hover).get();
+          runInAction(() => {
+            this.hoverRects = dims.map((m) => Rect.from(m.rect));
+          });
+        }
+      );
+    });
   }
 
   window: Window | undefined;
 
   @observable windowBodyHeight = 0;
+
+  revision = Date.now();
 
   setWindow(window: Window | undefined) {
     this.window = window;
@@ -97,11 +119,7 @@ export class Artboard {
         this.windowBodyHeight = height;
       });
     } else if (data.type === "windmix:reloadComputed") {
-      const nodes = new Set([
-        ...(appState.hover ? [appState.hover] : []),
-        ...appState.document.selectedNodes,
-      ]);
-      Promise.all([...nodes].map((node) => this.updateDimension(node)));
+      this.revision = Date.now();
     }
   };
 
@@ -137,14 +155,14 @@ export class Artboard {
     });
   }
 
-  async getComputedStyles(ids: string[]): Promise<ComputedValue[][]> {
+  async getComputedStyles(ids: string[]): Promise<Measurement[][]> {
     const targetWindow = this.window;
     if (!targetWindow) {
       return [];
     }
 
     const callID = Math.random();
-    return new Promise<ComputedValue[][]>((resolve) => {
+    return new Promise<Measurement[][]>((resolve) => {
       const listener = (event: MessageEvent<MessageFromWindow>) => {
         if (event.data.type !== "windmix:getComputedStylesResult") {
           return;
@@ -186,44 +204,38 @@ export class Artboard {
     this.window?.postMessage(message, "*");
   }
 
-  dimensions = new WeakMap<Node, NodeDimension>();
+  dimensions = new WeakMap<Node, NodeMeasurements>();
 
-  getDimension(node: Node): NodeDimension {
+  getDimension(node: Node): NodeMeasurements {
     let computation = this.dimensions.get(node);
     if (!computation) {
-      computation = new NodeDimension(node, this);
+      computation = new NodeMeasurements(node, this);
       this.dimensions.set(node, computation);
     }
     return computation;
   }
 
-  updateDimension(node: Node) {
-    this.getDimension(node).update();
-  }
+  @observable hoverRects: Rect[] = [];
+  @observable selectedRects: Rect[] = [];
 }
 
-export class NodeDimension {
+export class NodeMeasurements {
   constructor(node: Node, artboard: Artboard) {
     this.node = node;
     this.artboard = artboard;
-    makeObservable(this);
   }
 
   readonly node: Node;
   readonly artboard: Artboard;
-  @observable.ref computedValues: ComputedValue[] = [];
+  private _cache: Measurement[] = [];
+  private _cacheRevision = 0;
 
-  @computed get rects(): Rect[] {
-    return this.computedValues.map((value) => Rect.from(value.rect));
-  }
-
-  async update() {
-    const computedValues = (
-      await this.artboard.getComputedStyles([this.node.id])
-    )[0];
-    runInAction(() => {
-      this.computedValues = computedValues;
-    });
+  async get(): Promise<Measurement[]> {
+    if (this.artboard.revision > this._cacheRevision) {
+      this._cache = (await this.artboard.getComputedStyles([this.node.id]))[0];
+      this._cacheRevision = this.artboard.revision;
+    }
+    return this._cache;
   }
 }
 
@@ -233,10 +245,6 @@ export class Artboards {
 
   get all(): Artboard[] {
     return [this.desktop, this.mobile];
-  }
-
-  async updateDimension(node: Node) {
-    await Promise.all(this.all.map((locator) => locator.updateDimension(node)));
   }
 }
 

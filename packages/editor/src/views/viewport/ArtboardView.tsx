@@ -40,7 +40,7 @@ export const ArtboardView: React.FC<{
 });
 
 const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
-  const cursor = appState.insertMode ? "crosshair" : "default";
+  const cursor = appState.tool ? "crosshair" : "default";
 
   return (
     <div
@@ -54,15 +54,15 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
         if (!node) {
           return;
         }
-        await artboards.updateDimension(node);
+        //await artboards.updateDimension(node);
         runInAction(() => {
-          if (appState.insertMode) {
+          if (appState.tool?.type === "insert") {
             // insert node
 
             const element = appState.document.nodes.create("element");
             element.tagName = "div";
 
-            if (appState.insertMode === "text") {
+            if (appState.tool.nodeType === "text") {
               const text = appState.document.nodes.create("text");
               text.text = "Hello World";
               element.append([text]);
@@ -79,7 +79,7 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
             appState.document.deselectAll();
             element.select();
 
-            appState.insertMode = undefined;
+            appState.tool = undefined;
           } else {
             if (!(e.shiftKey || e.altKey)) {
               appState.document.deselectAll();
@@ -105,10 +105,6 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
           event.nativeEvent.offsetX,
           event.nativeEvent.offsetY
         );
-        if (!node) {
-          return;
-        }
-        await artboards.updateDimension(node);
         runInAction(() => {
           appState.hover = node;
         });
@@ -121,14 +117,9 @@ MouseOverlay.displayName = "MouseOverlay";
 const HUD: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
-  const { hover } = appState;
-  const hoveredRects = hover ? artboard.getDimension(hover).rects : [];
+  const hoveredRects = artboard.hoverRects;
 
-  const selectedRect = Rect.union(
-    ...appState.document.selectedNodes.flatMap(
-      (node) => artboard.getDimension(node).rects
-    )
-  );
+  const selectedRect = Rect.union(...artboard.selectedRects);
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
