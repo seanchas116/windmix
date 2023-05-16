@@ -62,8 +62,8 @@ export class Snapper {
     );
   }
 
-  snapInsertPoint(parent: ElementNode, point: Vec2): Vec2 {
-    return this.snapPoint(this.targetRects(parent, []), point);
+  async snapInsertPoint(parent: ElementNode, point: Vec2): Promise<Vec2> {
+    return this.snapPoint(await this.targetRects(parent, []), point);
   }
 
   private async targetRects(
@@ -91,37 +91,40 @@ export class Snapper {
     ];
   }
 
-  snapResizePoint(
+  async snapResizePoint(
     selectables: ElementNode[],
     point: Vec2,
     axes: { x?: boolean; y?: boolean } = { x: true, y: true }
-  ): Vec2 {
+  ): Promise<Vec2> {
     if (selectables.length === 0) {
       return point;
     }
-    const parent =
-      selectables[0].offsetParent ?? selectables[0].page?.selectable;
-    if (!parent) {
+    const parent = selectables[0]?.parent;
+    if (parent?.type !== "element") {
       return point;
     }
 
-    return this.snapPoint(this.targetRects(parent, selectables), point, axes);
+    return this.snapPoint(
+      await this.targetRects(parent, selectables),
+      point,
+      axes
+    );
   }
 
-  snapMoveRect(
+  async snapMoveRect(
     parent: ElementNode,
     selectables: ElementNode[],
     rect: Rect
-  ): Rect {
-    return this.snapRect(this.targetRects(parent, selectables), rect);
+  ): Promise<Rect> {
+    return this.snapRect(await this.targetRects(parent, selectables), rect);
   }
 
-  exactSnapMoveRect(
+  async exactSnapMoveRect(
     parent: ElementNode,
     selectables: ElementNode[],
     rect: Rect
-  ): void {
-    this.exactSnapRect(this.targetRects(parent, selectables), rect);
+  ): Promise<void> {
+    this.exactSnapRect(await this.targetRects(parent, selectables), rect);
   }
 
   get snappings(): readonly (PointSnapping | SameMarginSnapping)[] {
@@ -137,5 +140,3 @@ export class Snapper {
     1000
   );
 }
-
-export const snapper = new Snapper();
