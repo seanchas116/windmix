@@ -19,7 +19,7 @@ export async function resizeWithBoundingBox(
     return;
   }
 
-  const parentComputed = (await artboard.measure(parent))[0];
+  const parentComputed = await artboard.measureFirst(parent);
   if (!parentComputed) {
     return;
   }

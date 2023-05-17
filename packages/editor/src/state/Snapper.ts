@@ -1,6 +1,6 @@
 import { observable, makeObservable, action } from "mobx";
 import { Rect, Vec2 } from "paintvec";
-import { debounce } from "lodash-es";
+import { compact, debounce } from "lodash-es";
 import {
   PointSnapping,
   SameMarginSnapping,
@@ -80,15 +80,15 @@ export class Snapper {
       siblings.delete(selectable);
     }
 
-    const siblingMeasures = (
-      await Promise.all([...siblings].map((c) => this.artboard.measure(c)))
-    ).flat();
-    const parentMeasures = await this.artboard.measure(parent);
+    const siblingMeasures = await Promise.all(
+      [...siblings].map((c) => this.artboard.measureFirst(c))
+    );
+    const parentMeasure = await this.artboard.measureFirst(parent);
 
-    return [
-      ...siblingMeasures.map((m) => m.rect),
-      ...parentMeasures.map((m) => m.paddingRect),
-    ];
+    return compact([
+      ...siblingMeasures.map((m) => m?.rect),
+      parentMeasure?.paddingRect,
+    ]);
   }
 
   async snapResizePoint(
