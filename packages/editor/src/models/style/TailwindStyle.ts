@@ -398,6 +398,25 @@ class Property {
     }
     this.value = { type: "keyword", keyword };
   }
+
+  get arbitraryValue(): string | undefined {
+    const value = this.value;
+    if (value?.type === "arbitrary") {
+      return value.value;
+    }
+  }
+
+  set arbitraryValue(arbitraryValue: string | undefined) {
+    if (!arbitraryValue) {
+      this.value = undefined;
+      return;
+    }
+    this.value = { type: "arbitrary", value: arbitraryValue };
+  }
+
+  get resolvedValue(): string | undefined {
+    return this.value?.value;
+  }
 }
 
 class ShorthandProperty {
