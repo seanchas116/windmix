@@ -64,6 +64,10 @@ export class Artboard {
     return this.measure(node).then((measurements) => measurements[0]);
   }
 
+  getFirstRect(node: ElementNode): Promise<Rect | undefined> {
+    return this.measureFirst(node).then((measurement) => measurement?.rect);
+  }
+
   @observable hoverRects: Rect[] = [];
   @observable selectedRects: Rect[] = [];
 

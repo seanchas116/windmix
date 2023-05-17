@@ -3,6 +3,8 @@ import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { ElementNode } from "@windmix/model";
 import { DropDestination } from "../../../state/DropDestination";
+import { Artboard } from "../../../state/Artboard";
+import { scrollState } from "../../../state/ScrollState";
 
 export class NodeMoveDragHandler implements DragHandler {
   constructor(selectables: Selectable[], initPos: Vec2) {
@@ -123,13 +125,16 @@ export class NodeMoveDragHandler implements DragHandler {
 }
 
 export async function findDropDestination(
+  artboard: Artboard,
   event: ViewportEvent,
   subjects: ElementNode[]
 ): Promise<DropDestination> {
-  const parent = event.selectables.find((dst) => {
+  let parent: ElementNode | undefined;
+
+  for (const dst of event.selectables) {
     // cannot move inside itself
     if (subjects.some((target) => target.includes(dst))) {
-      return false;
+      continue;
     }
 
     // TODO: detect elements that do not accept children (e.g. <input> tags)
@@ -137,35 +142,36 @@ export async function findDropDestination(
     //   return false;
     // }
 
-    if (dst.parent) {
-      const bbox = dst.computedRect;
-      const parentBBox = dst.parent.computedRect;
+    if (dst.parent?.type === "element") {
+      const bbox = await artboard.getFirstRect(dst);
+      const parentBBox = await artboard.getFirstRect(dst.parent);
 
-      const parentCloseThresh = projectState.scroll.snapThreshold;
-      const threshold = projectState.scroll.snapThreshold * 2;
+      if (bbox && parentBBox) {
+        const parentCloseThresh = scrollState.snapThreshold;
+        const threshold = scrollState.snapThreshold * 2;
 
-      // do not drop near the edge when the parent edge is close
+        // do not drop near the edge when the parent edge is close
 
-      for (const edge of ["left", "top", "right", "bottom"] as const) {
-        if (
-          Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
-          Math.abs(
-            bbox[edge] -
-              event.pos[edge === "left" || edge === "right" ? "x" : "y"]
-          ) < threshold
-        ) {
-          return false;
+        for (const edge of ["left", "top", "right", "bottom"] as const) {
+          if (
+            Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
+            Math.abs(
+              bbox[edge] -
+                event.pos[edge === "left" || edge === "right" ? "x" : "y"]
+            ) < threshold
+          ) {
+            continue;
+          }
         }
       }
     }
 
-    return true;
-  });
+    parent = dst;
+    break;
+  }
 
   if (!parent) {
-    return {
-      parent: assertNonNull(projectState.page).selectable,
-    };
+    throw new Error("No parent found");
   }
 
   const layout = parent.style.layout;
