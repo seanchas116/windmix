@@ -16,7 +16,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.width.value).toEqual({
+      expect(style.width.value).toEqual({
         type: "keyword",
         keyword: "1/2",
         value: "50%",
@@ -26,7 +26,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-[200px] h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.width.value).toEqual({
+      expect(style.width.value).toEqual({
         type: "arbitrary",
         value: "200px",
       });
@@ -35,7 +35,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.width.value = {
+      style.width.value = {
         type: "keyword",
         keyword: "4",
       };
@@ -49,7 +49,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-2/3 h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.height.value).toEqual({
+      expect(style.height.value).toEqual({
         type: "keyword",
         keyword: "1/2",
         value: "50%",
@@ -59,7 +59,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-[300px] text-red-500 text-xl text-center"
       );
-      expect(style.props.height.value).toEqual({
+      expect(style.height.value).toEqual({
         type: "arbitrary",
         value: "300px",
       });
@@ -68,7 +68,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.height.value = {
+      style.height.value = {
         type: "keyword",
         keyword: "4",
       };
@@ -80,7 +80,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.height.value = undefined;
+      style.height.value = undefined;
       expect(style.className).toEqual("w-1/2 text-red-500 text-xl text-center");
     });
   });
@@ -90,7 +90,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.color.value).toEqual({
+      expect(style.color.value).toEqual({
         type: "keyword",
         keyword: "red-500",
         value: "#ef4444",
@@ -100,7 +100,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-[#f56565] text-xl text-center"
       );
-      expect(style.props.color.value).toEqual({
+      expect(style.color.value).toEqual({
         type: "arbitrary",
         value: "#f56565",
       });
@@ -109,7 +109,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.color.value = {
+      style.color.value = {
         type: "keyword",
         keyword: "green-500",
       };
@@ -121,7 +121,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.color.value = undefined;
+      style.color.value = undefined;
       expect(style.className).toEqual("w-1/2 h-1/2 text-xl text-center");
     });
   });
@@ -131,7 +131,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.fontSize.value).toEqual({
+      expect(style.fontSize.value).toEqual({
         type: "keyword",
         keyword: "xl",
         value: "1.25rem",
@@ -141,7 +141,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-[2rem] text-center"
       );
-      expect(style.props.fontSize.value).toEqual({
+      expect(style.fontSize.value).toEqual({
         type: "arbitrary",
         value: "2rem",
       });
@@ -150,7 +150,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.fontSize.value = {
+      style.fontSize.value = {
         type: "keyword",
         keyword: "2xl",
       };
@@ -162,7 +162,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.fontSize.value = undefined;
+      style.fontSize.value = undefined;
       expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-center");
     });
   });
@@ -172,7 +172,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      expect(style.props.textAlign.value).toEqual({
+      expect(style.textAlign.value).toEqual({
         type: "keyword",
         keyword: "center",
         value: "center",
@@ -182,7 +182,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.textAlign.value = {
+      style.textAlign.value = {
         type: "keyword",
         keyword: "left",
       };
@@ -194,7 +194,7 @@ describe(TailwindStyle.name, () => {
       const style = new SimpleTailwindStyle(
         "w-1/2 h-1/2 text-red-500 text-xl text-center"
       );
-      style.props.textAlign.value = undefined;
+      style.textAlign.value = undefined;
       expect(style.className).toEqual("w-1/2 h-1/2 text-red-500 text-xl");
     });
   });
@@ -202,7 +202,7 @@ describe(TailwindStyle.name, () => {
   describe("radius", () => {
     it("gets radius", () => {
       const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
-      expect(style.props.radius.value).toEqual({
+      expect(style.radius.value).toEqual({
         type: "keyword",
         keyword: "2xl",
         value: "1rem",
@@ -210,7 +210,7 @@ describe(TailwindStyle.name, () => {
     });
     it("gets default radius", () => {
       const style = new SimpleTailwindStyle("w-1/2 rounded text-center");
-      expect(style.props.radius.value).toEqual({
+      expect(style.radius.value).toEqual({
         type: "keyword",
         keyword: "DEFAULT",
         value: "0.25rem",
@@ -218,7 +218,7 @@ describe(TailwindStyle.name, () => {
     });
     it("sets radius", () => {
       const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
-      style.props.radius.value = {
+      style.radius.value = {
         type: "keyword",
         keyword: "lg",
       };
@@ -226,7 +226,7 @@ describe(TailwindStyle.name, () => {
     });
     it("sets default radius", () => {
       const style = new SimpleTailwindStyle("w-1/2 rounded-2xl text-center");
-      style.props.radius.value = {
+      style.radius.value = {
         type: "keyword",
         keyword: "DEFAULT",
       };

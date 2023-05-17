@@ -39,7 +39,7 @@ export const RingPane: React.FC = observer(() => {
 
 const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
   ({ styles }) => {
-    const value = sameOrNone(styles.map((s) => s.props.ringColor.value));
+    const value = sameOrNone(styles.map((s) => s.ringColor.value));
 
     return (
       <ColorInput
@@ -48,14 +48,14 @@ const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
         tokens={ringColors}
         onChange={(value) => {
           for (const style of styles) {
-            style.props.ringColor.value = value
+            style.ringColor.value = value
               ? { type: "arbitrary", value }
               : undefined;
           }
         }}
         onTokenChange={(keyword) => {
           for (const style of styles) {
-            style.props.ringColor.value = keyword
+            style.ringColor.value = keyword
               ? { type: "keyword", keyword }
               : undefined;
           }

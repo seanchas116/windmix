@@ -28,18 +28,15 @@ export const PaddingPane: React.FC = observer(() => {
   useOnSelectionChange(() => {
     const hasPadding = styles.some(
       (style) =>
-        style.props.paddingTop.value ||
-        style.props.paddingRight.value ||
-        style.props.paddingBottom.value ||
-        style.props.paddingLeft.value
+        style.paddingTop.value ||
+        style.paddingRight.value ||
+        style.paddingBottom.value ||
+        style.paddingLeft.value
     );
     const hasSeparatePadding = styles.some(
       (style) =>
-        !isEqual(
-          style.props.paddingTop.value,
-          style.props.paddingBottom.value
-        ) ||
-        !isEqual(style.props.paddingLeft.value, style.props.paddingRight.value)
+        !isEqual(style.paddingTop.value, style.paddingBottom.value) ||
+        !isEqual(style.paddingLeft.value, style.paddingRight.value)
     );
 
     setOpen(hasPadding);

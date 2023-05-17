@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { TailwindStyle } from "../../../models/style/TailwindStyle";
+import { TailwindStyleKey } from "../../../models/style/TailwindStyle";
 import { appState } from "../../../state/AppState";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import {
@@ -14,11 +14,11 @@ export const StyleIconRadio = observer(function StyleIconRadio({
 }: {
   className?: string;
   options: IconRadioOption<string>[];
-  property: keyof TailwindStyle["props"];
+  property: TailwindStyleKey;
 }) {
   const styles = appState.tailwindStyles;
 
-  const value = sameOrMixed(styles.map((s) => s.props[property].value));
+  const value = sameOrMixed(styles.map((s) => s[property].value));
 
   return (
     <IconRadio
@@ -34,7 +34,7 @@ export const StyleIconRadio = observer(function StyleIconRadio({
       unsettable
       onChange={(value) => {
         for (const style of styles) {
-          style.props[property].value = value
+          style[property].value = value
             ? { type: "keyword", keyword: value }
             : undefined;
         }

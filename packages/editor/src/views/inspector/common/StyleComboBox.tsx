@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import {
+  TailwindStyleKey,
   ResolvedTailwindValue,
-  TailwindStyle,
 } from "../../../models/style/TailwindStyle";
 import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { appState } from "../../../state/AppState";
@@ -12,12 +12,12 @@ export const StyleComboBox: React.FC<{
   className?: string;
   tooltip: React.ReactNode;
   icon: JSX.Element;
-  property: keyof TailwindStyle["props"];
+  property: TailwindStyleKey;
   tokens: Map<string, string>;
 }> = observer(({ className, tooltip, property, tokens, icon }) => {
   const styles = appState.tailwindStyles;
 
-  const value = sameOrNone(styles.map((s) => s.props[property].value));
+  const value = sameOrNone(styles.map((s) => s[property].value));
 
   const pxValue = (value: string) => {
     // rem -> px
@@ -54,7 +54,7 @@ export const StyleComboBox: React.FC<{
       }
       onChange={(value) => {
         for (const style of styles) {
-          style.props[property].value = value
+          style[property].value = value
             ? {
                 type: "arbitrary",
                 value,
@@ -65,7 +65,7 @@ export const StyleComboBox: React.FC<{
       }}
       onSelectChange={(keyword) => {
         for (const style of styles) {
-          style.props[property].value = keyword
+          style[property].value = keyword
             ? ({
                 type: "keyword",
                 keyword,

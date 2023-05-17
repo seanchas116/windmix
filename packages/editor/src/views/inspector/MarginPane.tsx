@@ -28,15 +28,15 @@ export const MarginPane: React.FC = observer(() => {
   useOnSelectionChange(() => {
     const hasMargin = styles.some(
       (style) =>
-        style.props.marginTop.value ||
-        style.props.marginRight.value ||
-        style.props.marginBottom.value ||
-        style.props.marginLeft.value
+        style.marginTop.value ||
+        style.marginRight.value ||
+        style.marginBottom.value ||
+        style.marginLeft.value
     );
     const hasSeparateMargin = styles.some(
       (style) =>
-        !isEqual(style.props.marginTop.value, style.props.marginBottom.value) ||
-        !isEqual(style.props.marginLeft.value, style.props.marginRight.value)
+        !isEqual(style.marginTop.value, style.marginBottom.value) ||
+        !isEqual(style.marginLeft.value, style.marginRight.value)
     );
 
     setOpen(hasMargin);

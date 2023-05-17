@@ -28,17 +28,17 @@ export async function resizeWithBoundingBox(
 
   if (targets.x) {
     const left = bbox.left - parentComputed.paddingRect.left;
-    style.props.left.arbitraryValue = `${left}px`;
+    style.left.arbitraryValue = `${left}px`;
   }
   if (targets.y) {
     const top = bbox.top - parentComputed.paddingRect.top;
-    style.props.top.arbitraryValue = `${top}px`;
+    style.top.arbitraryValue = `${top}px`;
   }
 
   if (targets.width) {
-    style.props.width.arbitraryValue = `${bbox.width}px`;
+    style.width.arbitraryValue = `${bbox.width}px`;
   }
   if (targets.height) {
-    style.props.height.arbitraryValue = `${bbox.height}px`;
+    style.height.arbitraryValue = `${bbox.height}px`;
   }
 }

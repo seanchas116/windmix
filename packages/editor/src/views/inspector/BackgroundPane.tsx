@@ -27,7 +27,7 @@ export const BackgroundPane: React.FC = observer(() => {
 
 const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
   ({ styles }) => {
-    const value = sameOrNone(styles.map((s) => s.props.background.value));
+    const value = sameOrNone(styles.map((s) => s.background.value));
 
     return (
       <ColorInput
@@ -36,14 +36,14 @@ const BackgroundComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
         tokens={backgroundColors}
         onChange={(value) => {
           for (const style of styles) {
-            style.props.background.value = value
+            style.background.value = value
               ? { type: "arbitrary", value }
               : undefined;
           }
         }}
         onTokenChange={(keyword) => {
           for (const style of styles) {
-            style.props.background.value = keyword
+            style.background.value = keyword
               ? { type: "keyword", keyword }
               : undefined;
           }

@@ -117,253 +117,226 @@ export abstract class TailwindStyle {
     this.className = classNames.join(" ");
   }
 
-  readonly props = {
-    // position
+  position = new Property(
+    this,
+    new ValueParser(
+      "",
+      new Map([
+        ["static", "static"],
+        ["relative", "relative"],
+        ["absolute", "absolute"],
+      ]),
+      false
+    )
+  );
 
-    position: new Property(
-      this,
-      new ValueParser(
-        "",
-        new Map([
-          ["static", "static"],
-          ["relative", "relative"],
-          ["absolute", "absolute"],
-        ]),
-        false
-      )
-    ),
+  inset = new Property(this, new ValueParser("inset-", insets, /.+/));
+  left = new Property(this, new ValueParser("left-", insets, /.+/), this.inset);
+  right = new Property(
+    this,
+    new ValueParser("right-", insets, /.+/),
+    this.inset
+  );
+  top = new Property(this, new ValueParser("top-", insets, /.+/), this.inset);
+  bottom = new Property(
+    this,
+    new ValueParser("bottom-", insets, /.+/),
+    this.inset
+  );
 
-    inset: new Property(this, new ValueParser("inset-", insets, /.+/)),
-    left: new Property(
-      this,
-      new ValueParser("left-", insets, /.+/),
-      (): Property => this.props.inset
-    ),
-    right: new Property(
-      this,
-      new ValueParser("right-", insets, /.+/),
-      (): Property => this.props.inset
-    ),
-    top: new Property(
-      this,
-      new ValueParser("top-", insets, /.+/),
-      (): Property => this.props.inset
-    ),
-    bottom: new Property(
-      this,
-      new ValueParser("bottom-", insets, /.+/),
-      (): Property => this.props.inset
-    ),
+  // margin
 
-    // margin
+  margin = new Property(this, new ValueParser("m-", margins, /.+/));
+  marginX = new Property(
+    this,
+    new ValueParser("mx-", margins, /.+/),
+    this.margin
+  );
+  marginY = new Property(
+    this,
+    new ValueParser("my-", margins, /.+/),
+    this.margin
+  );
 
-    margin: new Property(this, new ValueParser("m-", margins, /.+/)),
-    marginX: new Property(
-      this,
-      new ValueParser("mx-", margins, /.+/),
-      (): Property => this.props.margin
-    ),
-    marginY: new Property(
-      this,
-      new ValueParser("my-", margins, /.+/),
-      (): Property => this.props.margin
-    ),
+  marginLeft = new Property(
+    this,
+    new ValueParser("ml-", margins, /.+/),
+    this.marginX
+  );
+  marginRight = new Property(
+    this,
+    new ValueParser("mr-", margins, /.+/),
+    this.marginX
+  );
+  marginTop = new Property(
+    this,
+    new ValueParser("mt-", margins, /.+/),
+    this.marginY
+  );
+  marginBottom = new Property(
+    this,
+    new ValueParser("mb-", margins, /.+/),
+    this.marginY
+  );
 
-    marginLeft: new Property(
-      this,
-      new ValueParser("ml-", margins, /.+/),
-      (): Property => this.props.marginX
-    ),
-    marginRight: new Property(
-      this,
-      new ValueParser("mr-", margins, /.+/),
-      (): Property => this.props.marginX
-    ),
-    marginTop: new Property(
-      this,
-      new ValueParser("mt-", margins, /.+/),
-      (): Property => this.props.marginY
-    ),
-    marginBottom: new Property(
-      this,
-      new ValueParser("mb-", margins, /.+/),
-      (): Property => this.props.marginY
-    ),
+  mixedMarginX = new ShorthandProperty([this.marginLeft, this.marginRight]);
+  mixedMarginY = new ShorthandProperty([this.marginTop, this.marginBottom]);
+  mixedMargin = new ShorthandProperty([
+    this.marginLeft,
+    this.marginRight,
+    this.marginTop,
+    this.marginBottom,
+  ]);
 
-    mixedMarginX: new ShorthandProperty((): Property[] => [
-      this.props.marginLeft,
-      this.props.marginRight,
-    ]),
-    mixedMarginY: new ShorthandProperty((): Property[] => [
-      this.props.marginTop,
-      this.props.marginBottom,
-    ]),
-    mixedMargin: new ShorthandProperty((): Property[] => [
-      this.props.marginLeft,
-      this.props.marginRight,
-      this.props.marginTop,
-      this.props.marginBottom,
-    ]),
+  // size
 
-    // size
+  width = new Property(this, new ValueParser("w-", widths, /.+/));
+  height = new Property(this, new ValueParser("h-", heights, /.+/));
+  maxWidth = new Property(this, new ValueParser("max-w-", maxWidths, /.+/));
+  radius = new Property(this, new ValueParser("rounded-", radiuses, /.+/));
 
-    width: new Property(this, new ValueParser("w-", widths, /.+/)),
-    height: new Property(this, new ValueParser("h-", heights, /.+/)),
-    maxWidth: new Property(this, new ValueParser("max-w-", maxWidths, /.+/)),
-    radius: new Property(this, new ValueParser("rounded-", radiuses, /.+/)),
+  // layout
 
-    // layout
+  display = new Property(
+    this,
+    new ValueParser(
+      "",
+      new Map([
+        ["block", "block"],
+        ["flex", "flex"],
+        ["grid", "grid"],
+      ]),
+      false
+    )
+  );
+  flexDirection = new Property(
+    this,
+    new ValueParser(
+      "flex-",
+      new Map([
+        ["row", "row"],
+        ["row-reverse", "row-reverse"],
+        ["col", "column"],
+        ["col-reverse", "column-reverse"],
+      ]),
+      false
+    )
+  );
+  alignItems = new Property(
+    this,
+    new ValueParser("items-", alignItemsTokens, false)
+  );
+  justifyContent = new Property(
+    this,
+    new ValueParser("justify-", justifyContentTokens, false)
+  );
 
-    display: new Property(
-      this,
-      new ValueParser(
-        "",
-        new Map([
-          ["block", "block"],
-          ["flex", "flex"],
-          ["grid", "grid"],
-        ]),
-        false
-      )
-    ),
-    flexDirection: new Property(
-      this,
-      new ValueParser(
-        "flex-",
-        new Map([
-          ["row", "row"],
-          ["row-reverse", "row-reverse"],
-          ["col", "column"],
-          ["col-reverse", "column-reverse"],
-        ]),
-        false
-      )
-    ),
-    alignItems: new Property(
-      this,
-      new ValueParser("items-", alignItemsTokens, false)
-    ),
-    justifyContent: new Property(
-      this,
-      new ValueParser("justify-", justifyContentTokens, false)
-    ),
+  gap = new Property(this, new ValueParser("gap-", gaps, /.+/));
+  columnGap = new Property(
+    this,
+    new ValueParser("gap-x-", gaps, /.+/),
+    this.gap
+  );
+  rowGap = new Property(this, new ValueParser("gap-y-", gaps, /.+/), this.gap);
 
-    gap: new Property(this, new ValueParser("gap-", gaps, /.+/)),
-    columnGap: new Property(
-      this,
-      new ValueParser("gap-x-", gaps, /.+/),
-      (): Property => this.props.gap
-    ),
-    rowGap: new Property(
-      this,
-      new ValueParser("gap-y-", gaps, /.+/),
-      (): Property => this.props.gap
-    ),
+  padding = new Property(this, new ValueParser("p-", paddings, /.+/));
 
-    padding: new Property(this, new ValueParser("p-", paddings, /.+/)),
+  paddingX = new Property(
+    this,
+    new ValueParser("px-", paddings, /.+/),
+    this.padding
+  );
+  paddingY = new Property(
+    this,
+    new ValueParser("py-", paddings, /.+/),
+    this.padding
+  );
 
-    paddingX: new Property(
-      this,
-      new ValueParser("px-", paddings, /.+/),
-      (): Property => this.props.padding
-    ),
-    paddingY: new Property(
-      this,
-      new ValueParser("py-", paddings, /.+/),
-      (): Property => this.props.padding
-    ),
+  paddingLeft = new Property(
+    this,
+    new ValueParser("pl-", paddings, /.+/),
+    this.paddingX
+  );
+  paddingRight = new Property(
+    this,
+    new ValueParser("pr-", paddings, /.+/),
+    this.paddingX
+  );
+  paddingTop = new Property(
+    this,
+    new ValueParser("pt-", paddings, /.+/),
+    this.paddingY
+  );
+  paddingBottom = new Property(
+    this,
+    new ValueParser("pb-", paddings, /.+/),
+    this.paddingY
+  );
 
-    paddingLeft: new Property(
-      this,
-      new ValueParser("pl-", paddings, /.+/),
-      (): Property => this.props.paddingX
-    ),
-    paddingRight: new Property(
-      this,
-      new ValueParser("pr-", paddings, /.+/),
-      (): Property => this.props.paddingX
-    ),
-    paddingTop: new Property(
-      this,
-      new ValueParser("pt-", paddings, /.+/),
-      (): Property => this.props.paddingY
-    ),
-    paddingBottom: new Property(
-      this,
-      new ValueParser("pb-", paddings, /.+/),
-      (): Property => this.props.paddingY
-    ),
+  mixedPaddingX = new ShorthandProperty([this.paddingLeft, this.paddingRight]);
+  mixedPaddingY = new ShorthandProperty([this.paddingTop, this.paddingBottom]);
+  mixedPadding = new ShorthandProperty([
+    this.paddingLeft,
+    this.paddingRight,
+    this.paddingTop,
+    this.paddingBottom,
+  ]);
 
-    mixedPaddingX: new ShorthandProperty((): Property[] => [
-      this.props.paddingLeft,
-      this.props.paddingRight,
-    ]),
-    mixedPaddingY: new ShorthandProperty((): Property[] => [
-      this.props.paddingTop,
-      this.props.paddingBottom,
-    ]),
-    mixedPadding: new ShorthandProperty((): Property[] => [
-      this.props.paddingLeft,
-      this.props.paddingRight,
-      this.props.paddingTop,
-      this.props.paddingBottom,
-    ]),
+  // color
 
-    // color
+  color = new Property(this, new ValueParser("text-", colors, /^#/));
+  fontSize = new Property(
+    this,
+    new ValueParser(
+      "text-",
+      fontSizes,
+      /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
+    )
+  );
+  fontWeight = new Property(
+    this,
+    new ValueParser("font-", fontWeights, /^[0-9]+$/)
+  );
+  textAlign = new Property(
+    this,
+    new ValueParser(
+      "text-",
+      new Map([
+        ["left", "left"],
+        ["center", "center"],
+        ["right", "right"],
+      ]),
+      false
+    )
+  );
 
-    color: new Property(this, new ValueParser("text-", colors, /^#/)),
-    fontSize: new Property(
-      this,
-      new ValueParser(
-        "text-",
-        fontSizes,
-        /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
-      )
-    ),
-    fontWeight: new Property(
-      this,
-      new ValueParser("font-", fontWeights, /^[0-9]+$/)
-    ),
-    textAlign: new Property(
-      this,
-      new ValueParser(
-        "text-",
-        new Map([
-          ["left", "left"],
-          ["center", "center"],
-          ["right", "right"],
-        ]),
-        false
-      )
-    ),
+  // background
 
-    // background
+  background = new Property(
+    this,
+    new ValueParser("bg-", backgroundColors, /.+/)
+  );
 
-    background: new Property(
-      this,
-      new ValueParser("bg-", backgroundColors, /.+/)
-    ),
+  // ring
 
-    // ring
-
-    ringColor: new Property(this, new ValueParser("ring-", colors, /^#/)),
-    ringWidth: new Property(
-      this,
-      new ValueParser(
-        "ring-",
-        ringWidths,
-        /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
-      )
-    ),
-  };
+  ringColor = new Property(this, new ValueParser("ring-", colors, /^#/));
+  ringWidth = new Property(
+    this,
+    new ValueParser(
+      "ring-",
+      ringWidths,
+      /^[0-9.]+(rem|px|em|ex|ch|vw|vh|vmin|vmax|%)$/
+    )
+  );
 }
 
+export type TailwindStyleKey = Exclude<
+  keyof TailwindStyle,
+  "className" | "classNames"
+>;
+
 class Property {
-  constructor(
-    style: TailwindStyle,
-    parser: ValueParser,
-    shorthand?: () => Property
-  ) {
+  constructor(style: TailwindStyle, parser: ValueParser, shorthand?: Property) {
     this.style = style;
     this.parser = parser;
     this.shorthand = shorthand;
@@ -371,12 +344,12 @@ class Property {
 
   readonly style: TailwindStyle;
   readonly parser: ValueParser;
-  readonly shorthand?: () => Property;
+  readonly shorthand?: Property;
 
   get value(): ResolvedTailwindValue | undefined {
     return (
       this.parser.getValue(this.style.classNames)?.value ??
-      this.shorthand?.()?.value
+      this.shorthand?.value
     );
   }
 
@@ -420,14 +393,14 @@ class Property {
 }
 
 class ShorthandProperty {
-  constructor(separateProps: () => Property[]) {
+  constructor(separateProps: Property[]) {
     this.separateProps = separateProps;
   }
 
-  readonly separateProps: () => Property[];
+  readonly separateProps: Property[];
 
   get value(): ResolvedTailwindValue | typeof MIXED | undefined {
-    return sameOrMixed(this.separateProps().map((access) => access.value));
+    return sameOrMixed(this.separateProps.map((access) => access.value));
   }
 
   set value(value: TailwindValue | typeof MIXED | undefined) {
@@ -436,7 +409,7 @@ class ShorthandProperty {
     }
     // TODO: unset separate values and set shorthand value
 
-    for (const access of this.separateProps()) {
+    for (const access of this.separateProps) {
       access.value = value;
     }
   }
