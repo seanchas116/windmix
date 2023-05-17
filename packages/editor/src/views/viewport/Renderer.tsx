@@ -5,6 +5,7 @@ import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { ElementStyle } from "../../state/ElementStyle";
+import { NodeResizeBox } from "./hud/NodeResizeBox";
 
 export const Renderer: React.FC<{
   width: number;
@@ -139,6 +140,7 @@ const HUD: React.FC<{
           strokeWidth={1}
         />
       )}
+      <NodeResizeBox artboard={artboard} />
     </svg>
   );
 });
