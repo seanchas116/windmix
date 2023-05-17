@@ -108,13 +108,12 @@ export class EditorSession {
       const textEditor = this._textEditor;
       if (textEditor) {
         const newText = this._document.nodes.get("file")?.stringify() ?? "";
+        const oldText = textEditor.document.getText();
+        if (newText === oldText) {
+          // TODO: compare by AST?
+          return;
+        }
         textEditor.edit((editBuilder) => {
-          const oldText = textEditor.document.getText();
-          if (newText === oldText) {
-            // TODO: compare by AST?
-            return;
-          }
-
           editBuilder.replace(
             new vscode.Range(
               textEditor.document.positionAt(0),
