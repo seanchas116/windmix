@@ -160,7 +160,6 @@ export class EditorSession {
           if (textEditor) {
             const pos = new vscode.Position(location.line, location.column);
             textEditor.revealRange(new vscode.Range(pos, pos));
-            textEditor.selection = new vscode.Selection(pos, pos);
           }
         },
         undo: async () => {
