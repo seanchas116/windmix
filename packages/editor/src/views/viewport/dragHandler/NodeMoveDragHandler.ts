@@ -1,13 +1,8 @@
 import { Rect, Segment, Vec2 } from "paintvec";
-import { Selectable } from "@uimix/model/src/models";
-import { projectState } from "../../../state/ProjectState";
-import { DropDestination } from "../../../state/DropDestination";
-import { snapper } from "../../../state/Snapper";
-import { viewportState } from "../../../state/ViewportState";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
-import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
-import { resizeWithBoundingBox } from "@uimix/model/src/services";
+import { ElementNode } from "@windmix/model";
+import { DropDestination } from "../../../state/DropDestination";
 
 export class NodeMoveDragHandler implements DragHandler {
   constructor(selectables: Selectable[], initPos: Vec2) {
@@ -127,19 +122,20 @@ export class NodeMoveDragHandler implements DragHandler {
   >();
 }
 
-export function findDropDestination(
+export async function findDropDestination(
   event: ViewportEvent,
-  subjects: Selectable[]
-): DropDestination {
+  subjects: ElementNode[]
+): Promise<DropDestination> {
   const parent = event.selectables.find((dst) => {
     // cannot move inside itself
     if (subjects.some((target) => target.includes(dst))) {
       return false;
     }
 
-    if (!dst.canInsertChild) {
-      return false;
-    }
+    // TODO: detect elements that do not accept children (e.g. <input> tags)
+    // if (!dst.canInsertChild) {
+    //   return false;
+    // }
 
     if (dst.parent) {
       const bbox = dst.computedRect;
