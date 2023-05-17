@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
+import { ElementStyle } from "../../state/ElementStyle";
 
 export const Renderer: React.FC<{
   width: number;
@@ -70,13 +71,8 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
               text.text = "Hello World";
               element.append([text]);
             } else {
-              element.attributes = [
-                {
-                  name: "className",
-                  value: JSON.stringify("w-20 h-20 bg-blue-300"),
-                  trailingSpace: " ",
-                },
-              ];
+              const style = ElementStyle.get(element);
+              style.className = "w-20 h-20 bg-blue-300";
             }
             node.append([element]);
             appState.document.deselectAll();

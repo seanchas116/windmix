@@ -383,6 +383,21 @@ class Property {
   set value(value: TailwindValue | undefined) {
     this.style.classNames = this.parser.setValue(this.style.classNames, value);
   }
+
+  get keyword(): string | undefined {
+    const value = this.value;
+    if (value?.type === "keyword") {
+      return value.keyword;
+    }
+  }
+
+  set keyword(keyword: string | undefined) {
+    if (!keyword) {
+      this.value = undefined;
+      return;
+    }
+    this.value = { type: "keyword", keyword };
+  }
 }
 
 class ShorthandProperty {
