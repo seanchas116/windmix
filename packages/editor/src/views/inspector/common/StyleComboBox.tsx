@@ -20,6 +20,7 @@ export const StyleComboBox: React.FC<{
 }> = observer(({ className, tooltip, property, tokens, icon }) => {
   const elements = appState.document.selectedElements;
   const styles = elements.map(getElementTailwindStyle);
+  const value = sameOrNone(styles.map((s) => s[property].value));
 
   const setValue = (value: TailwindValue | undefined) => {
     for (const element of elements) {
@@ -27,13 +28,9 @@ export const StyleComboBox: React.FC<{
       style[property].value = value;
 
       element.className = style.className;
-      for (const artboard of artboards.all) {
-        artboard.setClassName(element, style.className);
-      }
+      artboards.setPreviewClassName(element, style.className);
     }
   };
-
-  const value = sameOrNone(styles.map((s) => s[property].value));
 
   const pxValue = (value: string) => {
     // rem -> px

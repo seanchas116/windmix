@@ -41,7 +41,7 @@ export class Artboard {
     return (await this.findNodes(offsetX, offsetY))[0];
   }
 
-  setClassName(node: Node, className: string) {
+  setPreviewClassName(node: Node, className: string) {
     this.adapter.setClassName(node, className);
   }
 
@@ -116,6 +116,12 @@ export class Artboards {
 
   get all(): Artboard[] {
     return [this.desktop, this.mobile];
+  }
+
+  setPreviewClassName(node: Node, className: string) {
+    for (const artboard of this.all) {
+      artboard.setPreviewClassName(node, className);
+    }
   }
 }
 

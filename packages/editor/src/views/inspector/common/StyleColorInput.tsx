@@ -22,10 +22,7 @@ export const StyleColorInput: React.FC<{
     for (const element of elements) {
       const style = getElementTailwindStyle(element);
       style[property].value = value;
-
-      for (const artboard of artboards.all) {
-        artboard.setClassName(element, style.className);
-      }
+      artboards.setPreviewClassName(element, style.className);
     }
   };
 
@@ -35,9 +32,7 @@ export const StyleColorInput: React.FC<{
       style[property].value = value;
 
       element.className = style.className;
-      for (const artboard of artboards.all) {
-        artboard.setClassName(element, style.className);
-      }
+      artboards.setPreviewClassName(element, style.className);
     }
   };
 

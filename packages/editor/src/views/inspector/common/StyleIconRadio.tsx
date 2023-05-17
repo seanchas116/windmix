@@ -42,9 +42,7 @@ export const StyleIconRadio = observer(function StyleIconRadio({
             ? { type: "keyword", keyword: value }
             : undefined;
           element.className = style.className;
-          for (const artboard of artboards.all) {
-            artboard.setClassName(element, style.className);
-          }
+          artboards.setPreviewClassName(element, style.className);
         }
       }}
     />
