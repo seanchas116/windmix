@@ -1,4 +1,4 @@
-import { ElementNode } from "@windmix/model";
+import { EXPRESSION, ElementNode } from "@windmix/model";
 import { TailwindStyle } from "../models/style/TailwindStyle";
 import { artboards } from "./Artboard";
 
@@ -10,10 +10,18 @@ export class ElementStyle extends TailwindStyle {
   readonly node: ElementNode;
 
   get className(): string {
-    return this.node.className ?? "";
+    const className = this.node.className;
+    if (typeof className === "string") {
+      return className;
+    }
+    return "";
   }
 
   set className(value: string) {
+    if (this.node.className === EXPRESSION) {
+      throw new Error("Cannot set className on an expression");
+    }
+
     this.node.className = value;
 
     artboards.all.forEach((locator) => {
