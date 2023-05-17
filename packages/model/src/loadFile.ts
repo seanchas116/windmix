@@ -16,6 +16,31 @@ import {
 import * as Y from "yjs";
 import { Document } from "./document";
 
+function generateID() {
+  return Math.random().toString(36).slice(2);
+}
+
+class IDReuser {
+  constructor(idGenerator = generateID) {
+    this.idGenerator = idGenerator;
+  }
+
+  add(indexPath: string[], type: Node["type"], id: string) {
+    this.ids.set([type, ...indexPath].join(":"), id);
+  }
+
+  get(indexPath: string[], type: Node["type"]): string | undefined {
+    return this.ids.get([type, ...indexPath].join(":"));
+  }
+
+  getOrGenerate(indexPath: string[], type: Node["type"]): string {
+    return this.get(indexPath, type) ?? this.idGenerator();
+  }
+
+  idGenerator: () => string;
+  ids = new Map<string, string>();
+}
+
 function codeForNode(code: string, node: babel.Node): string {
   return code.slice(node.start ?? 0, node.end ?? 0);
 }
@@ -38,14 +63,13 @@ function locationForNode(node: babel.Node):
 
 function loadElement(
   doc: Document,
+  idReuser: IDReuser,
   code: string,
   element: babel.JSXElement | babel.JSXFragment,
   indexPath: string[]
 ): ElementNode {
-  const elementNode = doc.nodes.create(
-    "element",
-    "element:" + indexPath.join(":")
-  );
+  const id = idReuser.getOrGenerate(indexPath, "element");
+  const elementNode = doc.nodes.create("element", id);
 
   if (element.type === "JSXElement") {
     const tagName = codeForNode(code, element.openingElement.name);
@@ -109,7 +133,9 @@ function loadElement(
 
   const childNodes: Node[] = [];
   for (const [i, child] of element.children.entries()) {
-    childNodes.push(loadNode(doc, code, child, [...indexPath, String(i)]));
+    childNodes.push(
+      loadNode(doc, idReuser, code, child, [...indexPath, String(i)])
+    );
   }
   elementNode.append(childNodes);
 
@@ -118,12 +144,16 @@ function loadElement(
 
 function loadNode(
   doc: Document,
+  idReuser: IDReuser,
   code: string,
   node: babel.JSXElement["children"][number],
   indexPath: string[]
 ): TextNode | ElementNode | ExpressionNode | WrappingExpressionNode {
   if (node.type === "JSXText") {
-    const textNode = doc.nodes.create("text", ["text", ...indexPath].join(":"));
+    const textNode = doc.nodes.create(
+      "text",
+      idReuser.getOrGenerate(indexPath, "text")
+    );
     textNode.data.set({
       text: codeForNode(code, node),
       location: locationForNode(node),
@@ -131,7 +161,7 @@ function loadNode(
     return textNode;
   }
   if (node.type === "JSXElement" || node.type === "JSXFragment") {
-    return loadElement(doc, code, node, indexPath);
+    return loadElement(doc, idReuser, code, node, indexPath);
   }
 
   let childElement: babel.JSXElement | babel.JSXFragment | undefined;
@@ -152,7 +182,7 @@ function loadNode(
     const footerEnd = node.end ?? 0;
     const footer = code.slice(footerStart, footerEnd);
 
-    const id = ["wrapper", ...indexPath].join(":");
+    const id = idReuser.getOrGenerate(indexPath, "wrappingExpression");
     const wrapperNode = doc.nodes.create("wrappingExpression", id);
     wrapperNode.data.set({
       header,
@@ -160,16 +190,15 @@ function loadNode(
       location: locationForNode(node),
     });
 
-    const childNode = loadElement(doc, code, childElement, [
+    const childNode = loadElement(doc, idReuser, code, childElement, [
       ...indexPath,
-      String(1),
+      String(0),
     ]);
     wrapperNode.append([childNode]);
 
     return wrapperNode;
   } else {
-    const id = ["expression", ...indexPath].join(":");
-
+    const id = idReuser.getOrGenerate(indexPath, "expression");
     const expressionNode = doc.nodes.create("expression", id);
     expressionNode.data.set({
       code: code.slice(node.start ?? 0, node.end ?? 0),
@@ -182,8 +211,24 @@ function loadNode(
 export function loadFile(
   doc: Document,
   filePath: string,
-  code: string
+  code: string,
+  idGenerator?: () => string
 ): FileNode {
+  const idReuser = new IDReuser(idGenerator);
+
+  const addToIDReuser = (node: Node, indexPath: string[]) => {
+    idReuser.add(indexPath, node.type, node.id);
+    for (const [index, child] of node.children.entries()) {
+      addToIDReuser(child, [...indexPath, String(index)]);
+    }
+  };
+
+  for (const node of doc.fileNode?.children ?? []) {
+    for (const rootNode of node.children) {
+      addToIDReuser(rootNode, [node.name]);
+    }
+  }
+
   const ast = parse(code, {
     sourceType: "module",
     plugins: ["jsx", "typescript"],
@@ -219,7 +264,13 @@ export function loadFile(
 
     const name = foundComponent.name ?? "default";
     const componentNode = doc.nodes.create("component", "component:" + name);
-    const elementNode = loadElement(doc, code, foundComponent.element, [name]);
+    const elementNode = loadElement(
+      doc,
+      idReuser,
+      code,
+      foundComponent.element,
+      [name]
+    );
     componentNode.append([elementNode]);
 
     componentNode.data.set({

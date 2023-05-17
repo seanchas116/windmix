@@ -2,26 +2,7 @@
 
 exports[`File load/stringify > should load a file > nodes 1`] = `
 {
-  "component:Example": {
-    "footer": "
-  );
-}
-",
-    "header": "export function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  return (
-    ",
-    "index": 0,
-    "location": {
-      "column": 0,
-      "line": 11,
-    },
-    "name": "Example",
-    "parent": "file",
-    "type": "component",
-  },
-  "element:Example": {
+  "1": {
     "attributes": [
       {
         "name": "className",
@@ -40,96 +21,187 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1": {
+  "10": {
+    "index": 0,
+    "location": {
+      "column": 49,
+      "line": 22,
+    },
+    "parent": "9",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "100": {
     "attributes": [
       {
         "name": "className",
         "trailingSpace": "",
-        "value": "\\"absolute inset-x-0 top-0 z-50\\"",
+        "value": "\\"relative isolate px-6 pt-14 lg:px-8\\"",
       },
     ],
-    "index": 1,
+    "index": 3,
     "location": {
       "column": 6,
-      "line": 16,
+      "line": 116,
     },
-    "parent": "element:Example",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "header",
-    "type": "element",
-  },
-  "element:Example:1:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "
-          ",
-        "value": "\\"flex items-center justify-between p-6 lg:px-8\\"",
-      },
-      {
-        "name": "aria-label",
-        "trailingSpace": "
-        ",
-        "value": "\\"Global\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 8,
-      "line": 17,
-    },
-    "parent": "element:Example:1",
-    "selfClosing": false,
-    "spaceAfterTagName": "
-          ",
-    "tagName": "nav",
-    "type": "element",
-  },
-  "element:Example:1:1:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"flex lg:flex-1\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 10,
-      "line": 21,
-    },
-    "parent": "element:Example:1:1",
+    "parent": "1",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:1:1:1": {
+  "101": {
+    "index": 0,
+    "location": {
+      "column": 59,
+      "line": 116,
+    },
+    "parent": "100",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "102": {
     "attributes": [
       {
-        "name": "href",
-        "trailingSpace": " ",
-        "value": "\\"#\\"",
+        "name": "className",
+        "trailingSpace": "
+          ",
+        "value": "\\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\\"",
       },
       {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"-m-1.5 p-1.5\\"",
+        "name": "aria-hidden",
+        "trailingSpace": "
+        ",
+        "value": "\\"true\\"",
       },
     ],
     "index": 1,
     "location": {
-      "column": 12,
-      "line": 22,
+      "column": 8,
+      "line": 117,
     },
-    "parent": "element:Example:1:1:1",
+    "parent": "100",
     "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "a",
+    "spaceAfterTagName": "
+          ",
+    "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:1:1:1:1": {
+  "103": {
+    "index": 0,
+    "location": {
+      "column": 9,
+      "line": 120,
+    },
+    "parent": "102",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "104": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "
+            ",
+        "value": "\\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\\"",
+      },
+      {
+        "name": "style",
+        "trailingSpace": "
+          ",
+        "value": "{{
+              clipPath:
+                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
+            }}",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 10,
+      "line": 121,
+    },
+    "parent": "102",
+    "selfClosing": true,
+    "spaceAfterTagName": "
+            ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "105": {
+    "index": 2,
+    "location": {
+      "column": 12,
+      "line": 127,
+    },
+    "parent": "102",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "106": {
+    "index": 2,
+    "location": {
+      "column": 14,
+      "line": 128,
+    },
+    "parent": "100",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "107": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"mx-auto max-w-2xl py-32 sm:py-48 lg:py-56\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 8,
+      "line": 129,
+    },
+    "parent": "100",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "108": {
+    "index": 0,
+    "location": {
+      "column": 67,
+      "line": 129,
+    },
+    "parent": "107",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "109": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"hidden sm:mb-8 sm:flex sm:justify-center\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 10,
+      "line": 130,
+    },
+    "parent": "107",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "11": {
     "attributes": [
       {
         "name": "className",
@@ -142,26 +214,693 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 23,
     },
-    "parent": "element:Example:1:1:1:1",
+    "parent": "9",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
-  "element:Example:1:1:1:1:1:1": {
+  "110": {
+    "index": 0,
+    "location": {
+      "column": 68,
+      "line": 130,
+    },
+    "parent": "109",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "111": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 12,
+      "line": 131,
+    },
+    "parent": "109",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "112": {
+    "index": 0,
+    "location": {
+      "column": 140,
+      "line": 131,
+    },
+    "parent": "111",
+    "text": "
+              Announcing our next round of funding.",
+    "type": "text",
+  },
+  "113": {
+    "code": "{\\" \\"}",
+    "index": 1,
+    "location": {
+      "column": 51,
+      "line": 132,
+    },
+    "parent": "111",
+    "type": "expression",
+  },
+  "114": {
+    "index": 2,
+    "location": {
+      "column": 56,
+      "line": 132,
+    },
+    "parent": "111",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "115": {
+    "attributes": [
+      {
+        "name": "href",
+        "trailingSpace": " ",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"font-semibold text-indigo-600\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 14,
+      "line": 133,
+    },
+    "parent": "111",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "a",
+    "type": "element",
+  },
+  "116": {
+    "index": 0,
+    "location": {
+      "column": 68,
+      "line": 133,
+    },
+    "parent": "115",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "117": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": " ",
+        "value": "\\"absolute inset-0\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "trailingSpace": " ",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 16,
+      "line": 134,
+    },
+    "parent": "115",
+    "selfClosing": true,
+    "spaceAfterTagName": " ",
+    "tagName": "span",
+    "type": "element",
+  },
+  "118": {
+    "index": 2,
+    "location": {
+      "column": 72,
+      "line": 134,
+    },
+    "parent": "115",
+    "text": "
+                Read more ",
+    "type": "text",
+  },
+  "119": {
+    "attributes": [
+      {
+        "name": "aria-hidden",
+        "trailingSpace": "",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 26,
+      "line": 135,
+    },
+    "parent": "115",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "span",
+    "type": "element",
+  },
+  "12": {
+    "index": 0,
+    "location": {
+      "column": 40,
+      "line": 23,
+    },
+    "parent": "11",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "120": {
+    "index": 0,
+    "location": {
+      "column": 51,
+      "line": 135,
+    },
+    "parent": "119",
+    "text": "&rarr;",
+    "type": "text",
+  },
+  "121": {
+    "index": 4,
+    "location": {
+      "column": 64,
+      "line": 135,
+    },
+    "parent": "115",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "122": {
+    "index": 4,
+    "location": {
+      "column": 18,
+      "line": 136,
+    },
+    "parent": "111",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "123": {
+    "index": 2,
+    "location": {
+      "column": 18,
+      "line": 137,
+    },
+    "parent": "109",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "124": {
+    "index": 2,
+    "location": {
+      "column": 16,
+      "line": 138,
+    },
+    "parent": "107",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "125": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"text-center\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 10,
+      "line": 139,
+    },
+    "parent": "107",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "126": {
+    "index": 0,
+    "location": {
+      "column": 39,
+      "line": 139,
+    },
+    "parent": "125",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "127": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 12,
+      "line": 140,
+    },
+    "parent": "125",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "h1",
+    "type": "element",
+  },
+  "128": {
+    "index": 0,
+    "location": {
+      "column": 88,
+      "line": 140,
+    },
+    "parent": "127",
+    "text": "
+              Data to enrich your online business
+            ",
+    "type": "text",
+  },
+  "129": {
+    "index": 2,
+    "location": {
+      "column": 17,
+      "line": 142,
+    },
+    "parent": "125",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "13": {
     "attributes": [],
     "index": 1,
     "location": {
       "column": 16,
       "line": 24,
     },
-    "parent": "element:Example:1:1:1:1:1",
+    "parent": "11",
     "selfClosing": false,
     "spaceAfterTagName": "",
     "tagName": "b",
     "type": "element",
   },
-  "element:Example:1:1:1:1:3": {
+  "130": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"mt-6 text-lg leading-8 text-gray-600\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 12,
+      "line": 143,
+    },
+    "parent": "125",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "p",
+    "type": "element",
+  },
+  "131": {
+    "index": 0,
+    "location": {
+      "column": 64,
+      "line": 143,
+    },
+    "parent": "130",
+    "text": "
+              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
+              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
+              fugiat aliqua.
+            ",
+    "type": "text",
+  },
+  "132": {
+    "index": 4,
+    "location": {
+      "column": 16,
+      "line": 147,
+    },
+    "parent": "125",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "133": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"mt-10 flex items-center justify-center gap-x-6\\"",
+      },
+    ],
+    "index": 5,
+    "location": {
+      "column": 12,
+      "line": 148,
+    },
+    "parent": "125",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "134": {
+    "index": 0,
+    "location": {
+      "column": 76,
+      "line": 148,
+    },
+    "parent": "133",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "135": {
+    "attributes": [
+      {
+        "name": "href",
+        "trailingSpace": "
+                ",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "trailingSpace": "
+              ",
+        "value": "\\"rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 14,
+      "line": 149,
+    },
+    "parent": "133",
+    "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
+    "tagName": "a",
+    "type": "element",
+  },
+  "136": {
+    "index": 0,
+    "location": {
+      "column": 15,
+      "line": 152,
+    },
+    "parent": "135",
+    "text": "
+                Get started
+              ",
+    "type": "text",
+  },
+  "137": {
+    "index": 2,
+    "location": {
+      "column": 18,
+      "line": 154,
+    },
+    "parent": "133",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "138": {
+    "attributes": [
+      {
+        "name": "href",
+        "trailingSpace": "
+                ",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "trailingSpace": "
+              ",
+        "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
+      },
+    ],
+    "index": 3,
+    "location": {
+      "column": 14,
+      "line": 155,
+    },
+    "parent": "133",
+    "selfClosing": false,
+    "spaceAfterTagName": "
+                ",
+    "tagName": "a",
+    "type": "element",
+  },
+  "139": {
+    "index": 0,
+    "location": {
+      "column": 15,
+      "line": 158,
+    },
+    "parent": "138",
+    "text": "
+                Learn more ",
+    "type": "text",
+  },
+  "14": {
+    "index": 0,
+    "location": {
+      "column": 19,
+      "line": 24,
+    },
+    "parent": "13",
+    "text": "Your",
+    "type": "text",
+  },
+  "140": {
+    "attributes": [
+      {
+        "name": "aria-hidden",
+        "trailingSpace": "",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 27,
+      "line": 159,
+    },
+    "parent": "138",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "span",
+    "type": "element",
+  },
+  "141": {
+    "index": 0,
+    "location": {
+      "column": 52,
+      "line": 159,
+    },
+    "parent": "140",
+    "text": "→",
+    "type": "text",
+  },
+  "142": {
+    "index": 2,
+    "location": {
+      "column": 60,
+      "line": 159,
+    },
+    "parent": "138",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "143": {
+    "index": 4,
+    "location": {
+      "column": 18,
+      "line": 160,
+    },
+    "parent": "133",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "144": {
+    "index": 6,
+    "location": {
+      "column": 18,
+      "line": 161,
+    },
+    "parent": "125",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "145": {
+    "index": 4,
+    "location": {
+      "column": 16,
+      "line": 162,
+    },
+    "parent": "107",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "146": {
+    "index": 4,
+    "location": {
+      "column": 14,
+      "line": 163,
+    },
+    "parent": "100",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "147": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "
+          ",
+        "value": "\\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\\"",
+      },
+      {
+        "name": "aria-hidden",
+        "trailingSpace": "
+        ",
+        "value": "\\"true\\"",
+      },
+    ],
+    "index": 5,
+    "location": {
+      "column": 8,
+      "line": 164,
+    },
+    "parent": "100",
+    "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "148": {
+    "index": 0,
+    "location": {
+      "column": 9,
+      "line": 167,
+    },
+    "parent": "147",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "149": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "
+            ",
+        "value": "\\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\\"",
+      },
+      {
+        "name": "style",
+        "trailingSpace": "
+          ",
+        "value": "{{
+              clipPath:
+                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
+            }}",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 10,
+      "line": 168,
+    },
+    "parent": "147",
+    "selfClosing": true,
+    "spaceAfterTagName": "
+            ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "15": {
+    "index": 2,
+    "location": {
+      "column": 27,
+      "line": 24,
+    },
+    "parent": "11",
+    "text": " Company
+              ",
+    "type": "text",
+  },
+  "150": {
+    "index": 2,
+    "location": {
+      "column": 12,
+      "line": 174,
+    },
+    "parent": "147",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "151": {
+    "index": 6,
+    "location": {
+      "column": 14,
+      "line": 175,
+    },
+    "parent": "100",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "152": {
+    "index": 4,
+    "location": {
+      "column": 12,
+      "line": 176,
+    },
+    "parent": "1",
+    "text": "
+    ",
+    "type": "text",
+  },
+  "16": {
+    "index": 2,
+    "location": {
+      "column": 21,
+      "line": 25,
+    },
+    "parent": "9",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "17": {
     "attributes": [
       {
         "name": "className",
@@ -187,14 +926,58 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 26,
     },
-    "parent": "element:Example:1:1:1:1",
+    "parent": "9",
     "selfClosing": true,
     "spaceAfterTagName": "
                 ",
     "tagName": "img",
     "type": "element",
   },
-  "element:Example:1:1:3": {
+  "18": {
+    "index": 4,
+    "location": {
+      "column": 16,
+      "line": 30,
+    },
+    "parent": "9",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "19": {
+    "index": 2,
+    "location": {
+      "column": 16,
+      "line": 31,
+    },
+    "parent": "7",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "2": {
+    "index": 0,
+    "location": {
+      "column": 30,
+      "line": 15,
+    },
+    "parent": "1",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "20": {
+    "index": 2,
+    "location": {
+      "column": 16,
+      "line": 32,
+    },
+    "parent": "5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "21": {
     "attributes": [
       {
         "name": "className",
@@ -207,13 +990,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 10,
       "line": 33,
     },
-    "parent": "element:Example:1:1",
+    "parent": "5",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:1:3:1": {
+  "22": {
+    "index": 0,
+    "location": {
+      "column": 42,
+      "line": 33,
+    },
+    "parent": "21",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "23": {
     "attributes": [
       {
         "name": "type",
@@ -239,14 +1033,25 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 12,
       "line": 34,
     },
-    "parent": "element:Example:1:1:3",
+    "parent": "21",
     "selfClosing": false,
     "spaceAfterTagName": "
               ",
     "tagName": "button",
     "type": "element",
   },
-  "element:Example:1:1:3:1:1": {
+  "24": {
+    "index": 0,
+    "location": {
+      "column": 13,
+      "line": 38,
+    },
+    "parent": "23",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "25": {
     "attributes": [
       {
         "name": "className",
@@ -259,13 +1064,34 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 39,
     },
-    "parent": "element:Example:1:1:3:1",
+    "parent": "23",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
-  "element:Example:1:1:3:1:3": {
+  "26": {
+    "index": 0,
+    "location": {
+      "column": 40,
+      "line": 39,
+    },
+    "parent": "25",
+    "text": "Open main menu",
+    "type": "text",
+  },
+  "27": {
+    "index": 2,
+    "location": {
+      "column": 61,
+      "line": 39,
+    },
+    "parent": "23",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "28": {
     "attributes": [
       {
         "name": "className",
@@ -283,13 +1109,65 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 40,
     },
-    "parent": "element:Example:1:1:3:1",
+    "parent": "23",
     "selfClosing": true,
     "spaceAfterTagName": " ",
     "tagName": "Bars3Icon",
     "type": "element",
   },
-  "element:Example:1:1:5": {
+  "29": {
+    "index": 4,
+    "location": {
+      "column": 66,
+      "line": 40,
+    },
+    "parent": "23",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "3": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"absolute inset-x-0 top-0 z-50\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 6,
+      "line": 16,
+    },
+    "parent": "1",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "header",
+    "type": "element",
+  },
+  "30": {
+    "index": 2,
+    "location": {
+      "column": 21,
+      "line": 41,
+    },
+    "parent": "21",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "31": {
+    "index": 4,
+    "location": {
+      "column": 16,
+      "line": 42,
+    },
+    "parent": "5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "32": {
     "attributes": [
       {
         "name": "className",
@@ -302,13 +1180,37 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 10,
       "line": 43,
     },
-    "parent": "element:Example:1:1",
+    "parent": "5",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:1:5:1:1": {
+  "33": {
+    "index": 0,
+    "location": {
+      "column": 54,
+      "line": 43,
+    },
+    "parent": "32",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "34": {
+    "footer": "
+            ))}",
+    "header": "{navigation.map((item) => (
+              ",
+    "index": 1,
+    "location": {
+      "column": 12,
+      "line": 44,
+    },
+    "parent": "32",
+    "type": "wrappingExpression",
+  },
+  "35": {
     "attributes": [
       {
         "name": "key",
@@ -334,14 +1236,79 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 45,
     },
-    "parent": "wrapper:Example:1:1:5:1",
+    "parent": "34",
     "selfClosing": false,
     "spaceAfterTagName": "
                 ",
     "tagName": "a",
     "type": "element",
   },
-  "element:Example:1:1:7": {
+  "36": {
+    "index": 0,
+    "location": {
+      "column": 15,
+      "line": 49,
+    },
+    "parent": "35",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "37": {
+    "code": "{item.name}",
+    "index": 1,
+    "location": {
+      "column": 16,
+      "line": 50,
+    },
+    "parent": "35",
+    "type": "expression",
+  },
+  "38": {
+    "index": 2,
+    "location": {
+      "column": 27,
+      "line": 50,
+    },
+    "parent": "35",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "39": {
+    "index": 2,
+    "location": {
+      "column": 15,
+      "line": 52,
+    },
+    "parent": "32",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "4": {
+    "index": 0,
+    "location": {
+      "column": 56,
+      "line": 16,
+    },
+    "parent": "3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "40": {
+    "index": 6,
+    "location": {
+      "column": 16,
+      "line": 53,
+    },
+    "parent": "5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "41": {
     "attributes": [
       {
         "name": "className",
@@ -354,13 +1321,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 10,
       "line": 54,
     },
-    "parent": "element:Example:1:1",
+    "parent": "5",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:1:7:1": {
+  "42": {
+    "index": 0,
+    "location": {
+      "column": 67,
+      "line": 54,
+    },
+    "parent": "41",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "43": {
     "attributes": [
       {
         "name": "href",
@@ -380,14 +1358,25 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 12,
       "line": 55,
     },
-    "parent": "element:Example:1:1:7",
+    "parent": "41",
     "selfClosing": false,
     "spaceAfterTagName": "
               ",
     "tagName": "a",
     "type": "element",
   },
-  "element:Example:1:1:7:1:1": {
+  "44": {
+    "index": 0,
+    "location": {
+      "column": 13,
+      "line": 58,
+    },
+    "parent": "43",
+    "text": "
+              Log in ",
+    "type": "text",
+  },
+  "45": {
     "attributes": [
       {
         "name": "aria-hidden",
@@ -400,13 +1389,94 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 21,
       "line": 59,
     },
-    "parent": "element:Example:1:1:7:1",
+    "parent": "43",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
-  "element:Example:1:3": {
+  "46": {
+    "index": 0,
+    "location": {
+      "column": 46,
+      "line": 59,
+    },
+    "parent": "45",
+    "text": "&rarr;",
+    "type": "text",
+  },
+  "47": {
+    "index": 2,
+    "location": {
+      "column": 59,
+      "line": 59,
+    },
+    "parent": "43",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "48": {
+    "index": 2,
+    "location": {
+      "column": 16,
+      "line": 60,
+    },
+    "parent": "41",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "49": {
+    "index": 8,
+    "location": {
+      "column": 16,
+      "line": 61,
+    },
+    "parent": "5",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "5": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "
+          ",
+        "value": "\\"flex items-center justify-between p-6 lg:px-8\\"",
+      },
+      {
+        "name": "aria-label",
+        "trailingSpace": "
+        ",
+        "value": "\\"Global\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 8,
+      "line": 17,
+    },
+    "parent": "3",
+    "selfClosing": false,
+    "spaceAfterTagName": "
+          ",
+    "tagName": "nav",
+    "type": "element",
+  },
+  "50": {
+    "index": 2,
+    "location": {
+      "column": 14,
+      "line": 62,
+    },
+    "parent": "3",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "51": {
     "attributes": [
       {
         "name": "as",
@@ -438,14 +1508,25 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 8,
       "line": 63,
     },
-    "parent": "element:Example:1",
+    "parent": "3",
     "selfClosing": false,
     "spaceAfterTagName": "
           ",
     "tagName": "Dialog",
     "type": "element",
   },
-  "element:Example:1:3:1": {
+  "52": {
+    "index": 0,
+    "location": {
+      "column": 9,
+      "line": 68,
+    },
+    "parent": "51",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "53": {
     "attributes": [
       {
         "name": "className",
@@ -458,13 +1539,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 10,
       "line": 69,
     },
-    "parent": "element:Example:1:3",
+    "parent": "51",
     "selfClosing": true,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3": {
+  "54": {
+    "index": 2,
+    "location": {
+      "column": 48,
+      "line": 69,
+    },
+    "parent": "51",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "55": {
     "attributes": [
       {
         "name": "className",
@@ -477,13 +1569,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 10,
       "line": 70,
     },
-    "parent": "element:Example:1:3",
+    "parent": "51",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "Dialog.Panel",
     "type": "element",
   },
-  "element:Example:1:3:3:1": {
+  "56": {
+    "index": 0,
+    "location": {
+      "column": 149,
+      "line": 70,
+    },
+    "parent": "55",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "57": {
     "attributes": [
       {
         "name": "className",
@@ -496,13 +1599,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 12,
       "line": 71,
     },
-    "parent": "element:Example:1:3:3",
+    "parent": "55",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3:1:1": {
+  "58": {
+    "index": 0,
+    "location": {
+      "column": 63,
+      "line": 71,
+    },
+    "parent": "57",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "59": {
     "attributes": [
       {
         "name": "href",
@@ -520,13 +1634,35 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 72,
     },
-    "parent": "element:Example:1:3:3:1",
+    "parent": "57",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "a",
     "type": "element",
   },
-  "element:Example:1:3:3:1:1:1": {
+  "6": {
+    "index": 0,
+    "location": {
+      "column": 9,
+      "line": 20,
+    },
+    "parent": "5",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "60": {
+    "index": 0,
+    "location": {
+      "column": 51,
+      "line": 72,
+    },
+    "parent": "59",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "61": {
     "attributes": [
       {
         "name": "className",
@@ -539,13 +1675,34 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 73,
     },
-    "parent": "element:Example:1:3:3:1:1",
+    "parent": "59",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
-  "element:Example:1:3:3:1:1:3": {
+  "62": {
+    "index": 0,
+    "location": {
+      "column": 42,
+      "line": 73,
+    },
+    "parent": "61",
+    "text": "Your Company",
+    "type": "text",
+  },
+  "63": {
+    "index": 2,
+    "location": {
+      "column": 61,
+      "line": 73,
+    },
+    "parent": "59",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "64": {
     "attributes": [
       {
         "name": "className",
@@ -571,14 +1728,36 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 74,
     },
-    "parent": "element:Example:1:3:3:1:1",
+    "parent": "59",
     "selfClosing": true,
     "spaceAfterTagName": "
                   ",
     "tagName": "img",
     "type": "element",
   },
-  "element:Example:1:3:3:1:3": {
+  "65": {
+    "index": 4,
+    "location": {
+      "column": 18,
+      "line": 78,
+    },
+    "parent": "59",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "66": {
+    "index": 2,
+    "location": {
+      "column": 18,
+      "line": 79,
+    },
+    "parent": "57",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "67": {
     "attributes": [
       {
         "name": "type",
@@ -604,14 +1783,25 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 80,
     },
-    "parent": "element:Example:1:3:3:1",
+    "parent": "57",
     "selfClosing": false,
     "spaceAfterTagName": "
                 ",
     "tagName": "button",
     "type": "element",
   },
-  "element:Example:1:3:3:1:3:1": {
+  "68": {
+    "index": 0,
+    "location": {
+      "column": 15,
+      "line": 84,
+    },
+    "parent": "67",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "69": {
     "attributes": [
       {
         "name": "className",
@@ -624,13 +1814,53 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 85,
     },
-    "parent": "element:Example:1:3:3:1:3",
+    "parent": "67",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "span",
     "type": "element",
   },
-  "element:Example:1:3:3:1:3:3": {
+  "7": {
+    "attributes": [
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"flex lg:flex-1\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 10,
+      "line": 21,
+    },
+    "parent": "5",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "div",
+    "type": "element",
+  },
+  "70": {
+    "index": 0,
+    "location": {
+      "column": 42,
+      "line": 85,
+    },
+    "parent": "69",
+    "text": "Close menu",
+    "type": "text",
+  },
+  "71": {
+    "index": 2,
+    "location": {
+      "column": 59,
+      "line": 85,
+    },
+    "parent": "67",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "72": {
     "attributes": [
       {
         "name": "className",
@@ -648,13 +1878,46 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 86,
     },
-    "parent": "element:Example:1:3:3:1:3",
+    "parent": "67",
     "selfClosing": true,
     "spaceAfterTagName": " ",
     "tagName": "XMarkIcon",
     "type": "element",
   },
-  "element:Example:1:3:3:3": {
+  "73": {
+    "index": 4,
+    "location": {
+      "column": 68,
+      "line": 86,
+    },
+    "parent": "67",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "74": {
+    "index": 4,
+    "location": {
+      "column": 23,
+      "line": 87,
+    },
+    "parent": "57",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "75": {
+    "index": 2,
+    "location": {
+      "column": 18,
+      "line": 88,
+    },
+    "parent": "55",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "76": {
     "attributes": [
       {
         "name": "className",
@@ -667,13 +1930,24 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 12,
       "line": 89,
     },
-    "parent": "element:Example:1:3:3",
+    "parent": "55",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3:3:1": {
+  "77": {
+    "index": 0,
+    "location": {
+      "column": 44,
+      "line": 89,
+    },
+    "parent": "76",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "78": {
     "attributes": [
       {
         "name": "className",
@@ -686,13 +1960,35 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 14,
       "line": 90,
     },
-    "parent": "element:Example:1:3:3:3",
+    "parent": "76",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3:3:1:1": {
+  "79": {
+    "index": 0,
+    "location": {
+      "column": 65,
+      "line": 90,
+    },
+    "parent": "78",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "8": {
+    "index": 0,
+    "location": {
+      "column": 42,
+      "line": 21,
+    },
+    "parent": "7",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "80": {
     "attributes": [
       {
         "name": "className",
@@ -705,13 +2001,37 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 91,
     },
-    "parent": "element:Example:1:3:3:3:1",
+    "parent": "78",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3:3:1:1:1:1": {
+  "81": {
+    "index": 0,
+    "location": {
+      "column": 48,
+      "line": 91,
+    },
+    "parent": "80",
+    "text": "
+                  ",
+    "type": "text",
+  },
+  "82": {
+    "footer": "
+                  ))}",
+    "header": "{navigation.map((item) => (
+                    ",
+    "index": 1,
+    "location": {
+      "column": 18,
+      "line": 92,
+    },
+    "parent": "80",
+    "type": "wrappingExpression",
+  },
+  "83": {
     "attributes": [
       {
         "name": "key",
@@ -737,14 +2057,68 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 20,
       "line": 93,
     },
-    "parent": "wrapper:Example:1:3:3:3:1:1:1",
+    "parent": "82",
     "selfClosing": false,
     "spaceAfterTagName": "
                       ",
     "tagName": "a",
     "type": "element",
   },
-  "element:Example:1:3:3:3:1:3": {
+  "84": {
+    "index": 0,
+    "location": {
+      "column": 21,
+      "line": 97,
+    },
+    "parent": "83",
+    "text": "
+                      ",
+    "type": "text",
+  },
+  "85": {
+    "code": "{item.name}",
+    "index": 1,
+    "location": {
+      "column": 22,
+      "line": 98,
+    },
+    "parent": "83",
+    "type": "expression",
+  },
+  "86": {
+    "index": 2,
+    "location": {
+      "column": 33,
+      "line": 98,
+    },
+    "parent": "83",
+    "text": "
+                    ",
+    "type": "text",
+  },
+  "87": {
+    "index": 2,
+    "location": {
+      "column": 21,
+      "line": 100,
+    },
+    "parent": "80",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "88": {
+    "index": 2,
+    "location": {
+      "column": 22,
+      "line": 101,
+    },
+    "parent": "78",
+    "text": "
+                ",
+    "type": "text",
+  },
+  "89": {
     "attributes": [
       {
         "name": "className",
@@ -757,13 +2131,48 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 16,
       "line": 102,
     },
-    "parent": "element:Example:1:3:3:3:1",
+    "parent": "78",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
     "type": "element",
   },
-  "element:Example:1:3:3:3:1:3:1": {
+  "9": {
+    "attributes": [
+      {
+        "name": "href",
+        "trailingSpace": " ",
+        "value": "\\"#\\"",
+      },
+      {
+        "name": "className",
+        "trailingSpace": "",
+        "value": "\\"-m-1.5 p-1.5\\"",
+      },
+    ],
+    "index": 1,
+    "location": {
+      "column": 12,
+      "line": 22,
+    },
+    "parent": "7",
+    "selfClosing": false,
+    "spaceAfterTagName": " ",
+    "tagName": "a",
+    "type": "element",
+  },
+  "90": {
+    "index": 0,
+    "location": {
+      "column": 38,
+      "line": 102,
+    },
+    "parent": "89",
+    "text": "
+                  ",
+    "type": "text",
+  },
+  "91": {
     "attributes": [
       {
         "name": "href",
@@ -783,448 +2192,121 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 18,
       "line": 103,
     },
-    "parent": "element:Example:1:3:3:3:1:3",
+    "parent": "89",
     "selfClosing": false,
     "spaceAfterTagName": "
                     ",
     "tagName": "a",
     "type": "element",
   },
-  "element:Example:3": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"relative isolate px-6 pt-14 lg:px-8\\"",
-      },
-    ],
-    "index": 3,
+  "92": {
+    "index": 0,
     "location": {
-      "column": 6,
-      "line": 116,
+      "column": 19,
+      "line": 106,
     },
-    "parent": "element:Example",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
+    "parent": "91",
+    "text": "
+                    Log in
+                  ",
+    "type": "text",
   },
-  "element:Example:3:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "
-          ",
-        "value": "\\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\\"",
-      },
-      {
-        "name": "aria-hidden",
-        "trailingSpace": "
-        ",
-        "value": "\\"true\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 8,
-      "line": 117,
-    },
-    "parent": "element:Example:3",
-    "selfClosing": false,
-    "spaceAfterTagName": "
-          ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:1:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "
-            ",
-        "value": "\\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\\"",
-      },
-      {
-        "name": "style",
-        "trailingSpace": "
-          ",
-        "value": "{{
-              clipPath:
-                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
-            }}",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 10,
-      "line": 121,
-    },
-    "parent": "element:Example:3:1",
-    "selfClosing": true,
-    "spaceAfterTagName": "
-            ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"mx-auto max-w-2xl py-32 sm:py-48 lg:py-56\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 8,
-      "line": 129,
-    },
-    "parent": "element:Example:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"hidden sm:mb-8 sm:flex sm:justify-center\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 10,
-      "line": 130,
-    },
-    "parent": "element:Example:3:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3:1:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 12,
-      "line": 131,
-    },
-    "parent": "element:Example:3:3:1",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3:1:1:3": {
-    "attributes": [
-      {
-        "name": "href",
-        "trailingSpace": " ",
-        "value": "\\"#\\"",
-      },
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"font-semibold text-indigo-600\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 14,
-      "line": 133,
-    },
-    "parent": "element:Example:3:3:1:1",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "a",
-    "type": "element",
-  },
-  "element:Example:3:3:1:1:3:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": " ",
-        "value": "\\"absolute inset-0\\"",
-      },
-      {
-        "name": "aria-hidden",
-        "trailingSpace": " ",
-        "value": "\\"true\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 16,
-      "line": 134,
-    },
-    "parent": "element:Example:3:3:1:1:3",
-    "selfClosing": true,
-    "spaceAfterTagName": " ",
-    "tagName": "span",
-    "type": "element",
-  },
-  "element:Example:3:3:1:1:3:3": {
-    "attributes": [
-      {
-        "name": "aria-hidden",
-        "trailingSpace": "",
-        "value": "\\"true\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 26,
-      "line": 135,
-    },
-    "parent": "element:Example:3:3:1:1:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "span",
-    "type": "element",
-  },
-  "element:Example:3:3:3": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"text-center\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 10,
-      "line": 139,
-    },
-    "parent": "element:Example:3:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3:3:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 12,
-      "line": 140,
-    },
-    "parent": "element:Example:3:3:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "h1",
-    "type": "element",
-  },
-  "element:Example:3:3:3:3": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"mt-6 text-lg leading-8 text-gray-600\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 12,
-      "line": 143,
-    },
-    "parent": "element:Example:3:3:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "p",
-    "type": "element",
-  },
-  "element:Example:3:3:3:5": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "",
-        "value": "\\"mt-10 flex items-center justify-center gap-x-6\\"",
-      },
-    ],
-    "index": 5,
-    "location": {
-      "column": 12,
-      "line": 148,
-    },
-    "parent": "element:Example:3:3:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:3:3:5:1": {
-    "attributes": [
-      {
-        "name": "href",
-        "trailingSpace": "
-                ",
-        "value": "\\"#\\"",
-      },
-      {
-        "name": "className",
-        "trailingSpace": "
-              ",
-        "value": "\\"rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 14,
-      "line": 149,
-    },
-    "parent": "element:Example:3:3:3:5",
-    "selfClosing": false,
-    "spaceAfterTagName": "
-                ",
-    "tagName": "a",
-    "type": "element",
-  },
-  "element:Example:3:3:3:5:3": {
-    "attributes": [
-      {
-        "name": "href",
-        "trailingSpace": "
-                ",
-        "value": "\\"#\\"",
-      },
-      {
-        "name": "className",
-        "trailingSpace": "
-              ",
-        "value": "\\"text-sm font-semibold leading-6 text-gray-900\\"",
-      },
-    ],
-    "index": 3,
-    "location": {
-      "column": 14,
-      "line": 155,
-    },
-    "parent": "element:Example:3:3:3:5",
-    "selfClosing": false,
-    "spaceAfterTagName": "
-                ",
-    "tagName": "a",
-    "type": "element",
-  },
-  "element:Example:3:3:3:5:3:1": {
-    "attributes": [
-      {
-        "name": "aria-hidden",
-        "trailingSpace": "",
-        "value": "\\"true\\"",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 27,
-      "line": 159,
-    },
-    "parent": "element:Example:3:3:3:5:3",
-    "selfClosing": false,
-    "spaceAfterTagName": " ",
-    "tagName": "span",
-    "type": "element",
-  },
-  "element:Example:3:5": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "
-          ",
-        "value": "\\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\\"",
-      },
-      {
-        "name": "aria-hidden",
-        "trailingSpace": "
-        ",
-        "value": "\\"true\\"",
-      },
-    ],
-    "index": 5,
-    "location": {
-      "column": 8,
-      "line": 164,
-    },
-    "parent": "element:Example:3",
-    "selfClosing": false,
-    "spaceAfterTagName": "
-          ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "element:Example:3:5:1": {
-    "attributes": [
-      {
-        "name": "className",
-        "trailingSpace": "
-            ",
-        "value": "\\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\\"",
-      },
-      {
-        "name": "style",
-        "trailingSpace": "
-          ",
-        "value": "{{
-              clipPath:
-                \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
-            }}",
-      },
-    ],
-    "index": 1,
-    "location": {
-      "column": 10,
-      "line": 168,
-    },
-    "parent": "element:Example:3:5",
-    "selfClosing": true,
-    "spaceAfterTagName": "
-            ",
-    "tagName": "div",
-    "type": "element",
-  },
-  "expression:Example:1:1:5:1:1:1": {
-    "code": "{item.name}",
-    "index": 1,
-    "location": {
-      "column": 16,
-      "line": 50,
-    },
-    "parent": "element:Example:1:1:5:1:1",
-    "type": "expression",
-  },
-  "expression:Example:1:3:3:3:1:1:1:1:1": {
-    "code": "{item.name}",
-    "index": 1,
+  "93": {
+    "index": 2,
     "location": {
       "column": 22,
-      "line": 98,
+      "line": 108,
     },
-    "parent": "element:Example:1:3:3:3:1:1:1:1",
-    "type": "expression",
+    "parent": "89",
+    "text": "
+                ",
+    "type": "text",
   },
-  "expression:Example:3:3:1:1:1": {
-    "code": "{\\" \\"}",
-    "index": 1,
+  "94": {
+    "index": 4,
     "location": {
-      "column": 51,
-      "line": 132,
+      "column": 22,
+      "line": 109,
     },
-    "parent": "element:Example:3:3:1:1",
-    "type": "expression",
+    "parent": "78",
+    "text": "
+              ",
+    "type": "text",
+  },
+  "95": {
+    "index": 2,
+    "location": {
+      "column": 20,
+      "line": 110,
+    },
+    "parent": "76",
+    "text": "
+            ",
+    "type": "text",
+  },
+  "96": {
+    "index": 4,
+    "location": {
+      "column": 18,
+      "line": 111,
+    },
+    "parent": "55",
+    "text": "
+          ",
+    "type": "text",
+  },
+  "97": {
+    "index": 4,
+    "location": {
+      "column": 25,
+      "line": 112,
+    },
+    "parent": "51",
+    "text": "
+        ",
+    "type": "text",
+  },
+  "98": {
+    "index": 4,
+    "location": {
+      "column": 17,
+      "line": 113,
+    },
+    "parent": "3",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "99": {
+    "index": 2,
+    "location": {
+      "column": 15,
+      "line": 114,
+    },
+    "parent": "1",
+    "text": "
+
+      ",
+    "type": "text",
+  },
+  "component:Example": {
+    "footer": "
+  );
+}
+",
+    "header": "export function Example() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    ",
+    "index": 0,
+    "location": {
+      "column": 0,
+      "line": 11,
+    },
+    "name": "Example",
+    "parent": "file",
+    "type": "component",
   },
   "file": {
     "filePath": "/demo.js",
@@ -1242,1088 +2324,6 @@ const navigation = [
 ",
     "index": 0,
     "type": "file",
-  },
-  "text:Example:0": {
-    "index": 0,
-    "location": {
-      "column": 30,
-      "line": 15,
-    },
-    "parent": "element:Example",
-    "text": "
-      ",
-    "type": "text",
-  },
-  "text:Example:1:0": {
-    "index": 0,
-    "location": {
-      "column": 56,
-      "line": 16,
-    },
-    "parent": "element:Example:1",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 9,
-      "line": 20,
-    },
-    "parent": "element:Example:1:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 42,
-      "line": 21,
-    },
-    "parent": "element:Example:1:1:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 49,
-      "line": 22,
-    },
-    "parent": "element:Example:1:1:1:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 40,
-      "line": 23,
-    },
-    "parent": "element:Example:1:1:1:1:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 19,
-      "line": 24,
-    },
-    "parent": "element:Example:1:1:1:1:1:1",
-    "text": "Your",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 27,
-      "line": 24,
-    },
-    "parent": "element:Example:1:1:1:1:1",
-    "text": " Company
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 21,
-      "line": 25,
-    },
-    "parent": "element:Example:1:1:1:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:1:4": {
-    "index": 4,
-    "location": {
-      "column": 16,
-      "line": 30,
-    },
-    "parent": "element:Example:1:1:1:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 16,
-      "line": 31,
-    },
-    "parent": "element:Example:1:1:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 16,
-      "line": 32,
-    },
-    "parent": "element:Example:1:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:3:0": {
-    "index": 0,
-    "location": {
-      "column": 42,
-      "line": 33,
-    },
-    "parent": "element:Example:1:1:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 13,
-      "line": 38,
-    },
-    "parent": "element:Example:1:1:3:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:3:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 40,
-      "line": 39,
-    },
-    "parent": "element:Example:1:1:3:1:1",
-    "text": "Open main menu",
-    "type": "text",
-  },
-  "text:Example:1:1:3:1:2": {
-    "index": 2,
-    "location": {
-      "column": 61,
-      "line": 39,
-    },
-    "parent": "element:Example:1:1:3:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:3:1:4": {
-    "index": 4,
-    "location": {
-      "column": 66,
-      "line": 40,
-    },
-    "parent": "element:Example:1:1:3:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:3:2": {
-    "index": 2,
-    "location": {
-      "column": 21,
-      "line": 41,
-    },
-    "parent": "element:Example:1:1:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:4": {
-    "index": 4,
-    "location": {
-      "column": 16,
-      "line": 42,
-    },
-    "parent": "element:Example:1:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:5:0": {
-    "index": 0,
-    "location": {
-      "column": 54,
-      "line": 43,
-    },
-    "parent": "element:Example:1:1:5",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:5:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 15,
-      "line": 49,
-    },
-    "parent": "element:Example:1:1:5:1:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:1:5:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 27,
-      "line": 50,
-    },
-    "parent": "element:Example:1:1:5:1:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:1:5:2": {
-    "index": 2,
-    "location": {
-      "column": 15,
-      "line": 52,
-    },
-    "parent": "element:Example:1:1:5",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:6": {
-    "index": 6,
-    "location": {
-      "column": 16,
-      "line": 53,
-    },
-    "parent": "element:Example:1:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:7:0": {
-    "index": 0,
-    "location": {
-      "column": 67,
-      "line": 54,
-    },
-    "parent": "element:Example:1:1:7",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:7:1:0": {
-    "index": 0,
-    "location": {
-      "column": 13,
-      "line": 58,
-    },
-    "parent": "element:Example:1:1:7:1",
-    "text": "
-              Log in ",
-    "type": "text",
-  },
-  "text:Example:1:1:7:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 46,
-      "line": 59,
-    },
-    "parent": "element:Example:1:1:7:1:1",
-    "text": "&rarr;",
-    "type": "text",
-  },
-  "text:Example:1:1:7:1:2": {
-    "index": 2,
-    "location": {
-      "column": 59,
-      "line": 59,
-    },
-    "parent": "element:Example:1:1:7:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:1:7:2": {
-    "index": 2,
-    "location": {
-      "column": 16,
-      "line": 60,
-    },
-    "parent": "element:Example:1:1:7",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:1:8": {
-    "index": 8,
-    "location": {
-      "column": 16,
-      "line": 61,
-    },
-    "parent": "element:Example:1:1",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:1:2": {
-    "index": 2,
-    "location": {
-      "column": 14,
-      "line": 62,
-    },
-    "parent": "element:Example:1",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:1:3:0": {
-    "index": 0,
-    "location": {
-      "column": 9,
-      "line": 68,
-    },
-    "parent": "element:Example:1:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:3:2": {
-    "index": 2,
-    "location": {
-      "column": 48,
-      "line": 69,
-    },
-    "parent": "element:Example:1:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 149,
-      "line": 70,
-    },
-    "parent": "element:Example:1:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 63,
-      "line": 71,
-    },
-    "parent": "element:Example:1:3:3:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 51,
-      "line": 72,
-    },
-    "parent": "element:Example:1:3:3:1:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 42,
-      "line": 73,
-    },
-    "parent": "element:Example:1:3:3:1:1:1",
-    "text": "Your Company",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 61,
-      "line": 73,
-    },
-    "parent": "element:Example:1:3:3:1:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:1:4": {
-    "index": 4,
-    "location": {
-      "column": 18,
-      "line": 78,
-    },
-    "parent": "element:Example:1:3:3:1:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:2": {
-    "index": 2,
-    "location": {
-      "column": 18,
-      "line": 79,
-    },
-    "parent": "element:Example:1:3:3:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:3:0": {
-    "index": 0,
-    "location": {
-      "column": 15,
-      "line": 84,
-    },
-    "parent": "element:Example:1:3:3:1:3",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 42,
-      "line": 85,
-    },
-    "parent": "element:Example:1:3:3:1:3:1",
-    "text": "Close menu",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:3:2": {
-    "index": 2,
-    "location": {
-      "column": 59,
-      "line": 85,
-    },
-    "parent": "element:Example:1:3:3:1:3",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:3:4": {
-    "index": 4,
-    "location": {
-      "column": 68,
-      "line": 86,
-    },
-    "parent": "element:Example:1:3:3:1:3",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:1:4": {
-    "index": 4,
-    "location": {
-      "column": 23,
-      "line": 87,
-    },
-    "parent": "element:Example:1:3:3:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:2": {
-    "index": 2,
-    "location": {
-      "column": 18,
-      "line": 88,
-    },
-    "parent": "element:Example:1:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 44,
-      "line": 89,
-    },
-    "parent": "element:Example:1:3:3:3",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 65,
-      "line": 90,
-    },
-    "parent": "element:Example:1:3:3:3:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 48,
-      "line": 91,
-    },
-    "parent": "element:Example:1:3:3:3:1:1",
-    "text": "
-                  ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:1:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 21,
-      "line": 97,
-    },
-    "parent": "element:Example:1:3:3:3:1:1:1:1",
-    "text": "
-                      ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:1:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 33,
-      "line": 98,
-    },
-    "parent": "element:Example:1:3:3:3:1:1:1:1",
-    "text": "
-                    ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 21,
-      "line": 100,
-    },
-    "parent": "element:Example:1:3:3:3:1:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:2": {
-    "index": 2,
-    "location": {
-      "column": 22,
-      "line": 101,
-    },
-    "parent": "element:Example:1:3:3:3:1",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:3:0": {
-    "index": 0,
-    "location": {
-      "column": 38,
-      "line": 102,
-    },
-    "parent": "element:Example:1:3:3:3:1:3",
-    "text": "
-                  ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 19,
-      "line": 106,
-    },
-    "parent": "element:Example:1:3:3:3:1:3:1",
-    "text": "
-                    Log in
-                  ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:3:2": {
-    "index": 2,
-    "location": {
-      "column": 22,
-      "line": 108,
-    },
-    "parent": "element:Example:1:3:3:3:1:3",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:1:4": {
-    "index": 4,
-    "location": {
-      "column": 22,
-      "line": 109,
-    },
-    "parent": "element:Example:1:3:3:3:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:3:2": {
-    "index": 2,
-    "location": {
-      "column": 20,
-      "line": 110,
-    },
-    "parent": "element:Example:1:3:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:1:3:3:4": {
-    "index": 4,
-    "location": {
-      "column": 18,
-      "line": 111,
-    },
-    "parent": "element:Example:1:3:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:1:3:4": {
-    "index": 4,
-    "location": {
-      "column": 25,
-      "line": 112,
-    },
-    "parent": "element:Example:1:3",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:1:4": {
-    "index": 4,
-    "location": {
-      "column": 17,
-      "line": 113,
-    },
-    "parent": "element:Example:1",
-    "text": "
-      ",
-    "type": "text",
-  },
-  "text:Example:2": {
-    "index": 2,
-    "location": {
-      "column": 15,
-      "line": 114,
-    },
-    "parent": "element:Example",
-    "text": "
-
-      ",
-    "type": "text",
-  },
-  "text:Example:3:0": {
-    "index": 0,
-    "location": {
-      "column": 59,
-      "line": 116,
-    },
-    "parent": "element:Example:3",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 9,
-      "line": 120,
-    },
-    "parent": "element:Example:3:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:1:2": {
-    "index": 2,
-    "location": {
-      "column": 12,
-      "line": 127,
-    },
-    "parent": "element:Example:3:1",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:2": {
-    "index": 2,
-    "location": {
-      "column": 14,
-      "line": 128,
-    },
-    "parent": "element:Example:3",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 67,
-      "line": 129,
-    },
-    "parent": "element:Example:3:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 68,
-      "line": 130,
-    },
-    "parent": "element:Example:3:3:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:0": {
-    "index": 0,
-    "location": {
-      "column": 140,
-      "line": 131,
-    },
-    "parent": "element:Example:3:3:1:1",
-    "text": "
-              Announcing our next round of funding.",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:2": {
-    "index": 2,
-    "location": {
-      "column": 56,
-      "line": 132,
-    },
-    "parent": "element:Example:3:3:1:1",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:3:0": {
-    "index": 0,
-    "location": {
-      "column": 68,
-      "line": 133,
-    },
-    "parent": "element:Example:3:3:1:1:3",
-    "text": "
-                ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:3:2": {
-    "index": 2,
-    "location": {
-      "column": 72,
-      "line": 134,
-    },
-    "parent": "element:Example:3:3:1:1:3",
-    "text": "
-                Read more ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 51,
-      "line": 135,
-    },
-    "parent": "element:Example:3:3:1:1:3:3",
-    "text": "&rarr;",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:3:4": {
-    "index": 4,
-    "location": {
-      "column": 64,
-      "line": 135,
-    },
-    "parent": "element:Example:3:3:1:1:3",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:1:4": {
-    "index": 4,
-    "location": {
-      "column": 18,
-      "line": 136,
-    },
-    "parent": "element:Example:3:3:1:1",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:1:2": {
-    "index": 2,
-    "location": {
-      "column": 18,
-      "line": 137,
-    },
-    "parent": "element:Example:3:3:1",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:3:2": {
-    "index": 2,
-    "location": {
-      "column": 16,
-      "line": 138,
-    },
-    "parent": "element:Example:3:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 39,
-      "line": 139,
-    },
-    "parent": "element:Example:3:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 88,
-      "line": 140,
-    },
-    "parent": "element:Example:3:3:3:1",
-    "text": "
-              Data to enrich your online business
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:2": {
-    "index": 2,
-    "location": {
-      "column": 17,
-      "line": 142,
-    },
-    "parent": "element:Example:3:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:3:0": {
-    "index": 0,
-    "location": {
-      "column": 64,
-      "line": 143,
-    },
-    "parent": "element:Example:3:3:3:3",
-    "text": "
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-              fugiat aliqua.
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:4": {
-    "index": 4,
-    "location": {
-      "column": 16,
-      "line": 147,
-    },
-    "parent": "element:Example:3:3:3",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:0": {
-    "index": 0,
-    "location": {
-      "column": 76,
-      "line": 148,
-    },
-    "parent": "element:Example:3:3:3:5",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:1:0": {
-    "index": 0,
-    "location": {
-      "column": 15,
-      "line": 152,
-    },
-    "parent": "element:Example:3:3:3:5:1",
-    "text": "
-                Get started
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:2": {
-    "index": 2,
-    "location": {
-      "column": 18,
-      "line": 154,
-    },
-    "parent": "element:Example:3:3:3:5",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:3:0": {
-    "index": 0,
-    "location": {
-      "column": 15,
-      "line": 158,
-    },
-    "parent": "element:Example:3:3:3:5:3",
-    "text": "
-                Learn more ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:3:1:0": {
-    "index": 0,
-    "location": {
-      "column": 52,
-      "line": 159,
-    },
-    "parent": "element:Example:3:3:3:5:3:1",
-    "text": "→",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:3:2": {
-    "index": 2,
-    "location": {
-      "column": 60,
-      "line": 159,
-    },
-    "parent": "element:Example:3:3:3:5:3",
-    "text": "
-              ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:5:4": {
-    "index": 4,
-    "location": {
-      "column": 18,
-      "line": 160,
-    },
-    "parent": "element:Example:3:3:3:5",
-    "text": "
-            ",
-    "type": "text",
-  },
-  "text:Example:3:3:3:6": {
-    "index": 6,
-    "location": {
-      "column": 18,
-      "line": 161,
-    },
-    "parent": "element:Example:3:3:3",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:3:4": {
-    "index": 4,
-    "location": {
-      "column": 16,
-      "line": 162,
-    },
-    "parent": "element:Example:3:3",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:4": {
-    "index": 4,
-    "location": {
-      "column": 14,
-      "line": 163,
-    },
-    "parent": "element:Example:3",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:5:0": {
-    "index": 0,
-    "location": {
-      "column": 9,
-      "line": 167,
-    },
-    "parent": "element:Example:3:5",
-    "text": "
-          ",
-    "type": "text",
-  },
-  "text:Example:3:5:2": {
-    "index": 2,
-    "location": {
-      "column": 12,
-      "line": 174,
-    },
-    "parent": "element:Example:3:5",
-    "text": "
-        ",
-    "type": "text",
-  },
-  "text:Example:3:6": {
-    "index": 6,
-    "location": {
-      "column": 14,
-      "line": 175,
-    },
-    "parent": "element:Example:3",
-    "text": "
-      ",
-    "type": "text",
-  },
-  "text:Example:4": {
-    "index": 4,
-    "location": {
-      "column": 12,
-      "line": 176,
-    },
-    "parent": "element:Example",
-    "text": "
-    ",
-    "type": "text",
-  },
-  "wrapper:Example:1:1:5:1": {
-    "footer": "
-            ))}",
-    "header": "{navigation.map((item) => (
-              ",
-    "index": 1,
-    "location": {
-      "column": 12,
-      "line": 44,
-    },
-    "parent": "element:Example:1:1:5",
-    "type": "wrappingExpression",
-  },
-  "wrapper:Example:1:3:3:3:1:1:1": {
-    "footer": "
-                  ))}",
-    "header": "{navigation.map((item) => (
-                    ",
-    "index": 1,
-    "location": {
-      "column": 18,
-      "line": 92,
-    },
-    "parent": "element:Example:1:3:3:3:1:1",
-    "type": "wrappingExpression",
   },
 }
 `;
@@ -2344,72 +2344,50 @@ export function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className=\\"bg-white\\" data-windmixid=\\"element:Example\\">
-      <header
-        className=\\"absolute inset-x-0 top-0 z-50\\"
-        data-windmixid=\\"element:Example:1\\"
-      >
+    <div className=\\"bg-white\\" data-windmixid=\\"1\\">
+      <header className=\\"absolute inset-x-0 top-0 z-50\\" data-windmixid=\\"3\\">
         <nav
           className=\\"flex items-center justify-between p-6 lg:px-8\\"
           aria-label=\\"Global\\"
-          data-windmixid=\\"element:Example:1:1\\"
+          data-windmixid=\\"5\\"
         >
-          <div
-            className=\\"flex lg:flex-1\\"
-            data-windmixid=\\"element:Example:1:1:1\\"
-          >
-            <a
-              href=\\"#\\"
-              className=\\"-m-1.5 p-1.5\\"
-              data-windmixid=\\"element:Example:1:1:1:1\\"
-            >
-              <span
-                className=\\"sr-only\\"
-                data-windmixid=\\"element:Example:1:1:1:1:1\\"
-              >
-                <b data-windmixid=\\"element:Example:1:1:1:1:1:1\\">Your</b> Company
+          <div className=\\"flex lg:flex-1\\" data-windmixid=\\"7\\">
+            <a href=\\"#\\" className=\\"-m-1.5 p-1.5\\" data-windmixid=\\"9\\">
+              <span className=\\"sr-only\\" data-windmixid=\\"11\\">
+                <b data-windmixid=\\"13\\">Your</b> Company
               </span>
               <img
                 className=\\"h-8 w-auto\\"
                 src=\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"
                 alt=\\"\\"
-                data-windmixid=\\"element:Example:1:1:1:1:3\\"
+                data-windmixid=\\"17\\"
               />
             </a>
           </div>
-          <div
-            className=\\"flex lg:hidden\\"
-            data-windmixid=\\"element:Example:1:1:3\\"
-          >
+          <div className=\\"flex lg:hidden\\" data-windmixid=\\"21\\">
             <button
               type=\\"button\\"
               className=\\"-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700\\"
               onClick={() => setMobileMenuOpen(true)}
-              data-windmixid=\\"element:Example:1:1:3:1\\"
+              data-windmixid=\\"23\\"
             >
-              <span
-                className=\\"sr-only\\"
-                data-windmixid=\\"element:Example:1:1:3:1:1\\"
-              >
+              <span className=\\"sr-only\\" data-windmixid=\\"25\\">
                 Open main menu
               </span>
               <Bars3Icon
                 className=\\"h-6 w-6\\"
                 aria-hidden=\\"true\\"
-                data-windmixid=\\"element:Example:1:1:3:1:3\\"
+                data-windmixid=\\"28\\"
               />
             </button>
           </div>
-          <div
-            className=\\"hidden lg:flex lg:gap-x-12\\"
-            data-windmixid=\\"element:Example:1:1:5\\"
-          >
+          <div className=\\"hidden lg:flex lg:gap-x-12\\" data-windmixid=\\"32\\">
             {navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 className=\\"text-sm font-semibold leading-6 text-gray-900\\"
-                data-windmixid=\\"element:Example:1:1:5:1:1\\"
+                data-windmixid=\\"35\\"
               >
                 {item.name}
               </a>
@@ -2417,18 +2395,15 @@ export function Example() {
           </div>
           <div
             className=\\"hidden lg:flex lg:flex-1 lg:justify-end\\"
-            data-windmixid=\\"element:Example:1:1:7\\"
+            data-windmixid=\\"41\\"
           >
             <a
               href=\\"#\\"
               className=\\"text-sm font-semibold leading-6 text-gray-900\\"
-              data-windmixid=\\"element:Example:1:1:7:1\\"
+              data-windmixid=\\"43\\"
             >
               Log in{\\" \\"}
-              <span
-                aria-hidden=\\"true\\"
-                data-windmixid=\\"element:Example:1:1:7:1:1\\"
-              >
+              <span aria-hidden=\\"true\\" data-windmixid=\\"45\\">
                 &rarr;
               </span>
             </a>
@@ -2439,88 +2414,66 @@ export function Example() {
           className=\\"lg:hidden\\"
           open={mobileMenuOpen}
           onClose={setMobileMenuOpen}
-          data-windmixid=\\"element:Example:1:3\\"
+          data-windmixid=\\"51\\"
         >
-          <div
-            className=\\"fixed inset-0 z-50\\"
-            data-windmixid=\\"element:Example:1:3:1\\"
-          />
+          <div className=\\"fixed inset-0 z-50\\" data-windmixid=\\"53\\" />
           <Dialog.Panel
             className=\\"fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10\\"
-            data-windmixid=\\"element:Example:1:3:3\\"
+            data-windmixid=\\"55\\"
           >
             <div
               className=\\"flex items-center justify-between\\"
-              data-windmixid=\\"element:Example:1:3:3:1\\"
+              data-windmixid=\\"57\\"
             >
-              <a
-                href=\\"#\\"
-                className=\\"-m-1.5 p-1.5\\"
-                data-windmixid=\\"element:Example:1:3:3:1:1\\"
-              >
-                <span
-                  className=\\"sr-only\\"
-                  data-windmixid=\\"element:Example:1:3:3:1:1:1\\"
-                >
+              <a href=\\"#\\" className=\\"-m-1.5 p-1.5\\" data-windmixid=\\"59\\">
+                <span className=\\"sr-only\\" data-windmixid=\\"61\\">
                   Your Company
                 </span>
                 <img
                   className=\\"h-8 w-auto\\"
                   src=\\"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600\\"
                   alt=\\"\\"
-                  data-windmixid=\\"element:Example:1:3:3:1:1:3\\"
+                  data-windmixid=\\"64\\"
                 />
               </a>
               <button
                 type=\\"button\\"
                 className=\\"-m-2.5 rounded-md p-2.5 text-gray-700\\"
                 onClick={() => setMobileMenuOpen(false)}
-                data-windmixid=\\"element:Example:1:3:3:1:3\\"
+                data-windmixid=\\"67\\"
               >
-                <span
-                  className=\\"sr-only\\"
-                  data-windmixid=\\"element:Example:1:3:3:1:3:1\\"
-                >
+                <span className=\\"sr-only\\" data-windmixid=\\"69\\">
                   Close menu
                 </span>
                 <XMarkIcon
                   className=\\"h-6 w-6\\"
                   aria-hidden=\\"true\\"
-                  data-windmixid=\\"element:Example:1:3:3:1:3:3\\"
+                  data-windmixid=\\"72\\"
                 />
               </button>
             </div>
-            <div
-              className=\\"mt-6 flow-root\\"
-              data-windmixid=\\"element:Example:1:3:3:3\\"
-            >
+            <div className=\\"mt-6 flow-root\\" data-windmixid=\\"76\\">
               <div
                 className=\\"-my-6 divide-y divide-gray-500/10\\"
-                data-windmixid=\\"element:Example:1:3:3:3:1\\"
+                data-windmixid=\\"78\\"
               >
-                <div
-                  className=\\"space-y-2 py-6\\"
-                  data-windmixid=\\"element:Example:1:3:3:3:1:1\\"
-                >
+                <div className=\\"space-y-2 py-6\\" data-windmixid=\\"80\\">
                   {navigation.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
                       className=\\"-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"
-                      data-windmixid=\\"element:Example:1:3:3:3:1:1:1:1\\"
+                      data-windmixid=\\"83\\"
                     >
                       {item.name}
                     </a>
                   ))}
                 </div>
-                <div
-                  className=\\"py-6\\"
-                  data-windmixid=\\"element:Example:1:3:3:3:1:3\\"
-                >
+                <div className=\\"py-6\\" data-windmixid=\\"89\\">
                   <a
                     href=\\"#\\"
                     className=\\"-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50\\"
-                    data-windmixid=\\"element:Example:1:3:3:3:1:3:1\\"
+                    data-windmixid=\\"91\\"
                   >
                     Log in
                   </a>
@@ -2531,14 +2484,11 @@ export function Example() {
         </Dialog>
       </header>
 
-      <div
-        className=\\"relative isolate px-6 pt-14 lg:px-8\\"
-        data-windmixid=\\"element:Example:3\\"
-      >
+      <div className=\\"relative isolate px-6 pt-14 lg:px-8\\" data-windmixid=\\"100\\">
         <div
           className=\\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\\"
           aria-hidden=\\"true\\"
-          data-windmixid=\\"element:Example:3:1\\"
+          data-windmixid=\\"102\\"
         >
           <div
             className=\\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\\"
@@ -2546,52 +2496,49 @@ export function Example() {
               clipPath:
                 \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
             }}
-            data-windmixid=\\"element:Example:3:1:1\\"
+            data-windmixid=\\"104\\"
           />
         </div>
         <div
           className=\\"mx-auto max-w-2xl py-32 sm:py-48 lg:py-56\\"
-          data-windmixid=\\"element:Example:3:3\\"
+          data-windmixid=\\"107\\"
         >
           <div
             className=\\"hidden sm:mb-8 sm:flex sm:justify-center\\"
-            data-windmixid=\\"element:Example:3:3:1\\"
+            data-windmixid=\\"109\\"
           >
             <div
               className=\\"relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20\\"
-              data-windmixid=\\"element:Example:3:3:1:1\\"
+              data-windmixid=\\"111\\"
             >
               Announcing our next round of funding.{\\" \\"}
               <a
                 href=\\"#\\"
                 className=\\"font-semibold text-indigo-600\\"
-                data-windmixid=\\"element:Example:3:3:1:1:3\\"
+                data-windmixid=\\"115\\"
               >
                 <span
                   className=\\"absolute inset-0\\"
                   aria-hidden=\\"true\\"
-                  data-windmixid=\\"element:Example:3:3:1:1:3:1\\"
+                  data-windmixid=\\"117\\"
                 />
                 Read more{\\" \\"}
-                <span
-                  aria-hidden=\\"true\\"
-                  data-windmixid=\\"element:Example:3:3:1:1:3:3\\"
-                >
+                <span aria-hidden=\\"true\\" data-windmixid=\\"119\\">
                   &rarr;
                 </span>
               </a>
             </div>
           </div>
-          <div className=\\"text-center\\" data-windmixid=\\"element:Example:3:3:3\\">
+          <div className=\\"text-center\\" data-windmixid=\\"125\\">
             <h1
               className=\\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\\"
-              data-windmixid=\\"element:Example:3:3:3:1\\"
+              data-windmixid=\\"127\\"
             >
               Data to enrich your online business
             </h1>
             <p
               className=\\"mt-6 text-lg leading-8 text-gray-600\\"
-              data-windmixid=\\"element:Example:3:3:3:3\\"
+              data-windmixid=\\"130\\"
             >
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
               lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
@@ -2599,25 +2546,22 @@ export function Example() {
             </p>
             <div
               className=\\"mt-10 flex items-center justify-center gap-x-6\\"
-              data-windmixid=\\"element:Example:3:3:3:5\\"
+              data-windmixid=\\"133\\"
             >
               <a
                 href=\\"#\\"
                 className=\\"rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600\\"
-                data-windmixid=\\"element:Example:3:3:3:5:1\\"
+                data-windmixid=\\"135\\"
               >
                 Get started
               </a>
               <a
                 href=\\"#\\"
                 className=\\"text-sm font-semibold leading-6 text-gray-900\\"
-                data-windmixid=\\"element:Example:3:3:3:5:3\\"
+                data-windmixid=\\"138\\"
               >
                 Learn more{\\" \\"}
-                <span
-                  aria-hidden=\\"true\\"
-                  data-windmixid=\\"element:Example:3:3:3:5:3:1\\"
-                >
+                <span aria-hidden=\\"true\\" data-windmixid=\\"140\\">
                   →
                 </span>
               </a>
@@ -2627,7 +2571,7 @@ export function Example() {
         <div
           className=\\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\\"
           aria-hidden=\\"true\\"
-          data-windmixid=\\"element:Example:3:5\\"
+          data-windmixid=\\"147\\"
         >
           <div
             className=\\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\\"
@@ -2635,7 +2579,7 @@ export function Example() {
               clipPath:
                 \\"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)\\",
             }}
-            data-windmixid=\\"element:Example:3:5:1\\"
+            data-windmixid=\\"149\\"
           />
         </div>
       </div>

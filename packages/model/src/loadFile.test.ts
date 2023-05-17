@@ -22,16 +22,31 @@ describe("File load/stringify", () => {
   it("should load a file", () => {
     const doc = new Document();
 
-    const file = loadFile(doc, "/demo.js", demoFile);
+    let id = 0;
+    const generateID = () => {
+      id += 1;
+      return String(id);
+    };
+
+    const file = loadFile(doc, "/demo.js", demoFile, generateID);
 
     expect(file.filePath).toEqual("/demo.js");
     expect(file.childCount).toEqual(1);
-    expect(doc.nodesData.toJSON()).toMatchSnapshot("nodes");
+    const nodesJSON = doc.nodesData.toJSON();
+    expect(nodesJSON).toMatchSnapshot("nodes");
 
     expect(file.stringify()).toEqual(demoFile);
     expect(formatJS(file.stringify({ id: true }))).toMatchSnapshot(
       "stringifyWithID"
     );
+
+    loadFile(doc, "/demo.js", demoFile, generateID);
+    // ID should be the same
+    expect(doc.nodesData.toJSON()).toEqual(nodesJSON);
+  });
+
+  it("should load example files", () => {
+    const doc = new Document();
 
     const exampleDir = path.resolve(__dirname, "../../example/src");
     const exampleFiles = fs.readdirSync(exampleDir);
