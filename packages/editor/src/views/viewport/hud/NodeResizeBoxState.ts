@@ -79,11 +79,24 @@ export class NodeResizeBoxState {
       resizeWithBoundingBox(this.artboard, instance, newBBox, {
         width: this.widthChanged,
         height: this.heightChanged,
+        preview: true,
       });
+      this.newBBox = newBBox;
     }
   }
+  newBBox: Rect | undefined;
 
   end() {
+    if (this.newBBox) {
+      for (const [instance] of this.initBoundingBoxes) {
+        resizeWithBoundingBox(this.artboard, instance, this.newBBox, {
+          width: this.widthChanged,
+          height: this.heightChanged,
+        });
+      }
+      this.newBBox = undefined;
+    }
+
     this.initBoundingBoxes.clear();
 
     if (!this.widthChanged && !this.heightChanged) {
