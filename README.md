@@ -13,3 +13,4 @@ code .
 ```
 
 Then press <kbd>F5</kbd> to run the extension in a new VS Code window.
+Open `packages/example` directory to try out the editor.
