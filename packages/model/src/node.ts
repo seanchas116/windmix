@@ -153,6 +153,8 @@ export interface SpreadAttribute {
   trailingSpace: string;
 }
 
+export const EXPRESSION = Symbol("EXPRESSION");
+
 // JSXElement
 export class ElementNode extends BaseNode<
   typeof nodeTypes,
@@ -181,21 +183,27 @@ export class ElementNode extends BaseNode<
     this.data.set({ attributes });
   }
 
-  get className(): string | undefined {
+  get className(): string | typeof EXPRESSION | undefined {
     for (const attribute of this.attributes) {
       if (
         "name" in attribute &&
         attribute.name === "className" &&
-        attribute.value &&
-        attribute.value.startsWith('"')
+        attribute.value
       ) {
-        return attribute.value.slice(1, -1);
+        if (attribute.value.startsWith('"')) {
+          return attribute.value.slice(1, -1);
+        } else {
+          return EXPRESSION;
+        }
       }
     }
   }
 
-  set className(className: string | undefined) {
+  set className(className: string | typeof EXPRESSION | undefined) {
     if (className === this.className) {
+      return;
+    }
+    if (className === EXPRESSION) {
       return;
     }
 
