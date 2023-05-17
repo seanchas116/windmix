@@ -92,7 +92,10 @@ export class EditorSession {
         }
       }),
       vscode.workspace.onDidChangeTextDocument((event) => {
-        if (this._textEditor?.document === event.document) {
+        if (
+          event.contentChanges.length &&
+          this._textEditor?.document === event.document
+        ) {
           this.reloadTextDocument();
         }
       })
