@@ -3,7 +3,6 @@ import { appState } from "./AppState";
 import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { RendererAdapter } from "./RendererAdapter";
-import { compact } from "lodash-es";
 import { Measurement } from "./Measurement";
 import { Snapper } from "./Snapper";
 

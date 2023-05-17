@@ -8,9 +8,8 @@ import * as Y from "yjs";
 import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
-import { TailwindStyle } from "../models/style/TailwindStyle";
-import { artboards } from "./Artboard";
 import { Tool } from "./Tool";
+import { ElementStyle } from "./ElementStyle";
 
 const vscode = acquireVsCodeApi();
 
@@ -117,11 +116,11 @@ export class AppState {
     this.connection.rpc.remote.jumpToLocation(location);
   }
 
-  @computed get tailwindStyles(): NodeTailwindStyle[] {
-    const targets: NodeTailwindStyle[] = [];
+  @computed get tailwindStyles(): ElementStyle[] {
+    const targets: ElementStyle[] = [];
     for (const node of this.document.selectedNodes.values()) {
       if (node.type === "element") {
-        targets.push(new NodeTailwindStyle(node));
+        targets.push(ElementStyle.get(node));
       }
     }
     return targets;
@@ -131,50 +130,9 @@ export class AppState {
   @observable tool: Tool | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;
-
-  readonly elementStates = new WeakMap<ElementNode, ElementState>();
-
-  elementState(elementNode: ElementNode): ElementState {
-    let state = this.elementStates.get(elementNode);
-    if (!state) {
-      state = new ElementState(elementNode);
-      this.elementStates.set(elementNode, state);
-    }
-    return state;
-  }
 }
 
 export const appState = new AppState();
-
-export class ElementState {
-  constructor(node: ElementNode) {
-    this.node = node;
-    this.style = new NodeTailwindStyle(node);
-  }
-
-  readonly node: ElementNode;
-  readonly style: NodeTailwindStyle;
-}
-
-export class NodeTailwindStyle extends TailwindStyle {
-  constructor(node: ElementNode) {
-    super();
-    this.node = node;
-  }
-  node: ElementNode;
-
-  get className(): string {
-    return this.node.className ?? "";
-  }
-
-  set className(value: string) {
-    this.node.className = value;
-
-    artboards.all.forEach((locator) => {
-      locator.setClassName(this.node, value);
-    });
-  }
-}
 
 class NodeStyleInspectorTarget implements StyleInspectorTarget {
   constructor(element: ElementNode) {
