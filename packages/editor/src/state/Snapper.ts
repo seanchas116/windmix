@@ -80,6 +80,7 @@ export class Snapper {
       siblings.delete(selectable);
     }
 
+    // TODO: support snapping in repeated elements (e.g. elements inside a loop)
     const siblingMeasures = await Promise.all(
       [...siblings].map((c) => this.artboard.measureFirst(c))
     );
