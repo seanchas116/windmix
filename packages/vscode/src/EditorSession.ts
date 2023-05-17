@@ -11,6 +11,7 @@ import {
 import { ViewState } from "../../editor/src/types/ViewState";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import { devServer } from "./extension";
+//import * as Diff from "diff";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(
@@ -103,8 +104,8 @@ export class EditorSession {
 
       const textEditor = this._textEditor;
       if (textEditor) {
+        const newText = this._document.nodes.get("file")?.stringify() ?? "";
         textEditor.edit((editBuilder) => {
-          const newText = this._document.nodes.get("file")?.stringify() ?? "";
           const oldText = textEditor.document.getText();
           if (newText === oldText) {
             // TODO: compare by AST?
@@ -119,6 +120,8 @@ export class EditorSession {
             newText
           );
         });
+        this._lastSetText = newText;
+        console.log("set lastSetText");
       }
     });
     this._document.ydoc.on("update", onDocUpdate);
@@ -222,6 +225,7 @@ export class EditorSession {
 
   private _panel: vscode.WebviewPanel;
   private _textEditor: vscode.TextEditor | undefined;
+  private _lastSetText: string | undefined;
   private _document = new Document();
 
   get textEditor(): vscode.TextEditor | undefined {
@@ -234,6 +238,7 @@ export class EditorSession {
     }
 
     this._textEditor = textEditor;
+    this._lastSetText = undefined;
     this._panel.title = this.titleForEditor(textEditor);
     this.reloadTextDocument();
   }
@@ -244,10 +249,16 @@ export class EditorSession {
     }
     const filePath = this.projectPathForEditor(this._textEditor);
     const code = this._textEditor.document.getText();
-    const file = loadFile(this._document, filePath, code);
+
+    //console.log(Diff.diffLines(code, this._lastSetText ?? ""));
+    if (code !== this._lastSetText) {
+      console.log("reload");
+      loadFile(this._document, filePath, code);
+    }
 
     if (devServer) {
-      devServer.setPreview(filePath, file.stringify({ id: true }));
+      const file = this._document.fileNode;
+      devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
     }
   }
 
