@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
-import { ElementStyle } from "../../state/ElementStyle";
 import { NodeResizeBox } from "./hud/NodeResizeBox";
 
 export const Renderer: React.FC<{
@@ -72,8 +71,7 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
               text.text = "Hello World";
               element.append([text]);
             } else {
-              const style = ElementStyle.get(element);
-              style.className = "w-20 h-20 bg-blue-300";
+              element.className = "w-20 h-20 bg-blue-300";
             }
             node.append([element]);
             appState.document.deselectAll();

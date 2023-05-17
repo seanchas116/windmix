@@ -106,8 +106,12 @@ function stringifyTailwindValue(value: TailwindValue): string {
   }
 }
 
-export abstract class TailwindStyle {
-  abstract className: string;
+export class TailwindStyle {
+  constructor(className = "") {
+    this.className = className;
+  }
+
+  className: string;
 
   get classNames(): string[] {
     return this.className.trim().split(/\s+/);

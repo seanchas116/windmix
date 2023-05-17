@@ -3,10 +3,13 @@ import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import {
   TailwindStyleKey,
   ResolvedTailwindValue,
+  TailwindValue,
 } from "../../../models/style/TailwindStyle";
 import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { appState } from "../../../state/AppState";
 import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
+import { getElementTailwindStyle } from "../../../state/getElementTailwindStyle";
+import { artboards } from "../../../state/Artboard";
 
 export const StyleComboBox: React.FC<{
   className?: string;
@@ -15,7 +18,20 @@ export const StyleComboBox: React.FC<{
   property: TailwindStyleKey;
   tokens: Map<string, string>;
 }> = observer(({ className, tooltip, property, tokens, icon }) => {
-  const styles = appState.tailwindStyles;
+  const elements = appState.document.selectedElements;
+  const styles = elements.map(getElementTailwindStyle);
+
+  const setValue = (value: TailwindValue | undefined) => {
+    for (const element of elements) {
+      const style = getElementTailwindStyle(element);
+      style[property].value = value;
+
+      element.className = style.className;
+      for (const artboard of artboards.all) {
+        artboard.setClassName(element, style.className);
+      }
+    }
+  };
 
   const value = sameOrNone(styles.map((s) => s[property].value));
 
@@ -53,25 +69,15 @@ export const StyleComboBox: React.FC<{
           : undefined
       }
       onChange={(value) => {
-        for (const style of styles) {
-          style[property].value = value
-            ? {
-                type: "arbitrary",
-                value,
-              }
-            : undefined;
-        }
+        setValue(value ? { type: "arbitrary", value } : undefined);
         return true;
       }}
       onSelectChange={(keyword) => {
-        for (const style of styles) {
-          style[property].value = keyword
-            ? ({
-                type: "keyword",
-                keyword,
-              } as ResolvedTailwindValue)
-            : undefined;
-        }
+        setValue(
+          keyword
+            ? ({ type: "keyword", keyword } as ResolvedTailwindValue)
+            : undefined
+        );
         return true;
       }}
     />

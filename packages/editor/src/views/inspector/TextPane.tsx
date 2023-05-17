@@ -1,26 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { appState } from "../../state/AppState";
-import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import {
-  TailwindStyle,
-  colors,
-  fontSizes,
-  fontWeights,
-} from "../../models/style/TailwindStyle";
+import { fontSizes, fontWeights } from "../../models/style/TailwindStyle";
 import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
   Row11,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { ColorInput } from "@seanchas116/paintkit/src/components/css/ColorInput";
 import { Icon } from "@iconify/react";
-import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { StyleIconRadio } from "./common/StyleIconRadio";
+import { StyleColorInput } from "./common/StyleColorInput";
 
 const textAlignOptions = [
   {
@@ -41,15 +33,12 @@ const textAlignOptions = [
 ];
 
 export const TextPane: React.FC = observer(() => {
-  const styles = appState.tailwindStyles;
-  const textAlign = sameOrNone(styles.map((s) => s.textAlign.value));
-
   return (
     <Pane>
       <PaneHeadingRow>
         <PaneHeading>Text</PaneHeading>
       </PaneHeadingRow>
-      <ColorComboBox styles={styles} />
+      <StyleColorInput property="color" />
       <Row11>
         <StyleComboBox
           tooltip="Font Size"
@@ -68,31 +57,3 @@ export const TextPane: React.FC = observer(() => {
     </Pane>
   );
 });
-
-const ColorComboBox: React.FC<{ styles: TailwindStyle[] }> = observer(
-  ({ styles }) => {
-    const value = sameOrNone(styles.map((s) => s.color.value));
-
-    return (
-      <ColorInput
-        value={value?.value}
-        tokenValue={value?.type === "keyword" ? value.keyword : undefined}
-        tokens={colors}
-        onChange={(value) => {
-          for (const style of styles) {
-            style.color.value = value
-              ? { type: "arbitrary", value }
-              : undefined;
-          }
-        }}
-        onTokenChange={(keyword) => {
-          for (const style of styles) {
-            style.color.value = keyword
-              ? { type: "keyword", keyword }
-              : undefined;
-          }
-        }}
-      />
-    );
-  }
-);

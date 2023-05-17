@@ -1,6 +1,6 @@
 import * as Y from "yjs";
 import { computed, makeObservable } from "mobx";
-import { FileNode, Node, NodeMap } from "./node";
+import { ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 
 export class Document {
@@ -37,6 +37,12 @@ export class Document {
       if (node) nodes.push(node);
     }
     return nodes;
+  }
+
+  @computed get selectedElements(): ElementNode[] {
+    return this.selectedNodes.filter(
+      (node): node is ElementNode => node.type === "element"
+    );
   }
 
   deselectAll(): void {

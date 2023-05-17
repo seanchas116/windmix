@@ -18,9 +18,12 @@ import { appState } from "../../state/AppState";
 import { StyleComboBox } from "./common/StyleComboBox";
 import { useOnSelectionChange } from "./common/useOnSelectionChange";
 import { isEqual } from "lodash-es";
+import { getElementTailwindStyle } from "../../state/getElementTailwindStyle";
 
 export const PaddingPane: React.FC = observer(() => {
-  const styles = appState.tailwindStyles;
+  const styles = appState.document.selectedElements.map(
+    getElementTailwindStyle
+  );
 
   const [open, setOpen] = useState(false);
   const [separate, setSeparate] = useState(true);

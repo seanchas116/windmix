@@ -9,7 +9,6 @@ import { Node, Document, FileNode, ElementNode } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { Tool } from "./Tool";
-import { ElementStyle } from "./ElementStyle";
 import { Rect } from "paintvec";
 
 const vscode = acquireVsCodeApi();
@@ -115,16 +114,6 @@ export class AppState {
   }
   jumpToLocation(location: { line: number; column: number }): void {
     this.connection.rpc.remote.jumpToLocation(location);
-  }
-
-  @computed get tailwindStyles(): ElementStyle[] {
-    const targets: ElementStyle[] = [];
-    for (const node of this.document.selectedNodes.values()) {
-      if (node.type === "element") {
-        targets.push(ElementStyle.get(node));
-      }
-    }
-    return targets;
   }
 
   @observable hover: Node | undefined = undefined;

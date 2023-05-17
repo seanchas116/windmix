@@ -1,7 +1,7 @@
 import { ElementNode } from "@windmix/model";
 import { Rect } from "paintvec";
 import { Artboard } from "../../../state/Artboard";
-import { ElementStyle } from "../../../state/ElementStyle";
+import { getElementTailwindStyle } from "../../../state/getElementTailwindStyle";
 
 export async function resizeWithBoundingBox(
   artboard: Artboard,
@@ -24,7 +24,7 @@ export async function resizeWithBoundingBox(
     return;
   }
 
-  const style = ElementStyle.get(element);
+  const style = getElementTailwindStyle(element);
 
   if (targets.x) {
     const left = bbox.left - parentComputed.paddingRect.left;
@@ -41,4 +41,6 @@ export async function resizeWithBoundingBox(
   if (targets.height) {
     style.height.arbitraryValue = `${bbox.height}px`;
   }
+
+  element.className = style.className;
 }
