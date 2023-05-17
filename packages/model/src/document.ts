@@ -30,13 +30,10 @@ export class Document {
   }
 
   @computed get selectedNodes(): Node[] {
-    const idPaths = Array.from(this.selectionData.keys());
-    const fileNode = this.fileNode;
-    if (!fileNode) return [];
-
+    const ids = Array.from(this.selectionData.keys());
     const nodes: Node[] = [];
-    for (const idPath of idPaths) {
-      const node = fileNode.getByPath(idPath.split(",").map(Number));
+    for (const id of ids) {
+      const node = this.nodes.get(id);
       if (node) nodes.push(node);
     }
     return nodes;
