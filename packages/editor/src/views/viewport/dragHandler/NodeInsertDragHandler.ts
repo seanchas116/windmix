@@ -69,6 +69,8 @@ export async function createNodeInsertDragHandler(
 
     async end() {
       appState.tool = undefined;
+
+      // TODO: auto-include absolute children
     },
   };
 }
