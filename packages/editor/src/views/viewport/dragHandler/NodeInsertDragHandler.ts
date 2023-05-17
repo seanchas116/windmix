@@ -3,7 +3,6 @@ import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { InsertMode } from "../../../state/Tool";
-import { ElementStyle } from "../../../state/ElementStyle";
 import { resizeWithBoundingBox } from "./resizeWithBoundingBox";
 import { appState } from "../../../state/AppState";
 
@@ -30,8 +29,7 @@ export async function createNodeInsertDragHandler(
     text.text = "Hello World";
     element.append([text]);
   } else {
-    const style = ElementStyle.get(element);
-    style.className = "w-20 h-20 bg-blue-300";
+    element.className = "w-20 h-20 bg-blue-300";
   }
 
   await resizeWithBoundingBox(
