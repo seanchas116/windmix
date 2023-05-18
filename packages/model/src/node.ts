@@ -65,6 +65,12 @@ export abstract class BaseNode<
     return this._selected;
   }
 
+  @computed get ancestorSelected(): boolean {
+    return (
+      this.selected || !!(this.parent as this | undefined)?.ancestorSelected
+    );
+  }
+
   select(): void {
     this._selected = true;
     for (const child of this.children as this[]) {
