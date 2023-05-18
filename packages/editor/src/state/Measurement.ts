@@ -2,6 +2,7 @@ import { ElementNode } from "@windmix/model";
 import { Rect } from "paintvec";
 
 export interface ComputedStyle {
+  position: string;
   display: string;
   flexDirection: string;
 
@@ -36,6 +37,7 @@ export class Measurement {
     this.node = node;
     this.rect = data?.rect ? Rect.from(data.rect) : new Rect();
     this.style = data?.style ?? {
+      position: "static",
       display: "block",
       flexDirection: "row",
       marginTop: "0px",

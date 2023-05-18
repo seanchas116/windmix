@@ -129,6 +129,7 @@ export class DevServer {
                             height: rect.height,
                           },
                           style: {
+                            position: style.position,
                             display: style.display,
                             flexDirection: style.flexDirection,
                             marginTop: style.marginTop,
