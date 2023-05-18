@@ -2,7 +2,6 @@ import { action } from "mobx";
 import React, { useMemo } from "react";
 import { Vec2 } from "paintvec";
 import { observer } from "mobx-react-lite";
-import { appState } from "../../../state/AppState";
 import { Artboard } from "../../../state/Artboard";
 import { ResizeBox } from "@seanchas116/paintkit/src/components/ResizeBox";
 import { NodeResizeBoxState } from "./NodeResizeBoxState";
@@ -12,7 +11,7 @@ export const NodeResizeBox: React.FC<{
 }> = observer(function NodeResizeBox({ artboard }) {
   const state = useMemo(() => new NodeResizeBoxState(artboard), [artboard]);
 
-  if (appState.dragPreviewRects.length) {
+  if (artboard.dragPreviewRects.length) {
     return null;
   }
 
