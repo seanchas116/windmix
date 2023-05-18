@@ -82,9 +82,9 @@ export class Snapper {
 
     // TODO: support snapping in repeated elements (e.g. elements inside a loop)
     const siblingMeasures = await Promise.all(
-      [...siblings].map((c) => this.artboard.getMeasurement(c))
+      [...siblings].map((c) => this.artboard.getComputation(c))
     );
-    const parentMeasure = await this.artboard.getMeasurement(parent);
+    const parentMeasure = await this.artboard.getComputation(parent);
 
     return [...siblingMeasures.map((m) => m.rect), parentMeasure.paddingRect];
   }

@@ -22,7 +22,7 @@ export interface ComputedStyle {
   paddingLeft: string;
 }
 
-export interface MeasurementData {
+export interface ComputationData {
   rect: {
     x: number;
     y: number;
@@ -32,8 +32,8 @@ export interface MeasurementData {
   style: ComputedStyle;
 }
 
-export class Measurement {
-  constructor(node: ElementNode, data?: MeasurementData) {
+export class Computation {
+  constructor(node: ElementNode, data?: ComputationData) {
     this.node = node;
     this.rect = data?.rect ? Rect.from(data.rect) : new Rect();
     this.style = data?.style ?? {

@@ -27,7 +27,7 @@ export async function createNodeMoveDragHandler(
 
   for (const s of selectables) {
     // TODO: use Promise.all
-    const dims = await artboard.getMeasurement(s);
+    const dims = await artboard.getComputation(s);
 
     targets.set(s, {
       rect: dims.rect,
@@ -161,20 +161,20 @@ export async function findDropDestination(
     throw new Error("No parent found");
   }
 
-  const parentMeasurement = await artboard.getMeasurement(parent);
+  const parentComputation = await artboard.getComputation(parent);
 
-  const childrenWithMeasurements = await Promise.all(
+  const childrenWithComputations = await Promise.all(
     parent.children
       .filter((c): c is ElementNode => c.type === "element")
-      .map((c) => artboard.getMeasurement(c).then((m) => [c, m] as const))
+      .map((c) => artboard.getComputation(c).then((m) => [c, m] as const))
   );
-  const inFlowChildren = childrenWithMeasurements.filter(
+  const inFlowChildren = childrenWithComputations.filter(
     ([, m]) => m.style.position !== "absolute"
   );
 
   const direction =
-    parentMeasurement.style.display === "flex" &&
-    parentMeasurement.style.flexDirection === "row"
+    parentComputation.style.display === "flex" &&
+    parentComputation.style.flexDirection === "row"
       ? "x"
       : "y"; // TODO: x
 
@@ -186,18 +186,18 @@ export async function findDropDestination(
   if (index === 0) {
     return {
       parent,
-      parentRect: parentMeasurement.rect,
+      parentRect: parentComputation.rect,
       ref: inFlowChildren[0][0],
-      insertionLine: parentMeasurement.rect.startLines.y,
+      insertionLine: parentComputation.rect.startLines.y,
     };
   }
   // last
   if (index === -1) {
     return {
       parent,
-      parentRect: parentMeasurement.rect,
+      parentRect: parentComputation.rect,
       ref: undefined,
-      insertionLine: parentMeasurement.rect.endLines.y,
+      insertionLine: parentComputation.rect.endLines.y,
     };
   }
 
@@ -206,7 +206,7 @@ export async function findDropDestination(
 
   return {
     parent,
-    parentRect: parentMeasurement.rect,
+    parentRect: parentComputation.rect,
     ref: next[0],
     insertionLine: next[1].rect.startLines[direction].mix(
       prev[1].rect.endLines[direction],

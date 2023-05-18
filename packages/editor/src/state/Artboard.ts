@@ -3,7 +3,7 @@ import { appState } from "./AppState";
 import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { RendererAdapter } from "./RendererAdapter";
-import { Measurement } from "./Measurement";
+import { Computation } from "./Computation";
 import { Snapper } from "./Snapper";
 import { DropDestination } from "./DropDestination";
 
@@ -46,29 +46,29 @@ export class Artboard {
     this.adapter.setPreviewClassName(node, className);
   }
 
-  private measurementsCaches = new WeakMap<ElementNode, MeasurementsCache>();
+  private computationCaches = new WeakMap<ElementNode, ComputationCache>();
 
-  private getMeasurementsCache(node: ElementNode): MeasurementsCache {
-    let computation = this.measurementsCaches.get(node);
+  private getComputationCache(node: ElementNode): ComputationCache {
+    let computation = this.computationCaches.get(node);
     if (!computation) {
-      computation = new MeasurementsCache(node, this);
-      this.measurementsCaches.set(node, computation);
+      computation = new ComputationCache(node, this);
+      this.computationCaches.set(node, computation);
     }
     return computation;
   }
 
-  getMeasurements(node: ElementNode): Promise<Measurement[]> {
-    return this.getMeasurementsCache(node).get();
+  getComputations(node: ElementNode): Promise<Computation[]> {
+    return this.getComputationCache(node).get();
   }
 
-  getMeasurement(node: ElementNode): Promise<Measurement> {
-    return this.getMeasurements(node).then(
-      (measurements) => measurements[0] ?? new Measurement(node)
+  getComputation(node: ElementNode): Promise<Computation> {
+    return this.getComputations(node).then(
+      (cs) => cs[0] ?? new Computation(node)
     );
   }
 
   getRect(node: ElementNode): Promise<Rect> {
-    return this.getMeasurement(node).then((measurement) => measurement.rect);
+    return this.getComputation(node).then((c) => c.rect);
   }
 
   @observable hoverRects: Rect[] = [];
@@ -79,13 +79,13 @@ export class Artboard {
   async updateRects() {
     const hoverDims =
       appState.hover?.type === "element"
-        ? await this.getMeasurementsCache(appState.hover).get()
+        ? await this.getComputationCache(appState.hover).get()
         : [];
     const selectedDims = (
       await Promise.all(
         appState.document.selectedNodes
           .filter((node): node is ElementNode => node.type === "element")
-          .map((node) => this.getMeasurementsCache(node).get())
+          .map((node) => this.getComputationCache(node).get())
       )
     ).flat();
     runInAction(() => {
@@ -97,7 +97,7 @@ export class Artboard {
   readonly snapper = new Snapper(this);
 }
 
-class MeasurementsCache {
+class ComputationCache {
   constructor(node: ElementNode, artboard: Artboard) {
     this.node = node;
     this.artboard = artboard;
@@ -105,14 +105,14 @@ class MeasurementsCache {
 
   readonly node: ElementNode;
   readonly artboard: Artboard;
-  private _cache: Measurement[] = [];
+  private _cache: Computation[] = [];
   private _cacheRevision = 0;
 
-  async get(): Promise<Measurement[]> {
+  async get(): Promise<Computation[]> {
     if (this.artboard.adapter.revision > this._cacheRevision) {
       this._cache = (
         await this.artboard.adapter.getComputedStyles([this.node.id])
-      )[0].map((data) => new Measurement(this.node, data));
+      )[0].map((data) => new Computation(this.node, data));
       this._cacheRevision = this.artboard.adapter.revision;
     }
     return this._cache;

@@ -20,7 +20,7 @@ export async function resizeWithBoundingBox(
     return;
   }
 
-  const parentComputed = await artboard.getMeasurement(parent);
+  const parentComputed = await artboard.getComputation(parent);
 
   const style = getElementTailwindStyle(element);
 
