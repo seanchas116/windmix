@@ -77,11 +77,11 @@ export class Artboard {
   @observable dropDestination: DropDestination | undefined = undefined;
 
   async updateRects() {
-    const hoverDims =
+    const hoverComputations =
       appState.hover?.type === "element"
         ? await this.getComputationCache(appState.hover).get()
         : [];
-    const selectedDims = (
+    const selectedComputations = (
       await Promise.all(
         appState.document.selectedNodes
           .filter((node): node is ElementNode => node.type === "element")
@@ -89,8 +89,8 @@ export class Artboard {
       )
     ).flat();
     runInAction(() => {
-      this.hoverRects = hoverDims.map((m) => m.rect);
-      this.selectedRects = selectedDims.map((m) => m.rect);
+      this.hoverRects = hoverComputations.map((m) => m.rect);
+      this.selectedRects = selectedComputations.map((m) => m.rect);
     });
   }
 

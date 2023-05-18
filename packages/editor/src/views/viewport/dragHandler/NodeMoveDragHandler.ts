@@ -27,11 +27,11 @@ export async function createNodeMoveDragHandler(
 
   for (const s of selectables) {
     // TODO: use Promise.all
-    const dims = await artboard.getComputation(s);
+    const computations = await artboard.getComputation(s);
 
     targets.set(s, {
-      rect: dims.rect,
-      absolute: dims.style.position === "absolute",
+      rect: computations.rect,
+      absolute: computations.style.position === "absolute",
     });
   }
   const rects = [...targets.values()].map(({ rect }) => rect);
