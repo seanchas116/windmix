@@ -46,7 +46,7 @@ export class NodeResizeBoxState {
     for (const instance of this.selectedInstances) {
       this.initBoundingBoxes.set(
         instance,
-        (await this.artboard.measureFirst(instance))?.rect ?? new Rect()
+        await this.artboard.getRect(instance)
       );
     }
     this.initWholeBoundingBox = this.boundingBox ?? new Rect();

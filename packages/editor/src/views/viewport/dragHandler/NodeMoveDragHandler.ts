@@ -143,25 +143,23 @@ export async function findDropDestination(
     // }
 
     if (dst.parent?.type === "element") {
-      const bbox = await artboard.getFirstRect(dst);
-      const parentBBox = await artboard.getFirstRect(dst.parent);
+      const bbox = await artboard.getRect(dst);
+      const parentBBox = await artboard.getRect(dst.parent);
 
-      if (bbox && parentBBox) {
-        const parentCloseThresh = scrollState.snapThreshold;
-        const threshold = scrollState.snapThreshold * 2;
+      const parentCloseThresh = scrollState.snapThreshold;
+      const threshold = scrollState.snapThreshold * 2;
 
-        // do not drop near the edge when the parent edge is close
+      // do not drop near the edge when the parent edge is close
 
-        for (const edge of ["left", "top", "right", "bottom"] as const) {
-          if (
-            Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
-            Math.abs(
-              bbox[edge] -
-                event.pos[edge === "left" || edge === "right" ? "x" : "y"]
-            ) < threshold
-          ) {
-            continue;
-          }
+      for (const edge of ["left", "top", "right", "bottom"] as const) {
+        if (
+          Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
+          Math.abs(
+            bbox[edge] -
+              event.pos[edge === "left" || edge === "right" ? "x" : "y"]
+          ) < threshold
+        ) {
+          continue;
         }
       }
     }

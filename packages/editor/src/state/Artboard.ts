@@ -56,16 +56,18 @@ export class Artboard {
     return computation;
   }
 
-  measure(node: ElementNode): Promise<Measurement[]> {
+  getMeasures(node: ElementNode): Promise<Measurement[]> {
     return this.getMeasurementsCache(node).get();
   }
 
-  measureFirst(node: ElementNode): Promise<Measurement | undefined> {
-    return this.measure(node).then((measurements) => measurements[0]);
+  getMeasure(node: ElementNode): Promise<Measurement> {
+    return this.getMeasures(node).then(
+      (measurements) => measurements[0] ?? new Measurement(node)
+    );
   }
 
-  getFirstRect(node: ElementNode): Promise<Rect | undefined> {
-    return this.measureFirst(node).then((measurement) => measurement?.rect);
+  getRect(node: ElementNode): Promise<Rect> {
+    return this.getMeasure(node).then((measurement) => measurement.rect);
   }
 
   @observable hoverRects: Rect[] = [];

@@ -32,10 +32,25 @@ export interface MeasurementData {
 }
 
 export class Measurement {
-  constructor(node: ElementNode, data: MeasurementData) {
+  constructor(node: ElementNode, data?: MeasurementData) {
     this.node = node;
-    this.rect = Rect.from(data.rect);
-    this.style = data.style;
+    this.rect = data?.rect ? Rect.from(data.rect) : new Rect();
+    this.style = data?.style ?? {
+      display: "block",
+      flexDirection: "row",
+      marginTop: "0px",
+      marginRight: "0px",
+      marginBottom: "0px",
+      marginLeft: "0px",
+      borderTopWidth: "0px",
+      borderRightWidth: "0px",
+      borderBottomWidth: "0px",
+      borderLeftWidth: "0px",
+      paddingTop: "0px",
+      paddingRight: "0px",
+      paddingBottom: "0px",
+      paddingLeft: "0px",
+    };
   }
 
   readonly node: ElementNode;
