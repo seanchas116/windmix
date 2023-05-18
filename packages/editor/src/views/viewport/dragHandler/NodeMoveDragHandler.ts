@@ -172,7 +172,11 @@ export async function findDropDestination(
     ([, m]) => m.style.position !== "absolute"
   );
 
-  const direction = "y"; // TODO: x
+  const direction =
+    parentMeasurement.style.display === "flex" &&
+    parentMeasurement.style.flexDirection === "row"
+      ? "x"
+      : "y"; // TODO: x
 
   const index = inFlowChildren.findIndex(
     ([, m]) => m.rect.center[direction] > event.pos[direction]
