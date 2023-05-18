@@ -22,7 +22,7 @@ function clickableAncestor(
   let instance = instanceAtPos;
   let innerInstance = instanceAtPos;
 
-  while (3 < instance.ancestors.length && !clickables.has(instance)) {
+  while (4 < instance.ancestors.length && !clickables.has(instance)) {
     innerInstance = instance;
     instance = assertNonNull(instance.parent);
   }
