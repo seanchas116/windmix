@@ -43,7 +43,7 @@ export class Artboard {
   }
 
   setPreviewClassName(node: Node, className: string) {
-    this.adapter.setClassName(node, className);
+    this.adapter.setPreviewClassName(node, className);
   }
 
   private measurementsCaches = new WeakMap<ElementNode, MeasurementsCache>();

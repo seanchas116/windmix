@@ -55,6 +55,8 @@ export class RendererAdapter {
 
   revision = Date.now();
 
+  previewInProgress = false;
+
   setWindow(window: Window | undefined) {
     this.window = window;
   }
@@ -72,6 +74,7 @@ export class RendererAdapter {
         this.windowBodyHeight = height;
       });
     } else if (data.type === "windmix:reloadComputed") {
+      this.previewInProgress = false;
       this.revision = Date.now();
       this.artboard.updateRects();
     }
@@ -140,7 +143,12 @@ export class RendererAdapter {
     });
   }
 
-  setClassName(node: Node, className: string) {
+  setPreviewClassName(node: Node, className: string) {
+    if (this.previewInProgress) {
+      return;
+    }
+    this.previewInProgress = true;
+
     const message: MessageToWindow = {
       type: "windmix:setClassName",
       id: node.id,
