@@ -46,6 +46,8 @@ export async function createNodeInsertDragHandler(
 
   let dragStarted = false;
 
+  let lastRect: Rect | undefined;
+
   return {
     async move(event: ViewportEvent) {
       if (
@@ -58,16 +60,27 @@ export async function createNodeInsertDragHandler(
 
       const pos = await artboard.snapper.snapResizePoint([element], event.pos);
       const rect = Rect.boundingRect([pos, initPos]);
+      lastRect = rect;
 
       await resizeWithBoundingBox(artboard, element, rect, {
         x: true,
         y: true,
         width: true,
         height: true,
+        preview: true,
       });
     },
 
     async end() {
+      if (lastRect) {
+        await resizeWithBoundingBox(artboard, element, lastRect, {
+          x: true,
+          y: true,
+          width: true,
+          height: true,
+        });
+      }
+
       appState.tool = undefined;
 
       // TODO: auto-include absolute children
