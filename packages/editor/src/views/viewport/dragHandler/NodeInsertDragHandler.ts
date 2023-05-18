@@ -32,6 +32,8 @@ export async function createNodeInsertDragHandler(
     element.className = "w-20 h-20 bg-blue-300";
   }
 
+  parent.append([element]);
+
   await resizeWithBoundingBox(
     artboard,
     element,
