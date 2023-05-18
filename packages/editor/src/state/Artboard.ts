@@ -5,6 +5,7 @@ import { Rect } from "paintvec";
 import { RendererAdapter } from "./RendererAdapter";
 import { Measurement } from "./Measurement";
 import { Snapper } from "./Snapper";
+import { DropDestination } from "./DropDestination";
 
 export class Artboard {
   constructor() {
@@ -72,6 +73,8 @@ export class Artboard {
 
   @observable hoverRects: Rect[] = [];
   @observable selectedRects: Rect[] = [];
+  @observable.ref dragPreviewRects: Rect[] = [];
+  @observable dropDestination: DropDestination | undefined = undefined;
 
   async updateRects() {
     const hoverDims =

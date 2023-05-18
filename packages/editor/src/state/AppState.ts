@@ -121,8 +121,6 @@ export class AppState {
   @observable tool: Tool | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;
-  @observable.ref dragPreviewRects: Rect[] = [];
-  @observable dropDestination: DropDestination | undefined = undefined;
 }
 
 export const appState = new AppState();

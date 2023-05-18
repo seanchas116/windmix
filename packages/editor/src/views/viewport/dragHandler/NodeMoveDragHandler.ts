@@ -7,7 +7,6 @@ import { Artboard } from "../../../state/Artboard";
 import { scrollState } from "../../../state/ScrollState";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { resizeWithBoundingBox } from "./resizeWithBoundingBox";
-import { appState } from "../../../state/AppState";
 
 export async function createNodeMoveDragHandler(
   artboard: Artboard,
@@ -73,14 +72,14 @@ export async function createNodeMoveDragHandler(
         }
       }
 
-      appState.dragPreviewRects = dragPreviewRects;
-      appState.dropDestination = dst;
+      artboard.dragPreviewRects = dragPreviewRects;
+      artboard.dropDestination = dst;
     },
 
     async end(event: ViewportEvent) {
       artboard.snapper.clear();
-      appState.dragPreviewRects = [];
-      appState.dropDestination = undefined;
+      artboard.dragPreviewRects = [];
+      artboard.dropDestination = undefined;
 
       const dst = await findDropDestination(artboard, event, [
         ...targets.keys(),
