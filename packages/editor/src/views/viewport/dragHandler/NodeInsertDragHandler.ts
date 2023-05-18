@@ -24,13 +24,14 @@ export async function createNodeInsertDragHandler(
   );
 
   const element = document.nodes.create("element");
-  element.tagName = "div";
 
   if (mode === "text") {
+    element.tagName = "p";
     const text = document.nodes.create("text");
     text.text = "Hello World";
     element.append([text]);
   } else {
+    element.tagName = "div";
     element.className = "w-20 h-20 bg-blue-300";
   }
 
