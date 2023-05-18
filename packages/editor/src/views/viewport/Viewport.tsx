@@ -66,6 +66,12 @@ export const Viewport: React.FC = observer(() => {
       onMouseLeave={onMouseLeave}
     >
       <div
+        className="absolute inset-0"
+        onClick={action(() => {
+          appState.document.deselectAll();
+        })}
+      />
+      <div
         style={{
           position: "absolute",
           transformOrigin: "left top",
