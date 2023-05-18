@@ -1,15 +1,14 @@
 import { action } from "mobx";
 import React, { useEffect, useRef } from "react";
 import { DragHandler } from "./DragHandler";
-import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
-import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
 import { doubleClickInterval } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { observer } from "mobx-react-lite";
-import { BackgroundClickMoveDragHandler } from "./BackgroundClickMoveDragHandler";
 import { Artboard } from "../../../state/Artboard";
 import { appState } from "../../../state/AppState";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { createNodeInsertDragHandler } from "./NodeInsertDragHandler";
+import { createNodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 
 export const DragHandlerOverlay: React.FC<{
   artboard: Artboard;
@@ -51,7 +50,7 @@ export const DragHandlerOverlay: React.FC<{
       appState.hover = undefined;
 
       if (appState.tool?.type === "insert") {
-        dragHandlerRef.current = new NodeInsertDragHandler(
+        dragHandlerRef.current = await createNodeInsertDragHandler(
           appState.tool.insertMode,
           viewportEvent
         );
@@ -65,15 +64,11 @@ export const DragHandlerOverlay: React.FC<{
       //   }
       // }
 
-      const clickMove = NodeClickMoveDragHandler.create(viewportEvent);
+      const clickMove = await createNodeClickMoveDragHandler(viewportEvent);
       if (clickMove) {
         dragHandlerRef.current = clickMove;
         return;
       }
-
-      dragHandlerRef.current = new BackgroundClickMoveDragHandler(
-        viewportEvent
-      );
     });
     const onPointerMove = action(async (e: PointerEvent) => {
       if (e.buttons === 0) {
@@ -108,12 +103,12 @@ export const DragHandlerOverlay: React.FC<{
       appState.hover = viewportEvent.selectable;
       appState.resizeBoxVisible = true;
 
-      snapper.clear();
-      if (viewportState.tool?.type === "insert") {
-        const parent =
-          viewportEvent.selectable ??
-          assertNonNull(projectState.page).selectable;
-        snapper.snapInsertPoint(parent, viewportEvent.pos);
+      artboard.snapper.clear();
+      if (appState.tool?.type === "insert") {
+        const parent = viewportEvent.selectable;
+        if (parent?.type === "element") {
+          artboard.snapper.snapInsertPoint(parent, viewportEvent.pos);
+        }
       }
     });
 
@@ -139,31 +134,32 @@ export const DragHandlerOverlay: React.FC<{
     e.preventDefault();
     e.stopPropagation();
 
-    const page = projectState.page;
-    if (!page) {
-      return;
-    }
+    // TODO
 
-    const viewportEvent = await ViewportEvent.create(artboard, e.nativeEvent);
+    // const page = projectState.page;
+    // if (!page) {
+    //   return;
+    // }
 
-    const override = viewportEvent.selectable;
-    if (override) {
-      if (!override.selected) {
-        projectState.project.clearSelection();
-        override.select();
-      }
-    } else {
-      projectState.project.clearSelection();
-    }
+    // const viewportEvent = await ViewportEvent.create(artboard, e.nativeEvent);
 
-    showContextMenu(
-      e,
-      commands.contextMenuForSelectable(override ?? page.selectable)
-    );
+    // const override = viewportEvent.selectable;
+    // if (override) {
+    //   if (!override.selected) {
+    //     projectState.project.clearSelection();
+    //     override.select();
+    //   }
+    // } else {
+    //   projectState.project.clearSelection();
+    // }
+
+    // showContextMenu(
+    //   e,
+    //   commands.contextMenuForSelectable(override ?? page.selectable)
+    // );
   });
 
-  const cursor =
-    viewportState.tool?.type === "insert" ? "crosshair" : undefined;
+  const cursor = appState.tool?.type === "insert" ? "crosshair" : undefined;
 
   return (
     <div
