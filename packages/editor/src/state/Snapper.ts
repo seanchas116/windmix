@@ -86,7 +86,7 @@ export class Snapper {
     );
     const parentMeasure = await this.artboard.getComputation(parent);
 
-    return [...siblingMeasures.map((m) => m.rect), parentMeasure.paddingRect];
+    return [...siblingMeasures.map((m) => m.rect), parentMeasure.contentRect];
   }
 
   async snapResizePoint(

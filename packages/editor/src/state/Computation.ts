@@ -53,26 +53,70 @@ export class Computation {
       paddingBottom: "0px",
       paddingLeft: "0px",
     };
+    this.bt = parseFloat(this.style.borderTopWidth);
+    this.br = parseFloat(this.style.borderRightWidth);
+    this.bb = parseFloat(this.style.borderBottomWidth);
+    this.bl = parseFloat(this.style.borderLeftWidth);
+    this.pt = parseFloat(this.style.paddingTop);
+    this.pr = parseFloat(this.style.paddingRight);
+    this.pb = parseFloat(this.style.paddingBottom);
+    this.pl = parseFloat(this.style.paddingLeft);
+    this.mt = parseFloat(this.style.marginTop);
+    this.mr = parseFloat(this.style.marginRight);
+    this.mb = parseFloat(this.style.marginBottom);
+    this.ml = parseFloat(this.style.marginLeft);
   }
 
   readonly node: ElementNode;
   readonly rect: Rect;
   readonly style: ComputedStyle;
 
-  get paddingRect(): Rect {
-    const bt = parseFloat(this.style.borderTopWidth);
-    const br = parseFloat(this.style.borderRightWidth);
-    const bb = parseFloat(this.style.borderBottomWidth);
-    const bl = parseFloat(this.style.borderLeftWidth);
-    const pt = parseFloat(this.style.paddingTop);
-    const pr = parseFloat(this.style.paddingRight);
-    const pb = parseFloat(this.style.paddingBottom);
-    const pl = parseFloat(this.style.paddingLeft);
+  readonly bt: number;
+  readonly br: number;
+  readonly bb: number;
+  readonly bl: number;
+  readonly pt: number;
+  readonly pr: number;
+  readonly pb: number;
+  readonly pl: number;
+  readonly mt: number;
+  readonly mr: number;
+  readonly mb: number;
+  readonly ml: number;
 
-    const left = this.rect.left + bl + pl;
-    const top = this.rect.top + bt + pt;
-    const width = this.rect.width - bl - br - pl - pr;
-    const height = this.rect.height - bt - bb - pt - pb;
+  get contentRect(): Rect {
+    const left = this.rect.left + this.bl + this.pl;
+    const top = this.rect.top + this.bt + this.pt;
+    const width = this.rect.width - this.bl - this.br - this.pl - this.pr;
+    const height = this.rect.height - this.bt - this.bb - this.pt - this.pb;
+
+    return Rect.from({
+      x: left,
+      y: top,
+      width,
+      height,
+    });
+  }
+
+  get paddingRect(): Rect {
+    const left = this.rect.left + this.bl;
+    const top = this.rect.top + this.bt;
+    const width = this.rect.width - this.bl - this.br;
+    const height = this.rect.height - this.bt - this.bb;
+
+    return Rect.from({
+      x: left,
+      y: top,
+      width,
+      height,
+    });
+  }
+
+  get marginRect(): Rect {
+    const left = this.rect.left - this.ml;
+    const top = this.rect.top - this.mt;
+    const width = this.rect.width + this.ml + this.mr;
+    const height = this.rect.height + this.mt + this.mb;
 
     return Rect.from({
       x: left,

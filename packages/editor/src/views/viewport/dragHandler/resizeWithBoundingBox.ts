@@ -25,11 +25,11 @@ export async function resizeWithBoundingBox(
   const style = getElementTailwindStyle(element);
 
   if (options.x) {
-    const left = bbox.left - parentComputed.paddingRect.left;
+    const left = bbox.left - parentComputed.contentRect.left;
     style.left.arbitraryValue = `${left}px`;
   }
   if (options.y) {
-    const top = bbox.top - parentComputed.paddingRect.top;
+    const top = bbox.top - parentComputed.contentRect.top;
     style.top.arbitraryValue = `${top}px`;
   }
 

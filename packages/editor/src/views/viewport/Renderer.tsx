@@ -7,6 +7,7 @@ import { Rect } from "paintvec";
 import { NodeResizeBox } from "./hud/NodeResizeBox";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
+import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 
 export const Renderer: React.FC<{
   width: number;
@@ -125,6 +126,7 @@ const HUD: React.FC<{
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
+      <MarginPaddingIndicator artboard={artboard} />
       {hoveredRects.map((rect, i) => (
         <rect
           key={i}
