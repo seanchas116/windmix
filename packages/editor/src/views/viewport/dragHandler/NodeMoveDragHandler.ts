@@ -5,6 +5,8 @@ import { ElementNode } from "@windmix/model";
 import { DropDestination } from "../../../state/DropDestination";
 import { Artboard } from "../../../state/Artboard";
 import { scrollState } from "../../../state/ScrollState";
+import { zip } from "lodash-es";
+import { Measurement } from "../../../state/Measurement";
 
 export class NodeMoveDragHandler implements DragHandler {
   constructor(selectables: Selectable[], initPos: Vec2) {
@@ -172,94 +174,24 @@ export async function findDropDestination(
     throw new Error("No parent found");
   }
 
-  const layout = parent.style.layout;
+  const childrenWithMeasurements = await Promise.all(
+    parent.children
+      .filter((c): c is ElementNode => c.type === "element")
+      .map((c) => artboard.getMeasure(c).then((m) => [c, m] as const))
+  );
+  const inFlowChildren = childrenWithMeasurements.filter(
+    ([, m]) => m.style.position !== "absolute"
+  );
 
-  if (layout === "flex") {
-    const direction = parent.style.flexDirection;
-    const inFlowChildren = parent.inFlowChildren;
-    const centers = inFlowChildren.map((c) => c.computedRect.center);
-    const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
-    if (index < 0) {
-      // append
-      const lastRect = inFlowChildren[inFlowChildren.length - 1].computedRect;
+  for (const [child, dims] of inFlowChildren) {
+    if (dims.rect.includes(event.pos)) {
       return {
         parent,
-        insertionLine: lastRect.endLines[direction],
+        ref: child,
+        insertionLine: dims.rect.endLines.x,
       };
     }
-
-    if (index === 0) {
-      // prepend
-      const firstRect = inFlowChildren[0].computedRect;
-      return {
-        parent,
-        ref: inFlowChildren[0],
-        insertionLine: firstRect.startLines[direction],
-      };
-    }
-
-    const prev = inFlowChildren[index - 1];
-    const next = inFlowChildren[index];
-    const prevRect = prev.computedRect;
-    const nextRect = next.computedRect;
-
-    return {
-      parent,
-      ref: next,
-      insertionLine: prevRect.endLines[direction].mix(
-        nextRect.startLines[direction],
-        0.5
-      ),
-    };
   }
 
-  if (layout === "grid") {
-    // TODO: when column count is 1, use the same logic as vertical stack
-
-    const inFlowChildren = parent.inFlowChildren;
-    const columnCount = parent.style.gridColumnCount ?? 1;
-    const rowCount = Math.ceil(inFlowChildren.length / columnCount);
-
-    let nextChild: Selectable | undefined;
-    let insertionLine: Segment | undefined;
-
-    for (let row = 0; row < rowCount; row++) {
-      const rowChildren = inFlowChildren.slice(
-        row * columnCount,
-        (row + 1) * columnCount
-      );
-      const rowChildrenBottom = Math.max(
-        ...rowChildren.map((c) => c.computedRect.bottom)
-      );
-      if (event.pos.y > rowChildrenBottom) {
-        continue;
-      }
-
-      for (const child of rowChildren) {
-        if (child.computedRect.center.x > event.pos.x) {
-          nextChild = child;
-          break;
-        }
-      }
-      nextChild = nextChild ?? rowChildren[rowChildren.length - 1].nextSibling;
-      if (nextChild) {
-        insertionLine = nextChild.computedRect.leftLine;
-      }
-      break;
-    }
-
-    if (!insertionLine) {
-      const lastChild = inFlowChildren[inFlowChildren.length - 1];
-      insertionLine = lastChild.computedRect.rightLine;
-    }
-
-    return {
-      parent,
-      ref: nextChild,
-      insertionLine: insertionLine,
-    };
-  }
-
-  // no layout
   return { parent };
 }
