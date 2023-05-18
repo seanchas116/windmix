@@ -7,6 +7,7 @@ import { Artboard } from "../../../state/Artboard";
 import { scrollState } from "../../../state/ScrollState";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { resizeWithBoundingBox } from "./resizeWithBoundingBox";
+import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 
 export async function createNodeMoveDragHandler(
   artboard: Artboard,
@@ -117,13 +118,14 @@ export async function findDropDestination(
       continue;
     }
 
-    // don't drop onto text-only elements
-    if (
-      dst.type === "element" &&
-      dst.children.length === 1 &&
-      dst.children[0].type === "text"
-    ) {
-      continue;
+    if (dst.type === "element") {
+      // don't drop onto text-only elements
+      if (dst.children.length === 1 && dst.children[0].type === "text") {
+        continue;
+      }
+      if (isReplacedElement(dst.tagName)) {
+        continue;
+      }
     }
 
     // TODO: detect elements that do not accept children (e.g. <input> tags)
