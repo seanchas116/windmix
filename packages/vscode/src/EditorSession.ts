@@ -305,6 +305,9 @@ export class EditorSession {
           :root {
             --macaron-background: var(--vscode-editor-background);
           }
+          body {
+            user-select: none;
+          }
         </style>
       </head>
       <body>
