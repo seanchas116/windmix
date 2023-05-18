@@ -57,12 +57,16 @@ export const DragHandlerOverlay: React.FC<{
         return;
       }
 
-      // if (isDoubleClick) {
-      //   const instance = viewportEvent.doubleClickableSelectable;
-      //   if (instance?.selected && isFocusable(instance)) {
-      //     viewportState.focusedSelectable = instance;
-      //   }
-      // }
+      if (isDoubleClick) {
+        const instance = viewportEvent.doubleClickableSelectable;
+        if (instance) {
+          appState.jumpToLocation(instance.location);
+        }
+
+        // if (instance?.selected && isFocusable(instance)) {
+        //   viewportState.focusedSelectable = instance;
+        // }
+      }
 
       const clickMove = await createNodeClickMoveDragHandler(viewportEvent);
       if (clickMove) {
