@@ -5,6 +5,7 @@ import { DragHandler } from "./DragHandler";
 import { InsertMode } from "../../../state/Tool";
 import { resizeWithBoundingBox } from "./resizeWithBoundingBox";
 import { appState } from "../../../state/AppState";
+import { findDropDestination } from "./NodeMoveDragHandler";
 
 export async function createNodeInsertDragHandler(
   mode: InsertMode,
@@ -12,10 +13,8 @@ export async function createNodeInsertDragHandler(
 ): Promise<DragHandler> {
   const artboard = event.artboard;
 
-  const parent = event.selectable; // TODO: null case
-  if (parent?.type !== "element") {
-    throw new Error("parent is not element");
-  }
+  const dest = await findDropDestination(artboard, event, []);
+  const parent = dest.parent;
 
   const document = parent.document;
   const initClientPos = new Vec2(event.event.clientX, event.event.clientY);
@@ -35,7 +34,7 @@ export async function createNodeInsertDragHandler(
     element.className = "w-20 h-20 bg-blue-300";
   }
 
-  parent.append([element]);
+  parent.insertBefore([element], dest.ref);
 
   await resizeWithBoundingBox(
     artboard,
