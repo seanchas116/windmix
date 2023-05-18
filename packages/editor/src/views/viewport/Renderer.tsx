@@ -6,6 +6,7 @@ import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { NodeResizeBox } from "./hud/NodeResizeBox";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
+import { DragIndicators } from "./hud/DragIndicator";
 
 export const Renderer: React.FC<{
   width: number;
@@ -139,6 +140,7 @@ const HUD: React.FC<{
           strokeWidth={1}
         />
       )}
+      <DragIndicators artboard={artboard} />
       <NodeResizeBox artboard={artboard} />
     </svg>
   );

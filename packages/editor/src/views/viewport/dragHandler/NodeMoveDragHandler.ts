@@ -152,6 +152,8 @@ export async function findDropDestination(
     throw new Error("No parent found");
   }
 
+  const parentMeasurement = await artboard.getMeasure(parent);
+
   const childrenWithMeasurements = await Promise.all(
     parent.children
       .filter((c): c is ElementNode => c.type === "element")
@@ -165,11 +167,12 @@ export async function findDropDestination(
     if (dims.rect.includes(event.pos)) {
       return {
         parent,
+        parentRect: parentMeasurement.rect,
         ref: child,
         insertionLine: dims.rect.endLines.x,
       };
     }
   }
 
-  return { parent };
+  return { parent, parentRect: parentMeasurement.rect, ref: undefined };
 }

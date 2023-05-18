@@ -1,8 +1,9 @@
 import { ElementNode } from "@windmix/model";
-import { Segment } from "paintvec";
+import { Rect, Segment } from "paintvec";
 
 export interface DropDestination {
   parent: ElementNode;
+  parentRect: Rect;
   ref?: ElementNode;
   insertionLine?: Segment;
 }
