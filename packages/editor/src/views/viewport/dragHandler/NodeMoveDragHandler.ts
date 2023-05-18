@@ -172,16 +172,41 @@ export async function findDropDestination(
     ([, m]) => m.style.position !== "absolute"
   );
 
-  for (const [child, dims] of inFlowChildren) {
-    if (dims.rect.includes(event.pos)) {
-      return {
-        parent,
-        parentRect: parentMeasurement.rect,
-        ref: child,
-        insertionLine: dims.rect.startLines.y,
-      };
-    }
+  const direction = "y"; // TODO: x
+
+  const index = inFlowChildren.findIndex(
+    ([, m]) => m.rect.center[direction] > event.pos[direction]
+  );
+
+  // first
+  if (index === 0) {
+    return {
+      parent,
+      parentRect: parentMeasurement.rect,
+      ref: inFlowChildren[0][0],
+      insertionLine: parentMeasurement.rect.startLines.y,
+    };
+  }
+  // last
+  if (index === -1) {
+    return {
+      parent,
+      parentRect: parentMeasurement.rect,
+      ref: undefined,
+      insertionLine: parentMeasurement.rect.endLines.y,
+    };
   }
 
-  return { parent, parentRect: parentMeasurement.rect, ref: undefined };
+  const prev = inFlowChildren[index - 1];
+  const next = inFlowChildren[index];
+
+  return {
+    parent,
+    parentRect: parentMeasurement.rect,
+    ref: next[0],
+    insertionLine: next[1].rect.startLines[direction].mix(
+      prev[1].rect.endLines[direction],
+      0.5
+    ),
+  };
 }
