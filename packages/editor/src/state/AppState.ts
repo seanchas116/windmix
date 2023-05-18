@@ -10,6 +10,7 @@ import { ViewState } from "../types/ViewState";
 import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
 import { Tool } from "./Tool";
 import { Rect } from "paintvec";
+import { DropDestination } from "./DropDestination";
 
 const vscode = acquireVsCodeApi();
 
@@ -121,6 +122,7 @@ export class AppState {
   @observable panMode = false;
   @observable resizeBoxVisible = false;
   @observable.ref dragPreviewRects: Rect[] = [];
+  @observable dropDestination: DropDestination | undefined = undefined;
 }
 
 export const appState = new AppState();
