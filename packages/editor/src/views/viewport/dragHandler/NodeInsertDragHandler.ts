@@ -19,7 +19,10 @@ export async function createNodeInsertDragHandler(
 
   const document = parent.document;
   const initClientPos = new Vec2(event.event.clientX, event.event.clientY);
-  const initPos = await artboard.snapper.snapInsertPoint(parent, event.pos);
+  const initPos = await artboard.snapper.snapInsertPoint(
+    parent,
+    event.pos.round
+  );
 
   const element = document.nodes.create("element");
   element.tagName = "div";
@@ -58,7 +61,10 @@ export async function createNodeInsertDragHandler(
       }
       dragStarted = true;
 
-      const pos = await artboard.snapper.snapResizePoint([element], event.pos);
+      const pos = await artboard.snapper.snapResizePoint(
+        [element],
+        event.pos.round
+      );
       const rect = Rect.boundingRect([pos, initPos]);
       lastRect = rect;
 
