@@ -1,7 +1,6 @@
 import { Vec2 } from "paintvec";
 import { ElementNode, Node } from "@windmix/model";
 import { appState } from "../../../state/AppState";
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Artboard } from "../../../state/Artboard";
 
 function clickableAncestor(
@@ -23,8 +22,16 @@ function clickableAncestor(
   let innerInstance = instanceAtPos;
 
   while (4 < instance.ancestors.length && !clickables.has(instance)) {
+    let parent = instance.parent;
+    while (parent && !(parent.type === "element" && parent.tagName !== "")) {
+      parent = parent.parent;
+    }
+    if (!parent) {
+      break;
+    }
+
     innerInstance = instance;
-    instance = assertNonNull(instance.parent);
+    instance = parent;
   }
 
   if (type === "doubleClick") {
