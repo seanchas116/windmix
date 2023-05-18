@@ -71,8 +71,8 @@ export class Artboard {
     return this.getComputation(node).then((c) => c.rect);
   }
 
-  @observable hoverRects: Rect[] = [];
-  @observable selectedRects: Rect[] = [];
+  @observable hoverComputations: Computation[] = [];
+  @observable selectedComputations: Computation[] = [];
   @observable.ref dragPreviewRects: Rect[] = [];
   @observable dropDestination: DropDestination | undefined = undefined;
 
@@ -89,8 +89,8 @@ export class Artboard {
       )
     ).flat();
     runInAction(() => {
-      this.hoverRects = hoverComputations.map((m) => m.rect);
-      this.selectedRects = selectedComputations.map((m) => m.rect);
+      this.hoverComputations = hoverComputations;
+      this.selectedComputations = selectedComputations;
     });
   }
 

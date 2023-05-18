@@ -117,9 +117,11 @@ MouseOverlay.displayName = "MouseOverlay";
 const HUD: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
-  const hoveredRects = artboard.hoverRects;
+  const hoveredRects = artboard.hoverComputations.map((c) => c.rect);
 
-  const selectedRect = Rect.union(...artboard.selectedRects);
+  const selectedRect = Rect.union(
+    ...artboard.selectedComputations.map((c) => c.rect)
+  );
 
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">

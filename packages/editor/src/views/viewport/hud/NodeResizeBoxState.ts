@@ -39,7 +39,7 @@ export class NodeResizeBoxState {
   }
 
   @computed get boundingBox(): Rect | undefined {
-    return Rect.union(...this.artboard.selectedRects);
+    return Rect.union(...this.artboard.selectedComputations.map((c) => c.rect));
   }
 
   async begin() {
