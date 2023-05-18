@@ -27,7 +27,7 @@ export async function createNodeMoveDragHandler(
 
   for (const s of selectables) {
     // TODO: use Promise.all
-    const dims = await artboard.getMeasure(s);
+    const dims = await artboard.getMeasurement(s);
 
     targets.set(s, {
       rect: dims.rect,
@@ -161,12 +161,12 @@ export async function findDropDestination(
     throw new Error("No parent found");
   }
 
-  const parentMeasurement = await artboard.getMeasure(parent);
+  const parentMeasurement = await artboard.getMeasurement(parent);
 
   const childrenWithMeasurements = await Promise.all(
     parent.children
       .filter((c): c is ElementNode => c.type === "element")
-      .map((c) => artboard.getMeasure(c).then((m) => [c, m] as const))
+      .map((c) => artboard.getMeasurement(c).then((m) => [c, m] as const))
   );
   const inFlowChildren = childrenWithMeasurements.filter(
     ([, m]) => m.style.position !== "absolute"
