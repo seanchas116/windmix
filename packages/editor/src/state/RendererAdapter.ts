@@ -50,11 +50,8 @@ export class RendererAdapter {
   readonly artboard: Artboard;
 
   window: Window | undefined;
-
   @observable windowBodyHeight = 0;
-
   revision = Date.now();
-
   previewInProgress = false;
 
   setWindow(window: Window | undefined) {
