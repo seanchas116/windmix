@@ -117,6 +117,15 @@ export async function findDropDestination(
       continue;
     }
 
+    // don't drop onto text-only elements
+    if (
+      dst.type === "element" &&
+      dst.children.length === 1 &&
+      dst.children[0].type === "text"
+    ) {
+      continue;
+    }
+
     // TODO: detect elements that do not accept children (e.g. <input> tags)
     // if (!dst.canInsertChild) {
     //   return false;
@@ -169,7 +178,7 @@ export async function findDropDestination(
         parent,
         parentRect: parentMeasurement.rect,
         ref: child,
-        insertionLine: dims.rect.endLines.x,
+        insertionLine: dims.rect.startLines.y,
       };
     }
   }
