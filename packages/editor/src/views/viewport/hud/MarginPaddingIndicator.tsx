@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import { Artboard } from "../../../state/Artboard";
+import colors from "tailwindcss/colors";
 
 function rectToSVGPoints(rect: Rect) {
   return [...rect.vertices, rect.topLeft].map((v) => `${v.x},${v.y}`).join(" ");
@@ -36,8 +37,8 @@ export const MarginPaddingIndicator: React.FC<{
 
         return (
           <Fragment key={i}>
-            <polygon points={marginPoints} fill="#FF7800" />
-            <polygon points={paddingPoints} fill="#00C553" />
+            <polygon points={marginPoints} fill={colors.amber[500]} />
+            <polygon points={paddingPoints} fill={colors.green[500]} />
           </Fragment>
         );
       })}
