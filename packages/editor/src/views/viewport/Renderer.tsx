@@ -5,6 +5,7 @@ import { Artboard } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { NodeResizeBox } from "./hud/NodeResizeBox";
+import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 
 export const Renderer: React.FC<{
   width: number;
@@ -36,7 +37,7 @@ export const Renderer: React.FC<{
           );
         }}
       />
-      <MouseOverlay artboard={artboard} />
+      <DragHandlerOverlay artboard={artboard} />
       <HUD artboard={artboard} />
     </div>
   );
