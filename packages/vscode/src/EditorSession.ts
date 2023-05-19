@@ -59,6 +59,21 @@ export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   }
 }
 
+export const debouncedChange = (onUpdate: () => void): (() => void) => {
+  let queued = false;
+  const debounced = () => {
+    if (queued) {
+      return;
+    }
+    queued = true;
+    queueMicrotask(() => {
+      queued = false;
+      onUpdate();
+    });
+  };
+  return debounced;
+};
+
 export class EditorSession {
   constructor({
     webviewPanel,
@@ -104,7 +119,14 @@ export class EditorSession {
 
     const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
       rpc.remote.update(update);
+    });
+    this._document.ydoc.on("update", onDocUpdate);
+    disposables.push({
+      dispose: () => this._document.ydoc.off("update", onDocUpdate),
+    });
 
+    const nodes = this._document.nodesData.y;
+    const onNodesChanged = debouncedChange(() => {
       const textEditor = this._textEditor;
       if (textEditor) {
         const newText = this._document.nodes.get("file")?.stringify() ?? "";
@@ -126,10 +148,7 @@ export class EditorSession {
         console.log("set lastSetText");
       }
     });
-    this._document.ydoc.on("update", onDocUpdate);
-    disposables.push({
-      dispose: () => this._document.ydoc.off("update", onDocUpdate),
-    });
+    nodes.observeDeep(onNodesChanged);
 
     const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
