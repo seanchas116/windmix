@@ -61,7 +61,7 @@ export const Viewport: React.FC = observer(() => {
   return (
     <main
       ref={ref}
-      className="flex-1 min-w-0 contain-strict relative"
+      className="fixed inset-0"
       onWheel={onWheel}
       onMouseLeave={onMouseLeave}
     >
@@ -71,30 +71,7 @@ export const Viewport: React.FC = observer(() => {
           appState.document.deselectAll();
         })}
       />
-      <div
-        style={{
-          position: "absolute",
-          transformOrigin: "left top",
-          transform: scrollState.documentToViewport.toCSSMatrixString(),
-        }}
-      >
-        <div className="absolute left-4 top-4 flex gap-4">
-          <div>
-            <h2 className="font-semibold mb-1">
-              {appState.tabPath &&
-                path.basename(appState.tabPath, path.extname(appState.tabPath))}
-            </h2>
-            <Renderer width={1440} artboard={artboards.desktop} />
-          </div>
-          <div>
-            <h2 className="font-semibold mb-1">
-              {appState.tabPath &&
-                path.basename(appState.tabPath, path.extname(appState.tabPath))}
-            </h2>
-            <Renderer width={375} artboard={artboards.mobile} />
-          </div>
-        </div>
-      </div>
+      <Renderer artboard={artboards.desktop} />
       <PanOverlay />
       <ZoomControlController className="absolute right-2 top-2" />
       <ToolBar className="absolute left-2 top-2" />

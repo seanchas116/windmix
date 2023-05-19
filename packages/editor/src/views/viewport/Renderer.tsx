@@ -8,29 +8,28 @@ import { NodeResizeBox } from "./hud/NodeResizeBox";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
+import { scrollState } from "../../state/ScrollState";
 
 export const Renderer: React.FC<{
   width: number;
   artboard: Artboard;
 }> = observer(({ width, artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const height = Math.max(artboard.adapter.windowBodyHeight, 1);
+  const scale = scrollState.scale;
 
   return (
     <div
-      className="relative bg-white"
+      className="absolute left-0 top-0"
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        contain: "strict",
+        width: `${375}px`,
+        height: `${100 / scale}%`,
+        transformOrigin: "left top",
+        transform: `scale(${scale})`,
       }}
     >
       <iframe
+        className="absolute left-0 top-0 w-full h-full"
         src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-        }}
         ref={iframeRef}
         onLoad={(e) => {
           console.log(e.currentTarget.contentWindow);
