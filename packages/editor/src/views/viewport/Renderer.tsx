@@ -18,35 +18,28 @@ export const Renderer: React.FC<{
   const scale = scrollState.scale;
 
   return (
-    <div
-      className="absolute left-0 top-0"
-      style={{
-        width: `${375}px`,
-        height: `${100 / scale}%`,
-        transformOrigin: "left top",
-        transform: `scale(${scale})`,
-      }}
-    >
-      <iframe
-        className="absolute left-0 top-0 w-full h-full"
-        src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
-        ref={iframeRef}
-        onLoad={(e) => {
-          console.log(e.currentTarget.contentWindow);
-          artboard.adapter.setWindow(
-            e.currentTarget.contentWindow ?? undefined
-          );
+    <div className="absolute inset-0 overflow-scroll">
+      <div
+        style={{
+          width: `${375}px`,
+          height: `${artboard.adapter.windowBodyHeight / scale}px`,
+          transformOrigin: "left top",
+          transform: `scale(${scale})`,
         }}
-      />
-      <div className="absolute inset-0 overflow-y-scroll">
-        <div
-          style={{
-            height: artboard.adapter.documentHeight + "px",
+      >
+        <iframe
+          className="absolute left-0 top-0 w-full h-full"
+          src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
+          ref={iframeRef}
+          onLoad={(e) => {
+            console.log(e.currentTarget.contentWindow);
+            artboard.adapter.setWindow(
+              e.currentTarget.contentWindow ?? undefined
+            );
           }}
-        >
-          <DragHandlerOverlay artboard={artboard} />
-          <HUD artboard={artboard} />
-        </div>
+        />
+        <DragHandlerOverlay artboard={artboard} />
+        <HUD artboard={artboard} />
       </div>
     </div>
   );
