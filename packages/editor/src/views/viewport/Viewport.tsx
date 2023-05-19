@@ -61,7 +61,7 @@ export const Viewport: React.FC = observer(() => {
   return (
     <main
       ref={ref}
-      className="fixed inset-0"
+      className="flex-1 relative"
       onWheel={onWheel}
       onMouseLeave={onMouseLeave}
     >
