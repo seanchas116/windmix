@@ -38,8 +38,16 @@ export const Renderer: React.FC<{
           );
         }}
       />
-      <DragHandlerOverlay artboard={artboard} />
-      <HUD artboard={artboard} />
+      <div className="absolute inset-0 overflow-y-scroll">
+        <div
+          style={{
+            height: artboard.adapter.documentHeight + "px",
+          }}
+        >
+          <DragHandlerOverlay artboard={artboard} />
+          <HUD artboard={artboard} />
+        </div>
+      </div>
     </div>
   );
 });
