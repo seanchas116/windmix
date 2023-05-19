@@ -73,8 +73,6 @@ export const Viewport: React.FC = observer(() => {
       />
       <Renderer artboard={artboards.desktop} />
       <PanOverlay />
-      <ZoomControlController className="absolute right-2 top-2" />
-      <ToolBar className="absolute left-2 top-2" />
     </main>
   );
 });

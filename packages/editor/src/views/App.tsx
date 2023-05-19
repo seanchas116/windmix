@@ -4,6 +4,7 @@ import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot"
 import { ScrollArea } from "@seanchas116/paintkit/src/components/ScrollArea";
 import { Outline } from "./outline/Outline";
 import { Viewport } from "./viewport/Viewport";
+import { ToolBar } from "./viewport/ToolBar";
 
 // 221px = 100px * 2 (rows) + 8px * 2 (padding) + 4px (gap) + 1px (border)
 
@@ -18,7 +19,10 @@ const App: React.FC = observer(() => {
         <aside className="w-[221px] h-full bg-macaron-uiBackground border-r border-macaron-separator relative contain-strict">
           <Outline />
         </aside>
-        <Viewport />
+        <div className="flex flex-col flex-1">
+          <ToolBar />
+          <Viewport />
+        </div>
         <aside className="w-[221px] h-full bg-macaron-uiBackground border-l border-macaron-separator relative contain-strict">
           <ScrollArea>
             <StyleInspector />

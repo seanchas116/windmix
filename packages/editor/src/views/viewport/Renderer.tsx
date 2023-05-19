@@ -11,17 +11,17 @@ import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { scrollState } from "../../state/ScrollState";
 
 export const Renderer: React.FC<{
-  width: number;
   artboard: Artboard;
-}> = observer(({ width, artboard }) => {
+}> = observer(({ artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const scale = scrollState.scale;
+  const width = artboard.width;
 
   return (
     <div className="absolute inset-0 overflow-scroll">
       <div
         style={{
-          width: `${375}px`,
+          width: width === "auto" ? "100%" : `${width}px`,
           height: `${artboard.adapter.windowBodyHeight / scale}px`,
           transformOrigin: "left top",
           transform: `scale(${scale})`,

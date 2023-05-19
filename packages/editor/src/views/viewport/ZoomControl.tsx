@@ -34,10 +34,7 @@ export const ZoomControl: React.FC<{
 }) {
   return (
     <div
-      className={twMerge(
-        "flex items-center bg-macaron-background border border-macaron-popoverBorder rounded-full shadow-lg px-1",
-        className
-      )}
+      className={twMerge("flex items-center", className)}
       onDoubleClick={(e) => e.stopPropagation()}
     >
       <IconButton onClick={onZoomOut}>
