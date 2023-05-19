@@ -111,44 +111,27 @@ export class EditorSession {
           event.contentChanges.length &&
           this._textEditor?.document === event.document
         ) {
-          this.reloadTextDocument();
+          this.loadTextDocument();
         }
       })
     );
-    this.reloadTextDocument();
+    this.loadTextDocument();
 
-    const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
-      rpc.remote.update(update);
-    });
-    this._document.ydoc.on("update", onDocUpdate);
-    disposables.push({
-      dispose: () => this._document.ydoc.off("update", onDocUpdate),
-    });
+    // broadcast updates
+    this._document.ydoc.on(
+      "update",
+      debouncedUpdate((update: Uint8Array) => {
+        rpc.remote.update(update);
+      })
+    );
 
+    // set text content on doc nodes change
     const nodes = this._document.nodesData.y;
-    const onNodesChanged = debouncedChange(() => {
-      const textEditor = this._textEditor;
-      if (textEditor) {
-        const newText = this._document.nodes.get("file")?.stringify() ?? "";
-        const oldText = textEditor.document.getText();
-        if (newText === oldText) {
-          // TODO: compare by AST?
-          return;
-        }
-        textEditor.edit((editBuilder) => {
-          editBuilder.replace(
-            new vscode.Range(
-              textEditor.document.positionAt(0),
-              textEditor.document.positionAt(oldText.length)
-            ),
-            newText
-          );
-        });
-        this._lastSetText = newText;
-        console.log("set lastSetText");
-      }
-    });
-    nodes.observeDeep(onNodesChanged);
+    nodes.observeDeep(
+      debouncedChange(() => {
+        this.saveTextDocument();
+      })
+    );
 
     const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
@@ -261,10 +244,33 @@ export class EditorSession {
     this._textEditor = textEditor;
     this._lastSetText = undefined;
     this._panel.title = this.titleForEditor(textEditor);
-    this.reloadTextDocument();
+    this.loadTextDocument();
   }
 
-  reloadTextDocument() {
+  private saveTextDocument() {
+    const textEditor = this._textEditor;
+    if (textEditor) {
+      const newText = this._document.nodes.get("file")?.stringify() ?? "";
+      const oldText = textEditor.document.getText();
+      if (newText === oldText) {
+        // TODO: compare by AST?
+        return;
+      }
+      textEditor.edit((editBuilder) => {
+        editBuilder.replace(
+          new vscode.Range(
+            textEditor.document.positionAt(0),
+            textEditor.document.positionAt(oldText.length)
+          ),
+          newText
+        );
+      });
+      this._lastSetText = newText;
+      console.log("set lastSetText");
+    }
+  }
+
+  private loadTextDocument() {
     if (!this._textEditor) {
       return;
     }
@@ -283,7 +289,7 @@ export class EditorSession {
     }
   }
 
-  titleForEditor(editor: vscode.TextEditor | undefined) {
+  private titleForEditor(editor: vscode.TextEditor | undefined) {
     if (!editor) {
       return "Windmix";
     }
@@ -291,7 +297,7 @@ export class EditorSession {
     return "Windmix " + path.basename(editor.document.uri.path);
   }
 
-  projectPathForEditor(editor: vscode.TextEditor) {
+  private projectPathForEditor(editor: vscode.TextEditor) {
     const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.path;
     if (!workspacePath) {
       throw new Error("No workspace path");
