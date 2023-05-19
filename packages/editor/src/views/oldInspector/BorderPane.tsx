@@ -16,7 +16,7 @@ import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
   StyleInspectorState,
   OldStylePropertyState,
-} from "../../state/OldStyleInspectorState";
+} from "../../state/old/OldStyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,

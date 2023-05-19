@@ -8,7 +8,7 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import * as icons from "@seanchas116/design-icons";
-import { StyleInspectorState } from "../../state/OldStyleInspectorState";
+import { StyleInspectorState } from "../../state/old/OldStyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
 import { StyleDimensionInput, StyleIconRadio } from "./Components";
 import { LetterIcon } from "@seanchas116/paintkit/src/components/Input";

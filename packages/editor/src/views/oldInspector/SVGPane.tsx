@@ -6,7 +6,7 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { StyleInspectorState } from "../../state/OldStyleInspectorState";
+import { StyleInspectorState } from "../../state/old/OldStyleInspectorState";
 import { StyleColorInput } from "./Components";
 
 export const SVGPane: React.FC<{

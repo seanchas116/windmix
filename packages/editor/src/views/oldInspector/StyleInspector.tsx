@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import styled from "styled-components";
-import { StyleInspectorState } from "../../state/OldStyleInspectorState";
+import { StyleInspectorState } from "../../state/old/OldStyleInspectorState";
 import { BackgroundPane } from "./BackgroundPane";
 import { BorderPane } from "./BorderPane";
 import { EffectsPane } from "./EffectsPane";

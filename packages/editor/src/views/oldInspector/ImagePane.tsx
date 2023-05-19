@@ -10,7 +10,7 @@ import * as icons from "@seanchas116/design-icons";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { IconRadioOption } from "@seanchas116/paintkit/src/components/IconRadio";
 import { Icon } from "@iconify/react";
-import { StyleInspectorState } from "../../state/OldStyleInspectorState";
+import { StyleInspectorState } from "../../state/old/OldStyleInspectorState";
 import { StyleIconRadio } from "./Components";
 
 const objectFitOptions: IconRadioOption<string>[] = [

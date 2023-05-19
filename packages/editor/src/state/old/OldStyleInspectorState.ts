@@ -7,8 +7,8 @@ import {
   allStyleKeys,
   imageStyleKeys,
   textStyleKeys,
-} from "../models/oldStyle/Style";
-import { StyleInspectorTarget } from "../models/oldStyle/StyleInspectorTarget";
+} from "../../models/oldStyle/Style";
+import { StyleInspectorTarget } from "../../models/oldStyle/StyleInspectorTarget";
 
 export class OldStylePropertyState {
   constructor(state: StyleInspectorState, key: AllStyleKey) {
