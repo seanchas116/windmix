@@ -164,16 +164,16 @@ export class DevServer {
                 });
 
                 const resizeObserver = new ResizeObserver(() => {
-                  console.log("resize", document.documentElement.clientWidth, document.documentElement.clientHeight);
+                  console.log("resize", document.body.clientWidth, document.body.clientHeight);
                   window.parent.postMessage({
                     type: 'windmix:resize',
-                    height: document.documentElement.clientHeight,
+                    height: document.body.clientHeight,
                   }, '*');
                 });
-                resizeObserver.observe(document.documentElement);
+                resizeObserver.observe(document.body);
                 window.parent.postMessage({
                   type: 'windmix:resize',
-                  height: document.documentElement.clientHeight,
+                  height: document.body.clientHeight,
                 }, '*');
 
                 const observer = new MutationObserver(() => {

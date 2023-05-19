@@ -50,7 +50,7 @@ export class RendererAdapter {
   readonly artboard: Artboard;
 
   window: Window | undefined;
-  @observable documentHeight = 0;
+  @observable windowBodyHeight = 0;
   revision = Date.now();
   previewInProgress = false;
 
@@ -68,7 +68,7 @@ export class RendererAdapter {
       const height = data.height;
       runInAction(() => {
         console.log("resize", height);
-        this.documentHeight = height;
+        this.windowBodyHeight = height;
       });
     } else if (data.type === "windmix:reloadComputed") {
       this.previewInProgress = false;
