@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@iconify-icons/ic": "^1.2.13",
-    "@iconify-icons/mdi": "^1.2.44",
+    "@iconify-icons/mdi": "^1.2.46",
     "@iconify/react": "^4.1.0",
     "@radix-ui/react-scroll-area": "^1.0.3",
     "@seanchas116/design-icons": "workspace:*",
@@ -38,22 +38,22 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.7",
     "@types/path-browserify": "^1.0.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
     "@types/styled-components": "^5.1.26",
     "@types/vscode-webview": "^1.57.1",
     "@types/wicg-file-system-access": "^2020.9.6",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.38.0",
+    "eslint": "^8.40.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-react-refresh": "^0.4.1",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2",
-    "vitest": "^0.31.0"
+    "typescript": "^5.0.4",
+    "vite": "^4.3.8",
+    "vitest": "^0.31.1"
   }
 }
