@@ -41,6 +41,13 @@ export const Renderer: React.FC<{
         <DragHandlerOverlay artboard={artboard} />
         <HUD artboard={artboard} />
       </div>
+      <div
+        className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
+        style={{
+          left: width === "auto" ? "100%" : `${width * scale}px`,
+          height: `${artboard.adapter.windowBodyHeight * scale}px`,
+        }}
+      ></div>
     </div>
   );
 });
