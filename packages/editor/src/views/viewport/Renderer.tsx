@@ -12,6 +12,9 @@ import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/use
 import { scrollState } from "../../state/ScrollState";
 import { breakpoints } from "./constants";
 
+const breakpointGradientHeight = 100;
+const breakpointGradientWidth = 2000;
+
 export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
@@ -36,22 +39,46 @@ export const Renderer: React.FC<{
 
   return (
     <div className="absolute inset-0">
-      {breakpoints.map((bp, i) => {
-        return (
-          <div
-            className="absolute border-x"
-            style={{
-              top: 0,
-              left: `${-bp.minWidth / 2}px`,
-              width: `${bp.minWidth}px`,
-              height: `${height}px`,
-              borderColor: bp.color + "80",
-              backgroundColor:
-                i === currentBreakpoint ? bp.color + "08" : "transparent",
-            }}
-          />
-        );
-      })}
+      <div className="pointer-events-none">
+        {breakpoints.map((bp, i) => {
+          return (
+            <div
+              className="absolute border-x"
+              style={{
+                top: `-${breakpointGradientHeight}px`,
+                left: `${-bp.minWidth / 2}px`,
+                width: `${bp.minWidth}px`,
+                height: `${height + breakpointGradientHeight * 2}px`,
+                borderColor: bp.color + "80",
+                backgroundColor:
+                  i === currentBreakpoint ? bp.color + "08" : "transparent",
+              }}
+            />
+          );
+        })}
+        <div
+          className="absolute"
+          style={{
+            top: `-${breakpointGradientHeight}px`,
+            height: `${breakpointGradientHeight}px`,
+            width: `${breakpointGradientWidth * 2}px`,
+            left: `-${breakpointGradientWidth}px`,
+            backgroundImage:
+              "linear-gradient(var(--macaron-background), transparent)",
+          }}
+        />
+        <div
+          className="absolute"
+          style={{
+            top: `${height}px`,
+            height: `${breakpointGradientHeight}px`,
+            width: `${breakpointGradientWidth * 2}px`,
+            left: `-${breakpointGradientWidth}px`,
+            backgroundImage:
+              "linear-gradient(transparent, var(--macaron-background))",
+          }}
+        />
+      </div>
       <div
         className="absolute -top-6 flex justify-between items-center"
         style={{
