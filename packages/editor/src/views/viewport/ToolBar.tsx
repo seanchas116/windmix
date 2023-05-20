@@ -86,17 +86,6 @@ export const ToolBar: React.FC<{
             </IconButton>
           </Tippy>
         </div>
-        <div className="flex items-center gap-1">
-          <Tippy content="Multiple Viewports">
-            <IconButton
-              onClick={action(() => {
-                // TODO
-              })}
-            >
-              <Icon icon="icon-park-outline:devices" />
-            </IconButton>
-          </Tippy>
-        </div>
         <ZoomControlController />
       </div>
     </div>
