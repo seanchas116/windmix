@@ -43,6 +43,7 @@ export const Renderer: React.FC<{
           <div
             className="absolute border-x"
             style={{
+              top: 0,
               left: `${-bp.minWidth / 2}px`,
               width: `${bp.minWidth}px`,
               height: `${height}px`,
@@ -53,6 +54,22 @@ export const Renderer: React.FC<{
           />
         );
       })}
+      <div
+        className="absolute -top-6 flex justify-between items-center"
+        style={{
+          left: `${-width / 2}px`,
+          width: `${width}px`,
+        }}
+      >
+        <div>Component</div>
+        <div
+          style={{
+            color: breakpoints[currentBreakpoint]?.color,
+          }}
+        >
+          {width}px
+        </div>
+      </div>
       <div
         className="absolute left-0 top-0"
         style={{

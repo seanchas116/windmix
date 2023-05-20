@@ -8,10 +8,10 @@ export const doubleClickInterval = 300;
 export const breakpoints = [
   {
     minWidth: 640,
-    color: colors.red[500],
+    color: colors.red[400],
   },
   {
     minWidth: 1024,
-    color: colors.green[500],
+    color: colors.green[400],
   },
 ];
