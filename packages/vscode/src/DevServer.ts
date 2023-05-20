@@ -183,6 +183,12 @@ export class DevServer {
                   }, '*');
                 });
                 observer.observe(document.body,  { attributes: true, childList: true, subtree: true });
+
+                window.addEventListener("resize", () => {
+                  window.parent.postMessage({
+                    type: 'windmix:reloadComputed',
+                  }, '*'); 
+                });
               `;
             }
           },
