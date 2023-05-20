@@ -105,7 +105,10 @@ export const Renderer: React.FC<{
       >
         <iframe
           className="absolute left-0 top-0 w-full h-full"
-          src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
+          src={
+            appState.tabPath &&
+            `http://localhost:1337/windmix?path=${appState.tabPath}&component=default`
+          }
           ref={iframeRef}
           onLoad={(e) => {
             console.log(e.currentTarget.contentWindow);
