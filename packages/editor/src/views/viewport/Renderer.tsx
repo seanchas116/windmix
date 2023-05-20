@@ -9,34 +9,74 @@ import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
+import { twMerge } from "tailwind-merge";
+import colors from "tailwindcss/colors";
 
 export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const width = artboard.width;
+  const height = artboard.adapter.windowBodyHeight;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
-      if (initData === "auto") {
-        return;
-      }
       const newWidth = initData + totalDeltaX;
       artboard.width = newWidth;
       return newWidth;
     },
   });
 
+  const breakpoints = [
+    {
+      minWidth: 640,
+      color: colors.red[500],
+    },
+    {
+      minWidth: 768,
+      color: colors.orange[500],
+    },
+    {
+      minWidth: 1024,
+      color: colors.green[500],
+    },
+    {
+      minWidth: 1280,
+      color: colors.teal[500],
+    },
+    {
+      minWidth: 1536,
+      color: colors.indigo[500],
+    },
+  ];
+  const currentBreakpoint = breakpoints.findIndex(
+    (bp) => artboard.width < bp.minWidth
+  );
+
   return (
     <div className="absolute inset-0">
+      {breakpoints.map((bp, i) => {
+        return (
+          <div
+            className="absolute border-r "
+            style={{
+              width: `${bp.minWidth}px`,
+              height: `${height}px`,
+              borderColor: bp.color + "80",
+              backgroundColor:
+                i === currentBreakpoint ? bp.color + "08" : "transparent",
+            }}
+          />
+        );
+      })}
       <div
         className="absolute left-0 top-0"
         style={{
-          width: width === "auto" ? "100vw" : `${width}px`,
-          height: `${artboard.adapter.windowBodyHeight}px`,
+          width: `${width}px`,
+          height: `${height}px`,
         }}
       >
         <iframe
@@ -57,8 +97,8 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: width === "auto" ? "100%" : `${width}px`,
-          height: `${artboard.adapter.windowBodyHeight}px`,
+          left: `${width}px`,
+          height: `${height}px`,
         }}
       ></div>
     </div>

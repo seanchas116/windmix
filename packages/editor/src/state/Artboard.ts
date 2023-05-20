@@ -76,7 +76,7 @@ export class Artboard {
   @observable.ref dragPreviewRects: Rect[] = [];
   @observable dropDestination: DropDestination | undefined = undefined;
 
-  @observable width: number | "auto" = 375;
+  @observable width = 375;
 
   async updateRects() {
     const hoverComputations =
