@@ -11,6 +11,7 @@ import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { twMerge } from "tailwind-merge";
 import colors from "tailwindcss/colors";
+import { scrollState } from "../../state/ScrollState";
 
 export const Renderer: React.FC<{
   artboard: Artboard;
@@ -24,7 +25,7 @@ export const Renderer: React.FC<{
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
-      const newWidth = initData + totalDeltaX * 2;
+      const newWidth = initData + (totalDeltaX * 2) / scrollState.scale;
       artboard.width = newWidth;
       return newWidth;
     },
