@@ -12,6 +12,7 @@ import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/use
 import { twMerge } from "tailwind-merge";
 import colors from "tailwindcss/colors";
 import { scrollState } from "../../state/ScrollState";
+import { breakpoints } from "./constants";
 
 export const Renderer: React.FC<{
   artboard: Artboard;
@@ -31,16 +32,6 @@ export const Renderer: React.FC<{
     },
   });
 
-  const breakpoints = [
-    {
-      minWidth: 640,
-      color: colors.red[500],
-    },
-    {
-      minWidth: 1024,
-      color: colors.green[500],
-    },
-  ];
   const currentBreakpoint = breakpoints.findIndex(
     (bp) => artboard.width < bp.minWidth
   );
