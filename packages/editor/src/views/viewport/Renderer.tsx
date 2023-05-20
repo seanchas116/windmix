@@ -35,35 +35,42 @@ export const Renderer: React.FC<{
   return (
     <div className="absolute inset-0 overflow-scroll">
       <div
+        className="h-full left-0 right-0 mx-auto relative"
         style={{
-          width: width === "auto" ? "100%" : `${width}px`,
-          height: `${artboard.adapter.windowBodyHeight}px`,
-          transformOrigin: "left top",
-          transform: `scale(${scale})`,
+          width: width === "auto" ? "100%" : `${width * scale}px`,
         }}
       >
-        <iframe
-          className="absolute left-0 top-0 w-full h-full"
-          src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
-          ref={iframeRef}
-          onLoad={(e) => {
-            console.log(e.currentTarget.contentWindow);
-            artboard.adapter.setWindow(
-              e.currentTarget.contentWindow ?? undefined
-            );
+        <div
+          style={{
+            width: width === "auto" ? "100%" : `${width}px`,
+            height: `${artboard.adapter.windowBodyHeight}px`,
+            transformOrigin: "left top",
+            transform: `scale(${scale})`,
           }}
-        />
-        <DragHandlerOverlay artboard={artboard} />
-        <HUD artboard={artboard} />
+        >
+          <iframe
+            className="absolute left-0 top-0 w-full h-full"
+            src={`http://localhost:1337/windmix?path=${appState.tabPath}&component=default`}
+            ref={iframeRef}
+            onLoad={(e) => {
+              console.log(e.currentTarget.contentWindow);
+              artboard.adapter.setWindow(
+                e.currentTarget.contentWindow ?? undefined
+              );
+            }}
+          />
+          <DragHandlerOverlay artboard={artboard} />
+          <HUD artboard={artboard} />
+        </div>
+        <div
+          {...pointerEventHandlers}
+          className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
+          style={{
+            left: width === "auto" ? "100%" : `${width * scale}px`,
+            height: `${artboard.adapter.windowBodyHeight * scale}px`,
+          }}
+        ></div>
       </div>
-      <div
-        {...pointerEventHandlers}
-        className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
-        style={{
-          left: width === "auto" ? "100%" : `${width * scale}px`,
-          height: `${artboard.adapter.windowBodyHeight * scale}px`,
-        }}
-      ></div>
     </div>
   );
 });
