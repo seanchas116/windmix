@@ -9,6 +9,7 @@ import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { scrollState } from "../../state/ScrollState";
+import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 
 export const Renderer: React.FC<{
   artboard: Artboard;
@@ -17,12 +18,26 @@ export const Renderer: React.FC<{
   const scale = scrollState.scale;
   const width = artboard.width;
 
+  const pointerEventHandlers = usePointerStroke({
+    onBegin(e) {
+      return artboard.width;
+    },
+    onMove(e, { totalDeltaX, totalDeltaY, initData }) {
+      if (initData === "auto") {
+        return;
+      }
+      const newWidth = initData + totalDeltaX / scale;
+      artboard.width = newWidth;
+      return newWidth;
+    },
+  });
+
   return (
     <div className="absolute inset-0 overflow-scroll">
       <div
         style={{
           width: width === "auto" ? "100%" : `${width}px`,
-          height: `${artboard.adapter.windowBodyHeight / scale}px`,
+          height: `${artboard.adapter.windowBodyHeight}px`,
           transformOrigin: "left top",
           transform: `scale(${scale})`,
         }}
@@ -42,6 +57,7 @@ export const Renderer: React.FC<{
         <HUD artboard={artboard} />
       </div>
       <div
+        {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
           left: width === "auto" ? "100%" : `${width * scale}px`,
