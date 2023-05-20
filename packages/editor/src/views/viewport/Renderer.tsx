@@ -8,25 +8,23 @@ import { NodeResizeBox } from "./hud/NodeResizeBox";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
-import { scrollState } from "../../state/ScrollState";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 
 export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const scale = scrollState.scale;
   const width = artboard.width;
 
   const pointerEventHandlers = usePointerStroke({
-    onBegin(e) {
+    onBegin() {
       return artboard.width;
     },
-    onMove(e, { totalDeltaX, totalDeltaY, initData }) {
+    onMove(e, { totalDeltaX, initData }) {
       if (initData === "auto") {
         return;
       }
-      const newWidth = initData + totalDeltaX / scale;
+      const newWidth = initData + totalDeltaX;
       artboard.width = newWidth;
       return newWidth;
     },
@@ -35,11 +33,10 @@ export const Renderer: React.FC<{
   return (
     <div className="absolute inset-0">
       <div
+        className="absolute left-0 top-0"
         style={{
           width: width === "auto" ? "100vw" : `${width}px`,
           height: `${artboard.adapter.windowBodyHeight}px`,
-          transformOrigin: "left top",
-          transform: `scale(${scale})`,
         }}
       >
         <iframe
@@ -60,8 +57,8 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: width === "auto" ? "100%" : `${width * scale}px`,
-          height: `${artboard.adapter.windowBodyHeight * scale}px`,
+          left: width === "auto" ? "100%" : `${width}px`,
+          height: `${artboard.adapter.windowBodyHeight}px`,
         }}
       ></div>
     </div>
