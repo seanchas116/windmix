@@ -9,8 +9,6 @@ import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
-import { twMerge } from "tailwind-merge";
-import colors from "tailwindcss/colors";
 import { scrollState } from "../../state/ScrollState";
 import { breakpoints } from "./constants";
 
@@ -18,8 +16,7 @@ export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const width = artboard.width;
-  const height = artboard.adapter.windowBodyHeight;
+  const { width, height } = artboard;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {

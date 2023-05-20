@@ -1,6 +1,12 @@
 import { ElementNode, Node } from "@windmix/model";
 import { appState } from "./AppState";
-import { makeObservable, observable, reaction, runInAction } from "mobx";
+import {
+  computed,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+} from "mobx";
 import { Rect } from "paintvec";
 import { RendererAdapter } from "./RendererAdapter";
 import { Computation } from "./Computation";
@@ -76,7 +82,10 @@ export class Artboard {
   @observable.ref dragPreviewRects: Rect[] = [];
   @observable dropDestination: DropDestination | undefined = undefined;
 
-  @observable width = 375;
+  @observable width = 360;
+  @computed get height() {
+    return this.adapter.windowBodyHeight;
+  }
 
   async updateRects() {
     const hoverComputations =
