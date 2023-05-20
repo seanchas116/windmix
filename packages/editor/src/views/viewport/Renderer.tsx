@@ -24,7 +24,7 @@ export const Renderer: React.FC<{
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
-      const newWidth = initData + totalDeltaX;
+      const newWidth = initData + totalDeltaX * 2;
       artboard.width = newWidth;
       return newWidth;
     },
@@ -61,8 +61,9 @@ export const Renderer: React.FC<{
       {breakpoints.map((bp, i) => {
         return (
           <div
-            className="absolute border-r "
+            className="absolute border-x"
             style={{
+              left: `${-bp.minWidth / 2}px`,
               width: `${bp.minWidth}px`,
               height: `${height}px`,
               borderColor: bp.color + "80",
@@ -75,6 +76,7 @@ export const Renderer: React.FC<{
       <div
         className="absolute left-0 top-0"
         style={{
+          left: `${-width / 2}px`,
           width: `${width}px`,
           height: `${height}px`,
         }}
@@ -97,7 +99,7 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: `${width}px`,
+          left: `${width / 2}px`,
           height: `${height}px`,
         }}
       ></div>
