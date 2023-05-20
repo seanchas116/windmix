@@ -71,7 +71,16 @@ export const Viewport: React.FC = observer(() => {
           appState.document.deselectAll();
         })}
       />
-      <Renderer artboard={artboards.desktop} />
+
+      <div
+        style={{
+          position: "absolute",
+          transformOrigin: "left top",
+          transform: scrollState.documentToViewport.toCSSMatrixString(),
+        }}
+      >
+        <Renderer artboard={artboards.desktop} />
+      </div>
       <PanOverlay />
     </main>
   );
