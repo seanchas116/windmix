@@ -49,7 +49,7 @@ export const ToolBar: React.FC<{
         </Tippy>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <div className="flex items-center gap-1">
           <Tippy content="Mobile">
             <IconButton
@@ -58,6 +58,15 @@ export const ToolBar: React.FC<{
               })}
             >
               <Icon icon="icon-park-outline:iphone" />
+            </IconButton>
+          </Tippy>
+          <Tippy content="Tablet">
+            <IconButton
+              onClick={action(() => {
+                artboards.desktop.width = 1024;
+              })}
+            >
+              <Icon icon="icon-park-outline:ipad" />
             </IconButton>
           </Tippy>
           <Tippy content="Desktop">
@@ -69,13 +78,15 @@ export const ToolBar: React.FC<{
               <Icon icon="icon-park-outline:new-computer" />
             </IconButton>
           </Tippy>
-          <Tippy content="Auto">
+        </div>
+        <div className="flex items-center gap-1">
+          <Tippy content="Multiple Viewports">
             <IconButton
               onClick={action(() => {
-                artboards.desktop.width = "auto";
+                // TODO
               })}
             >
-              <Icon icon="icon-park-outline:sort-four" rotate={1} />
+              <Icon icon="icon-park-outline:devices" />
             </IconButton>
           </Tippy>
         </div>
