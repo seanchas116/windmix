@@ -26,7 +26,8 @@ export const Renderer: React.FC<{
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
-      const newWidth = initData + (totalDeltaX * 2) / scrollState.scale;
+      const newWidth =
+        initData + Math.round((totalDeltaX * 2) / scrollState.scale);
       artboard.width = newWidth;
       return newWidth;
     },
