@@ -37,20 +37,8 @@ export const Renderer: React.FC<{
       color: colors.red[500],
     },
     {
-      minWidth: 768,
-      color: colors.orange[500],
-    },
-    {
       minWidth: 1024,
       color: colors.green[500],
-    },
-    {
-      minWidth: 1280,
-      color: colors.teal[500],
-    },
-    {
-      minWidth: 1536,
-      color: colors.indigo[500],
     },
   ];
   const currentBreakpoint = breakpoints.findIndex(
