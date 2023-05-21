@@ -2300,7 +2300,6 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
   return (
     ",
     "index": 0,
-    "isDefaultExport": false,
     "location": {
       "column": 0,
       "line": 11,
@@ -2588,4 +2587,94 @@ export function Example() {
   );
 }
 "
+`;
+
+exports[`File load/stringify > should load earlyReturn.js > nodes 1`] = `
+{
+  "1": {
+    "attributes": [],
+    "index": 0,
+    "location": {
+      "column": 4,
+      "line": 6,
+    },
+    "parent": "component:EarlyReturn",
+    "selfClosing": false,
+    "spaceAfterTagName": "",
+    "tagName": "div",
+    "type": "element",
+  },
+  "2": {
+    "index": 0,
+    "location": {
+      "column": 9,
+      "line": 6,
+    },
+    "parent": "1",
+    "text": "
+      ",
+    "type": "text",
+  },
+  "3": {
+    "attributes": [],
+    "index": 1,
+    "location": {
+      "column": 6,
+      "line": 7,
+    },
+    "parent": "1",
+    "selfClosing": false,
+    "spaceAfterTagName": "",
+    "tagName": "h1",
+    "type": "element",
+  },
+  "4": {
+    "index": 0,
+    "location": {
+      "column": 10,
+      "line": 7,
+    },
+    "parent": "3",
+    "text": "Early Return",
+    "type": "text",
+  },
+  "5": {
+    "index": 2,
+    "location": {
+      "column": 27,
+      "line": 7,
+    },
+    "parent": "1",
+    "text": "
+    ",
+    "type": "text",
+  },
+  "component:EarlyReturn": {
+    "footer": "
+  );
+}
+",
+    "header": "export function EarlyReturn() {
+  if (false) {
+    return <div>Error</div>;
+  }
+
+  return (
+    ",
+    "index": 0,
+    "location": {
+      "column": 0,
+      "line": 0,
+    },
+    "name": "EarlyReturn",
+    "parent": "file",
+    "type": "component",
+  },
+  "file": {
+    "filePath": "/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js",
+    "header": "",
+    "index": 0,
+    "type": "file",
+  },
+}
 `;

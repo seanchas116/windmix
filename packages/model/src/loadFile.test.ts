@@ -58,4 +58,26 @@ describe("File load/stringify", () => {
       expect(file.stringify()).toEqual(fileText);
     }
   });
+
+  const testFileDir = path.resolve(__dirname, "__fixtures__/tests");
+  const testFiles = fs.readdirSync(testFileDir);
+
+  for (const file of testFiles) {
+    if (file.endsWith(".js")) {
+      it(`should load ${file}`, () => {
+        const doc = new Document();
+
+        let id = 0;
+        const generateID = () => {
+          id += 1;
+          return String(id);
+        };
+
+        const filePath = path.resolve(testFileDir, file);
+        const fileText = fs.readFileSync(filePath, "utf-8");
+        loadFile(doc, filePath, fileText, generateID);
+        expect(doc.nodesData.toJSON()).toMatchSnapshot("nodes");
+      });
+    }
+  }
 });

@@ -318,7 +318,7 @@ function findComponentFromStatement(
     return;
   }
 
-  for (const bodyStatement of declaration.body.body) {
+  for (const bodyStatement of [...declaration.body.body].reverse()) {
     if (bodyStatement.type === "ReturnStatement") {
       const returnStatement = bodyStatement;
       const returnValue = returnStatement.argument;
