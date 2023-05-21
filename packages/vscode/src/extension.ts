@@ -27,7 +27,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // The commandId parameter must match the command field in package.json
   context.subscriptions.push(
     vscode.commands.registerCommand("windmix-vscode.openEditor", () => {
-      new EditorSession({});
+      EditorSession.createWithNewPanel();
     }),
     vscode.commands.registerCommand("windmix-vscode.openEditorExternal", () => {
       vscode.env.openExternal(vscode.Uri.parse("http://localhost:5173"));
