@@ -18,7 +18,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   devServer = new DevServer();
   await devServer.start();
-  extensionState.init();
+  await extensionState.init(context);
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand

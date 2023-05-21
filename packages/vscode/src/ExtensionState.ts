@@ -50,8 +50,33 @@ export class ExtensionState {
     );
   }
 
-  init() {
-    this._textEditor = vscode.window.activeTextEditor;
+  async init(context: vscode.ExtensionContext) {
+    this._context = context;
+    const tabPath = context.workspaceState.get("tabPath");
+
+    let textEditor;
+    if (typeof tabPath === "string") {
+      let editorViewColumn: vscode.ViewColumn | undefined;
+
+      for (const tab of vscode.window.tabGroups.all.flatMap(
+        (group) => group.tabs
+      )) {
+        if (tab.input instanceof vscode.TabInputText) {
+          if (tab.input.uri.fsPath === tabPath) {
+            editorViewColumn = tab.group.viewColumn;
+          }
+        }
+      }
+
+      textEditor = await vscode.window.showTextDocument(
+        vscode.Uri.file(tabPath),
+        { viewColumn: editorViewColumn }
+      );
+    } else {
+      textEditor = vscode.window.activeTextEditor;
+    }
+
+    this._textEditor = textEditor;
     this.loadTextDocument();
   }
 
@@ -62,6 +87,7 @@ export class ExtensionState {
   }
 
   disposables: vscode.Disposable[] = [];
+  private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
   private _lastSetText: string | undefined;
   readonly document = new Document();
@@ -79,6 +105,13 @@ export class ExtensionState {
     this._lastSetText = undefined;
     //this._panel.title = this.titleForEditor(textEditor);
     this.loadTextDocument();
+
+    if (this._context) {
+      this._context.workspaceState.update(
+        "tabPath",
+        textEditor?.document.uri.fsPath
+      );
+    }
   }
 
   private saveTextDocument() {
