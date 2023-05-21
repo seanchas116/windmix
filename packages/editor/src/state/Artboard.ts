@@ -20,7 +20,7 @@ export class Artboard {
     // TODO: use createAtom?
     queueMicrotask(() => {
       reaction(
-        () => [appState.hover, appState.document.selectedNodes],
+        () => [appState.document.hoverNode, appState.document.selectedNodes],
         async () => {
           await this.updateRects();
         }
@@ -88,13 +88,16 @@ export class Artboard {
   }
 
   async updateRects() {
+    const hover = appState.document.hoverNode;
+    const selection = appState.document.selectedNodes;
+
     const hoverComputations =
-      appState.hover?.type === "element"
-        ? await this.getComputationCache(appState.hover).get()
+      hover?.type === "element"
+        ? await this.getComputationCache(hover).get()
         : [];
     const selectedComputations = (
       await Promise.all(
-        appState.document.selectedNodes
+        selection
           .filter((node): node is ElementNode => node.type === "element")
           .map((node) => this.getComputationCache(node).get())
       )

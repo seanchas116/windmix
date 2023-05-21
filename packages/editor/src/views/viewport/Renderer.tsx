@@ -198,7 +198,7 @@ const MouseOverlay = observer(({ artboard }: { artboard: Artboard }) => {
           event.nativeEvent.offsetY
         );
         runInAction(() => {
-          appState.hover = node;
+          appState.document.hoverNode = node;
         });
       })}
     />

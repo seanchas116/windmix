@@ -6,7 +6,6 @@ import { ViewportEvent } from "./ViewportEvent";
 import { observer } from "mobx-react-lite";
 import { Artboard } from "../../../state/Artboard";
 import { appState } from "../../../state/AppState";
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { createNodeInsertDragHandler } from "./NodeInsertDragHandler";
 import { createNodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 
@@ -47,7 +46,7 @@ export const DragHandlerOverlay: React.FC<{
       //   }
       // }
 
-      appState.hover = undefined;
+      appState.document.hoverNode = undefined;
 
       if (appState.tool?.type === "insert") {
         dragHandlerRef.current = await createNodeInsertDragHandler(
@@ -104,7 +103,7 @@ export const DragHandlerOverlay: React.FC<{
       //   }
       // }
 
-      appState.hover = viewportEvent.selectable;
+      appState.document.hoverNode = viewportEvent.selectable;
       appState.resizeBoxVisible = true;
 
       artboard.snapper.clear();

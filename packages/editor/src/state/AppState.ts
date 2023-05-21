@@ -4,7 +4,7 @@ import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
-import { Node, Document } from "@windmix/model";
+import { Document } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { Tool } from "./Tool";
 import hotkeys from "hotkeys-js";
@@ -88,7 +88,6 @@ export class AppState {
     this.connection.rpc.remote.jumpToLocation(location);
   }
 
-  @observable hover: Node | undefined = undefined;
   @observable tool: Tool | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;

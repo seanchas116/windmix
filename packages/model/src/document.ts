@@ -66,6 +66,21 @@ export class Document {
     this.currentComponentName = value?.name;
   }
 
+  private get hoverID(): string | undefined {
+    return this.miscData.get("hover");
+  }
+  private set hoverID(value: string | undefined) {
+    this.miscData.set("hover", value);
+  }
+
+  get hoverNode(): Node | undefined {
+    return this.nodes.get(this.hoverID);
+  }
+
+  set hoverNode(value: Node | undefined) {
+    this.hoverID = value?.id;
+  }
+
   readonly ydoc: Y.Doc;
   readonly nodes: NodeMap;
 

@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import * as path from "path-browserify";
 import { appState } from "../../state/AppState";
 import { Renderer } from "./Renderer";
 import { scrollState, viewportGeometry } from "../../state/ScrollState";
@@ -7,8 +6,6 @@ import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
 import { createRef, useEffect } from "react";
 import { artboards } from "../../state/Artboard";
-import { ZoomControlController } from "./ZoomControl";
-import { ToolBar } from "./ToolBar";
 import { PanOverlay } from "./PanOverlay";
 
 export const Viewport: React.FC = observer(() => {
@@ -55,7 +52,7 @@ export const Viewport: React.FC = observer(() => {
   });
 
   const onMouseLeave = action(() => {
-    appState.hover = undefined;
+    appState.document.hoverNode = undefined;
   });
 
   return (

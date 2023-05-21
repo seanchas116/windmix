@@ -24,7 +24,7 @@ const NodeRow = observer(function NodeRow({
   /* This node instance can do many things. See the API reference. */
   const node = nodeApi.data.node;
 
-  const hover = appState.hover === node;
+  const hover = appState.document.hoverNode === node;
   const selected = node.selected;
 
   const getName = () => {
@@ -71,11 +71,11 @@ const NodeRow = observer(function NodeRow({
   };
 
   const onMouseEnter = action(() => {
-    appState.hover = node;
+    appState.document.hoverNode = node;
   });
 
   const onMouseLeave = action(() => {
-    appState.hover = undefined;
+    appState.document.hoverNode = undefined;
   });
 
   return (
