@@ -23,7 +23,7 @@ export class ExtensionState {
   constructor() {
     // TODO: restore current text editor from state
 
-    this.disposables.push(
+    this._disposables.push(
       vscode.window.onDidChangeActiveTextEditor((editor) => {
         console.log("onDidChangeActiveTextEditor", editor);
 
@@ -81,12 +81,12 @@ export class ExtensionState {
   }
 
   dispose() {
-    for (const disposable of this.disposables) {
+    for (const disposable of this._disposables) {
       disposable.dispose();
     }
   }
 
-  disposables: vscode.Disposable[] = [];
+  private _disposables: vscode.Disposable[] = [];
   private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
   private _lastSetText: string | undefined;
