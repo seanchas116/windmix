@@ -16,18 +16,10 @@ const App: React.FC = observer(() => {
     fixed inset-0 w-screen h-screen flex text-xs
     "
       >
-        <aside className="w-[221px] h-full bg-macaron-uiBackground border-r border-macaron-separator relative contain-strict">
-          <Outline className="w-full h-full" />
-        </aside>
         <div className="flex flex-col flex-1">
           <ToolBar />
           <Viewport />
         </div>
-        <aside className="w-[221px] h-full bg-macaron-uiBackground border-l border-macaron-separator relative contain-strict">
-          <ScrollArea>
-            <StyleInspector />
-          </ScrollArea>
-        </aside>
       </div>
     </PaintkitRoot>
   );
