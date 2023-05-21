@@ -3,6 +3,7 @@
 import * as vscode from "vscode";
 import { EditorPanelSerializer, EditorSession } from "./EditorSession";
 import { DevServer } from "./DevServer";
+import { extensionState } from "./ExtensionState";
 
 export let devServer: DevServer | undefined;
 
@@ -15,22 +16,21 @@ export async function activate(context: vscode.ExtensionContext) {
     'Congratulations, your extension "windmix-vscode" is now active!'
   );
 
+  devServer = new DevServer();
+  await devServer.start();
+  extensionState.init();
+
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   context.subscriptions.push(
     vscode.commands.registerCommand("windmix-vscode.openEditor", () => {
-      new EditorSession({
-        textEditor: vscode.window.activeTextEditor,
-      });
+      new EditorSession({});
     }),
     vscode.commands.registerCommand("windmix-vscode.openEditorExternal", () => {
       vscode.env.openExternal(vscode.Uri.parse("http://localhost:5173"));
     })
   );
-
-  devServer = new DevServer();
-  await devServer.start();
 
   vscode.window.registerWebviewPanelSerializer(
     "windmixEditor",

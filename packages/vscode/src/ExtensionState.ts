@@ -40,8 +40,6 @@ export class ExtensionState {
         }
       })
     );
-    this._textEditor = vscode.window.activeTextEditor;
-    this.loadTextDocument();
 
     // set text content on doc nodes change
     const nodes = this.document.nodesData.y;
@@ -50,6 +48,11 @@ export class ExtensionState {
         this.saveTextDocument();
       })
     );
+  }
+
+  init() {
+    this._textEditor = vscode.window.activeTextEditor;
+    this.loadTextDocument();
   }
 
   dispose() {
