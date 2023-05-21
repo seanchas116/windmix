@@ -7,6 +7,10 @@ import { appState } from "../../state/AppState";
 import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
 import { useEffect } from "react";
+import {
+  Pane,
+  PaneHeading,
+} from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 
 const nodeApis = new WeakMap<Node, NodeApi>();
 
@@ -152,17 +156,27 @@ export const Outline: React.FC<{ className?: string }> = observer(
 
     return (
       <div className={twMerge("flex flex-col", className)}>
-        {components.map((c) => (
-          <ComponentOutline
-            key={c.id}
-            component={c}
-            selected={c.name === appState.document.currentComponentName}
-            onTitleClick={action(() => {
-              console.log("click");
-              appState.document.currentComponentName = c.name;
-            })}
-          />
-        ))}
+        <Pane>
+          <PaneHeading>Components</PaneHeading>
+          <div className="-mx-3">
+            {components.map((c) => (
+              <ComponentTitle
+                key={c.id}
+                selected={c.name === appState.document.currentComponentName}
+                onClick={action(() => {
+                  console.log("click");
+                  appState.document.currentComponentName = c.name;
+                })}
+              >
+                {c.name}
+              </ComponentTitle>
+            ))}
+          </div>
+        </Pane>
+        <Pane className="flex flex-col flex-1">
+          <PaneHeading>Elements</PaneHeading>
+          <ComponentOutline />
+        </Pane>
       </div>
     );
   }
@@ -171,11 +185,9 @@ Outline.displayName = "Outline";
 
 const ComponentOutline: React.FC<{
   className?: string;
-  component: ComponentNode;
-  selected: boolean;
-  onTitleClick?: () => void;
-}> = observer(({ className, component, selected, onTitleClick }) => {
-  const data = buildTreeData(component).children;
+}> = observer(({ className }) => {
+  const component = appState.document.currentComponent;
+  const data = component ? buildTreeData(component).children : [];
 
   const onMove: MoveHandler<TreeData> = action(({ parentNode, index }) => {
     const parent = parentNode?.data.node;
@@ -224,30 +236,25 @@ const ComponentOutline: React.FC<{
   }, []);
 
   return (
-    <div className={twMerge("flex flex-col", selected && "flex-1", className)}>
-      <ComponentTitle selected={selected} onClick={onTitleClick}>
-        {component.name}
-      </ComponentTitle>
-      {selected && (
-        <FillFlexParent className="bg-macaron-background">
-          {({ width, height }) => (
-            <Tree
-              data={data}
-              onMove={onMove}
-              openByDefault={true}
-              width={width}
-              height={height}
-              indent={8}
-              rowHeight={22}
-              // paddingTop={12}
-              // paddingBottom={12}
-              overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
-            >
-              {NodeRow}
-            </Tree>
-          )}
-        </FillFlexParent>
-      )}
+    <div className={twMerge("flex flex-col flex-1 -mx-3 -mt-3", className)}>
+      <FillFlexParent>
+        {({ width, height }) => (
+          <Tree
+            data={data}
+            onMove={onMove}
+            openByDefault={true}
+            width={width}
+            height={height}
+            indent={8}
+            rowHeight={22}
+            paddingTop={12}
+            paddingBottom={12}
+            overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
+          >
+            {NodeRow}
+          </Tree>
+        )}
+      </FillFlexParent>
     </div>
   );
 });
@@ -262,20 +269,14 @@ const ComponentTitle: React.FC<
     <button
       {...props}
       className={twMerge(
-        "text-left px-2 py-1 flex items-center font-bold border-l-2",
-        props.selected
-          ? "border-macaron-active bg-macaron-background"
-          : "border-transparent opacity-60",
+        "text-left px-2 py-1 pl-3 flex items-center w-full",
+        props.selected ? "bg-macaron-active text-macaron-activeText" : "",
         props.className
       )}
     >
       <Icon
         icon="icon-park-outline:figma-component"
-        className={twMerge(
-          "mr-1",
-          props.selected &&
-            "text-indigo-500 [&>*]:fill-current [&>*]:stroke-current"
-        )}
+        className={twMerge("mr-1.5 opacity-50")}
       />
       {props.children}
     </button>
