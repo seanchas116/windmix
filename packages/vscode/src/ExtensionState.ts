@@ -118,21 +118,18 @@ export class ExtensionState {
       const file = this.document.fileNode;
       devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
     }
+
+    this._webviewTitleChanged.fire(this.webviewTitle);
   }
+
+  private readonly _webviewTitleChanged = new vscode.EventEmitter<string>();
+  readonly onWebviewTitleChanged = this._webviewTitleChanged.event;
 
   get webviewTitle(): string {
     const editor = this._textEditor;
     if (!editor) {
       return "Windmix";
     }
-    return "Windmix " + path.basename(editor.document.uri.path);
-  }
-
-  private titleForEditor(editor: vscode.TextEditor | undefined) {
-    if (!editor) {
-      return "Windmix";
-    }
-
     return "Windmix " + path.basename(editor.document.uri.path);
   }
 

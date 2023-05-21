@@ -91,10 +91,18 @@ export class EditorSession {
         { enableScripts: true }
       );
     this._panel = panel;
-    panel.title = extensionState.webviewTitle;
     panel.webview.html = this.getWebviewContent();
 
     const disposables: vscode.Disposable[] = [];
+
+    // set title
+
+    panel.title = extensionState.webviewTitle;
+    disposables.push(
+      extensionState.onWebviewTitleChanged((title) => {
+        panel.title = title;
+      })
+    );
 
     // broadcast updates
     extensionState.document.ydoc.on(
