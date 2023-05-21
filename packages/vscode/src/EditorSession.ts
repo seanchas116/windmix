@@ -105,12 +105,15 @@ export class EditorSession {
     );
 
     // broadcast updates
-    extensionState.document.ydoc.on(
-      "update",
-      debouncedUpdate((update: Uint8Array) => {
-        rpc.remote.update(update);
-      })
-    );
+    const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
+      rpc.remote.update(update);
+    });
+    extensionState.document.ydoc.on("update", onDocUpdate);
+    disposables.push({
+      dispose: () => {
+        extensionState.document.ydoc.off("update", onDocUpdate);
+      },
+    });
 
     const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
