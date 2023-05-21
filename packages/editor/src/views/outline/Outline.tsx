@@ -174,7 +174,16 @@ export const Outline: React.FC<{ className?: string }> = observer(
           </div>
         </Pane>
         <Pane className="flex flex-col flex-1">
-          <PaneHeading>Elements</PaneHeading>
+          <PaneHeading>
+            <div className="flex items-center">
+              <Icon
+                icon="icon-park-outline:figma-component"
+                className="mr-1.5 text-indigo-500 [&>*]:fill-current [&>*]:stroke-current"
+              />
+              {appState.document.currentComponent?.name ??
+                "No component selected"}
+            </div>
+          </PaneHeading>
           <ComponentOutline />
         </Pane>
       </div>
@@ -236,7 +245,7 @@ const ComponentOutline: React.FC<{
   }, []);
 
   return (
-    <div className={twMerge("flex flex-col flex-1 -mx-3 -mt-3", className)}>
+    <div className={twMerge("flex flex-col flex-1 -mx-3", className)}>
       <FillFlexParent>
         {({ width, height }) => (
           <Tree
@@ -247,8 +256,8 @@ const ComponentOutline: React.FC<{
             height={height}
             indent={8}
             rowHeight={22}
-            paddingTop={12}
-            paddingBottom={12}
+            // paddingTop={12}
+            // paddingBottom={12}
             overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
           >
             {NodeRow}
