@@ -5,6 +5,7 @@ import { EditorPanelSerializer, EditorSession } from "./EditorSession";
 import { DevServer } from "./DevServer";
 import { extensionState } from "./ExtensionState";
 import { InspectorWebviewViewProvider } from "./Inspector";
+import { OutlineWebviewViewProvider } from "./Outline";
 
 export let devServer: DevServer | undefined;
 
@@ -34,6 +35,10 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.window.registerWebviewViewProvider(
       "windmix-vscode.inspector",
       new InspectorWebviewViewProvider()
+    ),
+    vscode.window.registerWebviewViewProvider(
+      "windmix-vscode.outline",
+      new OutlineWebviewViewProvider()
     ),
     vscode.window.registerWebviewPanelSerializer(
       "windmixEditor",
