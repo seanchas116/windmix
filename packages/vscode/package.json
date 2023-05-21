@@ -41,15 +41,13 @@
           "type": "webview",
           "id": "windmix-vscode.outline",
           "name": "Outline",
-          "icon": "media/workbench.svg",
-          "contextualTitle": "Outline"
+          "icon": "media/workbench.svg"
         },
         {
           "type": "webview",
           "id": "windmix-vscode.inspector",
           "name": "Inspector",
-          "icon": "media/workbench.svg",
-          "contextualTitle": "Inspector"
+          "icon": "media/workbench.svg"
         }
       ]
     },
