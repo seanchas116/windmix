@@ -164,7 +164,7 @@ export const Outline: React.FC<{ className?: string }> = observer(
                 key={c.id}
                 selected={c.name === appState.document.currentComponentName}
                 onClick={action(() => {
-                  console.log("click");
+                  appState.document.deselectAll();
                   appState.document.currentComponentName = c.name;
                 })}
               >
