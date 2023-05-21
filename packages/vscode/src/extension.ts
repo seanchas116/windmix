@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import { EditorPanelSerializer, EditorSession } from "./EditorSession";
 import { DevServer } from "./DevServer";
 import { extensionState } from "./ExtensionState";
+import { InspectorWebviewViewProvider } from "./Inspector";
 
 export let devServer: DevServer | undefined;
 
@@ -29,12 +30,15 @@ export async function activate(context: vscode.ExtensionContext) {
     }),
     vscode.commands.registerCommand("windmix-vscode.openEditorExternal", () => {
       vscode.env.openExternal(vscode.Uri.parse("http://localhost:5173"));
-    })
-  );
-
-  vscode.window.registerWebviewPanelSerializer(
-    "windmixEditor",
-    new EditorPanelSerializer()
+    }),
+    vscode.window.registerWebviewViewProvider(
+      "windmix-vscode.inspector",
+      new InspectorWebviewViewProvider()
+    ),
+    vscode.window.registerWebviewPanelSerializer(
+      "windmixEditor",
+      new EditorPanelSerializer()
+    )
   );
 }
 

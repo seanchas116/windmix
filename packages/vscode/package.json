@@ -38,13 +38,15 @@
     "views": {
       "windmix-workbench": [
         {
-          "id": "windmix-outline",
+          "type": "webview",
+          "id": "windmix-vscode.outline",
           "name": "Outline",
           "icon": "media/workbench.svg",
           "contextualTitle": "Outline"
         },
         {
-          "id": "windmix-inspector",
+          "type": "webview",
+          "id": "windmix-vscode.inspector",
           "name": "Inspector",
           "icon": "media/workbench.svg",
           "contextualTitle": "Inspector"
@@ -53,7 +55,7 @@
     },
     "viewsWelcome": [
       {
-        "view": "windmix-outline",
+        "view": "windmix-vscode.outline",
         "contents": "[Open Editor](command:windmix-vscode.openEditor)"
       }
     ],
