@@ -11,6 +11,7 @@ import {
 import { ViewState } from "../../editor/src/types/ViewState";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import { devServer } from "./extension";
+import { extensionState } from "./ExtensionState";
 //import * as Diff from "diff";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
@@ -18,6 +19,7 @@ export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
     webviewPanel: vscode.WebviewPanel,
     state?: ViewState
   ) {
+    /*
     console.log(`Got state: ${state}`);
 
     const tabPath = state?.tabPath;
@@ -50,11 +52,11 @@ export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
       });
 
       return;
-    }
+    }*/
 
     new EditorSession({
       webviewPanel,
-      textEditor: vscode.window.activeTextEditor,
+      //textEditor: vscode.window.activeTextEditor,
     });
   }
 }
@@ -77,13 +79,9 @@ export const debouncedChange = (onUpdate: () => void): (() => void) => {
 export class EditorSession {
   constructor({
     webviewPanel,
-    textEditor,
   }: {
     webviewPanel?: vscode.WebviewPanel;
-    textEditor?: vscode.TextEditor;
   } = {}) {
-    this._textEditor = textEditor;
-
     const panel =
       webviewPanel ??
       vscode.window.createWebviewPanel(
@@ -93,43 +91,16 @@ export class EditorSession {
         { enableScripts: true }
       );
     this._panel = panel;
-    panel.title = this.titleForEditor(textEditor);
+    panel.title = extensionState.webviewTitle;
     panel.webview.html = this.getWebviewContent();
 
     const disposables: vscode.Disposable[] = [];
 
-    disposables.push(
-      vscode.window.onDidChangeActiveTextEditor((editor) => {
-        console.log("onDidChangeActiveTextEditor", editor);
-
-        if (editor) {
-          this.textEditor = editor;
-        }
-      }),
-      vscode.workspace.onDidChangeTextDocument((event) => {
-        if (
-          event.contentChanges.length &&
-          this._textEditor?.document === event.document
-        ) {
-          this.loadTextDocument();
-        }
-      })
-    );
-    this.loadTextDocument();
-
     // broadcast updates
-    this._document.ydoc.on(
+    extensionState.document.ydoc.on(
       "update",
       debouncedUpdate((update: Uint8Array) => {
         rpc.remote.update(update);
-      })
-    );
-
-    // set text content on doc nodes change
-    const nodes = this._document.nodesData.y;
-    nodes.observeDeep(
-      debouncedChange(() => {
-        this.saveTextDocument();
       })
     );
 
@@ -145,14 +116,14 @@ export class EditorSession {
       },
       {
         ready: async (data) => {
-          Y.applyUpdate(this._document.ydoc, data);
-          rpc.remote.init(Y.encodeStateAsUpdate(this._document.ydoc));
+          Y.applyUpdate(extensionState.document.ydoc, data);
+          rpc.remote.init(Y.encodeStateAsUpdate(extensionState.document.ydoc));
         },
         update: async (data) => {
-          Y.applyUpdate(this._document.ydoc, data);
+          Y.applyUpdate(extensionState.document.ydoc, data);
         },
         jumpToLocation: async (location: { line: number; column: number }) => {
-          const textEditor = this._textEditor;
+          const textEditor = extensionState.textEditor;
           if (textEditor) {
             const pos = new vscode.Position(location.line, location.column);
 
@@ -163,7 +134,7 @@ export class EditorSession {
           }
         },
         revealLocation: async (location: { line: number; column: number }) => {
-          const textEditor = this._textEditor;
+          const textEditor = extensionState.textEditor;
           if (textEditor) {
             const pos = new vscode.Position(location.line, location.column);
             textEditor.revealRange(new vscode.Range(pos, pos));
@@ -191,6 +162,11 @@ export class EditorSession {
 
   // https://stackoverflow.com/q/75551534
   private async undoOrRedo(command: "undo" | "redo") {
+    const textEditor = extensionState.textEditor;
+    if (!textEditor) {
+      return;
+    }
+
     const { edTabCol, webTabCol } = this.findTabs();
 
     if (edTabCol) {
@@ -199,7 +175,7 @@ export class EditorSession {
         preview: false,
         viewColumn: edTabCol,
       };
-      await vscode.window.showTextDocument(this._textEditor!.document, opts);
+      await vscode.window.showTextDocument(textEditor!.document, opts);
       await vscode.commands.executeCommand(command);
       if (webTabCol) {
         this._panel.reveal(webTabCol, false);
@@ -215,7 +191,10 @@ export class EditorSession {
       (group) => group.tabs
     )) {
       if (tab.input instanceof vscode.TabInputText) {
-        if (tab.input.uri.fsPath === this.textEditor?.document.uri.fsPath) {
+        if (
+          tab.input.uri.fsPath ===
+          extensionState.textEditor?.document.uri.fsPath
+        ) {
           edTabCol = tab.group.viewColumn;
         }
       } else if (tab.input instanceof vscode.TabInputWebview) {
@@ -228,83 +207,6 @@ export class EditorSession {
   }
 
   private _panel: vscode.WebviewPanel;
-  private _textEditor: vscode.TextEditor | undefined;
-  private _lastSetText: string | undefined;
-  private _document = new Document();
-
-  get textEditor(): vscode.TextEditor | undefined {
-    return this._textEditor;
-  }
-
-  set textEditor(textEditor: vscode.TextEditor | undefined) {
-    if (this._textEditor === textEditor) {
-      return;
-    }
-
-    this._textEditor = textEditor;
-    this._lastSetText = undefined;
-    this._panel.title = this.titleForEditor(textEditor);
-    this.loadTextDocument();
-  }
-
-  private saveTextDocument() {
-    const textEditor = this._textEditor;
-    if (textEditor) {
-      const newText = this._document.nodes.get("file")?.stringify() ?? "";
-      const oldText = textEditor.document.getText();
-      if (newText === oldText) {
-        // TODO: compare by AST?
-        return;
-      }
-      textEditor.edit((editBuilder) => {
-        editBuilder.replace(
-          new vscode.Range(
-            textEditor.document.positionAt(0),
-            textEditor.document.positionAt(oldText.length)
-          ),
-          newText
-        );
-      });
-      this._lastSetText = newText;
-      console.log("set lastSetText");
-    }
-  }
-
-  private loadTextDocument() {
-    if (!this._textEditor) {
-      return;
-    }
-    const filePath = this.projectPathForEditor(this._textEditor);
-    const code = this._textEditor.document.getText();
-
-    //console.log(Diff.diffLines(code, this._lastSetText ?? ""));
-    if (code !== this._lastSetText) {
-      console.log("reload");
-      loadFile(this._document, filePath, code);
-    }
-
-    if (devServer) {
-      const file = this._document.fileNode;
-      devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
-    }
-  }
-
-  private titleForEditor(editor: vscode.TextEditor | undefined) {
-    if (!editor) {
-      return "Windmix";
-    }
-
-    return "Windmix " + path.basename(editor.document.uri.path);
-  }
-
-  private projectPathForEditor(editor: vscode.TextEditor) {
-    const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.path;
-    if (!workspacePath) {
-      throw new Error("No workspace path");
-    }
-
-    return "/" + path.relative(workspacePath, editor.document.uri.path);
-  }
 
   private getWebviewContent() {
     return `
