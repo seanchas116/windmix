@@ -1,18 +1,13 @@
 import * as vscode from "vscode";
-import * as path from "node:path";
 import { RPC } from "@seanchas116/paintkit/src/util/typedRPC";
 import * as Y from "yjs";
-import { Document, FileNode } from "@windmix/model";
-import { loadFile } from "@windmix/model/src/loadFile";
 import {
   IEditorToRootRPCHandler,
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
 import { ViewState } from "../../editor/src/types/ViewState";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
-import { devServer } from "./extension";
 import { extensionState } from "./ExtensionState";
-//import * as Diff from "diff";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   async deserializeWebviewPanel(
@@ -61,21 +56,6 @@ export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
   }
 }
 
-export const debouncedChange = (onUpdate: () => void): (() => void) => {
-  let queued = false;
-  const debounced = () => {
-    if (queued) {
-      return;
-    }
-    queued = true;
-    queueMicrotask(() => {
-      queued = false;
-      onUpdate();
-    });
-  };
-  return debounced;
-};
-
 export class EditorSession {
   constructor({
     webviewPanel,
@@ -96,7 +76,6 @@ export class EditorSession {
     const disposables: vscode.Disposable[] = [];
 
     // set title
-
     panel.title = extensionState.webviewTitle;
     disposables.push(
       extensionState.onWebviewTitleChanged((title) => {
