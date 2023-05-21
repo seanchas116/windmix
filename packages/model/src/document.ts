@@ -1,12 +1,13 @@
 import * as Y from "yjs";
 import { computed, makeObservable } from "mobx";
-import { ElementNode, FileNode, Node, NodeMap } from "./node";
+import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 
 export class Document {
   constructor(ydoc: Y.Doc = new Y.Doc()) {
     this.ydoc = ydoc;
     this.nodes = new NodeMap(this);
+
     makeObservable(this);
   }
 
@@ -20,6 +21,28 @@ export class Document {
 
   get selectionData(): ObservableYMap<true> {
     return ObservableYMap.from(this.ydoc.getMap("selection"));
+  }
+
+  get currentComponentName(): string | undefined {
+    return this.ydoc.getMap("misc").get("currentComponent") as
+      | string
+      | undefined;
+  }
+
+  set currentComponentName(value: string | undefined) {
+    this.ydoc.getMap("misc").set("currentComponent", value);
+  }
+
+  get currentComponent(): ComponentNode | undefined {
+    const name = this.currentComponentName;
+    if (!name) {
+      return;
+    }
+    const node = this.nodes.get(`component:${name}`);
+    if (node?.type !== "component") {
+      return;
+    }
+    return node;
   }
 
   readonly ydoc: Y.Doc;
