@@ -277,7 +277,7 @@ const ComponentTitle: React.FC<
     <button
       {...props}
       className={twMerge(
-        "text-left px-2 py-1 pl-3 flex items-center w-full",
+        "text-left px-2 pl-3 flex items-center w-full h-[22px]",
         props.selected ? "bg-macaron-active text-macaron-activeText" : "",
         props.className
       )}
