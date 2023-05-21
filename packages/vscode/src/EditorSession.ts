@@ -10,48 +10,9 @@ import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpd
 import { extensionState } from "./ExtensionState";
 
 export class EditorPanelSerializer implements vscode.WebviewPanelSerializer {
-  async deserializeWebviewPanel(
-    webviewPanel: vscode.WebviewPanel,
-    state?: ViewState
-  ) {
-    /*
-    console.log(`Got state: ${state}`);
-
-    const tabPath = state?.tabPath;
-    if (tabPath && vscode.workspace.rootPath) {
-      const tabFullPath = path.join(
-        vscode.workspace.rootPath,
-        tabPath.slice(1)
-      );
-
-      let editorViewColumn: vscode.ViewColumn | undefined;
-
-      for (const tab of vscode.window.tabGroups.all.flatMap(
-        (group) => group.tabs
-      )) {
-        if (tab.input instanceof vscode.TabInputText) {
-          if (tab.input.uri.fsPath === tabFullPath) {
-            editorViewColumn = tab.group.viewColumn;
-          }
-        }
-      }
-
-      const textEditor = await vscode.window.showTextDocument(
-        vscode.Uri.file(tabFullPath),
-        { viewColumn: editorViewColumn }
-      );
-
-      new EditorSession({
-        webviewPanel,
-        textEditor,
-      });
-
-      return;
-    }*/
-
+  async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel) {
     new EditorSession({
       webviewPanel,
-      //textEditor: vscode.window.activeTextEditor,
     });
   }
 }
@@ -234,51 +195,4 @@ export class EditorSession {
     </html>
     `;
   }
-
-  /*
-  private getWebviewContent() {
-    return `<!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Cat Coding</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-      <div id="path">No editor selected</div>
-      <script>
-          const vscode = acquireVsCodeApi();
-          window.addEventListener('message', event => {
-              const message = event.data; // The JSON data our extension sent
-              switch (message.command) {
-                  case 'tabSelected':
-                      document.getElementById('path').innerText = message.path;
-
-                      const root = document.getElementById('root');
-                      root?.remove()
-                      const newRoot = document.createElement('div');
-                      newRoot.id = 'root';
-                      document.body.appendChild(newRoot);
-
-                      import("http://localhost:1337/virtual:windmix" + message.path).then(
-                        mod => {
-                          const root = document.getElementById('root');
-                          root?.remove()
-                          const newRoot = document.createElement('div');
-                          newRoot.id = 'root';
-                          document.body.appendChild(newRoot);
-                          mod.render(newRoot)
-                        }
-                      );
-                      break;
-              }
-          });
-          vscode.postMessage({
-            command: "ready",
-          });
-      </script>
-  </body>
-  </html>`;
-  }*/
 }
