@@ -7,7 +7,6 @@ import {
   backgroundColors,
 } from "../../../models/style/TailwindStyle";
 import { appState } from "../../../state/AppState";
-import { artboards } from "../../../state/Artboard";
 import { getElementTailwindStyle } from "../../../state/getElementTailwindStyle";
 import { useState } from "react";
 
@@ -24,23 +23,27 @@ export const StyleColorInput: React.FC<{
   const value = lastValue ?? sameOrNone(styles.map((s) => s[property].value));
 
   const previewValue = (value: ResolvedTailwindValue | undefined) => {
+    const classNamePreviews: Record<string, string> = {};
     for (const element of elements) {
       const style = getElementTailwindStyle(element);
       style[property].value = value;
-      artboards.setPreviewClassName(element, style.className);
+      classNamePreviews[element.id] = style.className;
     }
+    appState.document.classNamePreviews = classNamePreviews;
 
     setLastValue(value);
   };
 
   const setValue = (value: TailwindValue | undefined) => {
+    const classNamePreviews: Record<string, string> = {};
     for (const element of elements) {
       const style = getElementTailwindStyle(element);
       style[property].value = value;
 
       element.className = style.className;
-      artboards.setPreviewClassName(element, style.className);
+      classNamePreviews[element.id] = style.className;
     }
+    appState.document.classNamePreviews = classNamePreviews;
 
     setLastValue(undefined);
   };

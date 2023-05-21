@@ -81,6 +81,15 @@ export class Document {
     this.hoverID = value?.id;
   }
 
+  // node ID -> className
+  get classNamePreviews(): Record<string, string> {
+    return this.miscData.get("classNamePreview") ?? {};
+  }
+
+  set classNamePreviews(value: Record<string, string>) {
+    this.miscData.set("classNamePreview", value);
+  }
+
   readonly ydoc: Y.Doc;
   readonly nodes: NodeMap;
 

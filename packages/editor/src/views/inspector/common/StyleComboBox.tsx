@@ -9,7 +9,6 @@ import { SeparateComboBox } from "@seanchas116/paintkit/src/components/ComboBox"
 import { appState } from "../../../state/AppState";
 import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
 import { getElementTailwindStyle } from "../../../state/getElementTailwindStyle";
-import { artboards } from "../../../state/Artboard";
 
 export const StyleComboBox: React.FC<{
   className?: string;
@@ -23,13 +22,17 @@ export const StyleComboBox: React.FC<{
   const value = sameOrNone(styles.map((s) => s[property].value));
 
   const setValue = (value: TailwindValue | undefined) => {
+    const classNamePreviews: Record<string, string> = {};
+
     for (const element of elements) {
       const style = getElementTailwindStyle(element);
       style[property].value = value;
 
       element.className = style.className;
-      artboards.setPreviewClassName(element, style.className);
+      classNamePreviews[element.id] = style.className;
     }
+
+    appState.document.classNamePreviews = classNamePreviews;
   };
 
   const pxValue = (value: string) => {

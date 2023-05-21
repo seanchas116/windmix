@@ -25,6 +25,15 @@ export class Artboard {
           await this.updateRects();
         }
       );
+      reaction(
+        () => appState.document.classNamePreviews,
+        (previews) => {
+          // TODO: bulk update
+          for (const [id, className] of Object.entries(previews)) {
+            this.adapter.setPreviewClassName(id, className);
+          }
+        }
+      );
     });
   }
 
@@ -46,10 +55,6 @@ export class Artboard {
 
   async findNode(offsetX: number, offsetY: number): Promise<Node | undefined> {
     return (await this.findNodes(offsetX, offsetY))[0];
-  }
-
-  setPreviewClassName(node: Node, className: string) {
-    this.adapter.setPreviewClassName(node, className);
   }
 
   private computationCaches = new WeakMap<ElementNode, ComputationCache>();
@@ -139,12 +144,6 @@ export class Artboards {
 
   get all(): Artboard[] {
     return [this.desktop, this.mobile];
-  }
-
-  setPreviewClassName(node: Node, className: string) {
-    for (const artboard of this.all) {
-      artboard.setPreviewClassName(node, className);
-    }
   }
 }
 

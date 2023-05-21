@@ -1,4 +1,3 @@
-import { Node } from "@windmix/model";
 import { makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
@@ -140,7 +139,7 @@ export class RendererAdapter {
     });
   }
 
-  setPreviewClassName(node: Node, className: string) {
+  setPreviewClassName(nodeID: string, className: string) {
     if (this.previewInProgress) {
       return;
     }
@@ -148,7 +147,7 @@ export class RendererAdapter {
 
     const message: MessageToWindow = {
       type: "windmix:setClassName",
-      id: node.id,
+      id: nodeID,
       className,
     };
     this.window?.postMessage(message, "*");

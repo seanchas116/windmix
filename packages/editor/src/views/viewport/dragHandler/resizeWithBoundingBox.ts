@@ -1,7 +1,8 @@
 import { ElementNode } from "@windmix/model";
 import { Rect } from "paintvec";
-import { Artboard, artboards } from "../../../state/Artboard";
+import { Artboard } from "../../../state/Artboard";
 import { getElementTailwindStyle } from "../../../state/getElementTailwindStyle";
+import { appState } from "../../../state/AppState";
 
 export async function resizeWithBoundingBox(
   artboard: Artboard,
@@ -43,5 +44,8 @@ export async function resizeWithBoundingBox(
   if (!options.preview) {
     element.className = style.className;
   }
-  artboards.setPreviewClassName(element, style.className);
+
+  appState.document.classNamePreviews = {
+    [element.id]: style.className,
+  };
 }
