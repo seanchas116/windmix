@@ -32,7 +32,7 @@ export class Document {
   }
 
   get currentComponentName(): string | undefined {
-    return this.miscData.get("currentComponent") as string | undefined;
+    return this.miscData.get("currentComponent") ?? "default";
   }
 
   set currentComponentName(value: string | undefined) {
@@ -55,7 +55,11 @@ export class Document {
   readonly nodes: NodeMap;
 
   clear(): void {
-    this.nodesData.clear();
+    this.ydoc.transact(() => {
+      this.nodesData.clear();
+      this.selectionData.clear();
+      this.miscData.clear();
+    });
   }
 
   @computed get selectedNodes(): Node[] {
