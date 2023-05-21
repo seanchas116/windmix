@@ -178,6 +178,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+export function Component1() {
+  return <div>Hello</div>;
+}
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [frequency, setFrequency] = useState(pricing.frequencies[0]);

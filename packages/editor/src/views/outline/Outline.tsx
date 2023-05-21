@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { MoveHandler, NodeApi, NodeRendererProps, Tree } from "react-arborist";
 import { FillFlexParent } from "../../components/FillFlexParent";
 import { Icon } from "@iconify/react";
-import { Node } from "@windmix/model";
+import { ComponentNode, Node } from "@windmix/model";
 import { appState } from "../../state/AppState";
 import { action, reaction } from "mobx";
 import { twMerge } from "tailwind-merge";
@@ -140,9 +140,37 @@ function buildTreeData(node: Node): TreeData {
   };
 }
 
-export const Outline: React.FC = observer(() => {
-  const fileNode = appState.fileNode;
-  const data = fileNode ? buildTreeData(fileNode).children : [];
+export const Outline: React.FC<{ className?: string }> = observer(
+  ({ className }) => {
+    const fileNode = appState.fileNode;
+    const components =
+      fileNode?.children.filter(
+        (child): child is ComponentNode => child.type === "component"
+      ) ?? [];
+
+    // WIP: select component
+
+    return (
+      <div className={twMerge("flex flex-col", className)}>
+        {components.map((c) => (
+          <ComponentOutline
+            key={c.id}
+            component={c}
+            selected={c.isDefaultExport}
+          />
+        ))}
+      </div>
+    );
+  }
+);
+Outline.displayName = "Outline";
+
+const ComponentOutline: React.FC<{
+  className?: string;
+  component: ComponentNode;
+  selected: boolean;
+}> = observer(({ className, component, selected }) => {
+  const data = buildTreeData(component).children;
 
   const onMove: MoveHandler<TreeData> = action(({ parentNode, index }) => {
     const parent = parentNode?.data.node;
@@ -191,23 +219,58 @@ export const Outline: React.FC = observer(() => {
   }, []);
 
   return (
-    <FillFlexParent>
-      {({ width, height }) => (
-        <Tree
-          data={data}
-          onMove={onMove}
-          openByDefault={true}
-          width={width}
-          height={height}
-          indent={8}
-          rowHeight={22}
-          paddingTop={12}
-          paddingBottom={12}
-          overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
-        >
-          {NodeRow}
-        </Tree>
+    <div className={twMerge("flex flex-col", selected && "flex-1", className)}>
+      <ComponentTitle selected={selected}>{component.name}</ComponentTitle>
+      {selected && (
+        <FillFlexParent className="bg-macaron-background">
+          {({ width, height }) => (
+            <Tree
+              data={data}
+              onMove={onMove}
+              openByDefault={true}
+              width={width}
+              height={height}
+              indent={8}
+              rowHeight={22}
+              // paddingTop={12}
+              // paddingBottom={12}
+              overscanCount={10000} // enlarge the overscan count to make auto-scrolling-in work (TODO: avoid this hack)
+            >
+              {NodeRow}
+            </Tree>
+          )}
+        </FillFlexParent>
       )}
-    </FillFlexParent>
+    </div>
   );
 });
+ComponentOutline.displayName = "ComponentOutline";
+
+const ComponentTitle: React.FC<
+  JSX.IntrinsicElements["button"] & {
+    selected?: boolean;
+  }
+> = (props) => {
+  return (
+    <button
+      {...props}
+      className={twMerge(
+        "text-left px-2 py-1 flex items-center font-bold border-l-2",
+        props.selected
+          ? "border-macaron-active bg-macaron-background"
+          : "border-transparent opacity-60",
+        props.className
+      )}
+    >
+      <Icon
+        icon="icon-park-outline:figma-component"
+        className={twMerge(
+          "mr-1",
+          props.selected &&
+            "text-indigo-500 [&>*]:fill-current [&>*]:stroke-current"
+        )}
+      />
+      {props.children}
+    </button>
+  );
+};

@@ -17,7 +17,7 @@ const App: React.FC = observer(() => {
     "
       >
         <aside className="w-[221px] h-full bg-macaron-uiBackground border-r border-macaron-separator relative contain-strict">
-          <Outline />
+          <Outline className="w-full h-full" />
         </aside>
         <div className="flex flex-col flex-1">
           <ToolBar />
