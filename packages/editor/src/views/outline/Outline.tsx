@@ -162,10 +162,10 @@ export const Outline: React.FC<{ className?: string }> = observer(
             {components.map((c) => (
               <ComponentTitle
                 key={c.id}
-                selected={c.name === appState.document.currentComponentName}
+                selected={c === appState.document.currentComponent}
                 onClick={action(() => {
                   appState.document.deselectAll();
-                  appState.document.currentComponentName = c.name;
+                  appState.document.currentComponent = c;
                 })}
               >
                 {c.name}
@@ -180,8 +180,7 @@ export const Outline: React.FC<{ className?: string }> = observer(
                 icon="icon-park-outline:figma-component"
                 className="mr-1.5 text-indigo-500 [&>*]:fill-current [&>*]:stroke-current"
               />
-              {appState.document.currentComponent?.name ??
-                "No component selected"}
+              {appState.document.currentComponent?.name ?? "No component"}
             </div>
           </PaneHeading>
           <ComponentOutline />

@@ -31,24 +31,39 @@ export class Document {
     return this.fileNode?.data.get("filePath");
   }
 
-  get currentComponentName(): string | undefined {
+  get components(): ComponentNode[] {
+    return (
+      this.fileNode?.children.filter(
+        (node): node is ComponentNode => node.type === "component"
+      ) ?? []
+    );
+  }
+
+  private get currentComponentName(): string | undefined {
     return this.miscData.get("currentComponent") ?? "default";
   }
 
-  set currentComponentName(value: string | undefined) {
+  private set currentComponentName(value: string | undefined) {
     this.miscData.set("currentComponent", value);
   }
 
   get currentComponent(): ComponentNode | undefined {
+    const components = this.components;
+    if (components.length === 0) {
+      return;
+    }
+    if (components.length === 1) {
+      return components[0];
+    }
+
     const name = this.currentComponentName;
-    if (!name) {
-      return;
-    }
-    const node = this.nodes.get(`component:${name}`);
-    if (node?.type !== "component") {
-      return;
-    }
-    return node;
+    return (
+      components.find((component) => component.name === name) ?? components[0]
+    );
+  }
+
+  set currentComponent(value: ComponentNode | undefined) {
+    this.currentComponentName = value?.name;
   }
 
   readonly ydoc: Y.Doc;
