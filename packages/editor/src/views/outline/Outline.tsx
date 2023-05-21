@@ -142,7 +142,7 @@ function buildTreeData(node: Node): TreeData {
 
 export const Outline: React.FC<{ className?: string }> = observer(
   ({ className }) => {
-    const fileNode = appState.fileNode;
+    const fileNode = appState.document.fileNode;
     const components =
       fileNode?.children.filter(
         (child): child is ComponentNode => child.type === "component"
@@ -156,7 +156,11 @@ export const Outline: React.FC<{ className?: string }> = observer(
           <ComponentOutline
             key={c.id}
             component={c}
-            selected={c.isDefaultExport}
+            selected={c.name === appState.document.currentComponentName}
+            onTitleClick={action(() => {
+              console.log("click");
+              appState.document.currentComponentName = c.name;
+            })}
           />
         ))}
       </div>
@@ -169,7 +173,8 @@ const ComponentOutline: React.FC<{
   className?: string;
   component: ComponentNode;
   selected: boolean;
-}> = observer(({ className, component, selected }) => {
+  onTitleClick?: () => void;
+}> = observer(({ className, component, selected, onTitleClick }) => {
   const data = buildTreeData(component).children;
 
   const onMove: MoveHandler<TreeData> = action(({ parentNode, index }) => {
@@ -220,7 +225,9 @@ const ComponentOutline: React.FC<{
 
   return (
     <div className={twMerge("flex flex-col", selected && "flex-1", className)}>
-      <ComponentTitle selected={selected}>{component.name}</ComponentTitle>
+      <ComponentTitle selected={selected} onClick={onTitleClick}>
+        {component.name}
+      </ComponentTitle>
       {selected && (
         <FillFlexParent className="bg-macaron-background">
           {({ width, height }) => (

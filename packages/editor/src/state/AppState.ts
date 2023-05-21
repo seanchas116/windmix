@@ -4,7 +4,7 @@ import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "../types/RPC";
 import { RPC, Target } from "@seanchas116/paintkit/src/util/typedRPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import * as Y from "yjs";
-import { Node, Document, FileNode } from "@windmix/model";
+import { Node, Document } from "@windmix/model";
 import { ViewState } from "../types/ViewState";
 import { Tool } from "./Tool";
 import hotkeys from "hotkeys-js";
@@ -59,7 +59,7 @@ export class AppState {
     makeObservable(this);
 
     reaction(
-      () => this.tabPath,
+      () => this.document.filePath,
       (tabPath) => {
         const state: ViewState = {
           tabPath,
@@ -80,14 +80,6 @@ export class AppState {
 
   readonly document = new Document();
   readonly connection: VSCodeConnection = new VSCodeConnection(this);
-
-  @computed get tabPath(): string | undefined {
-    return this.fileNode?.data.get("filePath");
-  }
-
-  @computed get fileNode(): FileNode | undefined {
-    return this.document.nodes.get("file") as FileNode | undefined;
-  }
 
   revealLocation(location: { line: number; column: number }): void {
     this.connection.rpc.remote.revealLocation(location);

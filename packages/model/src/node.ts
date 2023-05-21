@@ -127,7 +127,6 @@ export class ComponentNode extends BaseNode<
   {
     header: string; // header code of component (e.g. `function MyComponent() { return `)
     footer: string; // footer code of component (e.g. `; }`)
-    isDefaultExport: boolean;
   }
 > {
   get type(): "component" {
@@ -139,9 +138,6 @@ export class ComponentNode extends BaseNode<
   }
   get footer(): string {
     return this.data.get("footer") ?? "";
-  }
-  get isDefaultExport(): boolean {
-    return this.data.get("isDefaultExport") ?? false;
   }
 
   stringify(options: StringifyOptions = {}): string {

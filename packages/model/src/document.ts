@@ -23,14 +23,20 @@ export class Document {
     return ObservableYMap.from(this.ydoc.getMap("selection"));
   }
 
+  get miscData(): ObservableYMap<any> {
+    return ObservableYMap.from(this.ydoc.getMap("misc"));
+  }
+
+  @computed get filePath(): string | undefined {
+    return this.fileNode?.data.get("filePath");
+  }
+
   get currentComponentName(): string | undefined {
-    return this.ydoc.getMap("misc").get("currentComponent") as
-      | string
-      | undefined;
+    return this.miscData.get("currentComponent") as string | undefined;
   }
 
   set currentComponentName(value: string | undefined) {
-    this.ydoc.getMap("misc").set("currentComponent", value);
+    this.miscData.set("currentComponent", value);
   }
 
   get currentComponent(): ComponentNode | undefined {

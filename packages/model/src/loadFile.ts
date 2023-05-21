@@ -277,7 +277,6 @@ export function loadFile(
       name,
       header: code.slice(headerStart, headerEnd),
       footer: code.slice(footerStart, footerEnd),
-      isDefaultExport: foundComponent.isDefaultExport,
       location: locationForNode(foundComponent.statement),
     });
 
@@ -290,8 +289,7 @@ export function loadFile(
 }
 
 interface FoundComponent {
-  name?: string;
-  isDefaultExport: boolean;
+  name: string;
   statement: babel.ExportDefaultDeclaration | babel.ExportNamedDeclaration;
   element: babel.JSXElement;
 }
@@ -312,7 +310,14 @@ function findComponentFromStatement(
     return;
   }
 
-  const name = declaration.id?.name;
+  const name =
+    statement.type === "ExportDefaultDeclaration"
+      ? "default"
+      : declaration.id?.name;
+  if (!name) {
+    return;
+  }
+
   for (const bodyStatement of declaration.body.body) {
     if (bodyStatement.type === "ReturnStatement") {
       const returnStatement = bodyStatement;
@@ -321,7 +326,6 @@ function findComponentFromStatement(
         return {
           statement,
           name,
-          isDefaultExport: statement.type === "ExportDefaultDeclaration",
           element: returnValue,
         };
       }
