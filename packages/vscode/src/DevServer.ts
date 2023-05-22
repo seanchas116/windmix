@@ -1,5 +1,5 @@
 import * as path from "node:path";
-import { createServer, ViteDevServer } from "vite";
+import { createServer, Logger, Rollup, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
 // @ts-ignore
@@ -7,6 +7,38 @@ import renderModuleScript from "./assets/renderModule.raw.js";
 
 const virtualModulePrefix = "/virtual:windmix?";
 const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
+
+function createLogger(): Logger {
+  const loggedErrors = new WeakSet<Error | Rollup.RollupError>();
+  const warnedMessages = new Set<string>();
+
+  const logger: Logger = {
+    hasWarned: false,
+    hasErrorLogged: (err) => loggedErrors.has(err),
+    clearScreen: () => {},
+    info(msg) {
+      console.log("info", msg);
+    },
+    warn(msg) {
+      console.log("warn", msg);
+      logger.hasWarned = true;
+    },
+    warnOnce(msg) {
+      if (warnedMessages.has(msg)) return;
+      console.log("warn", msg);
+      logger.hasWarned = true;
+      warnedMessages.add(msg);
+    },
+    error(msg, opts) {
+      console.log("error", msg);
+      if (opts?.error) {
+        loggedErrors.add(opts.error);
+      }
+    },
+  };
+
+  return logger;
+}
 
 export class DevServer {
   async start() {
@@ -96,6 +128,7 @@ export class DevServer {
       server: {
         port: 1337, // TODO: use ephemeral port
       },
+      customLogger: createLogger(),
     });
     await server.listen();
     server.printUrls();
