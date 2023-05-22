@@ -108,6 +108,7 @@ export class Document {
       this.nodesData.clear();
       this.selectionData.clear();
       this.miscData.clear();
+      this.buildProblems.delete(0, this.buildProblems.length);
     });
   }
 

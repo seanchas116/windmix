@@ -103,11 +103,6 @@ export class RendererAdapter {
         break;
       }
       case "windmix:beforeUpdate": {
-        console.log("beforeUpdate");
-        appState.document.buildProblems.delete(
-          0,
-          appState.document.buildProblems.length
-        );
         break;
       }
     }

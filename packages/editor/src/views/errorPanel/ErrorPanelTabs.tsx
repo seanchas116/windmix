@@ -71,7 +71,7 @@ export const ErrorPanelTabs: React.FC<{
               setTab("problems");
             }}
             badgeType="error"
-            badgeNumber={4}
+            badgeNumber={appState.document.buildProblems.length}
           />
         </div>
         <IconButton
