@@ -14,7 +14,9 @@ const Tab: React.FC<{
   onClick: () => void;
 }> = ({ text, selected, badgeNumber, badgeType, onClick }) => {
   const badgeBg =
-    badgeType === "info"
+    badgeNumber === 0
+      ? "bg-macaron-uiBackground"
+      : badgeType === "info"
       ? "bg-macaron-disabledText"
       : badgeType === "warn"
       ? "bg-yellow-400"
