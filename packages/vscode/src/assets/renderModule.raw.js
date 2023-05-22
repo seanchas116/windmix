@@ -133,14 +133,16 @@ for (const level of ["log", "warn", "error"]) {
     window.parent.postMessage(
       {
         type: "windmix:console",
-        level,
-        args: args.map((arg) => {
-          if (typeof arg === "object") {
-            return JSON.stringify(arg);
-          } else {
-            return arg;
-          }
-        }),
+        message: {
+          level,
+          args: args.map((arg) => {
+            if (typeof arg === "object") {
+              return JSON.stringify(arg);
+            } else {
+              return arg;
+            }
+          }),
+        },
       },
       "*"
     );

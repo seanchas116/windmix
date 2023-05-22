@@ -22,8 +22,7 @@ type MessageFromWindow =
     }
   | {
       type: "windmix:console";
-      args: string[];
-      level: "log" | "warn" | "error";
+      message: ConsoleMessage;
     };
 
 type MessageToWindow =
@@ -44,6 +43,11 @@ type MessageToWindow =
       className: string;
     };
 
+interface ConsoleMessage {
+  level: "log" | "warn" | "error";
+  args: string[];
+}
+
 export class RendererAdapter {
   constructor(artboard: Artboard) {
     this.artboard = artboard;
@@ -54,12 +58,19 @@ export class RendererAdapter {
   readonly artboard: Artboard;
 
   window: Window | undefined;
-  @observable windowBodyHeight = 0;
   revision = Date.now();
   previewInProgress = false;
 
+  @observable windowBodyHeight = 0;
+  readonly consoleMessages = observable.array<{
+    args: string[];
+    level: "log" | "warn" | "error";
+  }>();
+
   setWindow(window: Window | undefined) {
     this.window = window;
+    this.windowBodyHeight = 0;
+    this.consoleMessages.clear();
   }
 
   readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {
@@ -84,7 +95,7 @@ export class RendererAdapter {
         break;
       }
       case "windmix:console": {
-        console.log(data);
+        this.consoleMessages.push(data.message);
         break;
       }
     }
