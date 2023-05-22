@@ -118,7 +118,7 @@ const ConsoleMessageList: React.FC = observer(() => {
                 : "text-red-500";
 
             return (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex items-center gap-2 select-text">
                 <div className={color}>{message.args.join(" ")}</div>
               </div>
             );
