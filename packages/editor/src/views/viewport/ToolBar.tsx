@@ -17,7 +17,7 @@ export const ToolBar: React.FC<{
   return (
     <div
       className={twMerge(
-        "flex items-center justify-between bg-macaron-uiBackground border-b border-macaron-popoverBorder px-2 py-1",
+        "flex items-center justify-between bg-macaron-uiBackground border-b border-macaron-popoverBorder px-2 py-0.5",
         className
       )}
     >
