@@ -1,4 +1,4 @@
-import { makeObservable, observable, runInAction } from "mobx";
+import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
 import { appState } from "./AppState";
@@ -70,11 +70,20 @@ export class RendererAdapter {
     args: string[];
     level: "log" | "warn" | "error";
   }>();
+  @observable readConsoleMessageCount = 0;
+
+  @computed get unreadConsoleMessageCount() {
+    return Math.max(
+      0,
+      this.consoleMessages.length - this.readConsoleMessageCount
+    );
+  }
 
   setWindow(window: Window | undefined) {
     this.window = window;
     this.windowBodyHeight = 0;
     this.consoleMessages.clear();
+    this.readConsoleMessageCount = 0;
   }
 
   readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {

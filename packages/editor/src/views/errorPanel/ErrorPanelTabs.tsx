@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { artboards } from "../../state/Artboard";
 import { appState } from "../../state/AppState";
+import { action, runInAction } from "mobx";
 
 const Tab: React.FC<{
   text: string;
@@ -63,7 +64,7 @@ export const ErrorPanelTabs: React.FC<{
               setTab("console");
             }}
             badgeType="info"
-            badgeNumber={artboards.desktop.adapter.consoleMessages.length}
+            badgeNumber={artboards.desktop.adapter.unreadConsoleMessageCount}
           />
           <Tab
             text="Problems"
@@ -106,6 +107,13 @@ const ConsoleMessageList: React.FC = observer(() => {
       ref.current.scrollTop = ref.current.scrollHeight;
     }
   }, []);
+
+  useEffect(
+    action(() => {
+      artboards.desktop.adapter.readConsoleMessageCount =
+        artboards.desktop.adapter.consoleMessages.length;
+    })
+  );
 
   return (
     <div ref={ref} className="h-40 overflow-y-scroll font-mono">
