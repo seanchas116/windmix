@@ -148,3 +148,10 @@ for (const level of ["log", "warn", "error"]) {
     );
   };
 }
+
+if (import.meta.hot) {
+  import.meta.hot.on("vite:beforeUpdate", (data) => {
+    console.log("vite:beforeUpdate");
+    // TODO: clear build problems
+  });
+}
