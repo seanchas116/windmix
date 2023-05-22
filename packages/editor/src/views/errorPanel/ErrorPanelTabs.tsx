@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { artboards } from "../../state/Artboard";
 
@@ -89,28 +89,41 @@ export const ErrorPanelTabs: React.FC<{
           />
         </IconButton>
       </div>
-      {open && (
-        <div className="h-40 overflow-y-scroll">
-          {tab === "console" && (
-            <div className="p-2">
-              {artboards.desktop.adapter.consoleMessages.map((message, i) => {
-                const color =
-                  message.level === "log"
-                    ? "text-macaron-text"
-                    : message.level === "warn"
-                    ? "text-yellow-500"
-                    : "text-red-500";
+      {open && tab === "console" && <ConsoleMessageList />}
+    </div>
+  );
+});
 
-                return (
-                  <div key={i} className="flex items-center gap-2">
-                    <div className={color}>{message.args.join(" ")}</div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
+const ConsoleMessageList: React.FC = observer(() => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  // scroll to bottom on show
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight;
+    }
+  }, []);
+
+  return (
+    <div ref={ref} className="h-40 overflow-y-scroll">
+      <div className="p-2 flex flex-col-reverse">
+        {[...artboards.desktop.adapter.consoleMessages]
+          .reverse()
+          .map((message, i) => {
+            const color =
+              message.level === "log"
+                ? "text-macaron-text"
+                : message.level === "warn"
+                ? "text-yellow-500"
+                : "text-red-500";
+
+            return (
+              <div key={i} className="flex items-center gap-2">
+                <div className={color}>{message.args.join(" ")}</div>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 });
