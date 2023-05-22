@@ -108,7 +108,7 @@ const ConsoleMessageList: React.FC = observer(() => {
   }, []);
 
   return (
-    <div ref={ref} className="h-40 overflow-y-scroll">
+    <div ref={ref} className="h-40 overflow-y-scroll font-mono">
       <div className="p-2 flex flex-col-reverse">
         {[...artboards.desktop.adapter.consoleMessages]
           .reverse()
@@ -144,7 +144,7 @@ const BuildProblemsList: React.FC = observer(() => {
   const problems = [...appState.document.buildProblems].reverse();
 
   return (
-    <div ref={ref} className="h-40 overflow-y-scroll">
+    <div ref={ref} className="h-40 overflow-y-scroll font-mono">
       <div className="p-2 flex flex-col-reverse">
         {problems.map((message, i) => {
           const color =
