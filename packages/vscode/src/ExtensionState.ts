@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { Document } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
-import { devServer } from "./extension";
+import { DevServer } from "./DevServer";
 
 export const debouncedChange = (onUpdate: () => void): (() => void) => {
   let queued = false;
@@ -20,7 +20,8 @@ export const debouncedChange = (onUpdate: () => void): (() => void) => {
 };
 
 export class ExtensionState {
-  constructor() {
+  constructor(devServer: DevServer) {
+    this.devServer = devServer;
     // TODO: restore current text editor from state
 
     this._disposables.push(
@@ -38,6 +39,9 @@ export class ExtensionState {
         ) {
           this.loadTextDocument();
         }
+      }),
+      devServer.onBuildProblem((problem) => {
+        this.document.buildProblems.push([problem]);
       })
     );
 
@@ -78,14 +82,6 @@ export class ExtensionState {
 
     this._textEditor = textEditor;
     this.loadTextDocument();
-
-    if (devServer) {
-      this._disposables.push(
-        devServer.onBuildProblem((problem) => {
-          this.document.buildProblems.push([problem]);
-        })
-      );
-    }
   }
 
   dispose() {
@@ -94,6 +90,7 @@ export class ExtensionState {
     }
   }
 
+  readonly devServer: DevServer;
   private _disposables: vscode.Disposable[] = [];
   private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
@@ -158,10 +155,8 @@ export class ExtensionState {
       loadFile(this.document, filePath, code);
     }
 
-    if (devServer) {
-      const file = this.document.fileNode;
-      devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
-    }
+    const file = this.document.fileNode;
+    this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
 
     this._webviewTitleChanged.fire(this.webviewTitle);
   }
@@ -186,5 +181,3 @@ export class ExtensionState {
     return "/" + path.relative(workspacePath, editor.document.uri.path);
   }
 }
-
-export const extensionState = new ExtensionState();

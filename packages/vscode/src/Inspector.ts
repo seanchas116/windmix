@@ -1,9 +1,16 @@
 import * as vscode from "vscode";
 import { WebviewSession } from "./WebviewSession";
+import { ExtensionState } from "./ExtensionState";
 
 export class InspectorWebviewViewProvider
   implements vscode.WebviewViewProvider
 {
+  constructor(extensionState: ExtensionState) {
+    this.extensionState = extensionState;
+  }
+
+  extensionState: ExtensionState;
+
   async resolveWebviewView(
     webviewView: vscode.WebviewView,
     context: vscode.WebviewViewResolveContext<unknown>,
@@ -12,12 +19,12 @@ export class InspectorWebviewViewProvider
     webviewView.webview.options = {
       enableScripts: true,
     };
-    new InspectorSession(webviewView);
+    new InspectorSession(this.extensionState, webviewView);
   }
 }
 
 export class InspectorSession extends WebviewSession {
-  constructor(webviewView: vscode.WebviewView) {
-    super(webviewView, "inspector");
+  constructor(extensionState: ExtensionState, webviewView: vscode.WebviewView) {
+    super(extensionState, webviewView, "inspector");
   }
 }

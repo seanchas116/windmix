@@ -1,7 +1,14 @@
 import * as vscode from "vscode";
 import { WebviewSession } from "./WebviewSession";
+import { ExtensionState } from "./ExtensionState";
 
 export class OutlineWebviewViewProvider implements vscode.WebviewViewProvider {
+  constructor(extensionState: ExtensionState) {
+    this.extensionState = extensionState;
+  }
+
+  extensionState: ExtensionState;
+
   async resolveWebviewView(
     webviewView: vscode.WebviewView,
     context: vscode.WebviewViewResolveContext<unknown>,
@@ -10,12 +17,12 @@ export class OutlineWebviewViewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.options = {
       enableScripts: true,
     };
-    new OutlineSession(webviewView);
+    new OutlineSession(this.extensionState, webviewView);
   }
 }
 
 export class OutlineSession extends WebviewSession {
-  constructor(webviewView: vscode.WebviewView) {
-    super(webviewView, "outline");
+  constructor(extensionState: ExtensionState, webviewView: vscode.WebviewView) {
+    super(extensionState, webviewView, "outline");
   }
 }

@@ -6,14 +6,16 @@ import {
   IRootToEditorRPCHandler,
 } from "../../editor/src/types/RPC";
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
-import { extensionState } from "./ExtensionState";
+import { ExtensionState } from "./ExtensionState";
 import { editorWebviewPanels } from "./EditorSession";
 
 export class WebviewSession {
   constructor(
+    extensionState: ExtensionState,
     panel: vscode.WebviewPanel | vscode.WebviewView,
     scriptName: string
   ) {
+    this.extensionState = extensionState;
     this._panel = panel;
     panel.webview.html = this.getWebviewContent(scriptName);
 
@@ -88,7 +90,7 @@ export class WebviewSession {
 
   // https://stackoverflow.com/q/75551534
   private async undoOrRedo(command: "undo" | "redo") {
-    const textEditor = extensionState.textEditor;
+    const textEditor = this.extensionState.textEditor;
     if (!textEditor) {
       return;
     }
@@ -122,7 +124,7 @@ export class WebviewSession {
       if (tab.input instanceof vscode.TabInputText) {
         if (
           tab.input.uri.fsPath ===
-          extensionState.textEditor?.document.uri.fsPath
+          this.extensionState.textEditor?.document.uri.fsPath
         ) {
           edTabCol = tab.group.viewColumn;
         }
@@ -135,6 +137,7 @@ export class WebviewSession {
     return { edTabCol, webTabCol };
   }
 
+  readonly extensionState: ExtensionState;
   readonly disposables: vscode.Disposable[] = [];
   private _panel: vscode.WebviewPanel | vscode.WebviewView;
 
