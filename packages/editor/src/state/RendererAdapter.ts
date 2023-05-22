@@ -1,6 +1,7 @@
 import { makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
+import { appState } from "./AppState";
 
 type MessageFromWindow =
   | {
@@ -23,6 +24,9 @@ type MessageFromWindow =
   | {
       type: "windmix:console";
       message: ConsoleMessage;
+    }
+  | {
+      type: "windmix:beforeUpdate";
     };
 
 type MessageToWindow =
@@ -96,6 +100,14 @@ export class RendererAdapter {
       }
       case "windmix:console": {
         this.consoleMessages.push(data.message);
+        break;
+      }
+      case "windmix:beforeUpdate": {
+        console.log("beforeUpdate");
+        appState.document.buildProblems.delete(
+          0,
+          appState.document.buildProblems.length
+        );
         break;
       }
     }
