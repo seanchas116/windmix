@@ -2,13 +2,16 @@ import * as path from "node:path";
 import { createServer, Logger, Rollup, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
+import { BuildProblem } from "@windmix/model";
 // @ts-ignore
 import renderModuleScript from "./assets/renderModule.raw.js";
 
 const virtualModulePrefix = "/virtual:windmix?";
 const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
 
-function createLogger(): Logger {
+function createLogger(
+  onBuildProblem: vscode.EventEmitter<BuildProblem>
+): Logger {
   const loggedErrors = new WeakSet<Error | Rollup.RollupError>();
   const warnedMessages = new Set<string>();
 
@@ -17,20 +20,34 @@ function createLogger(): Logger {
     hasErrorLogged: (err) => loggedErrors.has(err),
     clearScreen: () => {},
     info(msg) {
-      console.log("info", msg);
+      console.log(msg);
     },
     warn(msg) {
-      console.log("warn", msg);
+      console.warn(msg);
+      onBuildProblem.fire({
+        type: "warning",
+        message: msg,
+      });
       logger.hasWarned = true;
     },
     warnOnce(msg) {
-      if (warnedMessages.has(msg)) return;
-      console.log("warn", msg);
+      if (warnedMessages.has(msg)) {
+        return;
+      }
+      console.warn(msg);
+      onBuildProblem.fire({
+        type: "warning",
+        message: msg,
+      });
       logger.hasWarned = true;
       warnedMessages.add(msg);
     },
     error(msg, opts) {
-      console.log("error", msg);
+      console.error(msg);
+      onBuildProblem.fire({
+        type: "error",
+        message: msg,
+      });
       if (opts?.error) {
         loggedErrors.add(opts.error);
       }
@@ -41,6 +58,9 @@ function createLogger(): Logger {
 }
 
 export class DevServer {
+  private _onBuildProblem = new vscode.EventEmitter<BuildProblem>();
+  onBuildProblem = this._onBuildProblem.event;
+
   async start() {
     const workspace = vscode.workspace.workspaceFolders?.[0];
     if (!workspace) {
@@ -128,7 +148,7 @@ export class DevServer {
       server: {
         port: 1337, // TODO: use ephemeral port
       },
-      customLogger: createLogger(),
+      customLogger: createLogger(this._onBuildProblem),
     });
     await server.listen();
     server.printUrls();

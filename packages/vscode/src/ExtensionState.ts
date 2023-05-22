@@ -78,6 +78,14 @@ export class ExtensionState {
 
     this._textEditor = textEditor;
     this.loadTextDocument();
+
+    if (devServer) {
+      this._disposables.push(
+        devServer.onBuildProblem((problem) => {
+          this.document.buildProblems.push([problem]);
+        })
+      );
+    }
   }
 
   dispose() {

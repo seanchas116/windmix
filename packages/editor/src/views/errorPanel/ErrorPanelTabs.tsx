@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
-import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { artboards } from "../../state/Artboard";
+import { appState } from "../../state/AppState";
 
 const Tab: React.FC<{
   text: string;
@@ -90,6 +90,7 @@ export const ErrorPanelTabs: React.FC<{
         </IconButton>
       </div>
       {open && tab === "console" && <ConsoleMessageList />}
+      {open && tab === "problems" && <BuildProblemsList />}
     </div>
   );
 });
@@ -123,6 +124,36 @@ const ConsoleMessageList: React.FC = observer(() => {
               </div>
             );
           })}
+      </div>
+    </div>
+  );
+});
+
+const BuildProblemsList: React.FC = observer(() => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  // scroll to bottom on show
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight;
+    }
+  }, []);
+
+  const problems = [...appState.document.buildProblems].reverse();
+
+  return (
+    <div ref={ref} className="h-40 overflow-y-scroll">
+      <div className="p-2 flex flex-col-reverse">
+        {problems.map((message, i) => {
+          const color =
+            message.type === "warning" ? "text-yellow-500" : "text-red-500";
+
+          return (
+            <div key={i} className="flex items-center gap-2 select-text">
+              <div className={color}>{message.message}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
