@@ -2,6 +2,12 @@ import * as Y from "yjs";
 import { computed, makeObservable } from "mobx";
 import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
+import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
+
+export interface BuildProblem {
+  type: "warning" | "error";
+  message: string;
+}
 
 export class Document {
   constructor(ydoc: Y.Doc = new Y.Doc()) {
@@ -25,6 +31,10 @@ export class Document {
 
   get miscData(): ObservableYMap<any> {
     return ObservableYMap.from(this.ydoc.getMap("misc"));
+  }
+
+  get buildProblems(): ObservableYArray<BuildProblem> {
+    return ObservableYArray.from(this.ydoc.getArray("buildProblems"));
   }
 
   @computed get filePath(): string | undefined {
