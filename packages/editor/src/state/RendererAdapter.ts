@@ -19,6 +19,11 @@ type MessageFromWindow =
     }
   | {
       type: "windmix:reloadComputed";
+    }
+  | {
+      type: "windmix:console";
+      args: string[];
+      level: "log" | "warn" | "error";
     };
 
 type MessageToWindow =
@@ -63,16 +68,25 @@ export class RendererAdapter {
     }
     const data = event.data;
 
-    if (data.type === "windmix:resize") {
-      const height = data.height;
-      runInAction(() => {
-        console.log("resize", height);
-        this.windowBodyHeight = height;
-      });
-    } else if (data.type === "windmix:reloadComputed") {
-      this.previewInProgress = false;
-      this.revision = Date.now();
-      this.artboard.updateRects();
+    switch (data.type) {
+      case "windmix:resize": {
+        const height = data.height;
+        runInAction(() => {
+          console.log("resize", height);
+          this.windowBodyHeight = height;
+        });
+        break;
+      }
+      case "windmix:reloadComputed": {
+        this.previewInProgress = false;
+        this.revision = Date.now();
+        this.artboard.updateRects();
+        break;
+      }
+      case "windmix:console": {
+        console.log(data);
+        break;
+      }
     }
   };
 

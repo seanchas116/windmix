@@ -26,6 +26,7 @@ const options = {
       process.env.NODE_ENV || "production"
     ),
   },
+  loader: { ".raw.js": "text" },
 };
 
 if (process.argv.includes("--watch")) {

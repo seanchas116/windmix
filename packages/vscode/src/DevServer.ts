@@ -3,7 +3,7 @@ import { createServer, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
 // @ts-ignore
-import renderModuleScript from "./assets/renderModule?raw";
+import renderModuleScript from "./assets/renderModule.raw.js";
 
 const virtualModulePrefix = "/virtual:windmix?";
 const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;

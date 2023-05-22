@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 
 const root = document.getElementById("root");
 createRoot(root).render(
-  React.createElement(module["%%moduleName%%"], module.getWindmixProps?.())
+  React.createElement(module["%%component%%"], module.getWindmixProps?.())
 );
 
 window.addEventListener("message", (event) => {
@@ -125,3 +125,24 @@ window.addEventListener("resize", () => {
     "*"
   );
 });
+
+for (const level of ["log", "warn", "error"]) {
+  const old = console[level];
+  console[level] = (...args) => {
+    old(...args);
+    window.parent.postMessage(
+      {
+        type: "windmix:console",
+        level,
+        args: args.map((arg) => {
+          if (typeof arg === "object") {
+            return JSON.stringify(arg);
+          } else {
+            return arg;
+          }
+        }),
+      },
+      "*"
+    );
+  };
+}
