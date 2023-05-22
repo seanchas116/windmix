@@ -1,7 +1,10 @@
 import { Icon } from "@iconify/react";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import { observable } from "mobx";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { artboards } from "../../state/Artboard";
 
 const Tab: React.FC<{
   text: string;
@@ -42,7 +45,7 @@ const Tab: React.FC<{
 
 export const ErrorPanelTabs: React.FC<{
   className?: string;
-}> = ({ className }) => {
+}> = observer(({ className }) => {
   const [tab, setTab] = useState<"console" | "problems">("console");
   const [open, setOpen] = useState(false);
 
@@ -58,7 +61,7 @@ export const ErrorPanelTabs: React.FC<{
               setTab("console");
             }}
             badgeType="info"
-            badgeNumber={123}
+            badgeNumber={artboards.desktop.adapter.consoleMessages.length}
           />
           <Tab
             text="Problems"
@@ -86,7 +89,28 @@ export const ErrorPanelTabs: React.FC<{
           />
         </IconButton>
       </div>
-      {open && <div className="h-40"></div>}
+      {open && (
+        <div className="h-40 overflow-y-scroll">
+          {tab === "console" && (
+            <div className="p-2">
+              {artboards.desktop.adapter.consoleMessages.map((message, i) => {
+                const color =
+                  message.level === "log"
+                    ? "text-macaron-text"
+                    : message.level === "warn"
+                    ? "text-yellow-500"
+                    : "text-red-500";
+
+                return (
+                  <div key={i} className="flex items-center gap-2">
+                    <div className={color}>{message.args.join(" ")}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
-};
+});
