@@ -84,20 +84,19 @@ window.addEventListener("message", (event) => {
 });
 
 const resizeObserver = new ResizeObserver(() => {
-  console.log("resize", document.body.clientWidth, document.body.clientHeight);
   window.parent.postMessage(
     {
       type: "windmix:resize",
-      height: document.body.clientHeight,
+      height: document.documentElement.offsetHeight,
     },
     "*"
   );
 });
-resizeObserver.observe(document.body);
+resizeObserver.observe(document.documentElement);
 window.parent.postMessage(
   {
     type: "windmix:resize",
-    height: document.body.clientHeight,
+    height: document.documentElement.offsetHeight,
   },
   "*"
 );
