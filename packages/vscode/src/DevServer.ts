@@ -9,6 +9,12 @@ import renderModuleScript from "./assets/renderModule.raw.js";
 const virtualModulePrefix = "/virtual:windmix?";
 const resolvedVirtualModulePrefix = "\0" + virtualModulePrefix;
 
+const nextModuleMocks = {
+  "next/head": `const Head = ({ children }) => children; export default Head`,
+  "next/link": `const Link = 'a'; export default Link`,
+  "next/image": `const Image = 'img'; export default Image`,
+};
+
 function createLogger(
   onBuildProblem: vscode.EventEmitter<BuildProblem>
 ): Logger {
@@ -120,6 +126,13 @@ export class DevServer {
           load: (id) => {
             console.log("load", id);
 
+            for (const [key, value] of Object.entries(nextModuleMocks)) {
+              if (id === "virtual:windmix-mocks/" + key) {
+                console.log(key);
+                return value;
+              }
+            }
+
             if (
               this.preview &&
               path.resolve(
@@ -148,6 +161,12 @@ export class DevServer {
       resolve: {
         alias: {
           "@/": `${workspace.uri.fsPath}/src/`,
+          ...Object.fromEntries(
+            Object.entries(nextModuleMocks).map(([key, value]) => [
+              key,
+              `virtual:windmix-mocks/${key}`,
+            ])
+          ),
         },
       },
       server: {
