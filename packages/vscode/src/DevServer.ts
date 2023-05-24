@@ -145,6 +145,11 @@ export class DevServer {
         },
       ],
       root: workspace.uri.fsPath,
+      resolve: {
+        alias: {
+          "@/": `${workspace.uri.fsPath}/src/`,
+        },
+      },
       server: {
         port: 1337, // TODO: use ephemeral port
       },
