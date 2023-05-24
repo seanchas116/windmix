@@ -291,7 +291,7 @@ export function loadFile(
 interface FoundComponent {
   name: string;
   statement: babel.ExportDefaultDeclaration | babel.ExportNamedDeclaration;
-  element: babel.JSXElement;
+  element: babel.JSXElement | babel.JSXFragment;
 }
 
 // TODO: support component declarations with arrow functions
@@ -322,7 +322,10 @@ function findComponentFromStatement(
     if (bodyStatement.type === "ReturnStatement") {
       const returnStatement = bodyStatement;
       const returnValue = returnStatement.argument;
-      if (returnValue?.type === "JSXElement") {
+      if (
+        returnValue?.type === "JSXElement" ||
+        returnValue?.type === "JSXFragment"
+      ) {
         return {
           statement,
           name,
