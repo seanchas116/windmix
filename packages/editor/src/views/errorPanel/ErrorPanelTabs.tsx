@@ -112,6 +112,7 @@ export const ErrorPanelTabs: React.FC<{
 });
 
 const ConsoleMessageList: React.FC = observer(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(
     action(() => {
       artboards.desktop.adapter.readConsoleMessageCount =

@@ -1,7 +1,6 @@
 import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
-import { appState } from "./AppState";
 import { LogEntry } from "@windmix/model";
 
 type MessageFromWindow =
