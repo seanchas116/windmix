@@ -1,4 +1,10 @@
-import { computed, makeObservable, observable, runInAction } from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
 
@@ -75,6 +81,8 @@ export class RendererAdapter {
   previewInProgress = false;
 
   @observable windowBodyHeight = 0;
+  @observable scrollX = 0;
+  @observable scrollY = 0;
   readonly consoleMessages = observable.array<{
     args: string[];
     level: "log" | "warn" | "error";
@@ -95,7 +103,7 @@ export class RendererAdapter {
     this.readConsoleMessageCount = 0;
   }
 
-  readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {
+  readonly onMessage = action((event: MessageEvent<MessageFromWindow>) => {
     if (event.source !== this.window) {
       return;
     }
@@ -123,8 +131,14 @@ export class RendererAdapter {
       case "windmix:beforeUpdate": {
         break;
       }
+      case "windmix:onScroll": {
+        console.log(data);
+        this.scrollX = data.scrollX;
+        this.scrollY = data.scrollY;
+        break;
+      }
     }
-  };
+  });
 
   async findNodeIDs(offsetX: number, offsetY: number): Promise<string[]> {
     const targetWindow = this.window;

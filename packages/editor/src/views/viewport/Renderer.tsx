@@ -203,28 +203,33 @@ const HUD: React.FC<{
     ...artboard.selectedComputations.map((c) => c.rect)
   );
 
+  const scrollTransform = `translate(${-artboard.adapter.scrollX} ${-artboard
+    .adapter.scrollY})`;
+
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
-      <MarginPaddingIndicator artboard={artboard} />
-      {hoveredRects.map((rect, i) => (
-        <rect
-          key={i}
-          {...rect.toSVGRectProps()}
-          fill="none"
-          stroke="blue"
-          strokeWidth={1}
-        />
-      ))}
-      {selectedRect && (
-        <rect
-          {...selectedRect.toSVGRectProps()}
-          fill="none"
-          stroke="blue"
-          strokeWidth={1}
-        />
-      )}
-      <DragIndicators artboard={artboard} />
-      <NodeResizeBox artboard={artboard} />
+      <g transform={scrollTransform}>
+        <MarginPaddingIndicator artboard={artboard} />
+        {hoveredRects.map((rect, i) => (
+          <rect
+            key={i}
+            {...rect.toSVGRectProps()}
+            fill="none"
+            stroke="blue"
+            strokeWidth={1}
+          />
+        ))}
+        {selectedRect && (
+          <rect
+            {...selectedRect.toSVGRectProps()}
+            fill="none"
+            stroke="blue"
+            strokeWidth={1}
+          />
+        )}
+        <DragIndicators artboard={artboard} />
+        <NodeResizeBox artboard={artboard} />
+      </g>
     </svg>
   );
 });
