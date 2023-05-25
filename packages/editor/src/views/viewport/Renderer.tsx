@@ -46,7 +46,12 @@ export const Renderer: React.FC<{
 
   return (
     <div className="absolute inset-0">
-      <div className="pointer-events-none">
+      <div
+        className="pointer-events-none"
+        style={{
+          transform: "translateX(50%)",
+        }}
+      >
         {breakpoints.map((bp, i) => {
           return (
             <div
@@ -87,25 +92,9 @@ export const Renderer: React.FC<{
         />
       </div>
       <div
-        className="absolute -top-6 flex justify-between items-center"
-        style={{
-          left: `${-width / 2}px`,
-          width: `${width}px`,
-        }}
-      >
-        <div>Component</div>
-        <div
-          style={{
-            color: breakpoints[currentBreakpoint]?.color,
-          }}
-        >
-          {width}px
-        </div>
-      </div>
-      <div
         className="absolute left-0 top-0"
         style={{
-          left: `${-width / 2}px`,
+          left: `calc(50% - ${width / 2}px)`,
           width: `${width}px`,
           height: `${height}px`,
         }}
@@ -128,7 +117,7 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: `${width / 2}px`,
+          left: `calc(50% + ${width / 2}px)`,
           height: `${height}px`,
         }}
       ></div>
