@@ -72,6 +72,12 @@ export class RendererAdapter {
     );
   }
 
+  @computed get unreadConsoleMessages() {
+    return this.consoleMessages.slice(
+      this.consoleMessages.length - this.unreadConsoleMessageCount
+    );
+  }
+
   setWindow(window: Window | undefined) {
     this.window = window;
     this.windowBodyHeight = 0;

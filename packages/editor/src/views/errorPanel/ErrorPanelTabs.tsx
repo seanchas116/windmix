@@ -8,17 +8,27 @@ import { appState } from "../../state/AppState";
 import { action } from "mobx";
 import { LogEntry } from "@windmix/model";
 
+function mostSeriousLogType(logs: LogEntry[]): LogEntry["type"] {
+  if (logs.some((log) => log.type === "error")) {
+    return "error";
+  } else if (logs.some((log) => log.type === "warn")) {
+    return "warn";
+  } else {
+    return "info";
+  }
+}
+
 const Tab: React.FC<{
   text: string;
   selected: boolean;
   badgeNumber: number;
-  badgeType: "info" | "warn" | "error";
+  badgeType: "log" | "info" | "warn" | "error";
   onClick: () => void;
 }> = ({ text, selected, badgeNumber, badgeType, onClick }) => {
   const badgeBg =
     badgeNumber === 0
       ? "bg-macaron-uiBackground"
-      : badgeType === "info"
+      : badgeType === "info" || badgeType === "log"
       ? "bg-macaron-disabledText"
       : badgeType === "warn"
       ? "bg-yellow-400"
@@ -64,7 +74,9 @@ export const ErrorPanelTabs: React.FC<{
               setOpen(true);
               setTab("console");
             }}
-            badgeType="info"
+            badgeType={mostSeriousLogType(
+              artboards.desktop.adapter.unreadConsoleMessages
+            )}
             badgeNumber={artboards.desktop.adapter.unreadConsoleMessageCount}
           />
           <Tab
