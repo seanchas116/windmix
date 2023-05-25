@@ -162,6 +162,10 @@ export const DragHandlerOverlay: React.FC<{
     // );
   });
 
+  const onWheel = action((e: React.WheelEvent) => {
+    artboard.adapter.wheel(e.deltaX, e.deltaY);
+  });
+
   const cursor = appState.tool?.type === "insert" ? "crosshair" : undefined;
 
   return (
@@ -169,6 +173,7 @@ export const DragHandlerOverlay: React.FC<{
       ref={ref}
       className="absolute left-0 top-0 w-full h-full"
       onContextMenu={onContextMenu}
+      onWheel={onWheel}
       style={{
         cursor,
       }}

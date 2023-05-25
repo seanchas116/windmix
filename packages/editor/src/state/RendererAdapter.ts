@@ -1,7 +1,6 @@
 import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
-import { appState } from "./AppState";
 
 type MessageFromWindow =
   | {
@@ -27,6 +26,11 @@ type MessageFromWindow =
     }
   | {
       type: "windmix:beforeUpdate";
+    }
+  | {
+      type: "windmix:onScroll";
+      scrollX: number;
+      scrollY: number;
     };
 
 type MessageToWindow =
@@ -45,6 +49,11 @@ type MessageToWindow =
       type: "windmix:setClassName";
       id: string;
       className: string;
+    }
+  | {
+      type: "windmix:wheel";
+      deltaX: number;
+      deltaY: number;
     };
 
 interface ConsoleMessage {
@@ -190,6 +199,15 @@ export class RendererAdapter {
       type: "windmix:setClassName",
       id: nodeID,
       className,
+    };
+    this.window?.postMessage(message, "*");
+  }
+
+  wheel(deltaX: number, deltaY: number) {
+    const message: MessageToWindow = {
+      type: "windmix:wheel",
+      deltaX,
+      deltaY,
     };
     this.window?.postMessage(message, "*");
   }

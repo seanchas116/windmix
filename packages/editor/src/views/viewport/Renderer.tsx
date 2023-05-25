@@ -92,11 +92,10 @@ export const Renderer: React.FC<{
         />
       </div>
       <div
-        className="absolute left-0 top-0"
+        className="absolute left-0 top-0 h-full"
         style={{
           left: `calc(50% - ${width / 2}px)`,
           width: `${width}px`,
-          height: `${height}px`,
         }}
       >
         <iframe

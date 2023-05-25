@@ -80,6 +80,9 @@ window.addEventListener("message", (event) => {
     for (const elem of elems) {
       elem.className = data.className;
     }
+  } else if (data.type === "windmix:wheel") {
+    document.documentElement.scrollLeft += data.deltaX;
+    document.documentElement.scrollTop += data.deltaY;
   }
 });
 
@@ -120,6 +123,17 @@ window.addEventListener("resize", () => {
   window.parent.postMessage(
     {
       type: "windmix:reloadComputed",
+    },
+    "*"
+  );
+});
+
+window.addEventListener("scroll", () => {
+  window.parent.postMessage(
+    {
+      type: "windmix:onScroll",
+      deltaX: document.documentElement.scrollLeft,
+      deltaY: document.documentElement.scrollTop,
     },
     "*"
   );
