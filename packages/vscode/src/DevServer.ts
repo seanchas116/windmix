@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { createServer, Logger, Rollup, ViteDevServer } from "vite";
 import * as vscode from "vscode";
 import react from "@vitejs/plugin-react";
-import { BuildProblem } from "@windmix/model";
+import { LogEntry } from "@windmix/model";
 // @ts-ignore
 import renderModuleScript from "./assets/renderModule.raw.js";
 
@@ -15,9 +15,7 @@ const nextModuleMocks = {
   "next/image": `const Image = 'img'; export default Image`,
 };
 
-function createLogger(
-  onBuildProblem: vscode.EventEmitter<BuildProblem>
-): Logger {
+function createLogger(onBuildProblem: vscode.EventEmitter<LogEntry>): Logger {
   const loggedErrors = new WeakSet<Error | Rollup.RollupError>();
   const warnedMessages = new Set<string>();
 
@@ -31,8 +29,8 @@ function createLogger(
     warn(msg) {
       console.warn(msg);
       onBuildProblem.fire({
-        type: "warning",
-        message: msg,
+        type: "warn",
+        messages: [msg],
       });
       logger.hasWarned = true;
     },
@@ -42,8 +40,8 @@ function createLogger(
       }
       console.warn(msg);
       onBuildProblem.fire({
-        type: "warning",
-        message: msg,
+        type: "warn",
+        messages: [msg],
       });
       logger.hasWarned = true;
       warnedMessages.add(msg);
@@ -52,7 +50,7 @@ function createLogger(
       console.error(msg);
       onBuildProblem.fire({
         type: "error",
-        message: msg,
+        messages: [msg],
       });
       if (opts?.error) {
         loggedErrors.add(opts.error);
@@ -64,7 +62,7 @@ function createLogger(
 }
 
 export class DevServer {
-  private _onBuildProblem = new vscode.EventEmitter<BuildProblem>();
+  private _onBuildProblem = new vscode.EventEmitter<LogEntry>();
   onBuildProblem = this._onBuildProblem.event;
 
   async start() {

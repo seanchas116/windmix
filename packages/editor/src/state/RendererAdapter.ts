@@ -2,6 +2,7 @@ import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
 import { appState } from "./AppState";
+import { LogEntry } from "@windmix/model";
 
 type MessageFromWindow =
   | {
@@ -23,7 +24,7 @@ type MessageFromWindow =
     }
   | {
       type: "windmix:console";
-      message: ConsoleMessage;
+      message: LogEntry;
     }
   | {
       type: "windmix:beforeUpdate";
@@ -47,11 +48,6 @@ type MessageToWindow =
       className: string;
     };
 
-interface ConsoleMessage {
-  level: "log" | "warn" | "error";
-  args: string[];
-}
-
 export class RendererAdapter {
   constructor(artboard: Artboard) {
     this.artboard = artboard;
@@ -66,10 +62,7 @@ export class RendererAdapter {
   previewInProgress = false;
 
   @observable windowBodyHeight = 0;
-  readonly consoleMessages = observable.array<{
-    args: string[];
-    level: "log" | "warn" | "error";
-  }>();
+  readonly consoleMessages = observable.array<LogEntry>();
   @observable readConsoleMessageCount = 0;
 
   @computed get unreadConsoleMessageCount() {

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { artboards } from "../../state/Artboard";
 import { appState } from "../../state/AppState";
-import { action, runInAction } from "mobx";
+import { action } from "mobx";
 
 const Tab: React.FC<{
   text: string;
@@ -122,15 +122,15 @@ const ConsoleMessageList: React.FC = observer(() => {
           .reverse()
           .map((message, i) => {
             const color =
-              message.level === "log"
+              message.type === "log"
                 ? "text-macaron-text"
-                : message.level === "warn"
+                : message.type === "warn"
                 ? "text-yellow-500"
                 : "text-red-500";
 
             return (
               <div key={i} className="flex items-center gap-2 select-text">
-                <div className={color}>{message.args.join(" ")}</div>
+                <div className={color}>{message.messages.join(" ")}</div>
               </div>
             );
           })}
@@ -156,11 +156,11 @@ const BuildProblemsList: React.FC = observer(() => {
       <div className="p-2 flex flex-col-reverse">
         {problems.map((message, i) => {
           const color =
-            message.type === "warning" ? "text-yellow-500" : "text-red-500";
+            message.type === "warn" ? "text-yellow-500" : "text-red-500";
 
           return (
             <div key={i} className="flex items-center gap-2 select-text">
-              <div className={color}>{message.message}</div>
+              <div className={color}>{message.messages.join(" ")}</div>
             </div>
           );
         })}

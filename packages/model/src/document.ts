@@ -4,9 +4,9 @@ import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
 
-export interface BuildProblem {
-  type: "warning" | "error";
-  message: string;
+export interface LogEntry {
+  type: "log" | "info" | "warn" | "error";
+  messages: string[];
 }
 
 export class Document {
@@ -33,7 +33,7 @@ export class Document {
     return ObservableYMap.from(this.ydoc.getMap("misc"));
   }
 
-  get buildProblems(): ObservableYArray<BuildProblem> {
+  get buildProblems(): ObservableYArray<LogEntry> {
     return ObservableYArray.from(this.ydoc.getArray("buildProblems"));
   }
 

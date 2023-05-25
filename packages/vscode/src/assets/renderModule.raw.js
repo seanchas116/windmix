@@ -125,16 +125,16 @@ window.addEventListener("resize", () => {
   );
 });
 
-for (const level of ["log", "warn", "error"]) {
-  const old = console[level];
-  console[level] = (...args) => {
+for (const type of ["log", "info", "warn", "error"]) {
+  const old = console[type];
+  console[type] = (...args) => {
     old(...args);
     window.parent.postMessage(
       {
         type: "windmix:console",
         message: {
-          level,
-          args: args.map((arg) => {
+          type,
+          messages: args.map((arg) => {
             if (typeof arg === "object") {
               return JSON.stringify(arg);
             } else {
