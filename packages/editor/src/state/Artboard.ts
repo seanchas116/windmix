@@ -140,10 +140,10 @@ class ComputationCache {
 
 export class Artboards {
   readonly desktop = new Artboard();
-  readonly mobile = new Artboard();
+  //readonly mobile = new Artboard();
 
   get all(): Artboard[] {
-    return [this.desktop, this.mobile];
+    return [this.desktop];
   }
 }
 
