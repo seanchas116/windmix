@@ -4,6 +4,7 @@ import { TextPane } from "./TextPane";
 import { DimensionPane } from "./DimensionPane";
 import { BackgroundPane } from "./BackgroundPane";
 import { RingPane } from "./RingPane";
+import { DebugPane } from "./DebugPane";
 
 export const StyleInspector: React.FC = observer(() => {
   return (
@@ -13,6 +14,7 @@ export const StyleInspector: React.FC = observer(() => {
       <TextPane />
       <BackgroundPane />
       <RingPane />
+      <DebugPane />
     </>
   );
 });
