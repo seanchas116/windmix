@@ -111,7 +111,7 @@ export const Renderer: React.FC<{
         }}
       >
         <iframe
-          className="absolute left-0 top-0 w-full h-full"
+          className="absolute left-0 top-0 w-full h-full bg-white"
           src={previewURL}
           ref={iframeRef}
           onLoad={(e) => {
