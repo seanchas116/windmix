@@ -21,11 +21,17 @@ export const Renderer: React.FC<{
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { width, height } = artboard;
 
+  const widthCSS = width === "auto" ? "100%" : `${width}px`;
+
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
+      if (initData === "auto") {
+        return;
+      }
+
       const newWidth =
         initData + Math.round((totalDeltaX * 2) / scrollState.scale);
       artboard.width = newWidth;
@@ -34,7 +40,7 @@ export const Renderer: React.FC<{
   });
 
   const currentBreakpoint = breakpoints.findIndex(
-    (bp) => artboard.width < bp.minWidth
+    (bp) => artboard.width !== "auto" && artboard.width < bp.minWidth
   );
 
   const filePath = appState.document.filePath;
@@ -94,8 +100,8 @@ export const Renderer: React.FC<{
       <div
         className="absolute left-0 top-0 h-full"
         style={{
-          left: `calc(50% - ${width / 2}px)`,
-          width: `${width}px`,
+          left: `calc(50% - ${widthCSS} / 2)`,
+          width: widthCSS,
         }}
       >
         <iframe
@@ -116,8 +122,7 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: `calc(50% + ${width / 2}px)`,
-          height: `${height}px`,
+          left: `calc(50% + ${widthCSS} / 2)`,
         }}
       ></div>
     </div>

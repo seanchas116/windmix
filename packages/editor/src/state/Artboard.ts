@@ -87,7 +87,7 @@ export class Artboard {
   @observable.ref dragPreviewRects: Rect[] = [];
   @observable dropDestination: DropDestination | undefined = undefined;
 
-  @observable width = 360;
+  @observable width: number | "auto" = 360;
   @computed get height() {
     return this.adapter.windowBodyHeight;
   }

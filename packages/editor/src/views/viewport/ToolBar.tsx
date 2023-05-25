@@ -85,6 +85,16 @@ export const ToolBar: React.FC<{
               <Icon icon="icon-park-outline:new-computer" />
             </IconButton>
           </Tippy>
+          <Tippy content="Auto">
+            <IconButton
+              pressed={artboards.desktop.width === "auto"}
+              onClick={action(() => {
+                artboards.desktop.width = "auto";
+              })}
+            >
+              <Icon icon="icon-park-outline:auto-width" />
+            </IconButton>
+          </Tippy>
         </div>
         <ZoomControlController />
       </div>
