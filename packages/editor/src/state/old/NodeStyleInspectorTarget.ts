@@ -22,7 +22,6 @@ export class NodeStyleInspectorTarget implements StyleInspectorTarget {
             className = attribute.value.slice(1, -1);
           }
         }
-        console.log(className);
 
         this.style.loadTailwind(className);
       },

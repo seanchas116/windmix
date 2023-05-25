@@ -26,8 +26,6 @@ export class ExtensionState {
 
     this._disposables.push(
       vscode.window.onDidChangeActiveTextEditor((editor) => {
-        console.log("onDidChangeActiveTextEditor", editor);
-
         if (editor) {
           this.textEditor = editor;
         }
@@ -138,7 +136,6 @@ export class ExtensionState {
         );
       });
       this._lastSetText = newText;
-      console.log("set lastSetText");
     }
   }
 
@@ -149,9 +146,7 @@ export class ExtensionState {
     const filePath = this.projectPathForEditor(this._textEditor);
     const code = this._textEditor.document.getText();
 
-    //console.log(Diff.diffLines(code, this._lastSetText ?? ""));
     if (code !== this._lastSetText) {
-      console.log("reload");
       loadFile(this.document, filePath, code);
     }
 

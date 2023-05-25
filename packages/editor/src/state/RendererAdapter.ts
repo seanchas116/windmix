@@ -96,7 +96,6 @@ export class RendererAdapter {
       case "windmix:resize": {
         const height = data.height;
         runInAction(() => {
-          console.log("resize", height);
           this.windowBodyHeight = height;
         });
         break;

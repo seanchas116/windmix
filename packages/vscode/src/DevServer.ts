@@ -81,14 +81,12 @@ export class DevServer {
           name: "windmix-renderer", // required, will show up in warnings and errors
           configureServer: (server) => {
             server.middlewares.use(async (req, res, next) => {
-              console.log(req.originalUrl);
               if (req.originalUrl?.startsWith("/windmix?")) {
                 const query = new URLSearchParams(
                   req.originalUrl.slice("/windmix?".length)
                 );
                 const path = query.get("path");
                 const component = query.get("component");
-                console.log(req.originalUrl, path);
 
                 let template = `<!DOCTYPE html>
                 <html lang="en">
@@ -123,17 +121,13 @@ export class DevServer {
             });
           },
           resolveId: (id) => {
-            console.log(id);
             if (id.startsWith(virtualModulePrefix)) {
               return "\0" + id;
             }
           },
           load: (id) => {
-            console.log("load", id);
-
             for (const [key, value] of Object.entries(nextModuleMocks)) {
               if (id === "virtual:windmix-mocks/" + key) {
-                console.log(key);
                 return value;
               }
             }

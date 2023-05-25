@@ -18,7 +18,6 @@ export const Viewport: React.FC = observer(() => {
     }
 
     const updateViewportClientRect = action(() => {
-      console.log("update viewport");
       viewportGeometry.domClientRect = Rect.from(elem.getBoundingClientRect());
     });
 

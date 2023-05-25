@@ -208,7 +208,6 @@ const ComponentOutline: React.FC<{
     }
 
     const next = (parentNode.children ?? [])[index]?.data.node;
-    console.log(index, next);
     const selectedNodes = appState.document.selectedNodes;
     parent.insertBefore(selectedNodes, next);
   });

@@ -115,7 +115,6 @@ export const Renderer: React.FC<{
           src={previewURL}
           ref={iframeRef}
           onLoad={(e) => {
-            console.log(e.currentTarget.contentWindow);
             artboard.adapter.setWindow(
               e.currentTarget.contentWindow ?? undefined
             );

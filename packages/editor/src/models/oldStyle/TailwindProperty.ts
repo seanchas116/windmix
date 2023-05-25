@@ -4,8 +4,6 @@ import resolveConfig from "tailwindcss/resolveConfig";
 import defaultConfig from "tailwindcss/defaultConfig";
 const theme = resolveConfig(defaultConfig).theme!;
 
-console.log(theme);
-
 export interface ITailwindProperty {
   cssName: AllStyleKey;
   toTailwind(cssValue: string): string | undefined;
