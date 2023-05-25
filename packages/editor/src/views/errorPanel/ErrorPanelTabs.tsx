@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { artboards } from "../../state/Artboard";
 import { appState } from "../../state/AppState";
 import { action } from "mobx";
+import { LogEntry } from "@windmix/model";
 
 const Tab: React.FC<{
   text: string;
@@ -99,15 +100,6 @@ export const ErrorPanelTabs: React.FC<{
 });
 
 const ConsoleMessageList: React.FC = observer(() => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  // scroll to bottom on show
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollTop = ref.current.scrollHeight;
-    }
-  }, []);
-
   useEffect(
     action(() => {
       artboards.desktop.adapter.readConsoleMessageCount =
@@ -116,30 +108,17 @@ const ConsoleMessageList: React.FC = observer(() => {
   );
 
   return (
-    <div ref={ref} className="h-40 overflow-y-scroll font-mono">
-      <div className="p-2 flex flex-col-reverse">
-        {[...artboards.desktop.adapter.consoleMessages]
-          .reverse()
-          .map((message, i) => {
-            const color =
-              message.type === "log"
-                ? "text-macaron-text"
-                : message.type === "warn"
-                ? "text-yellow-500"
-                : "text-red-500";
-
-            return (
-              <div key={i} className="flex items-center gap-2 select-text">
-                <div className={color}>{message.messages.join(" ")}</div>
-              </div>
-            );
-          })}
-      </div>
-    </div>
+    <LogList logs={[...artboards.desktop.adapter.consoleMessages].reverse()} />
   );
 });
 
 const BuildProblemsList: React.FC = observer(() => {
+  return <LogList logs={[...appState.document.buildProblems].reverse()} />;
+});
+
+const LogList: React.FC<{
+  logs: LogEntry[];
+}> = ({ logs }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   // scroll to bottom on show
@@ -149,22 +128,24 @@ const BuildProblemsList: React.FC = observer(() => {
     }
   }, []);
 
-  const problems = [...appState.document.buildProblems].reverse();
-
   return (
     <div ref={ref} className="h-40 overflow-y-scroll font-mono">
       <div className="p-2 flex flex-col-reverse">
-        {problems.map((message, i) => {
+        {logs.map((log, i) => {
           const color =
-            message.type === "warn" ? "text-yellow-500" : "text-red-500";
+            log.type === "error"
+              ? "text-red-500"
+              : log.type === "warn"
+              ? "text-yellow-500"
+              : "text-macaron-text";
 
           return (
             <div key={i} className="flex items-center gap-2 select-text">
-              <div className={color}>{message.messages.join(" ")}</div>
+              <div className={color}>{log.messages.join(" ")}</div>
             </div>
           );
         })}
       </div>
     </div>
   );
-});
+};
