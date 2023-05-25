@@ -130,7 +130,7 @@ const LogList: React.FC<{
 
   return (
     <div ref={ref} className="h-40 overflow-y-scroll font-mono">
-      <div className="p-2 flex flex-col-reverse">
+      <div className="flex flex-col-reverse divide-y  divide-y-reverse divide-macaron-separator">
         {logs.map((log, i) => {
           const color =
             log.type === "error"
@@ -140,7 +140,10 @@ const LogList: React.FC<{
               : "text-macaron-text";
 
           return (
-            <div key={i} className="flex items-center gap-2 select-text">
+            <div
+              key={i}
+              className="flex items-center gap-2 select-text py-1 px-2"
+            >
               <div className={color}>{log.messages.join(" ")}</div>
             </div>
           );
