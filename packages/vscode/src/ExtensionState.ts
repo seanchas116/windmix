@@ -158,7 +158,7 @@ export class ExtensionState {
 
     const file = this.document.getFileNode(filePath);
 
-    // TODO: keep preview updated on non-active TextDocument changes
+    // TODO: keep preview updated on non-active TextDocument changes (e.g., git checkout)
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
 
     this._webviewTitleChanged.fire(this.webviewTitle);
