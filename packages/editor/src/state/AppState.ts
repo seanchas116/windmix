@@ -59,17 +59,8 @@ export class AppState {
     makeObservable(this);
 
     reaction(
-      () => this.document.currentFileID,
-      (currentFileID) => {
-        console.log("currentFileID", currentFileID);
-      }
-    );
-
-    reaction(
       () => this.document.currentFile?.filePath,
       (tabPath) => {
-        console.log(tabPath);
-
         const state: ViewState = {
           tabPath,
         };
