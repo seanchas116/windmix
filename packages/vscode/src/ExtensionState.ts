@@ -3,6 +3,7 @@ import * as path from "node:path";
 import { Document, fileNodeID } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import { DevServer } from "./DevServer";
+import { reaction } from "mobx";
 
 export const debouncedChange = (onUpdate: () => void): (() => void) => {
   let queued = false;
@@ -42,7 +43,15 @@ export class ExtensionState {
       }),
       devServer.onBuildProblem((problem) => {
         this.document.buildProblems.push([problem]);
-      })
+      }),
+      {
+        dispose: reaction(
+          () => this.document.currentComponent,
+          (currentComponent) => {
+            console.log("TODO change active tab:", currentComponent?.id);
+          }
+        ),
+      }
     );
 
     // set text content on doc nodes change
