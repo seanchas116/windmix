@@ -93,6 +93,7 @@ export class ViewportEvent {
   readonly event: MouseEvent | DragEvent;
   readonly mode: "click" | "doubleClick";
 
+  // TODO: don't select nested component contents until double click
   get clickableSelectable(): Node | undefined {
     const instance = this.selectables[0];
     if (instance) {
