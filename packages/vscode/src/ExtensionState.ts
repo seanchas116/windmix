@@ -24,6 +24,8 @@ export class ExtensionState {
     this.devServer = devServer;
     // TODO: restore current text editor from state
 
+    this.document.init();
+
     this._disposables.push(
       vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor) {
@@ -120,7 +122,10 @@ export class ExtensionState {
   private saveTextDocument() {
     const textEditor = this._textEditor;
     if (textEditor) {
-      const newText = this.document.nodes.get("file")?.stringify() ?? "";
+      const filePath = this.projectPathForEditor(textEditor);
+      const fileNode = this.document.getFileNode(filePath);
+
+      const newText = fileNode.stringify();
       const oldText = textEditor.document.getText();
       if (newText === oldText) {
         // TODO: compare by AST?
@@ -150,7 +155,7 @@ export class ExtensionState {
       loadFile(this.document, filePath, code);
     }
 
-    const file = this.document.fileNode;
+    const file = this.document.getFileNode(filePath);
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
 
     this._webviewTitleChanged.fire(this.webviewTitle);
