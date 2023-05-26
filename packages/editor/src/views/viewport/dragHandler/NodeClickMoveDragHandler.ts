@@ -50,6 +50,8 @@ export async function createNodeClickMoveDragHandler(
           appState.document.deselectAll();
         }
         selectable.select();
+
+        appState.document.currentComponent = selectable.component;
       }
     },
   };

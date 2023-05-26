@@ -42,6 +42,10 @@ export abstract class BaseNode<
     return (this.nodeMap as CollaborativeNodeMap<any> as NodeMap).document;
   }
 
+  get component(): ComponentNode | undefined {
+    return (this.parent as this | undefined)?.component ?? undefined;
+  }
+
   get location(): Location {
     return this.data.get("location") ?? { line: 1, column: 0 };
   }
@@ -131,6 +135,10 @@ export class ComponentNode extends BaseNode<
 > {
   get type(): "component" {
     return "component";
+  }
+
+  get component(): ComponentNode {
+    return this;
   }
 
   get header(): string {

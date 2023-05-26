@@ -38,7 +38,7 @@ export const Renderer: React.FC<{
   );
 
   const filePath = appState.document.filePath;
-  const componentName = appState.document.currentComponent?.name;
+  const componentName = appState.document.previewComponentName;
   const previewURL =
     filePath && componentName
       ? `http://localhost:1337/windmix?path=${filePath}&component=${componentName}`

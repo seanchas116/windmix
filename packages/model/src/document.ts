@@ -49,7 +49,15 @@ export class Document {
     );
   }
 
-  private get currentComponentName(): string | undefined {
+  get previewComponentName(): string {
+    return this.miscData.get("previewComponent") ?? "default";
+  }
+
+  set previewComponentName(value: string | undefined) {
+    this.miscData.set("previewComponent", value);
+  }
+
+  private get currentComponentName(): string {
     return this.miscData.get("currentComponent") ?? "default";
   }
 
@@ -73,6 +81,9 @@ export class Document {
   }
 
   set currentComponent(value: ComponentNode | undefined) {
+    if (this.currentComponentName === value?.name) {
+      return;
+    }
     this.currentComponentName = value?.name;
   }
 
