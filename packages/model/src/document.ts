@@ -9,13 +9,35 @@ export interface LogEntry {
   messages: string[];
 }
 
-export class Document {
-  constructor(ydoc: Y.Doc = new Y.Doc()) {
-    this.ydoc = ydoc;
-    this.nodes = new NodeMap(this);
+export class DocumentData {
+  constructor(ymap?: Y.Map<any>) {
+    if (ymap) {
+      this.nodes = ymap.get("nodes");
+      this.selection = ymap.get("selection");
+      this.misc = ymap.get("misc");
+      this.buildProblems = ymap.get("buildProblems");
+    } else {
+      this.nodes = new Y.Map();
+      this.selection = new Y.Map();
+      this.misc = new Y.Map();
+      this.buildProblems = new Y.Array();
+    }
+  }
 
+  nodes: Y.Map<any>;
+  selection: Y.Map<true>;
+  misc: Y.Map<any>;
+  buildProblems: Y.Array<LogEntry>;
+}
+
+export class Document {
+  constructor(filePath: string, data: DocumentData) {
+    this.filePath = filePath;
+    this.nodes = new NodeMap(this);
     makeObservable(this);
   }
+
+  readonly filePath: string;
 
   get fileNode(): FileNode | undefined {
     return this.nodes.get("file") as FileNode | undefined;
@@ -35,10 +57,6 @@ export class Document {
 
   get buildProblems(): ObservableYArray<LogEntry> {
     return ObservableYArray.from(this.ydoc.getArray("buildProblems"));
-  }
-
-  @computed get filePath(): string | undefined {
-    return this.fileNode?.data.get("filePath");
   }
 
   get components(): ComponentNode[] {
