@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
-import { Document, fileNodeID } from "@windmix/model";
+import { Document, FileNode, fileNodeID } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import { DevServer } from "./DevServer";
 import { reaction } from "mobx";
@@ -153,7 +153,8 @@ export class ExtensionState {
     this._lastSetTexts = new WeakMap();
     //this._panel.title = this.titleForEditor(textEditor);
     if (textEditor) {
-      this.loadTextDocument(textEditor.document);
+      const file = this.loadTextDocument(textEditor.document);
+      this.document.previewComponentID = file.children[0]?.id;
     }
 
     if (this._context) {
@@ -186,7 +187,7 @@ export class ExtensionState {
     this._lastSetTexts.set(textEditor.document, newText);
   }
 
-  private loadTextDocument(textDocument: vscode.TextDocument) {
+  private loadTextDocument(textDocument: vscode.TextDocument): FileNode {
     const filePath = this.projectPathFromURI(textDocument.uri);
     const code = textDocument.getText();
 
@@ -204,6 +205,8 @@ export class ExtensionState {
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
 
     this._webviewTitleChanged.fire(this.webviewTitle);
+
+    return file;
   }
 
   private readonly _webviewTitleChanged = new vscode.EventEmitter<string>();

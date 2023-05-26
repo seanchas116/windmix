@@ -85,7 +85,7 @@ export class Document {
   }
 
   get previewComponentID(): string | undefined {
-    return this.miscData.get("previewComponent") ?? this.components[0]?.id;
+    return this.miscData.get("previewComponent");
   }
 
   set previewComponentID(value: string | undefined) {
