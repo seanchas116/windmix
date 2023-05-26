@@ -3,6 +3,7 @@ import { computed, makeObservable } from "mobx";
 import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 
 export interface LogEntry {
   type: "log" | "info" | "warn" | "error";
@@ -33,30 +34,32 @@ export class DocumentData {
 export class Document {
   constructor(filePath: string, data: DocumentData) {
     this.filePath = filePath;
+    this.data = data;
     this.nodes = new NodeMap(this);
     makeObservable(this);
   }
 
   readonly filePath: string;
+  readonly data: DocumentData;
 
   get fileNode(): FileNode | undefined {
     return this.nodes.get("file") as FileNode | undefined;
   }
 
   get nodesData(): ObservableYMap<any> {
-    return ObservableYMap.from(this.ydoc.getMap("nodes"));
+    return ObservableYMap.from(this.data.nodes);
   }
 
   get selectionData(): ObservableYMap<true> {
-    return ObservableYMap.from(this.ydoc.getMap("selection"));
+    return ObservableYMap.from(this.data.selection);
   }
 
   get miscData(): ObservableYMap<any> {
-    return ObservableYMap.from(this.ydoc.getMap("misc"));
+    return ObservableYMap.from(this.data.misc);
   }
 
   get buildProblems(): ObservableYArray<LogEntry> {
-    return ObservableYArray.from(this.ydoc.getArray("buildProblems"));
+    return ObservableYArray.from(this.data.buildProblems);
   }
 
   get components(): ComponentNode[] {
@@ -133,8 +136,11 @@ export class Document {
     this.miscData.set("classNamePreview", value);
   }
 
-  readonly ydoc: Y.Doc;
   readonly nodes: NodeMap;
+
+  get ydoc(): Y.Doc {
+    return assertNonNull(this.data.nodes.doc);
+  }
 
   clear(): void {
     this.ydoc.transact(() => {
