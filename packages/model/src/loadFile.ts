@@ -214,6 +214,8 @@ export function loadFile(
   code: string,
   idGenerator?: () => string
 ): FileNode {
+  const file = doc.getFileNode(filePath);
+
   const idReuser = new IDReuser(idGenerator);
 
   const addToIDReuser = (node: Node, indexPath: string[]) => {
@@ -223,7 +225,7 @@ export function loadFile(
     }
   };
 
-  for (const node of doc.fileNode?.children ?? []) {
+  for (const node of file.children) {
     for (const rootNode of node.children) {
       addToIDReuser(rootNode, [node.name]);
     }
@@ -234,14 +236,12 @@ export function loadFile(
     plugins: ["jsx", "typescript"],
   });
 
-  doc.clear();
+  file.clear();
 
   const foundComponents = ast.program.body.flatMap((expr) => {
     const found = findComponentFromStatement(expr);
     return found ? [found] : [];
   });
-
-  const file = doc.nodes.create("file", "file");
 
   const fileHeaderStart = 0;
   const fileHeaderEnd = foundComponents[0]?.statement.start ?? code.length;
@@ -263,7 +263,10 @@ export function loadFile(
     const footerEnd = nextComponent?.statement.start ?? code.length;
 
     const name = foundComponent.name ?? "default";
-    const componentNode = doc.nodes.create("component", "component:" + name);
+    const componentNode = doc.nodes.create(
+      "component",
+      "component:" + filePath + "#" + name
+    );
     const elementNode = loadElement(
       doc,
       idReuser,

@@ -100,6 +100,16 @@ export abstract class BaseNode<
   }
 }
 
+export class RootNode extends BaseNode<typeof nodeTypes, {}> {
+  get type(): "root" {
+    return "root";
+  }
+
+  stringify(options: StringifyOptions = {}): string {
+    throw new Error("RootNode cannot be stringified");
+  }
+}
+
 export class FileNode extends BaseNode<
   typeof nodeTypes,
   {
@@ -344,6 +354,7 @@ export class ExpressionNode extends BaseNode<
 }
 
 export const nodeTypes = {
+  root: RootNode,
   file: FileNode,
   component: ComponentNode,
   element: ElementNode,

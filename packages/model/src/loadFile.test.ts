@@ -21,6 +21,7 @@ const demoFile = fs.readFileSync(
 describe("File load/stringify", () => {
   it("should load a file", () => {
     const doc = new Document();
+    doc.init();
 
     let id = 0;
     const generateID = () => {
@@ -47,6 +48,7 @@ describe("File load/stringify", () => {
 
   it("should load example files", () => {
     const doc = new Document();
+    doc.init();
 
     const exampleDir = path.resolve(__dirname, "../../example/src");
     const exampleFiles = fs.readdirSync(exampleDir);

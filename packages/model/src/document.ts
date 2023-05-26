@@ -1,6 +1,13 @@
 import * as Y from "yjs";
 import { computed, makeObservable } from "mobx";
-import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
+import {
+  ComponentNode,
+  ElementNode,
+  FileNode,
+  Node,
+  NodeMap,
+  RootNode,
+} from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
 
@@ -17,8 +24,8 @@ export class Document {
     makeObservable(this);
   }
 
-  get fileNode(): FileNode | undefined {
-    return this.nodes.get("file") as FileNode | undefined;
+  get rootNode(): RootNode | undefined {
+    return this.nodes.get("root") as RootNode | undefined;
   }
 
   get nodesData(): ObservableYMap<any> {
@@ -37,8 +44,34 @@ export class Document {
     return ObservableYArray.from(this.ydoc.getArray("buildProblems"));
   }
 
-  @computed get filePath(): string | undefined {
-    return this.fileNode?.data.get("filePath");
+  get currentFileData(): ObservableYMap<string | undefined> {
+    return ObservableYMap.from(this.ydoc.getMap("currentFile"));
+  }
+
+  get currentFileID(): string | undefined {
+    return this.currentFileData.get("value");
+  }
+
+  set currentFileID(value: string | undefined) {
+    if (this.currentFileData.get("value") === value) {
+      return;
+    }
+    this.currentFileData.set("value", value);
+  }
+
+  get files(): FileNode[] {
+    return (this.rootNode?.children ?? []) as FileNode[];
+  }
+
+  getFileNode(filePath: string): FileNode {
+    return this.nodes.getOrCreate("file", "file:" + filePath);
+  }
+
+  get fileNode(): FileNode | undefined {
+    const node = this.nodes.get(this.currentFileID);
+    if (node && node.type === "file") {
+      return node;
+    }
   }
 
   get components(): ComponentNode[] {
@@ -117,6 +150,11 @@ export class Document {
 
   readonly ydoc: Y.Doc;
   readonly nodes: NodeMap;
+
+  // warning: call this only once across all clients
+  init(): void {
+    this.nodes.create("root", "root");
+  }
 
   clear(): void {
     this.ydoc.transact(() => {

@@ -59,7 +59,7 @@ export class AppState {
     makeObservable(this);
 
     reaction(
-      () => this.document.filePath,
+      () => this.document.fileNode?.filePath,
       (tabPath) => {
         const state: ViewState = {
           tabPath,

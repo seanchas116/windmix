@@ -15,7 +15,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "column": 4,
       "line": 15,
     },
-    "parent": "component:Example",
+    "parent": "component:/demo.js#Example",
     "selfClosing": false,
     "spaceAfterTagName": " ",
     "tagName": "div",
@@ -2289,7 +2289,7 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       ",
     "type": "text",
   },
-  "component:Example": {
+  "component:/demo.js#Example": {
     "footer": "
   );
 }
@@ -2305,10 +2305,10 @@ exports[`File load/stringify > should load a file > nodes 1`] = `
       "line": 11,
     },
     "name": "Example",
-    "parent": "file",
+    "parent": "file:/demo.js",
     "type": "component",
   },
-  "file": {
+  "file:/demo.js": {
     "filePath": "/demo.js",
     "header": "import { useState } from \\"react\\";
 import { Dialog } from \\"@headlessui/react\\";
@@ -2324,6 +2324,10 @@ const navigation = [
 ",
     "index": 0,
     "type": "file",
+  },
+  "root": {
+    "index": 0,
+    "type": "root",
   },
 }
 `;
@@ -2598,7 +2602,7 @@ exports[`File load/stringify > should load earlyReturn.js > nodes 1`] = `
       "column": 4,
       "line": 6,
     },
-    "parent": "component:EarlyReturn",
+    "parent": "component:/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js#EarlyReturn",
     "selfClosing": false,
     "spaceAfterTagName": "",
     "tagName": "div",
@@ -2649,7 +2653,7 @@ exports[`File load/stringify > should load earlyReturn.js > nodes 1`] = `
     ",
     "type": "text",
   },
-  "component:EarlyReturn": {
+  "component:/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js#EarlyReturn": {
     "footer": "
   );
 }
@@ -2667,10 +2671,10 @@ exports[`File load/stringify > should load earlyReturn.js > nodes 1`] = `
       "line": 0,
     },
     "name": "EarlyReturn",
-    "parent": "file",
+    "parent": "file:/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js",
     "type": "component",
   },
-  "file": {
+  "file:/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js": {
     "filePath": "/Users/seanchas116/Repos/seanchas116/windmix/packages/model/src/__fixtures__/tests/earlyReturn.js",
     "header": "",
     "index": 0,
