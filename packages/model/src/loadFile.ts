@@ -12,6 +12,7 @@ import {
   Attribute,
   SpreadAttribute,
   FileNode,
+  componentNodeID,
 } from "./index";
 import * as Y from "yjs";
 import { Document } from "./document";
@@ -266,7 +267,7 @@ export function loadFile(
     const name = foundComponent.name ?? "default";
     const componentNode = doc.nodes.create(
       "component",
-      "component:" + filePath + "#" + name
+      componentNodeID(filePath, name)
     );
     const elementNode = loadElement(
       doc,

@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
-import { Document, fileNodeIDForPath } from "@windmix/model";
+import { Document, fileNodeID } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import { DevServer } from "./DevServer";
 
@@ -154,7 +154,7 @@ export class ExtensionState {
     if (code !== this._lastSetText) {
       loadFile(this.document, filePath, code);
     }
-    this.document.currentFileID = fileNodeIDForPath(filePath);
+    this.document.currentFileID = fileNodeID(filePath);
 
     const file = this.document.getFileNode(filePath);
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");

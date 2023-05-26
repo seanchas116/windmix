@@ -7,7 +7,7 @@ import {
   Node,
   NodeMap,
   RootNode,
-  fileNodeIDForPath,
+  fileNodeID,
   rootNodeID,
 } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
@@ -66,7 +66,7 @@ export class Document {
   }
 
   getFileNode(filePath: string): FileNode {
-    return this.nodes.getOrCreate("file", fileNodeIDForPath(filePath));
+    return this.nodes.getOrCreate("file", fileNodeID(filePath));
   }
 
   @computed get currentFile(): FileNode | undefined {

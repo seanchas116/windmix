@@ -112,7 +112,7 @@ export class RootNode extends BaseNode<typeof nodeTypes, {}> {
   }
 }
 
-export function fileNodeIDForPath(filePath: string) {
+export function fileNodeID(filePath: string) {
   return "file:" + filePath;
 }
 
@@ -140,6 +140,10 @@ export class FileNode extends BaseNode<
       this.children.map((child) => child.stringify(options)).join("")
     );
   }
+}
+
+export function componentNodeID(filePath: string, varName: string) {
+  return "component:" + filePath + "#" + varName;
 }
 
 export class ComponentNode extends BaseNode<
