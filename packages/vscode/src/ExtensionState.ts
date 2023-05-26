@@ -122,10 +122,7 @@ export class ExtensionState {
       textEditor = vscode.window.activeTextEditor;
     }
 
-    this._textEditor = textEditor;
-    if (textEditor) {
-      this.loadTextDocument(textEditor.document);
-    }
+    this.textEditor = textEditor;
   }
 
   dispose() {
