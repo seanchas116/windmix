@@ -139,7 +139,7 @@ export class ExtensionState {
   private _disposables: vscode.Disposable[] = [];
   private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
-  private _lastSetText: string | undefined;
+  private _lastSetTexts = new WeakMap<vscode.TextDocument, string>();
   private _subviewTextDocument: vscode.TextDocument | undefined;
   readonly document = new Document();
 
@@ -153,7 +153,7 @@ export class ExtensionState {
     }
 
     this._textEditor = textEditor;
-    this._lastSetText = undefined;
+    this._lastSetTexts = new WeakMap();
     //this._panel.title = this.titleForEditor(textEditor);
     if (textEditor) {
       this.loadTextDocument(textEditor.document);
@@ -186,7 +186,7 @@ export class ExtensionState {
         newText
       );
     });
-    this._lastSetText = newText;
+    this._lastSetTexts.set(textEditor.document, newText);
   }
 
   private loadTextDocument(textDocument: vscode.TextDocument) {
@@ -195,7 +195,7 @@ export class ExtensionState {
 
     // TODO: load dependency files
 
-    if (code !== this._lastSetText) {
+    if (code !== this._lastSetTexts.get(textDocument)) {
       loadFile(this.document, filePath, code);
     }
 
