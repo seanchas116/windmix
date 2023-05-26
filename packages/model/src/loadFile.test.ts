@@ -5,6 +5,7 @@ import { loadFile } from "./loadFile";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import { Document } from "./document";
+import { Project } from "./project";
 
 export function formatJS(text: string): string {
   return prettier.format(text, {
@@ -20,7 +21,8 @@ const demoFile = fs.readFileSync(
 
 describe("File load/stringify", () => {
   it("should load a file", () => {
-    const doc = new Document();
+    const project = new Project();
+    const doc = project.getDocument("/demo.js");
 
     let id = 0;
     const generateID = () => {
@@ -46,7 +48,8 @@ describe("File load/stringify", () => {
   });
 
   it("should load example files", () => {
-    const doc = new Document();
+    const project = new Project();
+    const doc = project.getDocument("/demo.js");
 
     const exampleDir = path.resolve(__dirname, "../../example/src");
     const exampleFiles = fs.readdirSync(exampleDir);
@@ -65,7 +68,8 @@ describe("File load/stringify", () => {
   for (const file of testFiles) {
     if (file.endsWith(".js")) {
       it(`should load ${file}`, () => {
-        const doc = new Document();
+        const project = new Project();
+        const doc = project.getDocument("/demo.js");
 
         let id = 0;
         const generateID = () => {

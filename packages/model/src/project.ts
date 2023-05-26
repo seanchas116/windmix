@@ -48,7 +48,7 @@ export class Project {
 
   getDocument(path: string): Document {
     if (!this.documentsData.has(path)) {
-      this.documentsData.set(path, new DocumentData());
+      this.documentsData.set(path, new DocumentData().ymap);
     }
     return this.documents.get(path)!;
   }

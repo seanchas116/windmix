@@ -14,18 +14,25 @@ export interface LogEntry {
 export class DocumentData {
   constructor(ymap?: Y.Map<any>) {
     if (ymap) {
+      this.ymap = ymap;
       this.nodes = ymap.get("nodes");
       this.selection = ymap.get("selection");
       this.misc = ymap.get("misc");
       this.buildProblems = ymap.get("buildProblems");
     } else {
+      this.ymap = new Y.Map();
       this.nodes = new Y.Map();
       this.selection = new Y.Map();
       this.misc = new Y.Map();
       this.buildProblems = new Y.Array();
+      this.ymap.set("nodes", this.nodes);
+      this.ymap.set("selection", this.selection);
+      this.ymap.set("misc", this.misc);
+      this.ymap.set("buildProblems", this.buildProblems);
     }
   }
 
+  ymap: Y.Map<any>;
   nodes: Y.Map<any>;
   selection: Y.Map<true>;
   misc: Y.Map<any>;
