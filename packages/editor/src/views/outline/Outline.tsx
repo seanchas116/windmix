@@ -146,7 +146,7 @@ function buildTreeData(node: Node): TreeData {
 
 export const Outline: React.FC<{ className?: string }> = observer(
   ({ className }) => {
-    const fileNode = appState.document.fileNode;
+    const fileNode = appState.document.currentFile;
     const components =
       fileNode?.children.filter(
         (child): child is ComponentNode => child.type === "component"

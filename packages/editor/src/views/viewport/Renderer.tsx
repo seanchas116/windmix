@@ -37,7 +37,7 @@ export const Renderer: React.FC<{
     (bp) => artboard.width < bp.minWidth
   );
 
-  const filePath = appState.document.fileNode?.filePath;
+  const filePath = appState.document.currentFile?.filePath;
   const componentName = appState.document.previewComponentName;
   const previewURL =
     filePath && componentName

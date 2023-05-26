@@ -67,7 +67,7 @@ export class Document {
     return this.nodes.getOrCreate("file", "file:" + filePath);
   }
 
-  @computed get fileNode(): FileNode | undefined {
+  @computed get currentFile(): FileNode | undefined {
     const node = this.nodes.get(this.currentFileID);
     if (node && node.type === "file") {
       return node;
@@ -76,7 +76,7 @@ export class Document {
 
   get components(): ComponentNode[] {
     return (
-      this.fileNode?.children.filter(
+      this.currentFile?.children.filter(
         (node): node is ComponentNode => node.type === "component"
       ) ?? []
     );

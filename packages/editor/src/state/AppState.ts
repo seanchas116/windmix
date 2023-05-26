@@ -66,7 +66,7 @@ export class AppState {
     );
 
     reaction(
-      () => this.document.fileNode?.filePath,
+      () => this.document.currentFile?.filePath,
       (tabPath) => {
         console.log(tabPath);
 
