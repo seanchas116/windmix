@@ -8,13 +8,35 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
+interface Frequency {
+  value: "monthly" | "annually";
+  label: string;
+  priceSuffix: string;
+}
+
+interface Tier {
+  name: string;
+  id: string;
+  href: string;
+  price: { monthly: string; annually: string };
+  description: string;
+  features: string[];
+  mostPopular: boolean;
+}
+
+interface Pricing {
+  frequencies: Frequency[];
+  tiers: Tier[];
+}
+
 const navigation = [
   { name: "Product", href: "#" },
   { name: "Features", href: "#" },
   { name: "Marketplace", href: "#" },
   { name: "Company", href: "#" },
 ];
-const pricing = {
+
+const pricing: Pricing = {
   frequencies: [
     { value: "monthly", label: "Monthly", priceSuffix: "/month" },
     { value: "annually", label: "Annually", priceSuffix: "/year" },
@@ -75,7 +97,7 @@ const pricing = {
       mostPopular: false,
     },
   ],
-} as const;
+};
 const faqs = [
   {
     question: "What's the best thing about Switzerland?",
@@ -182,8 +204,8 @@ export function PricingTier({
   tier = pricing.tiers[0],
   frequency = pricing.frequencies[0],
 }: {
-  tier: (typeof pricing.tiers)[number];
-  frequency: (typeof pricing.frequencies)[number];
+  tier: Tier;
+  frequency: Frequency;
 }) {
   return (
     <div
