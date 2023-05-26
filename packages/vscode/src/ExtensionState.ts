@@ -21,7 +21,8 @@ export const debouncedChange = (onUpdate: () => void): (() => void) => {
 };
 
 export class ExtensionState {
-  constructor(devServer: DevServer) {
+  constructor(workspaceFolder: vscode.WorkspaceFolder, devServer: DevServer) {
+    this.workspaceFolder = workspaceFolder;
     this.devServer = devServer;
     // TODO: restore current text editor from state
 
@@ -99,6 +100,7 @@ export class ExtensionState {
     }
   }
 
+  readonly workspaceFolder: vscode.WorkspaceFolder;
   readonly devServer: DevServer;
   private _disposables: vscode.Disposable[] = [];
   private _context: vscode.ExtensionContext | undefined;

@@ -19,9 +19,18 @@ export async function activate(context: vscode.ExtensionContext) {
     'Congratulations, your extension "windmix-vscode" is now active!'
   );
 
-  const devServer = new DevServer();
+  const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+  if (!workspaceFolder) {
+    // show alert
+    vscode.window.showErrorMessage(
+      "Windmix requires an open workspace folder to work."
+    );
+    return;
+  }
+
+  const devServer = new DevServer(workspaceFolder);
   await devServer.start();
-  const extensionState = new ExtensionState(devServer);
+  const extensionState = new ExtensionState(workspaceFolder, devServer);
   await extensionState.init(context);
 
   _devServer = devServer;

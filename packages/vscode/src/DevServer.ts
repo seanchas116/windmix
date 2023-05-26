@@ -62,15 +62,16 @@ function createLogger(onBuildProblem: vscode.EventEmitter<LogEntry>): Logger {
 }
 
 export class DevServer {
+  constructor(workspaceFolder: vscode.WorkspaceFolder) {
+    this.workspaceFolder = workspaceFolder;
+  }
+
+  readonly workspaceFolder: vscode.WorkspaceFolder;
+
   private _onBuildProblem = new vscode.EventEmitter<LogEntry>();
   onBuildProblem = this._onBuildProblem.event;
 
   async start() {
-    const workspace = vscode.workspace.workspaceFolders?.[0];
-    if (!workspace) {
-      throw new Error("No workspace found");
-    }
-
     const server = await createServer({
       configFile: false,
       plugins: [
@@ -149,10 +150,10 @@ export class DevServer {
           },
         },
       ],
-      root: workspace.uri.fsPath,
+      root: this.workspaceFolder.uri.fsPath,
       resolve: {
         alias: {
-          "@/": `${workspace.uri.fsPath}/src/`,
+          "@/": `${this.workspaceFolder.uri.fsPath}/src/`,
           ...Object.fromEntries(
             Object.entries(nextModuleMocks).map(([key, value]) => [
               key,
@@ -179,11 +180,10 @@ export class DevServer {
   }
 
   setPreview(filePath: string, content: string) {
-    const workspace = vscode.workspace.workspaceFolders?.[0];
-    if (!workspace) {
-      return;
-    }
-    const absPath = path.resolve(workspace.uri.fsPath, filePath.slice(1));
+    const absPath = path.resolve(
+      this.workspaceFolder.uri.fsPath,
+      filePath.slice(1)
+    );
     this.previews.set(absPath, content);
 
     if (!this.server) {
@@ -191,7 +191,7 @@ export class DevServer {
     }
 
     const module = this.server.moduleGraph.getModuleById(
-      path.join(workspace.uri.fsPath, filePath.slice(1))
+      path.join(this.workspaceFolder.uri.fsPath, filePath.slice(1))
     );
     if (module) {
       this.server.reloadModule(module);
