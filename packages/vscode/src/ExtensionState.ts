@@ -157,6 +157,8 @@ export class ExtensionState {
     this.document.currentFileID = fileNodeID(filePath);
 
     const file = this.document.getFileNode(filePath);
+
+    // TODO: keep preview updated on non-active TextDocument changes
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");
 
     this._webviewTitleChanged.fire(this.webviewTitle);
