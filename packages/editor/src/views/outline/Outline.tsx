@@ -174,7 +174,7 @@ export const Outline: React.FC<{ className?: string }> = observer(
           </div>
         </Pane>
         <Pane className="flex flex-col flex-1">
-          <PaneHeading>
+          {/* <PaneHeading>
             <div className="flex items-center">
               <Icon
                 icon="icon-park-outline:figma-component"
@@ -182,7 +182,7 @@ export const Outline: React.FC<{ className?: string }> = observer(
               />
               {appState.document.currentComponent?.name ?? "No component"}
             </div>
-          </PaneHeading>
+          </PaneHeading> */}
           <ComponentOutline />
         </Pane>
       </div>
