@@ -179,8 +179,8 @@ function classNames(...classes) {
 }
 
 export function PricingTier({
-  tier,
-  frequency,
+  tier = pricing.tiers[0],
+  frequency = pricing.frequencies[0],
 }: {
   tier: (typeof pricing.tiers)[number];
   frequency: (typeof pricing.frequencies)[number];
