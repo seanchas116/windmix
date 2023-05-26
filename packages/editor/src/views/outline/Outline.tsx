@@ -166,7 +166,7 @@ export const Outline: React.FC<{ className?: string }> = observer(
                 onClick={action(() => {
                   appState.document.deselectAll();
                   appState.document.currentComponent = c;
-                  appState.document.previewComponentName = c.name;
+                  appState.document.previewComponentID = c.id;
                 })}
               >
                 {c.name}

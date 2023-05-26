@@ -37,13 +37,6 @@ export const Renderer: React.FC<{
     (bp) => artboard.width < bp.minWidth
   );
 
-  const filePath = appState.document.currentFile?.filePath;
-  const componentName = appState.document.previewComponentName;
-  const previewURL =
-    filePath && componentName
-      ? `http://localhost:1337/windmix?path=${filePath}&component=${componentName}`
-      : undefined;
-
   return (
     <div className="absolute inset-0">
       <div className="pointer-events-none">
@@ -112,7 +105,7 @@ export const Renderer: React.FC<{
       >
         <iframe
           className="absolute left-0 top-0 w-full h-full bg-white"
-          src={previewURL}
+          src={appState.previewURL}
           ref={iframeRef}
           onLoad={(e) => {
             artboard.adapter.setWindow(

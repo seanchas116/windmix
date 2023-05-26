@@ -84,30 +84,29 @@ export class Document {
     );
   }
 
-  get previewComponentName(): string {
-    return (
-      this.miscData.get("previewComponent") ??
-      this.components[0]?.name ??
-      "default"
-    );
+  get previewComponentID(): string | undefined {
+    return this.miscData.get("previewComponent") ?? this.components[0]?.id;
   }
 
-  set previewComponentName(value: string | undefined) {
+  set previewComponentID(value: string | undefined) {
     if (this.miscData.get("previewComponent") === value) {
       return;
     }
     this.miscData.set("previewComponent", value);
   }
 
-  private get currentComponentName(): string {
-    return (
-      this.miscData.get("currentComponent") ??
-      this.components[0]?.name ??
-      "default"
-    );
+  get previewComponent(): ComponentNode | undefined {
+    const component = this.nodes.get(this.previewComponentID);
+    if (component && component.type === "component") {
+      return component;
+    }
   }
 
-  private set currentComponentName(value: string | undefined) {
+  private get currentComponentID(): string | undefined {
+    return this.miscData.get("currentComponent") ?? this.components[0]?.id;
+  }
+
+  private set currentComponentID(value: string | undefined) {
     if (this.miscData.get("currentComponent") === value) {
       return;
     }
@@ -115,15 +114,17 @@ export class Document {
   }
 
   get currentComponent(): ComponentNode | undefined {
-    const name = this.currentComponentName;
-    return this.components.find((component) => component.name === name);
+    const component = this.nodes.get(this.currentComponentID);
+    if (component && component.type === "component") {
+      return component;
+    }
   }
 
   set currentComponent(value: ComponentNode | undefined) {
-    if (this.currentComponentName === value?.name) {
+    if (this.currentComponentID === value?.id) {
       return;
     }
-    this.currentComponentName = value?.name;
+    this.currentComponentID = value?.id;
   }
 
   private get hoverID(): string | undefined {

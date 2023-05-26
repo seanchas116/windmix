@@ -101,6 +101,22 @@ export class AppState {
   @observable panMode = false;
   @observable resizeBoxVisible = false;
 
+  @computed get previewURL(): string | undefined {
+    const previewComponent = this.document.previewComponent;
+    if (!previewComponent) {
+      return;
+    }
+    const previewFile = previewComponent?.parent;
+    if (previewFile?.type !== "file") {
+      return;
+    }
+
+    const filePath = previewFile.filePath;
+    const componentName = previewComponent.name;
+
+    return `http://localhost:1337/windmix?path=${filePath}&component=${componentName}`;
+  }
+
   // old things
 
   @computed get styleInspectorTargets(): NodeStyleInspectorTarget[] {
