@@ -68,8 +68,12 @@ export class ExtensionState {
                 );
 
                 const tab = findTabForURI(uri);
-                if (tab && textDocument) {
-                  this._subviewTextDocument = textDocument;
+                if (
+                  tab &&
+                  textDocument &&
+                  this._textEditor?.document !== textDocument
+                ) {
+                  this._keepsPreviewComponent = true;
                   vscode.window.showTextDocument(textDocument, {
                     preserveFocus: false,
                     preview: false,
@@ -79,7 +83,6 @@ export class ExtensionState {
                 }
               }
             }
-            this._subviewTextDocument = undefined;
           }
         ),
       }
@@ -137,7 +140,7 @@ export class ExtensionState {
   private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
   private _lastSetTexts = new WeakMap<vscode.TextDocument, string>();
-  private _subviewTextDocument: vscode.TextDocument | undefined;
+  private _keepsPreviewComponent = false;
   readonly document = new Document();
 
   get textEditor(): vscode.TextEditor | undefined {
@@ -154,7 +157,12 @@ export class ExtensionState {
     //this._panel.title = this.titleForEditor(textEditor);
     if (textEditor) {
       const file = this.loadTextDocument(textEditor.document);
-      this.document.previewComponentID = file.children[0]?.id;
+
+      if (this._keepsPreviewComponent) {
+        this._keepsPreviewComponent = false;
+      } else {
+        this.document.previewComponentID = file.children[0]?.id;
+      }
     }
 
     if (this._context) {
