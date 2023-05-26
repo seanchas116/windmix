@@ -154,6 +154,7 @@ export class ExtensionState {
     if (code !== this._lastSetText) {
       loadFile(this.document, filePath, code);
     }
+    this.document.currentFileID = "file:" + filePath;
 
     const file = this.document.getFileNode(filePath);
     this.devServer.setPreview(filePath, file?.stringify({ id: true }) ?? "");

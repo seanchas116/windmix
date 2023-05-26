@@ -67,7 +67,7 @@ export class Document {
     return this.nodes.getOrCreate("file", "file:" + filePath);
   }
 
-  get fileNode(): FileNode | undefined {
+  @computed get fileNode(): FileNode | undefined {
     const node = this.nodes.get(this.currentFileID);
     if (node && node.type === "file") {
       return node;
