@@ -168,6 +168,10 @@ export class ComponentNode extends BaseNode<
     return this.data.get("footer") ?? "";
   }
 
+  get filePath(): string | undefined {
+    return (this.parent as FileNode | undefined)?.filePath;
+  }
+
   stringify(options: StringifyOptions = {}): string {
     return (
       this.header +

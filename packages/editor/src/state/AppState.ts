@@ -97,15 +97,8 @@ export class AppState {
     if (!previewComponent) {
       return;
     }
-    const previewFile = previewComponent?.parent;
-    if (previewFile?.type !== "file") {
-      return;
-    }
-
-    const filePath = previewFile.filePath;
-    const componentName = previewComponent.name;
-
-    return `http://localhost:1337/windmix?path=${filePath}&component=${componentName}`;
+    const filePath = previewComponent.filePath;
+    return `http://localhost:1337/windmix?path=${filePath}&component=${previewComponent.name}`;
   }
 
   // old things

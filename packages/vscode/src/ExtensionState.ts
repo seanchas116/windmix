@@ -50,9 +50,9 @@ export class ExtensionState {
           () => this.document.currentComponent,
           (currentComponent) => {
             if (currentComponent) {
-              const file = currentComponent.parent;
-              if (file?.type === "file") {
-                const uri = this.uriFromProjectPath(file.filePath);
+              const filePath = currentComponent.filePath;
+              if (filePath) {
+                const uri = this.uriFromProjectPath(filePath);
                 console.log("TODO: change active tab to", uri);
               }
             }
