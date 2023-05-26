@@ -49,7 +49,13 @@ export class ExtensionState {
         dispose: reaction(
           () => this.document.currentComponent,
           (currentComponent) => {
-            console.log("TODO change active tab:", currentComponent?.id);
+            if (currentComponent) {
+              const file = currentComponent.parent;
+              if (file?.type === "file") {
+                const uri = this.uriFromProjectPath(file.filePath);
+                console.log("TODO: change active tab to", uri);
+              }
+            }
           }
         ),
       }
@@ -133,7 +139,7 @@ export class ExtensionState {
   private saveTextDocument() {
     const textEditor = this._textEditor;
     if (textEditor) {
-      const filePath = this.projectPathForEditor(textEditor);
+      const filePath = this.projectPathFromURI(textEditor.document.uri);
       const fileNode = this.document.getFileNode(filePath);
 
       const newText = fileNode.stringify();
@@ -159,7 +165,7 @@ export class ExtensionState {
     if (!this._textEditor) {
       return;
     }
-    const filePath = this.projectPathForEditor(this._textEditor);
+    const filePath = this.projectPathFromURI(this._textEditor.document.uri);
     const code = this._textEditor.document.getText();
 
     // TODO: load dependency files
@@ -188,12 +194,13 @@ export class ExtensionState {
     return "Windmix " + path.basename(editor.document.uri.path);
   }
 
-  private projectPathForEditor(editor: vscode.TextEditor) {
-    const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.path;
-    if (!workspacePath) {
-      throw new Error("No workspace path");
-    }
+  private projectPathFromURI(uri: vscode.Uri) {
+    return "/" + path.relative(this.workspaceFolder.uri.fsPath, uri.path);
+  }
 
-    return "/" + path.relative(workspacePath, editor.document.uri.path);
+  private uriFromProjectPath(projectPath: string) {
+    return vscode.Uri.file(
+      path.join(this.workspaceFolder.uri.fsPath, projectPath.slice(1))
+    );
   }
 }
