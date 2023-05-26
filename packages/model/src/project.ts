@@ -18,7 +18,10 @@ export class Project {
         }
         if (change.action === "add" || change.action === "update") {
           const value = documentsData.get(key);
-          this.documents.set(key, new Document(key, new DocumentData(value)));
+          this.documents.set(
+            key,
+            new Document(this, key, new DocumentData(value))
+          );
         }
       }
     });

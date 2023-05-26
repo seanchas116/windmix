@@ -4,6 +4,7 @@ import { ComponentNode, ElementNode, FileNode, Node, NodeMap } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { Project } from "./project";
 
 export interface LogEntry {
   type: "log" | "info" | "warn" | "error";
@@ -32,13 +33,15 @@ export class DocumentData {
 }
 
 export class Document {
-  constructor(filePath: string, data: DocumentData) {
+  constructor(project: Project, filePath: string, data: DocumentData) {
+    this.project = project;
     this.filePath = filePath;
     this.data = data;
     this.nodes = new NodeMap(this);
     makeObservable(this);
   }
 
+  readonly project: Project;
   readonly filePath: string;
   readonly data: DocumentData;
 
