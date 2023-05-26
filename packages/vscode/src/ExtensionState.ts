@@ -160,6 +160,8 @@ export class ExtensionState {
     const filePath = this.projectPathForEditor(this._textEditor);
     const code = this._textEditor.document.getText();
 
+    // TODO: load dependency files
+
     if (code !== this._lastSetText) {
       loadFile(this.document, filePath, code);
     }
