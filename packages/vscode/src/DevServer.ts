@@ -130,14 +130,9 @@ export class DevServer {
               }
             }
 
-            if (
-              this.preview &&
-              path.resolve(
-                workspace.uri.fsPath,
-                this.preview.filePath.slice(1)
-              ) === id
-            ) {
-              return this.preview.content;
+            const previewContent = this.previews.get(id);
+            if (previewContent) {
+              return previewContent;
             }
 
             if (id.startsWith(resolvedVirtualModulePrefix)) {
@@ -184,16 +179,14 @@ export class DevServer {
   }
 
   setPreview(filePath: string, content: string) {
-    this.preview = {
-      filePath,
-      content,
-    };
-
-    if (!this.server) {
-      return;
-    }
     const workspace = vscode.workspace.workspaceFolders?.[0];
     if (!workspace) {
+      return;
+    }
+    const absPath = path.resolve(workspace.uri.fsPath, filePath.slice(1));
+    this.previews.set(absPath, content);
+
+    if (!this.server) {
       return;
     }
 
@@ -205,10 +198,5 @@ export class DevServer {
     }
   }
 
-  private preview:
-    | {
-        filePath: string;
-        content: string;
-      }
-    | undefined = undefined;
+  private readonly previews = new Map<string, string>();
 }
