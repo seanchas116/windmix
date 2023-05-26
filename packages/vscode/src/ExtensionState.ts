@@ -20,6 +20,18 @@ export const debouncedChange = (onUpdate: () => void): (() => void) => {
   return debounced;
 };
 
+function findTabForURI(uri: vscode.Uri): vscode.ViewColumn | undefined {
+  for (const tab of vscode.window.tabGroups.all.flatMap(
+    (group) => group.tabs
+  )) {
+    if (tab.input instanceof vscode.TabInputText) {
+      if (tab.input.uri.fsPath === uri.fsPath) {
+        return tab.group.viewColumn;
+      }
+    }
+  }
+}
+
 export class ExtensionState {
   constructor(workspaceFolder: vscode.WorkspaceFolder, devServer: DevServer) {
     this.workspaceFolder = workspaceFolder;
@@ -54,8 +66,23 @@ export class ExtensionState {
               if (filePath) {
                 const uri = this.uriFromProjectPath(filePath);
                 console.log("TODO: change active tab to", uri);
+                const textDocument = vscode.workspace.textDocuments.find(
+                  (doc) => doc.uri.fsPath === uri.fsPath
+                );
+
+                const tab = findTabForURI(uri);
+                if (tab && textDocument) {
+                  this._subviewTextDocument = textDocument;
+                  vscode.window.showTextDocument(textDocument, {
+                    preserveFocus: false,
+                    preview: false,
+                    viewColumn: tab,
+                  });
+                  return;
+                }
               }
             }
+            this._subviewTextDocument = undefined;
           }
         ),
       }
@@ -112,6 +139,7 @@ export class ExtensionState {
   private _context: vscode.ExtensionContext | undefined;
   private _textEditor: vscode.TextEditor | undefined;
   private _lastSetText: string | undefined;
+  private _subviewTextDocument: vscode.TextDocument | undefined;
   readonly document = new Document();
 
   get textEditor(): vscode.TextEditor | undefined {
@@ -173,6 +201,11 @@ export class ExtensionState {
     if (code !== this._lastSetText) {
       loadFile(this.document, filePath, code);
     }
+
+    if (this._subviewTextDocument === this._textEditor.document) {
+      return;
+    }
+
     this.document.currentFileID = fileNodeID(filePath);
 
     const file = this.document.getFileNode(filePath);
