@@ -50,34 +50,38 @@ export class Document {
   }
 
   get previewComponentName(): string {
-    return this.miscData.get("previewComponent") ?? "default";
+    return (
+      this.miscData.get("previewComponent") ??
+      this.components[0]?.name ??
+      "default"
+    );
   }
 
   set previewComponentName(value: string | undefined) {
+    if (this.miscData.get("previewComponent") === value) {
+      return;
+    }
     this.miscData.set("previewComponent", value);
   }
 
   private get currentComponentName(): string {
-    return this.miscData.get("currentComponent") ?? "default";
+    return (
+      this.miscData.get("currentComponent") ??
+      this.components[0]?.name ??
+      "default"
+    );
   }
 
   private set currentComponentName(value: string | undefined) {
+    if (this.miscData.get("currentComponent") === value) {
+      return;
+    }
     this.miscData.set("currentComponent", value);
   }
 
   get currentComponent(): ComponentNode | undefined {
-    const components = this.components;
-    if (components.length === 0) {
-      return;
-    }
-    if (components.length === 1) {
-      return components[0];
-    }
-
     const name = this.currentComponentName;
-    return (
-      components.find((component) => component.name === name) ?? components[0]
-    );
+    return this.components.find((component) => component.name === name);
   }
 
   set currentComponent(value: ComponentNode | undefined) {
