@@ -7,6 +7,8 @@ import {
   Node,
   NodeMap,
   RootNode,
+  fileNodeIDForPath,
+  rootNodeID,
 } from "./node";
 import { ObservableYMap } from "@seanchas116/paintkit/src/util/yjs/ObservableYMap";
 import { ObservableYArray } from "@seanchas116/paintkit/src/util/yjs/ObservableYArray";
@@ -64,7 +66,7 @@ export class Document {
   }
 
   getFileNode(filePath: string): FileNode {
-    return this.nodes.getOrCreate("file", "file:" + filePath);
+    return this.nodes.getOrCreate("file", fileNodeIDForPath(filePath));
   }
 
   @computed get currentFile(): FileNode | undefined {
@@ -153,7 +155,7 @@ export class Document {
 
   // warning: call this only once across all clients
   init(): void {
-    this.nodes.create("root", "root");
+    this.nodes.create("root", rootNodeID);
   }
 
   clear(): void {

@@ -100,6 +100,8 @@ export abstract class BaseNode<
   }
 }
 
+export const rootNodeID = "root";
+
 export class RootNode extends BaseNode<typeof nodeTypes, {}> {
   get type(): "root" {
     return "root";
@@ -108,6 +110,10 @@ export class RootNode extends BaseNode<typeof nodeTypes, {}> {
   stringify(options: StringifyOptions = {}): string {
     throw new Error("RootNode cannot be stringified");
   }
+}
+
+export function fileNodeIDForPath(filePath: string) {
+  return "file:" + filePath;
 }
 
 export class FileNode extends BaseNode<
