@@ -236,6 +236,7 @@ export function loadFile(
     plugins: ["jsx", "typescript"],
   });
 
+  // FIXME: data is not cleared and dangling nodes are left in the document
   file.clear();
 
   const foundComponents = ast.program.body.flatMap((expr) => {
