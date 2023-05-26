@@ -47,11 +47,8 @@ export class ExtensionState {
         }
       }),
       vscode.workspace.onDidChangeTextDocument((event) => {
-        if (
-          event.contentChanges.length &&
-          this._textEditor?.document === event.document
-        ) {
-          this.loadTextDocument();
+        if (event.contentChanges.length) {
+          this.loadTextDocument(event.document);
         }
       }),
       devServer.onBuildProblem((problem) => {
@@ -92,7 +89,9 @@ export class ExtensionState {
     const nodes = this.document.nodesData.y;
     nodes.observeDeep(
       debouncedChange(() => {
-        this.saveTextDocument();
+        if (this._textEditor) {
+          this.saveToTextEditor(this._textEditor);
+        }
       })
     );
   }
@@ -124,7 +123,9 @@ export class ExtensionState {
     }
 
     this._textEditor = textEditor;
-    this.loadTextDocument();
+    if (textEditor) {
+      this.loadTextDocument(textEditor.document);
+    }
   }
 
   dispose() {
@@ -154,7 +155,9 @@ export class ExtensionState {
     this._textEditor = textEditor;
     this._lastSetText = undefined;
     //this._panel.title = this.titleForEditor(textEditor);
-    this.loadTextDocument();
+    if (textEditor) {
+      this.loadTextDocument(textEditor.document);
+    }
 
     if (this._context) {
       this._context.workspaceState.update(
@@ -164,46 +167,36 @@ export class ExtensionState {
     }
   }
 
-  private saveTextDocument() {
-    const textEditor = this._textEditor;
-    if (textEditor) {
-      const filePath = this.projectPathFromURI(textEditor.document.uri);
-      const fileNode = this.document.getFileNode(filePath);
+  private saveToTextEditor(textEditor: vscode.TextEditor) {
+    const filePath = this.projectPathFromURI(textEditor.document.uri);
+    const fileNode = this.document.getFileNode(filePath);
 
-      const newText = fileNode.stringify();
-      const oldText = textEditor.document.getText();
-      if (newText === oldText) {
-        // TODO: compare by AST?
-        return;
-      }
-      textEditor.edit((editBuilder) => {
-        editBuilder.replace(
-          new vscode.Range(
-            textEditor.document.positionAt(0),
-            textEditor.document.positionAt(oldText.length)
-          ),
-          newText
-        );
-      });
-      this._lastSetText = newText;
-    }
-  }
-
-  private loadTextDocument() {
-    if (!this._textEditor) {
+    const newText = fileNode.stringify();
+    const oldText = textEditor.document.getText();
+    if (newText === oldText) {
+      // TODO: compare by AST?
       return;
     }
-    const filePath = this.projectPathFromURI(this._textEditor.document.uri);
-    const code = this._textEditor.document.getText();
+    textEditor.edit((editBuilder) => {
+      editBuilder.replace(
+        new vscode.Range(
+          textEditor.document.positionAt(0),
+          textEditor.document.positionAt(oldText.length)
+        ),
+        newText
+      );
+    });
+    this._lastSetText = newText;
+  }
+
+  private loadTextDocument(textDocument: vscode.TextDocument) {
+    const filePath = this.projectPathFromURI(textDocument.uri);
+    const code = textDocument.getText();
 
     // TODO: load dependency files
 
     if (code !== this._lastSetText) {
       loadFile(this.document, filePath, code);
-    }
-
-    if (this._subviewTextDocument === this._textEditor.document) {
-      return;
     }
 
     this.document.currentFileID = fileNodeID(filePath);
