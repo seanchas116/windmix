@@ -12,25 +12,7 @@ import { RendererAdapter } from "./RendererAdapter";
 import { Computation } from "./Computation";
 import { Snapper } from "./Snapper";
 import { DropDestination } from "./DropDestination";
-
-export class ViewportSize {
-  constructor() {
-    makeObservable(this);
-  }
-
-  @observable manualWidth: number | "auto" = 360;
-  @observable availableWidth = 0;
-
-  @computed get width(): number {
-    return this.manualWidth === "auto" ? this.availableWidth : this.manualWidth;
-  }
-
-  @computed get scale(): number {
-    return this.manualWidth === "auto"
-      ? 1
-      : Math.min(1, this.availableWidth / this.manualWidth);
-  }
-}
+import { ViewportSize } from "./ViewportSize";
 
 export class Artboard {
   constructor() {

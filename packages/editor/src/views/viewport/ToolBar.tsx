@@ -7,7 +7,6 @@ import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
 import { ZoomControlController } from "./ZoomControl";
 import { artboards } from "../../state/Artboard";
-import { breakpoints } from "./constants";
 
 export const ToolBar: React.FC<{
   className?: string;
@@ -56,7 +55,7 @@ export const ToolBar: React.FC<{
         <div className="flex items-center gap-1">
           <Tippy content="Mobile">
             <IconButton
-              pressed={viewportSize.width < breakpoints[0].minWidth}
+              pressed={viewportSize.breakpointIndex === 0}
               onClick={action(() => {
                 viewportSize.manualWidth = 360;
               })}
@@ -66,10 +65,7 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Tablet">
             <IconButton
-              pressed={
-                breakpoints[0].minWidth <= viewportSize.width &&
-                viewportSize.width < breakpoints[1].minWidth
-              }
+              pressed={viewportSize.breakpointIndex === 1}
               onClick={action(() => {
                 viewportSize.manualWidth = 960;
               })}
@@ -79,7 +75,7 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Desktop">
             <IconButton
-              pressed={viewportSize.width >= breakpoints[1].minWidth}
+              pressed={viewportSize.breakpointIndex === -1}
               onClick={action(() => {
                 viewportSize.manualWidth = 1440;
               })}

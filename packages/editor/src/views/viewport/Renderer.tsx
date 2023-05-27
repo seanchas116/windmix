@@ -10,8 +10,7 @@ import { DragIndicators } from "./hud/DragIndicator";
 import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { scrollState } from "../../state/ScrollState";
-import { breakpoints } from "./constants";
-import useResizeObserver from "use-resize-observer";
+import { breakpoints } from "../../state/ViewportSize";
 
 const breakpointGradientHeight = 100;
 const breakpointGradientWidth = 2000;
@@ -42,6 +41,7 @@ export const Renderer: React.FC<{
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const width = viewportSize.width;
   const scale = viewportSize.scale;
+  const currentBreakpoint = viewportSize.breakpointIndex;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
@@ -58,12 +58,6 @@ export const Renderer: React.FC<{
       return newWidth;
     },
   });
-
-  const currentBreakpoint = breakpoints.findIndex(
-    (bp) =>
-      viewportSize.manualWidth !== "auto" &&
-      viewportSize.manualWidth < bp.minWidth
-  );
 
   return (
     <div className="absolute inset-0" ref={ref}>
