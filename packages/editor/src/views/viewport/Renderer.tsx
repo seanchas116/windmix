@@ -25,6 +25,8 @@ export const Renderer: React.FC<{
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const width = artboard.width === "auto" ? rendererWidth : artboard.width;
+  const scale =
+    artboard.width === "auto" ? 1 : Math.min(1, rendererWidth / artboard.width);
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
@@ -98,6 +100,9 @@ export const Renderer: React.FC<{
         style={{
           left: `calc(50% - ${width}px / 2)`,
           width: `${width}px`,
+          height: `calc(100% / ${scale})`,
+          transform: `scale(${scale})`,
+          transformOrigin: "top center",
         }}
       >
         <iframe
