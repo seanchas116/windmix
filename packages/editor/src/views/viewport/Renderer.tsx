@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
-import { Artboard } from "../../state/Artboard";
+import { Artboard, artboards } from "../../state/Artboard";
 import { action, runInAction } from "mobx";
 import { Rect } from "paintvec";
 import { NodeResizeBox } from "./hud/NodeResizeBox";
@@ -16,6 +16,47 @@ const breakpointGradientHeight = 100;
 const breakpointGradientWidth = 2000;
 
 const viewportSideMargin = 20;
+
+const SideHandle: React.FC<{
+  position: "left" | "right";
+  scaledWidth: number;
+}> = ({ position, scaledWidth }) => {
+  const viewportSize = artboards.desktop.viewportSize;
+
+  const pointerEventHandlers = usePointerStroke({
+    onBegin() {
+      return viewportSize.manualWidth;
+    },
+    onMove(e, { totalDeltaX, initData }) {
+      if (initData === "auto") {
+        return;
+      }
+
+      const newWidth =
+        initData +
+        Math.round(
+          (totalDeltaX * 2 * (position === "left" ? -1 : 1)) / scrollState.scale
+        );
+      viewportSize.manualWidth = Math.max(newWidth, 100);
+      return newWidth;
+    },
+  });
+
+  return (
+    <div
+      {...pointerEventHandlers}
+      className="absolute top-0 bottom-0 w-5 cursor-ew-resize flex items-center justify-center"
+      style={{
+        left:
+          position === "left"
+            ? `calc(50% - ${scaledWidth}px / 2 - ${viewportSideMargin}px)`
+            : `calc(50% + ${scaledWidth}px / 2)`,
+      }}
+    >
+      <div className="w-1 h-32 bg-white/20 rounded"></div>
+    </div>
+  );
+};
 
 export const Renderer: React.FC<{
   artboard: Artboard;
@@ -44,22 +85,6 @@ export const Renderer: React.FC<{
   const width = viewportSize.width;
   const scale = viewportSize.scale;
   const currentBreakpoint = viewportSize.breakpointIndex;
-
-  const pointerEventHandlers = usePointerStroke({
-    onBegin() {
-      return viewportSize.manualWidth;
-    },
-    onMove(e, { totalDeltaX, initData }) {
-      if (initData === "auto") {
-        return;
-      }
-
-      const newWidth =
-        initData + Math.round((totalDeltaX * 2) / scrollState.scale);
-      viewportSize.manualWidth = newWidth;
-      return newWidth;
-    },
-  });
 
   return (
     <div className="absolute inset-0" ref={ref}>
@@ -131,15 +156,8 @@ export const Renderer: React.FC<{
         <DragHandlerOverlay artboard={artboard} />
         <HUD artboard={artboard} />
       </div>
-      <div
-        {...pointerEventHandlers}
-        className="absolute top-0 bottom-0 w-5 cursor-ew-resize flex items-center justify-center"
-        style={{
-          left: `calc(50% + ${width * scale}px / 2)`,
-        }}
-      >
-        <div className="w-1 h-32 bg-white/20 rounded"></div>
-      </div>
+      <SideHandle position="left" scaledWidth={width * scale} />
+      <SideHandle position="right" scaledWidth={width * scale} />
     </div>
   );
 });
