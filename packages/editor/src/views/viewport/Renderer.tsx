@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
 import { Artboard } from "../../state/Artboard";
@@ -11,6 +11,7 @@ import { MarginPaddingIndicator } from "./hud/MarginPaddingIndicator";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { scrollState } from "../../state/ScrollState";
 import { breakpoints } from "./constants";
+import useResizeObserver from "use-resize-observer";
 
 const breakpointGradientHeight = 100;
 const breakpointGradientWidth = 2000;
@@ -18,10 +19,12 @@ const breakpointGradientWidth = 2000;
 export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const { width, height } = artboard;
+  const ref = useRef<HTMLIFrameElement>(null);
 
-  const widthCSS = width === "auto" ? "100%" : `${width}px`;
+  const { width: rendererWidth = 1 } = useResizeObserver({ ref });
+
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const width = artboard.width === "auto" ? rendererWidth : artboard.width;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
@@ -44,7 +47,7 @@ export const Renderer: React.FC<{
   );
 
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0" ref={ref}>
       <div
         className="pointer-events-none"
         style={{
@@ -59,7 +62,7 @@ export const Renderer: React.FC<{
                 top: `-${breakpointGradientHeight}px`,
                 left: `${-bp.minWidth / 2}px`,
                 width: `${bp.minWidth}px`,
-                height: `${height + breakpointGradientHeight * 2}px`,
+                height: `calc(100% + ${breakpointGradientHeight * 2}px)`,
                 borderColor: bp.color + "80",
                 backgroundColor:
                   i === currentBreakpoint ? bp.color + "08" : "transparent",
@@ -67,7 +70,7 @@ export const Renderer: React.FC<{
             />
           );
         })}
-        <div
+        {/* <div
           className="absolute"
           style={{
             top: `-${breakpointGradientHeight}px`,
@@ -88,13 +91,13 @@ export const Renderer: React.FC<{
             backgroundImage:
               "linear-gradient(transparent, var(--macaron-background))",
           }}
-        />
+        /> */}
       </div>
       <div
         className="absolute left-0 top-0 h-full"
         style={{
-          left: `calc(50% - ${widthCSS} / 2)`,
-          width: widthCSS,
+          left: `calc(50% - ${width}px / 2)`,
+          width: `${width}px`,
         }}
       >
         <iframe
@@ -114,7 +117,7 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: `calc(50% + ${widthCSS} / 2)`,
+          left: `calc(50% + ${width}px / 2)`,
         }}
       ></div>
     </div>
