@@ -71,7 +71,11 @@ export const ErrorPanelTabs: React.FC<{
             text="Console"
             selected={tab === "console"}
             onClick={() => {
-              setOpen(true);
+              if (open && tab === "console") {
+                setOpen(false);
+              } else {
+                setOpen(true);
+              }
               setTab("console");
             }}
             badgeType={mostSeriousLogType(
@@ -83,7 +87,11 @@ export const ErrorPanelTabs: React.FC<{
             text="Problems"
             selected={tab === "problems"}
             onClick={() => {
-              setOpen(true);
+              if (open && tab === "problems") {
+                setOpen(false);
+              } else {
+                setOpen(true);
+              }
               setTab("problems");
             }}
             badgeType="error"
