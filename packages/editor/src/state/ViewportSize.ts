@@ -18,6 +18,7 @@ export class ViewportSize {
   }
 
   @observable manualWidth: number | "auto" = 360;
+  @observable manualScale: number | "auto" = "auto";
   @observable availableWidth = 0;
 
   @computed get width(): number {
@@ -25,9 +26,12 @@ export class ViewportSize {
   }
 
   @computed get scale(): number {
-    return this.manualWidth === "auto"
-      ? 1
-      : Math.min(1, this.availableWidth / this.manualWidth);
+    if (this.manualScale === "auto") {
+      return Math.min(1, this.availableWidth / this.width);
+    }
+
+    const maxScale = this.availableWidth / this.width;
+    return Math.min(this.manualScale, maxScale);
   }
 
   @computed get breakpointIndex(): number {

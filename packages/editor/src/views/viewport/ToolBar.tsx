@@ -53,19 +53,19 @@ export const ToolBar: React.FC<{
       </div>
 
       <div className="flex items-center gap-3">
-        <Input
-          className="w-10 [&>input]:text-center"
-          value={String(viewportSize.width)}
-          onChange={(value) => {
-            if (value === "") {
-              viewportSize.manualWidth = "auto";
-            } else {
-              viewportSize.manualWidth = Number.parseInt(value);
-            }
-            return true;
-          }}
-        />
         <div className="flex items-center gap-1">
+          <Input
+            className="w-10 [&>input]:text-center"
+            value={String(viewportSize.width)}
+            onChange={(value) => {
+              if (value === "") {
+                viewportSize.manualWidth = "auto";
+              } else {
+                viewportSize.manualWidth = Number.parseInt(value);
+              }
+              return true;
+            }}
+          />
           <Tippy content="Mobile">
             <IconButton
               pressed={viewportSize.breakpointIndex === 0}
@@ -107,7 +107,30 @@ export const ToolBar: React.FC<{
             </IconButton>
           </Tippy>
         </div>
-        <ZoomControlController />
+        <div className="flex items-center gap-1">
+          <Input
+            className="w-10 [&>input]:text-center"
+            value={String(Math.round(viewportSize.scale * 100)) + "%"}
+            onChange={(value) => {
+              if (value === "") {
+                viewportSize.manualScale = "auto";
+              } else {
+                viewportSize.manualScale = Number.parseInt(value) / 100;
+              }
+              return true;
+            }}
+          />
+          <Tippy content="Auto Scale">
+            <IconButton
+              pressed={viewportSize.manualScale === "auto"}
+              onClick={action(() => {
+                viewportSize.manualScale = "auto";
+              })}
+            >
+              <Icon icon="icon-park-outline:expand-text-input" />
+            </IconButton>
+          </Tippy>
+        </div>
       </div>
     </div>
   );
