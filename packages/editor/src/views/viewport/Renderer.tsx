@@ -15,6 +15,8 @@ import { breakpoints } from "../../state/ViewportSize";
 const breakpointGradientHeight = 100;
 const breakpointGradientWidth = 2000;
 
+const viewportSideMargin = 20;
+
 export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
@@ -29,7 +31,7 @@ export const Renderer: React.FC<{
 
     const resizeObserver = new ResizeObserver(
       action(() => {
-        viewportSize.availableWidth = node.clientWidth;
+        viewportSize.availableWidth = node.clientWidth - viewportSideMargin * 2;
       })
     );
     resizeObserver.observe(node);
@@ -131,11 +133,13 @@ export const Renderer: React.FC<{
       </div>
       <div
         {...pointerEventHandlers}
-        className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
+        className="absolute top-0 bottom-0 w-5 cursor-ew-resize flex items-center justify-center"
         style={{
-          left: `calc(50% + ${width}px / 2)`,
+          left: `calc(50% + ${width * scale}px / 2)`,
         }}
-      ></div>
+      >
+        <div className="w-1 h-32 bg-white/20 rounded"></div>
+      </div>
     </div>
   );
 });
