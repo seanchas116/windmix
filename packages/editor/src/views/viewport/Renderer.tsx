@@ -30,7 +30,7 @@ export const Renderer: React.FC<{
 
     const resizeObserver = new ResizeObserver(
       action(() => {
-        viewportSize.availableSize = node.clientWidth;
+        viewportSize.availableWidth = node.clientWidth;
       })
     );
     resizeObserver.observe(node);
@@ -40,12 +40,12 @@ export const Renderer: React.FC<{
   }, []);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const width = viewportSize.actualWidth;
+  const width = viewportSize.width;
   const scale = viewportSize.scale;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
-      return viewportSize.width;
+      return viewportSize.manualWidth;
     },
     onMove(e, { totalDeltaX, initData }) {
       if (initData === "auto") {
@@ -54,13 +54,15 @@ export const Renderer: React.FC<{
 
       const newWidth =
         initData + Math.round((totalDeltaX * 2) / scrollState.scale);
-      viewportSize.width = newWidth;
+      viewportSize.manualWidth = newWidth;
       return newWidth;
     },
   });
 
   const currentBreakpoint = breakpoints.findIndex(
-    (bp) => viewportSize.width !== "auto" && viewportSize.width < bp.minWidth
+    (bp) =>
+      viewportSize.manualWidth !== "auto" &&
+      viewportSize.manualWidth < bp.minWidth
   );
 
   return (

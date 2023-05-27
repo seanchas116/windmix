@@ -18,17 +18,17 @@ export class ViewportSize {
     makeObservable(this);
   }
 
-  @observable width: number | "auto" = 360;
-  @observable availableSize = 0;
+  @observable manualWidth: number | "auto" = 360;
+  @observable availableWidth = 0;
 
-  @computed get actualWidth(): number {
-    return this.width === "auto" ? this.availableSize : this.width;
+  @computed get width(): number {
+    return this.manualWidth === "auto" ? this.availableWidth : this.manualWidth;
   }
 
   @computed get scale(): number {
-    return this.width === "auto"
+    return this.manualWidth === "auto"
       ? 1
-      : Math.min(1, this.availableSize / this.width);
+      : Math.min(1, this.availableWidth / this.manualWidth);
   }
 }
 

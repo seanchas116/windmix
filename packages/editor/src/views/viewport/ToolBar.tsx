@@ -56,9 +56,9 @@ export const ToolBar: React.FC<{
         <div className="flex items-center gap-1">
           <Tippy content="Mobile">
             <IconButton
-              pressed={viewportSize.actualWidth < breakpoints[0].minWidth}
+              pressed={viewportSize.width < breakpoints[0].minWidth}
               onClick={action(() => {
-                viewportSize.width = 360;
+                viewportSize.manualWidth = 360;
               })}
             >
               <Icon icon="icon-park-outline:iphone" />
@@ -67,11 +67,11 @@ export const ToolBar: React.FC<{
           <Tippy content="Tablet">
             <IconButton
               pressed={
-                breakpoints[0].minWidth <= viewportSize.actualWidth &&
-                viewportSize.actualWidth < breakpoints[1].minWidth
+                breakpoints[0].minWidth <= viewportSize.width &&
+                viewportSize.width < breakpoints[1].minWidth
               }
               onClick={action(() => {
-                viewportSize.width = 960;
+                viewportSize.manualWidth = 960;
               })}
             >
               <Icon icon="icon-park-outline:ipad" />
@@ -79,9 +79,9 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Desktop">
             <IconButton
-              pressed={viewportSize.actualWidth >= breakpoints[1].minWidth}
+              pressed={viewportSize.width >= breakpoints[1].minWidth}
               onClick={action(() => {
-                viewportSize.width = 1440;
+                viewportSize.manualWidth = 1440;
               })}
             >
               <Icon icon="icon-park-outline:new-computer" />
@@ -89,9 +89,9 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Auto">
             <IconButton
-              pressed={viewportSize.width === "auto"}
+              pressed={viewportSize.manualWidth === "auto"}
               onClick={action(() => {
-                viewportSize.width = "auto";
+                viewportSize.manualWidth = "auto";
               })}
             >
               <Icon icon="icon-park-outline:auto-width" />
