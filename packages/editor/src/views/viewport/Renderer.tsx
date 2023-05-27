@@ -101,7 +101,7 @@ export const Renderer: React.FC<{
               style={{
                 top: 0,
                 bottom: 0,
-                left: `${-bp.minWidth / 2}px`,
+                left: `${(-bp.minWidth / 2) * scale}px`,
                 width: `${bp.minWidth}px`,
                 borderColor: bp.color + "80",
                 backgroundColor:
