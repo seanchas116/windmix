@@ -14,6 +14,8 @@ export const ToolBar: React.FC<{
 }> = observer(({ className }) => {
   const tool = appState.tool;
 
+  const viewportSize = artboards.desktop.viewportSize;
+
   return (
     <div
       className={twMerge(
@@ -54,9 +56,9 @@ export const ToolBar: React.FC<{
         <div className="flex items-center gap-1">
           <Tippy content="Mobile">
             <IconButton
-              pressed={artboards.desktop.width < breakpoints[0].minWidth}
+              pressed={viewportSize.actualWidth < breakpoints[0].minWidth}
               onClick={action(() => {
-                artboards.desktop.width = 360;
+                viewportSize.width = 360;
               })}
             >
               <Icon icon="icon-park-outline:iphone" />
@@ -65,11 +67,11 @@ export const ToolBar: React.FC<{
           <Tippy content="Tablet">
             <IconButton
               pressed={
-                breakpoints[0].minWidth <= artboards.desktop.width &&
-                artboards.desktop.width < breakpoints[1].minWidth
+                breakpoints[0].minWidth <= viewportSize.actualWidth &&
+                viewportSize.actualWidth < breakpoints[1].minWidth
               }
               onClick={action(() => {
-                artboards.desktop.width = 960;
+                viewportSize.width = 960;
               })}
             >
               <Icon icon="icon-park-outline:ipad" />
@@ -77,9 +79,9 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Desktop">
             <IconButton
-              pressed={artboards.desktop.width >= breakpoints[1].minWidth}
+              pressed={viewportSize.actualWidth >= breakpoints[1].minWidth}
               onClick={action(() => {
-                artboards.desktop.width = 1440;
+                viewportSize.width = 1440;
               })}
             >
               <Icon icon="icon-park-outline:new-computer" />
@@ -87,9 +89,9 @@ export const ToolBar: React.FC<{
           </Tippy>
           <Tippy content="Auto">
             <IconButton
-              pressed={artboards.desktop.width === "auto"}
+              pressed={viewportSize.width === "auto"}
               onClick={action(() => {
-                artboards.desktop.width = "auto";
+                viewportSize.width = "auto";
               })}
             >
               <Icon icon="icon-park-outline:auto-width" />

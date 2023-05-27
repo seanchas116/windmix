@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
 import { Artboard } from "../../state/Artboard";
@@ -20,17 +20,32 @@ export const Renderer: React.FC<{
   artboard: Artboard;
 }> = observer(({ artboard }) => {
   const ref = useRef<HTMLIFrameElement>(null);
+  const viewportSize = artboard.viewportSize;
 
-  const { width: rendererWidth = 1 } = useResizeObserver({ ref });
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(
+      action(() => {
+        viewportSize.availableSize = node.clientWidth;
+      })
+    );
+    resizeObserver.observe(node);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const width = artboard.width === "auto" ? rendererWidth : artboard.width;
-  const scale =
-    artboard.width === "auto" ? 1 : Math.min(1, rendererWidth / artboard.width);
+  const width = viewportSize.actualWidth;
+  const scale = viewportSize.scale;
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
-      return artboard.width;
+      return viewportSize.width;
     },
     onMove(e, { totalDeltaX, initData }) {
       if (initData === "auto") {
@@ -39,13 +54,13 @@ export const Renderer: React.FC<{
 
       const newWidth =
         initData + Math.round((totalDeltaX * 2) / scrollState.scale);
-      artboard.width = newWidth;
+      viewportSize.width = newWidth;
       return newWidth;
     },
   });
 
   const currentBreakpoint = breakpoints.findIndex(
-    (bp) => artboard.width !== "auto" && artboard.width < bp.minWidth
+    (bp) => viewportSize.width !== "auto" && viewportSize.width < bp.minWidth
   );
 
   return (

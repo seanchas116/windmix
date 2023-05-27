@@ -13,6 +13,25 @@ import { Computation } from "./Computation";
 import { Snapper } from "./Snapper";
 import { DropDestination } from "./DropDestination";
 
+export class ViewportSize {
+  constructor() {
+    makeObservable(this);
+  }
+
+  @observable width: number | "auto" = 360;
+  @observable availableSize = 0;
+
+  @computed get actualWidth(): number {
+    return this.width === "auto" ? this.availableSize : this.width;
+  }
+
+  @computed get scale(): number {
+    return this.width === "auto"
+      ? 1
+      : Math.min(1, this.availableSize / this.width);
+  }
+}
+
 export class Artboard {
   constructor() {
     makeObservable(this);
@@ -87,7 +106,8 @@ export class Artboard {
   @observable.ref dragPreviewRects: Rect[] = [];
   @observable dropDestination: DropDestination | undefined = undefined;
 
-  @observable width: number | "auto" = 360;
+  readonly viewportSize = new ViewportSize();
+
   @computed get height() {
     return this.adapter.windowBodyHeight;
   }
