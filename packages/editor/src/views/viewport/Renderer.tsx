@@ -21,11 +21,17 @@ export const Renderer: React.FC<{
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { width, height } = artboard;
 
+  const widthCSS = width === "auto" ? "100%" : `${width}px`;
+
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
       return artboard.width;
     },
     onMove(e, { totalDeltaX, initData }) {
+      if (initData === "auto") {
+        return;
+      }
+
       const newWidth =
         initData + Math.round((totalDeltaX * 2) / scrollState.scale);
       artboard.width = newWidth;
@@ -34,12 +40,17 @@ export const Renderer: React.FC<{
   });
 
   const currentBreakpoint = breakpoints.findIndex(
-    (bp) => artboard.width < bp.minWidth
+    (bp) => artboard.width !== "auto" && artboard.width < bp.minWidth
   );
 
   return (
     <div className="absolute inset-0">
-      <div className="pointer-events-none">
+      <div
+        className="pointer-events-none"
+        style={{
+          transform: "translateX(50%)",
+        }}
+      >
         {breakpoints.map((bp, i) => {
           return (
             <div
@@ -80,27 +91,10 @@ export const Renderer: React.FC<{
         />
       </div>
       <div
-        className="absolute -top-6 flex justify-between items-center"
+        className="absolute left-0 top-0 h-full"
         style={{
-          left: `${-width / 2}px`,
-          width: `${width}px`,
-        }}
-      >
-        <div>Component</div>
-        <div
-          style={{
-            color: breakpoints[currentBreakpoint]?.color,
-          }}
-        >
-          {width}px
-        </div>
-      </div>
-      <div
-        className="absolute left-0 top-0"
-        style={{
-          left: `${-width / 2}px`,
-          width: `${width}px`,
-          height: `${height}px`,
+          left: `calc(50% - ${widthCSS} / 2)`,
+          width: widthCSS,
         }}
       >
         <iframe
@@ -120,8 +114,7 @@ export const Renderer: React.FC<{
         {...pointerEventHandlers}
         className="absolute top-0 bottom-0 w-2 bg-white/20 cursor-ew-resize"
         style={{
-          left: `${width / 2}px`,
-          height: `${height}px`,
+          left: `calc(50% + ${widthCSS} / 2)`,
         }}
       ></div>
     </div>
@@ -207,28 +200,33 @@ const HUD: React.FC<{
     ...artboard.selectedComputations.map((c) => c.rect)
   );
 
+  const scrollTransform = `translate(${-artboard.adapter.scrollX} ${-artboard
+    .adapter.scrollY})`;
+
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
-      <MarginPaddingIndicator artboard={artboard} />
-      {hoveredRects.map((rect, i) => (
-        <rect
-          key={i}
-          {...rect.toSVGRectProps()}
-          fill="none"
-          stroke="blue"
-          strokeWidth={1}
-        />
-      ))}
-      {selectedRect && (
-        <rect
-          {...selectedRect.toSVGRectProps()}
-          fill="none"
-          stroke="blue"
-          strokeWidth={1}
-        />
-      )}
-      <DragIndicators artboard={artboard} />
-      <NodeResizeBox artboard={artboard} />
+      <g transform={scrollTransform}>
+        <MarginPaddingIndicator artboard={artboard} />
+        {hoveredRects.map((rect, i) => (
+          <rect
+            key={i}
+            {...rect.toSVGRectProps()}
+            fill="none"
+            stroke="blue"
+            strokeWidth={1}
+          />
+        ))}
+        {selectedRect && (
+          <rect
+            {...selectedRect.toSVGRectProps()}
+            fill="none"
+            stroke="blue"
+            strokeWidth={1}
+          />
+        )}
+        <DragIndicators artboard={artboard} />
+        <NodeResizeBox artboard={artboard} />
+      </g>
     </svg>
   );
 });

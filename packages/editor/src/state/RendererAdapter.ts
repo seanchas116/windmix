@@ -1,4 +1,10 @@
-import { computed, makeObservable, observable, runInAction } from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 import { Artboard } from "./Artboard";
 import { ComputationData } from "./Computation";
 import { LogEntry } from "@windmix/model";
@@ -27,6 +33,11 @@ type MessageFromWindow =
     }
   | {
       type: "windmix:beforeUpdate";
+    }
+  | {
+      type: "windmix:onScroll";
+      scrollX: number;
+      scrollY: number;
     };
 
 type MessageToWindow =
@@ -45,6 +56,11 @@ type MessageToWindow =
       type: "windmix:setClassName";
       id: string;
       className: string;
+    }
+  | {
+      type: "windmix:wheel";
+      deltaX: number;
+      deltaY: number;
     };
 
 export class RendererAdapter {
@@ -61,6 +77,8 @@ export class RendererAdapter {
   previewInProgress = false;
 
   @observable windowBodyHeight = 0;
+  @observable scrollX = 0;
+  @observable scrollY = 0;
   readonly consoleMessages = observable.array<LogEntry>();
   @observable readConsoleMessageCount = 0;
 
@@ -84,7 +102,7 @@ export class RendererAdapter {
     this.readConsoleMessageCount = 0;
   }
 
-  readonly onMessage = (event: MessageEvent<MessageFromWindow>) => {
+  readonly onMessage = action((event: MessageEvent<MessageFromWindow>) => {
     if (event.source !== this.window) {
       return;
     }
@@ -111,8 +129,14 @@ export class RendererAdapter {
       case "windmix:beforeUpdate": {
         break;
       }
+      case "windmix:onScroll": {
+        console.log(data);
+        this.scrollX = data.scrollX;
+        this.scrollY = data.scrollY;
+        break;
+      }
     }
-  };
+  });
 
   async findNodeIDs(offsetX: number, offsetY: number): Promise<string[]> {
     const targetWindow = this.window;
@@ -187,6 +211,15 @@ export class RendererAdapter {
       type: "windmix:setClassName",
       id: nodeID,
       className,
+    };
+    this.window?.postMessage(message, "*");
+  }
+
+  wheel(deltaX: number, deltaY: number) {
+    const message: MessageToWindow = {
+      type: "windmix:wheel",
+      deltaX,
+      deltaY,
     };
     this.window?.postMessage(message, "*");
   }

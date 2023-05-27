@@ -30,6 +30,9 @@ window.addEventListener("message", (event) => {
   } else if (data.type === "windmix:getComputedStyles") {
     const result = [];
 
+    const scrollX = document.documentElement.scrollLeft;
+    const scrollY = document.documentElement.scrollTop;
+
     for (const id of data.ids) {
       const elems = document.querySelectorAll('[data-windmixid="' + id + '"]');
       const resultsForElem = [];
@@ -38,8 +41,8 @@ window.addEventListener("message", (event) => {
         const style = getComputedStyle(elem);
         resultsForElem.push({
           rect: {
-            x: rect.x,
-            y: rect.y,
+            x: rect.x + scrollX,
+            y: rect.y + scrollY,
             width: rect.width,
             height: rect.height,
           },
@@ -80,6 +83,9 @@ window.addEventListener("message", (event) => {
     for (const elem of elems) {
       elem.className = data.className;
     }
+  } else if (data.type === "windmix:wheel") {
+    document.documentElement.scrollLeft += data.deltaX;
+    document.documentElement.scrollTop += data.deltaY;
   }
 });
 
@@ -147,6 +153,17 @@ for (const type of ["log", "info", "warn", "error"]) {
     );
   };
 }
+
+window.addEventListener("scroll", () => {
+  window.parent.postMessage(
+    {
+      type: "windmix:onScroll",
+      scrollX: document.documentElement.scrollLeft,
+      scrollY: document.documentElement.scrollTop,
+    },
+    "*"
+  );
+});
 
 if (import.meta.hot) {
   import.meta.hot.on("vite:beforeUpdate", (data) => {
