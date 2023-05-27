@@ -145,7 +145,8 @@ export class DevServer {
 
               return (renderModuleScript as string)
                 .replace("%%path%%", path!)
-                .replace("%%component%%", component!);
+                .replace("%%component%%", component!)
+                .replace("%%rootDir%%", this.workspaceFolder.uri.fsPath);
             }
           },
         },

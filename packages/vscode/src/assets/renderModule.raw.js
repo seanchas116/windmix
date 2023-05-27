@@ -3,6 +3,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom";
 
+const rootDir = "%%rootDir%%";
+
 const getInstanceFromNode =
   __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Events[0];
 
@@ -215,7 +217,7 @@ treeObserver.observe(document.body, {
 function getLocationForDOM(dom) {
   const fiberNode = getInstanceFromNode(dom);
   if (fiberNode?._debugSource) {
-    const fileName = fiberNode._debugSource.fileName;
+    const fileName = fiberNode._debugSource.fileName.slice(rootDir.length);
     const line = fiberNode._debugSource.lineNumber;
     const column = fiberNode._debugSource.columnNumber - 1;
     return [fileName, line, column];
