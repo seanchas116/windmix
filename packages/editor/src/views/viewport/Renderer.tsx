@@ -62,7 +62,7 @@ export const Renderer: React.FC<{
   return (
     <div className="absolute inset-0" ref={ref}>
       <div
-        className="pointer-events-none"
+        className="pointer-events-none h-full"
         style={{
           transform: "translateX(50%)",
         }}
@@ -72,10 +72,10 @@ export const Renderer: React.FC<{
             <div
               className="absolute border-x"
               style={{
-                top: `-${breakpointGradientHeight}px`,
+                top: 0,
+                bottom: 0,
                 left: `${-bp.minWidth / 2}px`,
                 width: `${bp.minWidth}px`,
-                height: `calc(100% + ${breakpointGradientHeight * 2}px)`,
                 borderColor: bp.color + "80",
                 backgroundColor:
                   i === currentBreakpoint ? bp.color + "08" : "transparent",
