@@ -4,33 +4,7 @@ import { Document, FileNode, fileNodeID } from "@windmix/model";
 import { loadFile } from "@windmix/model/src/loadFile";
 import { DevServer } from "./DevServer";
 import { reaction } from "mobx";
-
-export const debouncedChange = (onUpdate: () => void): (() => void) => {
-  let queued = false;
-  const debounced = () => {
-    if (queued) {
-      return;
-    }
-    queued = true;
-    queueMicrotask(() => {
-      queued = false;
-      onUpdate();
-    });
-  };
-  return debounced;
-};
-
-function findTabForURI(uri: vscode.Uri): vscode.ViewColumn | undefined {
-  for (const tab of vscode.window.tabGroups.all.flatMap(
-    (group) => group.tabs
-  )) {
-    if (tab.input instanceof vscode.TabInputText) {
-      if (tab.input.uri.fsPath === uri.fsPath) {
-        return tab.group.viewColumn;
-      }
-    }
-  }
-}
+import { microtaskDebounce, findTabColumnForURI } from "./common";
 
 export class ExtensionState {
   constructor(workspaceFolder: vscode.WorkspaceFolder, devServer: DevServer) {
@@ -66,7 +40,7 @@ export class ExtensionState {
                   (doc) => doc.uri.fsPath === uri.fsPath
                 );
 
-                const tab = findTabForURI(uri);
+                const tab = findTabColumnForURI(uri);
                 if (
                   tab &&
                   textDocument &&
@@ -90,7 +64,7 @@ export class ExtensionState {
     // set text content on doc nodes change
     const nodes = this.document.nodesData.y;
     nodes.observeDeep(
-      debouncedChange(() => {
+      microtaskDebounce(() => {
         if (this._textEditor) {
           this.saveToTextEditor(this._textEditor);
         }

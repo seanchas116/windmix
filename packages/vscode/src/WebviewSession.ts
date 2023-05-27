@@ -8,6 +8,7 @@ import {
 import { debouncedUpdate } from "@seanchas116/paintkit/src/util/yjs/debouncedUpdate";
 import { ExtensionState } from "./ExtensionState";
 import { editorWebviewPanels } from "./EditorSession";
+import { findTabColumnForURI, findTabColumnForWebview } from "./common";
 
 export class WebviewSession {
   constructor(
@@ -95,46 +96,24 @@ export class WebviewSession {
       return;
     }
 
-    const { edTabCol, webTabCol } = this.findTabs();
+    const editorColumn = findTabColumnForURI(textEditor.document.uri);
+    const webviewColumn = findTabColumnForWebview(/windmixEditor$/);
 
-    if (edTabCol) {
+    if (editorColumn) {
       const opts = {
         preserveFocus: false,
         preview: false,
-        viewColumn: edTabCol,
+        viewColumn: editorColumn,
       };
       await vscode.window.showTextDocument(textEditor!.document, opts);
       await vscode.commands.executeCommand(command);
-      if (webTabCol) {
+      if (webviewColumn) {
         const editorPanel = [...editorWebviewPanels][0];
         if (editorPanel) {
-          editorPanel.reveal(webTabCol, false);
+          editorPanel.reveal(webviewColumn, false);
         }
       }
     }
-  }
-
-  private findTabs() {
-    let edTabCol: vscode.ViewColumn | undefined;
-    let webTabCol: vscode.ViewColumn | undefined;
-
-    for (const tab of vscode.window.tabGroups.all.flatMap(
-      (group) => group.tabs
-    )) {
-      if (tab.input instanceof vscode.TabInputText) {
-        if (
-          tab.input.uri.fsPath ===
-          this.extensionState.textEditor?.document.uri.fsPath
-        ) {
-          edTabCol = tab.group.viewColumn;
-        }
-      } else if (tab.input instanceof vscode.TabInputWebview) {
-        if (/windmixEditor$/.test(tab.input.viewType)) {
-          webTabCol = tab.group.viewColumn;
-        }
-      }
-    }
-    return { edTabCol, webTabCol };
   }
 
   readonly extensionState: ExtensionState;
