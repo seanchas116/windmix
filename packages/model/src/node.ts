@@ -11,7 +11,8 @@ interface StringifyOptions {
   id?: boolean;
 }
 
-interface Location {
+export interface Location {
+  filePath: string;
   line: number;
   column: number;
 }
@@ -47,7 +48,7 @@ export abstract class BaseNode<
   }
 
   get location(): Location {
-    return this.data.get("location") ?? { line: 1, column: 0 };
+    return this.data.get("location") ?? { filePath: "", line: 1, column: 0 };
   }
 
   @computed private get _selected(): boolean {

@@ -217,9 +217,9 @@ treeObserver.observe(document.body, {
 function getLocationForDOM(dom) {
   const fiberNode = getInstanceFromNode(dom);
   if (fiberNode?._debugSource) {
-    const fileName = fiberNode._debugSource.fileName.slice(rootDir.length);
+    const filePath = fiberNode._debugSource.fileName.slice(rootDir.length);
     const line = fiberNode._debugSource.lineNumber;
     const column = fiberNode._debugSource.columnNumber - 1;
-    return [fileName, line, column];
+    return [filePath, line, column];
   }
 }

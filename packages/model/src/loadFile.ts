@@ -1,8 +1,7 @@
 import * as babel from "@babel/types";
 import { parse } from "@babel/parser";
 import {
-  nodeTypes,
-  CollaborativeNodeMap,
+  Location,
   Node,
   ElementNode,
   TextNode,
@@ -46,17 +45,16 @@ function codeForNode(code: string, node: babel.Node): string {
   return code.slice(node.start ?? 0, node.end ?? 0);
 }
 
-function locationForNode(node: babel.Node):
-  | {
-      line: number;
-      column: number;
-    }
-  | undefined {
+function locationForNode(
+  filePath: string,
+  node: babel.Node
+): Location | undefined {
   if (!node.loc) {
     return;
   }
 
   return {
+    filePath,
     line: node.loc.start.line,
     column: node.loc.start.column,
   };
@@ -64,6 +62,7 @@ function locationForNode(node: babel.Node):
 
 function loadElement(
   doc: Document,
+  filePath: string,
   idReuser: IDReuser,
   code: string,
   element: babel.JSXElement | babel.JSXFragment,
@@ -119,7 +118,7 @@ function loadElement(
       spaceAfterTagName,
       attributes,
       selfClosing: element.openingElement.selfClosing,
-      location: locationForNode(element),
+      location: locationForNode(filePath, element),
     });
   } else {
     // fragment
@@ -128,14 +127,14 @@ function loadElement(
       spaceAfterTagName: "",
       attributes: [],
       selfClosing: false,
-      location: locationForNode(element),
+      location: locationForNode(filePath, element),
     });
   }
 
   const childNodes: Node[] = [];
   for (const [i, child] of element.children.entries()) {
     childNodes.push(
-      loadNode(doc, idReuser, code, child, [...indexPath, String(i)])
+      loadNode(doc, filePath, idReuser, code, child, [...indexPath, String(i)])
     );
   }
   elementNode.append(childNodes);
@@ -145,6 +144,7 @@ function loadElement(
 
 function loadNode(
   doc: Document,
+  filePath: string,
   idReuser: IDReuser,
   code: string,
   node: babel.JSXElement["children"][number],
@@ -157,12 +157,12 @@ function loadNode(
     );
     textNode.data.set({
       text: codeForNode(code, node),
-      location: locationForNode(node),
+      location: locationForNode(filePath, node),
     });
     return textNode;
   }
   if (node.type === "JSXElement" || node.type === "JSXFragment") {
-    return loadElement(doc, idReuser, code, node, indexPath);
+    return loadElement(doc, filePath, idReuser, code, node, indexPath);
   }
 
   let childElement: babel.JSXElement | babel.JSXFragment | undefined;
@@ -188,10 +188,10 @@ function loadNode(
     wrapperNode.data.set({
       header,
       footer,
-      location: locationForNode(node),
+      location: locationForNode(filePath, node),
     });
 
-    const childNode = loadElement(doc, idReuser, code, childElement, [
+    const childNode = loadElement(doc, filePath, idReuser, code, childElement, [
       ...indexPath,
       String(0),
     ]);
@@ -203,7 +203,7 @@ function loadNode(
     const expressionNode = doc.nodes.create("expression", id);
     expressionNode.data.set({
       code: code.slice(node.start ?? 0, node.end ?? 0),
-      location: locationForNode(node),
+      location: locationForNode(filePath, node),
     });
     return expressionNode;
   }
@@ -271,6 +271,7 @@ export function loadFile(
     );
     const elementNode = loadElement(
       doc,
+      filePath,
       idReuser,
       code,
       foundComponent.element,
@@ -282,7 +283,7 @@ export function loadFile(
       name,
       header: code.slice(headerStart, headerEnd),
       footer: code.slice(footerStart, footerEnd),
-      location: locationForNode(foundComponent.statement),
+      location: locationForNode(filePath, foundComponent.statement),
     });
 
     componentNodes.push(componentNode);
