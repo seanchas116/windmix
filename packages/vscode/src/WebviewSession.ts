@@ -52,7 +52,7 @@ export class WebviewSession {
         jumpToLocation: async (location: { line: number; column: number }) => {
           const textEditor = extensionState.textEditor;
           if (textEditor) {
-            const pos = new vscode.Position(location.line, location.column);
+            const pos = new vscode.Position(location.line - 1, location.column);
 
             vscode.window.showTextDocument(textEditor.document, {
               viewColumn: textEditor.viewColumn,
@@ -63,7 +63,7 @@ export class WebviewSession {
         revealLocation: async (location: { line: number; column: number }) => {
           const textEditor = extensionState.textEditor;
           if (textEditor) {
-            const pos = new vscode.Position(location.line, location.column);
+            const pos = new vscode.Position(location.line - 1, location.column);
             textEditor.revealRange(new vscode.Range(pos, pos));
           }
         },

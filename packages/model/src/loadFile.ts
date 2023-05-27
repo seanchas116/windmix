@@ -57,7 +57,7 @@ function locationForNode(node: babel.Node):
   }
 
   return {
-    line: node.loc.start.line - 1, // zero based
+    line: node.loc.start.line,
     column: node.loc.start.column,
   };
 }
