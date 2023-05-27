@@ -62,7 +62,6 @@ export class ExtensionState {
               const filePath = currentComponent.filePath;
               if (filePath) {
                 const uri = this.uriFromProjectPath(filePath);
-                console.log("TODO: change active tab to", uri);
                 const textDocument = vscode.workspace.textDocuments.find(
                   (doc) => doc.uri.fsPath === uri.fsPath
                 );
