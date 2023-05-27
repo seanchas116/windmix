@@ -1,11 +1,17 @@
 import * as module from "%%path%%";
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom";
+
+const getInstanceFromNode =
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Events[0];
 
 const root = document.getElementById("root");
 createRoot(root).render(
   React.createElement(module["%%component%%"], module.getWindmixProps?.())
 );
+
+const locationToNodes = new Map();
 
 window.addEventListener("message", (event) => {
   const data = event.data;
@@ -13,6 +19,9 @@ window.addEventListener("message", (event) => {
     const elems = document.elementsFromPoint(data.x, data.y);
     const ids = [];
     for (const elem of elems) {
+      const fiberNode = getInstanceFromNode(elem);
+      console.debug(fiberNode?._debugSource);
+
       const id = elem.getAttribute("data-windmixid");
       if (id) {
         ids.push(id);
@@ -173,5 +182,32 @@ if (import.meta.hot) {
       },
       "*"
     );
+  });
+
+  import.meta.hot.on("vite:afterUpdate", (data) => {
+    console.log("afterUpdate");
+
+    locationToNodes.clear();
+
+    const traverse = (dom) => {
+      const fiberNode = getInstanceFromNode(dom);
+
+      if (fiberNode?._debugSource) {
+        const line = fiberNode._debugSource.lineNumber;
+        const column = fiberNode._debugSource.columnNumber - 1;
+        const key = JSON.stringify([line, column]);
+
+        const old = locationToNodes.get(key) ?? [];
+        old.push(dom);
+        locationToNodes.set(key, old);
+      }
+
+      for (const child of dom.children) {
+        traverse(child);
+      }
+    };
+    traverse(root);
+
+    console.log(locationToNodes);
   });
 }
