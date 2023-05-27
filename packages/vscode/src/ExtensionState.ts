@@ -153,7 +153,7 @@ export class ExtensionState {
 
     this._textEditor = textEditor;
     this._lastSetTexts = new WeakMap();
-    //this._panel.title = this.titleForEditor(textEditor);
+
     if (textEditor) {
       const file = this.loadTextDocument(textEditor.document);
 
