@@ -25,13 +25,9 @@ const SideHandle: React.FC<{
 
   const pointerEventHandlers = usePointerStroke({
     onBegin() {
-      return viewportSize.manualWidth;
+      return viewportSize.width;
     },
     onMove(e, { totalDeltaX, initData }) {
-      if (initData === "auto") {
-        return;
-      }
-
       const newWidth =
         initData +
         Math.round(
