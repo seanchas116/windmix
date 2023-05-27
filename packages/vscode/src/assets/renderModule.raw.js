@@ -183,31 +183,41 @@ if (import.meta.hot) {
       "*"
     );
   });
+}
 
-  import.meta.hot.on("vite:afterUpdate", (data) => {
-    console.log("afterUpdate");
+const treeObserver = new MutationObserver(() => {
+  locationToNodes.clear();
 
-    locationToNodes.clear();
+  const traverse = (dom) => {
+    const location = getLocationForDOM(dom);
+    if (location) {
+      const key = JSON.stringify(location);
+      const old = locationToNodes.get(key) ?? [];
+      old.push(dom);
+      locationToNodes.set(key, old);
+    }
 
-    const traverse = (dom) => {
-      const fiberNode = getInstanceFromNode(dom);
+    for (const child of dom.children) {
+      traverse(child);
+    }
+  };
+  traverse(root);
 
-      if (fiberNode?._debugSource) {
-        const line = fiberNode._debugSource.lineNumber;
-        const column = fiberNode._debugSource.columnNumber - 1;
-        const key = JSON.stringify([line, column]);
+  console.log(locationToNodes);
+});
 
-        const old = locationToNodes.get(key) ?? [];
-        old.push(dom);
-        locationToNodes.set(key, old);
-      }
+treeObserver.observe(document.body, {
+  attributes: false,
+  childList: true,
+  subtree: true,
+});
 
-      for (const child of dom.children) {
-        traverse(child);
-      }
-    };
-    traverse(root);
-
-    console.log(locationToNodes);
-  });
+function getLocationForDOM(dom) {
+  const fiberNode = getInstanceFromNode(dom);
+  if (fiberNode?._debugSource) {
+    const fileName = fiberNode._debugSource.fileName;
+    const line = fiberNode._debugSource.lineNumber;
+    const column = fiberNode._debugSource.columnNumber - 1;
+    return [fileName, line, column];
+  }
 }
