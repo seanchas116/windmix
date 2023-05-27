@@ -7,6 +7,7 @@ import { appState } from "../../state/AppState";
 import { observer } from "mobx-react-lite";
 import { ZoomControlController } from "./ZoomControl";
 import { artboards } from "../../state/Artboard";
+import { Input } from "@seanchas116/paintkit/src/components/Input";
 
 export const ToolBar: React.FC<{
   className?: string;
@@ -52,6 +53,18 @@ export const ToolBar: React.FC<{
       </div>
 
       <div className="flex items-center gap-3">
+        <Input
+          className="w-10 [&>input]:text-center"
+          value={String(viewportSize.width)}
+          onChange={(value) => {
+            if (value === "") {
+              viewportSize.manualWidth = "auto";
+            } else {
+              viewportSize.manualWidth = Number.parseInt(value);
+            }
+            return true;
+          }}
+        />
         <div className="flex items-center gap-1">
           <Tippy content="Mobile">
             <IconButton
