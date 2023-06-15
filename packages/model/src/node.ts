@@ -1,6 +1,7 @@
 import {
   CollaborativeNode,
   CollaborativeNodeMap,
+  NodeTypes,
 } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
 import { computed, makeObservable } from "mobx";
 import { Document } from "./document";
@@ -17,23 +18,15 @@ interface Location {
 }
 
 export abstract class BaseNode<
-  NodeTypes extends Record<
-    string,
-    {
-      new (
-        nodeMap: CollaborativeNodeMap<NodeTypes>,
-        id: string
-      ): CollaborativeNode<NodeTypes, any>;
-    }
-  >,
+  TNodeTypes extends NodeTypes<TNodeTypes>,
   ExtraNodeData
 > extends CollaborativeNode<
-  NodeTypes,
+  TNodeTypes,
   ExtraNodeData & {
     location: Location;
   }
 > {
-  constructor(nodes: CollaborativeNodeMap<NodeTypes>, id: string) {
+  constructor(nodes: CollaborativeNodeMap<TNodeTypes>, id: string) {
     super(nodes, id);
     makeObservable(this);
   }
