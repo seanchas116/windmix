@@ -1,5 +1,6 @@
 import {
   CollaborativeNode,
+  CollaborativeNodeData,
   CollaborativeNodeMap,
   NodeTypes,
 } from "@seanchas116/paintkit/src/util/collaborativeNode/CollaborativeNode";
@@ -17,15 +18,14 @@ interface Location {
   column: number;
 }
 
+interface BaseNodeData extends CollaborativeNodeData {
+  location: Location;
+}
+
 export abstract class BaseNode<
   TNodeTypes extends NodeTypes<TNodeTypes>,
-  ExtraNodeData
-> extends CollaborativeNode<
-  TNodeTypes,
-  ExtraNodeData & {
-    location: Location;
-  }
-> {
+  TNodeData extends BaseNodeData = BaseNodeData
+> extends CollaborativeNode<TNodeTypes, TNodeData> {
   constructor(nodes: CollaborativeNodeMap<TNodeTypes>, id: string) {
     super(nodes, id);
     makeObservable(this);
@@ -95,7 +95,7 @@ export abstract class BaseNode<
 
 export const rootNodeID = "root";
 
-export class RootNode extends BaseNode<typeof nodeTypes, {}> {
+export class RootNode extends BaseNode<typeof nodeTypes> {
   get type(): "root" {
     return "root";
   }
@@ -111,7 +111,7 @@ export function fileNodeID(filePath: string) {
 
 export class FileNode extends BaseNode<
   typeof nodeTypes,
-  {
+  BaseNodeData & {
     filePath: string; // path in project (e.g. `/src/components/MyComponent.tsx`)
     header: string; // header code (e.g. `import React from "react";`)
   }
@@ -141,7 +141,7 @@ export function componentNodeID(filePath: string, varName: string) {
 
 export class ComponentNode extends BaseNode<
   typeof nodeTypes,
-  {
+  BaseNodeData & {
     header: string; // header code of component (e.g. `function MyComponent() { return `)
     footer: string; // footer code of component (e.g. `; }`)
   }
@@ -189,7 +189,7 @@ export const EXPRESSION = Symbol("EXPRESSION");
 // JSXElement
 export class ElementNode extends BaseNode<
   typeof nodeTypes,
-  {
+  BaseNodeData & {
     tagName: string;
     spaceAfterTagName: string;
     attributes: (Attribute | SpreadAttribute)[];
@@ -296,7 +296,10 @@ export class ElementNode extends BaseNode<
 }
 
 // JSXText
-export class TextNode extends BaseNode<typeof nodeTypes, { text: string }> {
+export class TextNode extends BaseNode<
+  typeof nodeTypes,
+  BaseNodeData & { text: string }
+> {
   get type(): "text" {
     return "text";
   }
@@ -317,7 +320,7 @@ export class TextNode extends BaseNode<typeof nodeTypes, { text: string }> {
 // JSXExpressionContainer containing an element (e.g. `{users.map(user => (<div>{user.name}</div>))}`)
 export class WrappingExpressionNode extends BaseNode<
   typeof nodeTypes,
-  {
+  BaseNodeData & {
     header: string; // header code of expression (e.g. `{users.map(user => (`)
     footer: string; // footer code of expression (e.g. `)}`)
   }
@@ -345,7 +348,7 @@ export class WrappingExpressionNode extends BaseNode<
 // JSXExpressionContainer without an element (e.g. `{users.map(user => user.name)}`)
 export class ExpressionNode extends BaseNode<
   typeof nodeTypes,
-  { code: string }
+  BaseNodeData & { code: string }
 > {
   get type(): "expression" {
     return "expression";
